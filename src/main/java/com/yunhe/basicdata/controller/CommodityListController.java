@@ -1,6 +1,4 @@
 package com.yunhe.basicdata.controller;
-
-
 import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +7,6 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 /**
  * <p>
  * 商品列表 前端控制器
@@ -25,7 +22,6 @@ public class CommodityListController {
     CommodityListServiceImpl commodityListService;
     /**
      * 查询商品的信息 分页
-     *
      * @param size          每页显示的条数
      * @param current       当前页
      * @param commodityList 商品列表的对象
