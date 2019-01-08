@@ -19,7 +19,6 @@ import java.util.Map;
     @Repository
     public interface WarehouseMapper extends BaseMapper<Warehouse> {
 
-        /*List<Warehouse> selectAll();*/
 
         /**
          * <p>
@@ -41,5 +40,14 @@ import java.util.Map;
          * @return list集合
          */
         List<Warehouse> selectWareHouseLike(Map<String, Object> cond);
+
+        /**
+         * <p>
+         *  查询所有库存信息
+         * </p>
+         *
+         * @return list集合
+         */
+        List<Warehouse> selectAll();
 
 }

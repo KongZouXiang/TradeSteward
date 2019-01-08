@@ -25,12 +25,12 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, Warehouse
     @Resource
     WarehouseMapper warehouseMapper;
 
-/*    @Override
-    public List<Warehouse> selectAll() {
+    @Override
+    public List<Warehouse> selectExcel() {
 
         return warehouseMapper.selectAll();
 
-    }*/
+    }
 
     @Override
     public int insertWareHouse(Warehouse warehouse) {

@@ -3,6 +3,7 @@ package com.yunhe.cargomanagement.service;
 import com.yunhe.cargomanagement.entity.Warehouse;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,7 +21,7 @@ public interface IWarehouseService extends IService<Warehouse> {
      * </p>
      * @return 返回一个List集合
      */
-    /* List<Warehouse> selectAll();*/
+     List<Warehouse> selectExcel();
 
     /**
      * <p>
