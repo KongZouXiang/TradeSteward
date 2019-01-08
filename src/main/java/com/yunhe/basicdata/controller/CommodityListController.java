@@ -14,7 +14,6 @@ import java.util.Map;
  * <p>
  * 商品列表 前端控制器
  * </p>
- *
  * @author 李恒逵, 唐凯宽
  * @since 2019-01-02
  *
@@ -24,7 +23,6 @@ import java.util.Map;
 public class CommodityListController {
     @Resource
     CommodityListServiceImpl commodityListService;
-
     /**
      * 查询商品的信息 分页
      *
