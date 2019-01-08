@@ -34,12 +34,17 @@ public class PurchaseHistoryController {
         return mv;
     }
 
+    /**
+     * 这是一个为了上传才写的注释
+     * @return
+     */
     @RequestMapping("/addPurchaseHistory")
     public ModelAndView getPurchaseHistory(){
         ModelAndView mv = new ModelAndView();
         mv.setViewName("addPurchaseHistory");
         return mv;
     }
+
 
     /**
      * 进货历史分页
