@@ -8,8 +8,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 属性设置 服务类
  * </p>
  *
- * @author 唐凯宽,李恒奎
- * @since 2019-01-04
+ * @author 唐凯宽，李恒奎
+ * @since 2019-01-05
  */
 public interface IPropertyService extends IService<Property> {
 

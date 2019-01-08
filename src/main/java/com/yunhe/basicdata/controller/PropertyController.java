@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.MalformedParameterizedTypeException;
+
 /**
  * <p>
  * 属性设置 前端控制器
@@ -16,5 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/basicdata/property")
 public class PropertyController {
+
 
 }

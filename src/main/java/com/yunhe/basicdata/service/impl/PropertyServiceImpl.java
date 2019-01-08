@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
  * 属性设置 服务实现类
  * </p>
  *
- * @author 唐凯宽,李恒奎
- * @since 2019-01-04
+ * @author 唐凯宽，李恒奎
+ * @since 2019-01-05
  */
 @Service
 public class PropertyServiceImpl extends ServiceImpl<PropertyMapper, Property> implements IPropertyService {
