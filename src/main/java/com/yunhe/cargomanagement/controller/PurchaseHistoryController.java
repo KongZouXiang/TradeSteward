@@ -50,7 +50,6 @@ public class PurchaseHistoryController {
      */
     @RequestMapping("/getPurchaseHistoryPage")
     public Map getPurchaseHistoryByPhNumber(int pageNum, int pageSize, PurchaseHistory purchaseHistory){
-        System.out.println("名称："+purchaseHistory.getPhNumber());
         Map purchaseHistpage = purchaseHistoryService.getPurchaseHistoryByPhNumber(pageNum,pageSize,purchaseHistory);
         System.out.println(purchaseHistpage);
         return purchaseHistpage;
