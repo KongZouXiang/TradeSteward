@@ -7,6 +7,7 @@ import org.apache.logging.log4j.util.PropertySource;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,21 +30,21 @@ public interface ISalesOrderHistoryService extends IService<SalesOrderHistory> {
 
     /**
      * 更新销售订单历史
-     * @param salesOrderHistory
+     * @param salesOrderHistory 要更新的销售历史记录的信息
      * @return int
      */
     int updateSale(SalesOrderHistory salesOrderHistory);
 
     /**
      * 根据id删除销售历史记录
-     * @param id
+     * @param id 当前销售记录的id
      * @return int
      */
     int deleteById(Serializable id);
 
     /**
      * 插入新的销售订单历史
-     * @param salesOrderHistory
+     * @param salesOrderHistory 要插入的销售历史记录的信息
      * @return int
      */
     int insertSale(SalesOrderHistory salesOrderHistory);
@@ -55,5 +56,10 @@ public interface ISalesOrderHistoryService extends IService<SalesOrderHistory> {
      */
     SalesOrderHistory selectById(int id);
 
+    /**
+     * 查询所有的
+     * @return
+     */
+    List<SalesOrderHistory> selectAll();
 
 }

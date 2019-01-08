@@ -1,5 +1,6 @@
 package com.yunhe.cargomanagement.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.cargomanagement.entity.SalesOrderHistory;
 import com.yunhe.cargomanagement.dao.SalesOrderHistoryMapper;
@@ -39,17 +40,18 @@ public class SalesOrderHistoryServiceImpl extends ServiceImpl<SalesOrderHistoryM
 
     @Override
     public int updateSale(SalesOrderHistory salesOrderHistory) {
-        return 0;
+
+        return salesOrderHistoryMapper.updateSale(salesOrderHistory);
     }
 
     @Override
     public int deleteById(Serializable id) {
-        return 0;
+        return salesOrderHistoryMapper.deleteById(id);
     }
 
     @Override
     public int insertSale(SalesOrderHistory salesOrderHistory) {
-        return 0;
+        return salesOrderHistoryMapper.insert(salesOrderHistory);
     }
 
     @Override
@@ -57,4 +59,10 @@ public class SalesOrderHistoryServiceImpl extends ServiceImpl<SalesOrderHistoryM
         SalesOrderHistory sale = salesOrderHistoryMapper.selectById(id);
         return sale;
     }
+
+    @Override
+    public List<SalesOrderHistory> selectAll() {
+        return salesOrderHistoryMapper.selectAll();
+    }
+
 }

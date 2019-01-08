@@ -54,5 +54,6 @@ public interface SalesOrderHistoryMapper extends BaseMapper<SalesOrderHistory> {
          */
         int updateSale(SalesOrderHistory salesOrderHistory);
 
+        List<SalesOrderHistory> selectAll();
 
 }
