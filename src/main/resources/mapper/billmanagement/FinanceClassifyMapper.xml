@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunhe.billmanagement.dao.FinanceClassifyMapper">
+
+    <sql id="fcCols">
+        id,fc_type,fc_sort,fc_remark
+    </sql>
+
+    <select id="selectFcPage" resultType="com.yunhe.billmanagement.entity.FinanceClassify">
+        select <include refid="fcCols"/> from finance_classify where fc_type like concat('%',#{financeClassify.fcType},'%') order by id desc
+    </select>
+
+</mapper>

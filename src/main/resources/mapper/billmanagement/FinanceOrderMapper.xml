@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunhe.billmanagement.dao.FinanceOrderMapper">
+
+    <sql id="foCols">
+        id,fo_num_list,fo_time,fo_fc_type,fo_money,fo_account,fo_person,fo_remark,fo_image
+    </sql>
+    <select id="selectFoPage" resultType="com.yunhe.billmanagement.entity.FinanceOrder">
+        select <include refid="foCols"/> from finance_order where (fo_fc_type like concat('%',#{financeOrder.foFcType},'%')) or (fo_num_list like concat('%',#{financeOrder.foNumList},'%')) order by id desc
+    </select>
+
+
+</mapper>

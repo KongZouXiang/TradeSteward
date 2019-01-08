@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunhe.billmanagement.dao.FundClientDebtMapper">
+    <sql id="fcdCols">
+        id,fcd_num_list,fcd_name,fcd_linkman,fcd_telephone,fcd_begin_debt,fcd_add_debt,fcd_back_debt,fcd_discount,fcd_offset_deb,fcd_receivable
+    </sql>
+
+    <select id="selectFcdPage" resultType="com.yunhe.billmanagement.entity.FundClientDebt">
+        select <include refid="fcdCols"/> from fund_client_debt order by id desc
+    </select>
+</mapper>

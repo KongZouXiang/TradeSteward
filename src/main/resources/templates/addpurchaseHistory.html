@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/jquery/jquery.min.js"></script>
+    <script src="/js/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+    <script src="/js/jquery.validation/1.14.0/messages_zh.min.js"></script>
+    <style>
+        input.error {
+            border: 1px solid #E6594E;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <form id="addPurchaseHistoryForm">
+        <br/>
+        <div class="form-group">
+            <label for="phDate">业务日期：</label>
+            <input type="text" class="form-control" id="phDate" name="phDate" placeholder="输入日期">
+        </div>
+
+        <div class="form-group">
+            <label for="phNumber">单据编号：</label>
+            <input type="text" class="form-control" id="phNumber" name="phNumber" placeholder="输入编号"
+                   required="required">
+        </div>
+
+        <div class="form-group">
+            <label for="phSupname">供应商名称：</label>
+            <input type="text" class="form-control" id="phSupname" name="phSupname" placeholder="输入供应商名称">
+        </div>
+
+        <div class="form-group">
+            <label for="phClname">进货商品：</label>
+            <input type="text" class="form-control" id="phClname" name="phClname" placeholder="输入进货商品">
+        </div>
+
+        <div class="form-group">
+            <label for="phQuantity">进货数量：</label>
+            <input type="text" class="form-control" id="phQuantity" name="phQuantity" placeholder="输入进货数量">
+        </div>
+
+
+        <div class="form-group">
+            <label for="phAmountPayable">应付金额：</label>
+            <input type="text" class="form-control" id="phAmountPayable" name="phAmountPayable" placeholder="输入应付金额">
+        </div>
+
+
+        <div class="form-group">
+            <label for="phAmountPaid">已付金额：</label>
+            <input type="text" class="form-control" id="phAmountPaid" name="phAmountPaid" placeholder="输入已付金额">
+        </div>
+
+
+        <div class="form-group">
+            <label for="phWarehouse">入库仓库：</label>
+            <input type="text" class="form-control" id="phWarehouse" name="phWarehouse" placeholder="输入应付金额">
+        </div>
+
+
+        <div class="form-group">
+            <label for="poBill">纸质单据：</label>
+            <input type="text" class="form-control" id="poBill" name="poBill" placeholder="输入纸质单据">
+        </div>
+
+
+        <div class="form-group">
+            <label for="phJindate">制单日期：</label>
+            <input type="text" class="form-control" id="phJindate" name="phJindate" placeholder="制单日期">
+        </div>
+
+        <div class="form-group">
+            <label for="phManeyHu">结算账户：</label>
+            <input type="text" class="form-control" id="phManeyHu" name="phManeyHu" placeholder="输入结算账户">
+        </div>
+
+        <div class="form-group">
+            <label for="phExperiencedPerson">经手人：</label>
+            <input type="text" class="form-control" id="phExperiencedPerson" name="phExperiencedPerson"
+                   placeholder="输入经手人">
+        </div>
+
+        <div class="form-group">
+            <label for="phSinglePerson">制单人：</label>
+            <input type="text" class="form-control" id="phSinglePerson" name="phSinglePerson"
+                   placeholder="输入制单人">
+        </div>
+        <div class="form-group">
+            <label for="phOtherExpenses">其他费用：</label>
+            <input type="text" class="form-control" id="phOtherExpenses" name="phOtherExpenses"
+                   placeholder="输入其他费用">
+        </div>
+        <div class="form-group">
+            <label for="phWarehousingStatus">入库状态：</label>
+            <input type="text" class="form-control" id="phWarehousingStatus" name="phWarehousingStatus"
+                   placeholder="输入入库状态">
+        </div>
+
+        <div class="form-group">
+            <label for="phRemarks">备注：</label>
+            <input type="text" class="form-control" id="phRemarks" name="phRemarks" placeholder="输入备注">
+        </div>
+
+        <div class="form-group">
+            <button type="button" id="saveBtn" class="btn btn-success">提交</button>
+            <button type="button" id="cancelBtn" class="btn btn-default">取消</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    var addPurchaseHistory = function () {
+        if (!check().form()) {
+            return ;
+        }
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "/cargomanagement/purchase-history/addPurchaseHistoryGoTo",
+            data: {
+                "phDate": $("#phDate").val(),
+                "phNumber":$("#phNumber").val(),
+                "phSupname":$("#phSupname").val(),
+                "phClname":$("#phClname").val(),
+                "phQuantity":$("#phQuantity").val(),
+                "phAmountPayable":$("#phAmountPayable").val(),
+                "phAmountPaid":$("#phAmountPaid").val(),
+                "phWarehouse":$("#phWarehouse").val(),
+                "phBill":$("#phBill").val(),
+                "phJindate":$("#phJindate").val(),
+                "phManeyHu":$("#phManeyHu").val(),
+                "phExperiencedPerson":$("#phExperiencedPerson").val(),
+                "phSinglePerson":$("#phSinglePerson").val(),
+                "phOtherExpenses":$("#phOtherExpenses").val(),
+                "phWarehousingStatus":$("#phWarehousingStatus").val(),
+                "phRemarks":$("#phRemarks").val()
+            },
+            success:function (msg) {
+                $("#cancelBtn").click();
+            }
+        });
+    };
+
+    $('#saveBtn').on('click',function () {
+        addPurchase();
+    });
+
+    $('#cancelBtn').on('click',function () {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.getPurchaseHistoryPageList();
+        parent.layer.close(index);
+    });
+
+</script>
+
+</body>
+</html>

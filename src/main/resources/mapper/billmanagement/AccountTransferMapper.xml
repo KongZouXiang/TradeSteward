@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunhe.billmanagement.dao.AccountTransferMapper">
+
+    <sql id="atCols">
+        id,at_out_account,at_out_time,at_into_account,at_into_time,at_money,at_charge,at_charge_person,at_person,at_remark
+    </sql>
+
+    <select id="selectAtPage" resultType="com.yunhe.billmanagement.entity.AccountTransfer">
+        select <include refid="atCols"/> from account_transfer where at_out_account like concat('%',#{accountTransfer.atOutAccount},'%') order by id desc
+    </select>
+</mapper>

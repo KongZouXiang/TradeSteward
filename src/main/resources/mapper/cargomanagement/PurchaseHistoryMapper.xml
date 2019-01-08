@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunhe.cargomanagement.dao.PurchaseHistoryMapper">
+    <sql id="purchase_history">
+        id
+        ,
+        ph_date,
+        ph_number,
+        ph_supname,
+        ph_clname,
+        ph_quantity,
+        ph_amount_payable,
+        ph_amount_paid,
+        ph_warehouse,
+        ph_bill,
+        ph_jindate,
+        ph_maney_hu,
+        ph_experienced_person,
+        ph_single_person,
+        ph_other_expenses,
+        ph_warehousing_status,
+        ph_remarks
+    </sql>
+
+    <select id="getPurchaseHistoryByPhNumber" resultType="com.yunhe.cargomanagement.entity.PurchaseHistory"
+            parameterType="com.yunhe.cargomanagement.entity.PurchaseHistory">
+        select
+        <include refid="purchase_history"/>
+        from purchase_history where ph_number like concat('%', #{purchaseHistory.phNumber}, '%') order by id desc
+    </select>
+</mapper>

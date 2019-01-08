@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunhe.basicdata.dao.SettlementAccountMapper">
+    <!--从数据库中获取账户的信息  分页-->
+    <select id="selectAllAccountList" parameterType="SettlementAccount" resultType="SettlementAccount">
+        select *
+        from settlement_account
+    </select>
+    <!--增加账户-->
+    <insert id="insertAccount" parameterType="SettlementAccount">
+        insert into settlement_account(sa_name, sa_bank, sa_balance, sa_state, sa_banknumber, sa_beginbalance)
+        values (#{saName}, #{saBank}, #{saBalance}, #{saState}, #{saBankNumber}, #{saBeginBalance})
+    </insert>
+    <!--查询账户的详细信息-->
+    <select id="selectAccountById" parameterType="SettlementAccount" resultType="SettlementAccount">
+        select *
+        from settlement_account
+        where id = #{id}
+    </select>
+    <!--修改账户的信息-->
+    <update id="updateAccount" parameterType="SettlementAccount">
+        update settlement_account
+        set sa_name=#{saName},
+            sa_bank=#{saBank},
+            sa_balance=#{saBalance},
+            sa_state=#{saState},
+            sa_banknumber=#{saBankNumber},
+            sa_beginbalance=#{saBeginBalance}
+        where id = #{id}
+    </update>
+    <!--删除账户的信息-->
+    <delete id="deleteAccount" parameterType="SettlementAccount">
+        delete
+        from settlement_account
+        where id = #{id}
+    </delete>
+</mapper>

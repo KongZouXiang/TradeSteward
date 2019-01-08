@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunhe.cargomanagement.dao.PurchaseOrderMapper">
+    <sql id="getPurchaseOrderByNumber">
+        id
+        ,
+        po_date,
+        po_number,
+        po_state,
+        po_auditor,
+        po_sup_name,
+        po_cl_name,
+        po_quantity_of_purchase,
+        po_ying_money,
+        po_bill,
+        po_experienced_person,
+        po_single_person,
+        po_remarks,
+        po_date_order
+    </sql>
+
+    <sql id="addPurchaseTo">
+        po_date
+        ,
+        po_number,
+        po_state,
+        po_auditor,
+        po_sup_name,
+        po_cl_name,
+        po_quantity_of_purchase,
+        po_ying_money,
+        po_bill,
+        po_experienced_person,
+        po_single_person,
+        po_remarks,
+        po_date_order
+    </sql>
+
+    <!--销售订单历史-->
+    <select id="getPurchaseByPoNumber" resultType="com.yunhe.cargomanagement.entity.PurchaseOrder"
+            parameterType="com.yunhe.cargomanagement.entity.PurchaseOrder">
+        select
+        <include refid="getPurchaseOrderByNumber"/>
+        from purchase_order where po_number like concat('%', #{purchaseOrder.poNumber}, '%') order by id desc
+    </select>
+    <!--销售订单历史总条数-->
+    <select id="getPoNumberCount" parameterType="com.yunhe.cargomanagement.entity.PurchaseOrder" resultType="int">
+        select count(1)
+        from purchase_order
+        where po_number like concat('%', #{purchaseOrder.poNumber}, '%') AND po_sup_name like concat('%', #{purchaseOrder.poSupName}, '%')
+    </select>
+    <!--销售订单历史详情-->
+    <select id="getPurchaseById" resultType="com.yunhe.cargomanagement.entity.PurchaseOrder" parameterType="Integer">
+        select
+        <include refid="getPurchaseOrderByNumber"/>
+        from purchase_order where id = {id}
+    </select>
+
+    <!--更改销售订单历史-->
+    <update id="updategetPurchaseById" parameterType="com.yunhe.cargomanagement.entity.PurchaseOrder">
+        update purchase_order
+        set po_date = #{purchaseOrder.po_date},
+            po_number = #{purchaseOrder.po_number},
+            po_state= #{purchaseOrder.po_state},
+            po_auditor= #{purchaseOrder.po_auditor},
+            po_sup_name= #{purchaseOrder.po_sup_name},
+            po_cl_name= #{purchaseOrder.po_cl_name},
+            po_quantity_of_purchase= #{purchaseOrder.po_quantity_of_purchase},
+            po_ying_money= #{purchaseOrder.po_ying_money},
+            po_bill= #{purchaseOrder.po_bill},
+            po_experienced_person= #{purchaseOrder.po_experienced_person},
+            po_single_person= #{purchaseOrder.po_single_person},
+            po_remarks= #{purchaseOrder.po_remarks},
+            po_date_order= #{purchaseOrder.po_date_order} where id=#{purchaseOrder.id}
+    </update>
+
+
+
+    <!--增加进货订单历史-->
+    <!--<insert id="addPurchase" parameterType="com.yunhe.cargomanagement.entity.PurchaseOrder">
+        insert into
+        purchase_order
+        <include refid="addPurchaseTo"/>
+        values (#{purchaseOrder.poDate},
+                #{purchaseOrder.poNumber},
+                #{purchaseOrder.poState},
+                #{purchaseOrder.poAuditor},
+                #{purchaseOrder.poSupName},
+                #{purchaseOrder.poClName},
+                #{purchaseOrder.poQuantityOfPurchase},
+                #{purchaseOrder.poYingMoney},
+                #{purchaseOrder.poBill},
+                #{purchaseOrder.poExperiencedPerson},
+                #{purchaseOrder.poSinglePerson},
+                #{purchaseOrder.poRemarks},
+                #{purchaseOrder.poDateOrder})
+    </insert>-->
+
+    <!--以下均为测试代码-->
+
+
+    <!--******************************************进货订单历史**************************************************-->
+    <!--<resultMap type="com.yunhe.cargomanagement.entity.PurchaseOrder" id="getPurchaseBypoNumber">
+        &lt;!&ndash; 如果属性名和字段名一致 可以不配置 但不推荐 一般把属性全部配置 &ndash;&gt;
+        <id column="id" property="id"></id>&lt;!&ndash; 这个是purchase_order的id &ndash;&gt;
+        <result column="poDate" property="po_date"/>
+        <result column="poNumber" property="po_number"/>
+        <result column="poState" property="po_state"/>
+        <result column="poAuditor" property="po_auditor"/>
+        <result column="poclname" property="po_cl_name"/>
+        <result column="poQuantityOfPurchase" property="po_quantity_of_purchase"/>
+        <result column="poNumber" property="po_bill"/>
+        <result column="poNumber" property="po_experienced_person"/>
+        <result column="poNumber" property="po_single_person"/>
+        <result column="poNumber" property="po_remarks"/>
+        &lt;!&ndash; 一对一的标签  &ndash;&gt;
+        &lt;!&ndash; supplier与purchase_order中的supplier保持一致  supplier与purchase_order中的supplier保持一致 &ndash;&gt;
+        <association property="supplier" javaType="com.yunhe.customermanagement.entity.Supplier">
+            <id column="sid" property="id"></id>
+            <result column="supCompname" property="sup_compname"/>
+        </association>
+    </resultMap>-->
+    <!--****************************进货订单历史总条数*******************************-->
+
+    <!--<resultMap  id="getPurchaseBypoNumber" type="com.yunhe.cargomanagement.entity.PurchaseOrder">
+        <id column="id" property="id"></id>&lt;!&ndash; 这个是purchase_order的id &ndash;&gt;
+        <result column="poclname" property="po_cl_name"/>
+        <association property="supplier" javaType="com.yunhe.customermanagement.entity.Supplier">
+            <id column="id" property="supId"></id>
+            <result column="supCompname" property="sup_compname"/>
+        </association>
+    </resultMap>
+
+    <select id="getPurchaseByPoNumber" resultType="com.yunhe.cargomanagement.entity.PurchaseOrder" parameterType="map" resultMap="getPurchaseBypoNumber">
+        SELECT pu.id,
+               pu.po_cl_name,
+               su.sup_compname
+        FROM purchase_order pu,
+             supplier su
+        WHERE pu.sup_id = su.id/* AND pu.po_number LIKE CONCAT('%',#{purchase.poNumber},'%');*/
+    </select>-->
+
+    <!-- <select id="getPurchaseByPoNumber" resultType="com.yunhe.cargomanagement.entity.PurchaseOrder" parameterType="com.yunhe.cargomanagement.entity.PurchaseOrder" resultMap="getPurchaseBypoNumber">
+         SELECT pu.id,
+                pu.po_date,
+                pu.po_number,
+                pu.po_state,
+                pu.po_auditor,
+                su.id sid,
+                su.sup_compname,
+                pu.po_cl_name,
+                pu.po_quantity_of_purchase,
+                pu.po_bill,
+                pu.po_experienced_person,
+                pu.po_single_person,
+                pu.po_remarks
+         FROM purchase_order pu,
+              supplier su
+         WHERE pu.sup_id = su.id AND pu.po_number LIKE CONCAT('%',#{purchase.poNumber},'%');
+     </select>-->
+
+
+    <!--
+        <select id="getPoNumberCount" resultType="Integer" parameterType="map">
+            SELECT count(1)
+            FROM purchase_order pu,
+                 supplier su
+            WHERE pu.sup_id = su.id AND pu.po_number LIKE CONCAT('%',#{purchase.poNumber},'%');
+        </select>
+
+
+        <select id="gerTest" resultType="com.yunhe.cargomanagement.entity.PurchaseOrder" parameterType="com.yunhe.cargomanagement.entity.PurchaseOrder">
+            select * from purchase_order
+        </select>-->
+</mapper>

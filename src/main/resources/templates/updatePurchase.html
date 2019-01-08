@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/jquery/jquery.min.js"></script>
+    <script src="/js/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+    <script src="/js/jquery.validation/1.14.0/messages_zh.min.js"></script>
+</head>
+<body>
+<h1 th:text="${session.purchase.id}"></h1>
+<div class="container">
+    <form id="updateUserForm">
+        <br/>
+        <div class="form-group">
+            <label for="poDate">业务日期：</label>
+            <input type="text" class="form-control" id="poDate" name="poDate" th:value="${session.purchase.poDate}" placeholder="输入日期">
+        </div>
+
+        <div class="form-group">
+            <label for="poNumber">单据编号：</label>
+            <input type="text" class="form-control" id="poNumber" name="poNumber" th:value="${session.purchase.poNumber}" placeholder="输入编号" required="required">
+        </div>
+
+        <div class="form-group">
+            <label for="poState">处理状态：</label>
+            <input type="text" class="form-control" id="poState" name="poState" th:value="${session.purchase.poState}" placeholder="输入状态">
+        </div>
+
+        <div class="form-group">
+            <label for="poAuditor">审核人：</label>
+            <input type="text" class="form-control" id="poAuditor" name="poAuditor" th:value="${session.purchase.poAuditor}" placeholder="输入审核人">
+        </div>
+
+        <div class="form-group">
+            <label for="poSupName">供应商名称：</label>
+            <input type="text" class="form-control" id="poSupName" name="poSupName" th:value="${session.purchase.poSupName}" placeholder="输入供应商">
+        </div>
+
+        <div class="form-group">
+            <label for="poClName">商品名（多）：</label>
+            <input type="text" class="form-control" id="poClName" name="poClName" th:value="${session.purchase.poClName}" placeholder="输入商品名">
+        </div>
+
+
+        <div class="form-group">
+            <label for="poQuantityOfPurchase">进货数量：</label>
+            <input type="text" class="form-control" id="poQuantityOfPurchase" name="poQuantityOfPurchase" th:value="${session.purchase.poQuantityOfPurchase}" placeholder="输入商品数量">
+        </div>
+
+
+        <div class="form-group">
+            <label for="poYingMoney">应付金额：</label>
+            <input type="text" class="form-control" id="poYingMoney" name="poYingMoney" th:value="${session.purchase.poYingMoney}" placeholder="输入应付金额">
+        </div>
+
+
+        <div class="form-group">
+            <label for="poBill">纸质单据：</label>
+            <input type="text" class="form-control" id="poBill" name="poBill" th:value="${session.purchase.poBill}" placeholder="输入纸质单据">
+        </div>
+
+
+        <div class="form-group">
+            <label for="poExperiencedPerson">经手人：</label>
+            <input type="text" class="form-control" id="poExperiencedPerson" name="poExperiencedPerson" th:value="${session.purchase.poExperiencedPerson}" placeholder="输入经手人">
+        </div>
+
+        <div class="form-group">
+            <label for="poSinglePerson">制单人：</label>
+            <input type="text" class="form-control" id="poSinglePerson" name="poSinglePerson" th:value="${session.purchase.poSinglePerson}" placeholder="输入制单人">
+        </div>
+
+        <div class="form-group">
+            <label for="poRemarks">备注：</label>
+            <input type="text" class="form-control" id="poRemarks" name="poRemarks" th:value="${session.purchase.poRemarks}" placeholder="输入备注">
+        </div>
+
+        <div class="form-group">
+            <label for="poDateOrder">制单日期：</label>
+            <input type="text" class="form-control" id="poDateOrder" name="poDateOrder" th:value="${session.purchase.poDateOrder}" placeholder="输入制单日期">
+        </div>
+        <div class="form-group">
+            <button type="button" id="updateBtn" class="btn btn-success">提交</button>
+            <button type="button" id="cancelBtn" class="btn btn-default">取消</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    var updateUser = function () {
+        if (!check().form()) {
+            return;
+        }
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: "/cargomanagement/purchase-order/updatePurchaseById",
+            data: {
+                uid:"[[${session.purchase.poDateOrder}]]",
+                "poDate": $("#poDate").val(),
+                "poNumber":$("#poNumber").val(),
+                "poState":$("#poState").val(),
+                "poAuditor":$("#poAuditor").val(),
+                "poSupName":$("#poSupName").val(),
+                "poClName":$("#poClName").val(),
+                "poQuantityOfPurchase":$("#poQuantityOfPurchase").val(),
+                "poYingMoney":$("#poYingMoney").val(),
+                "poBill":$("#poBill").val(),
+                "poExperiencedPerson":$("#poExperiencedPerson").val(),
+                "poSinglePerson":$("#poSinglePerson").val(),
+                "poRemarks":$("#poRemarks").val(),
+                "poDateOrder":$("#poDateOrder").val()
+            },
+            success: function () {
+                $("#cancelBtn").click();
+            }
+        });
+    };
+
+    $("#updateBtn").click(function () {
+        updateUser();
+    });
+
+
+    $("#cancelBtn").click(function () {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.getPurchasePageList();
+        parent.layer.close(index);
+    });
+
+    function check() {
+        return $("#updateUserForm").validate({
+            rules: {
+                poDate:{
+                    required:true
+                },
+                poNumber:{
+                    required:true
+                },
+                poState:{
+                    required:true
+                },
+                poAuditor:{
+                    required:true
+                },
+                poSupName:{
+                    required:true
+                },
+                poClName:{
+                    required:true
+                },
+                poQuantityOfPurchase:{
+                    required:true
+                },
+                poYingMoney:{
+                    required:true
+                },
+                poBill:{
+                    required:true
+                },
+                poExperiencedPerson:{
+                    required:true
+                },
+                poSinglePerson:{
+                    required:true
+                },
+                poRemarks:{
+                    required:true
+                },
+                poDateOrder:{
+                    required:true
+                }
+            },
+            messages:{
+                poDate:{
+                    required:""
+                },
+                poNumber:{
+                    required:""
+                },
+                poState:{
+                    required:""
+                },
+                poAuditor:{
+                    required:""
+                },
+                poSupName:{
+                    required:""
+                },
+                poClName:{
+                    required:''
+                },
+                poQuantityOfPurchase:{
+                    required:''
+                },
+                poYingMoney:{
+                    required:""
+                },
+                poBill:{
+                    required:''
+                },
+                poExperiencedPerson:{
+                    required:""
+                },
+                poSinglePerson:{
+                    required:""
+                },
+                poRemarks:{
+                    required:""
+                },
+                poDateOrder:{
+                    required:""
+                }
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

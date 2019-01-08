@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>这是个测试</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/laypage.css">
+    <script type="text/javascript" src="/js/vue/vue.min.js"></script>
+    <script type="text/javascript" src="/js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/layer/layer.js"></script>
+    <script type="text/javascript" src="/js/laypage/laypage.js"></script>
+</head>
+<body>
+<div id="app" class="container">
+
+    <form class="form-inline bg-danger" role="form">
+        查询条件：
+        <div class="form-group">
+            <label class="sr-only" for="poNumber">搜索单号</label>
+            <input type="text" class="form-control" id="poNumber" placeholder="搜索单号">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="poSupName">供应商名称</label>
+            <input type="text" class="form-control" id="poSupName" placeholder="供应商名称">
+        </div>
+        <button type="button" id="findPurchase" class="btn btn-success">搜索</button>
+        <button type="button" id="addPurchaseBtn" class="btn btn-danger">新增进货订单</button>
+    </form>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr class="success">
+                <td>序号</td>
+                <td>业务日期</td>
+                <td>单据编号</td>
+                <td>处理状态</td>
+                <td>审核人</td>
+                <td>供应商名称</td>
+                <td>商品名（多）</td>
+                <td>进货数量</td>
+                <td>应付金额</td>
+                <td>纸质单据</td>
+                <td>经手人</td>
+                <td>制单人</td>
+                <td>备注</td>
+                <td>制单日期</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="active" v-for="(item,index) in result">
+                <td>{{index+1}}</td>
+                <td>{{item.poDate}}</td>
+                <td>{{item.poNumber}}</td>
+                <td>{{item.poState}}</td>
+                <td>{{item.poAuditor}}</td>
+                <td>{{item.poSupName}}</td>
+                <td>{{item.poClName}}</td>
+                <td>{{item.poQuantityOfPurchase}}</td>
+                <td>{{item.poYingMoney}}</td>
+                <td>{{item.poBill}}</td>
+                <td>{{item.poExperiencedPerson}}</td>
+                <td>{{item.poSinglePerson}}</td>
+                <td>{{item.poRemarks}}</td>
+                <td>{{item.poDateOrder}}</td>
+                <td><a href="#" @click="editEvent(item.id)">编辑</a>&emsp;<a href="#" @click="delEvent(item.id)">删除</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="pagenav"></div>
+    </div>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            result: []
+        }
+    });
+    //查询
+    var getPurchasePageList = function (curr) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/cargomanagement/purchase-order/getPage',
+            data: {
+                /*当前页*/
+                pageNum: curr || 1,
+                /*每页大小*/
+                pageSize: 1,
+                poNumber: $("#poNumber").val(),
+                poSupName:$("#poSupName").val()
+                //向服务端传的参数，此处只是演示
+            },
+            success:function (msg) {
+                app.result = msg.list;
+                laypage({
+                    cont: 'pagenav',//容器  值支持id名、原生dom对象，jquery对象,
+                    pages: msg.pages,//总页数
+                    first : '首页',
+                    last : '尾页',
+                    curr: curr || 1,//初始化页数
+                    jump: function (obj, first) { //触发分页后的回调
+                        if (!first) {     //点击跳页触发函数自身，并传递当前页：obj.curr
+                            getPurchasePageList(obj.curr);
+                        }
+                    }
+                });
+            }
+        });
+    };
+    getPurchasePageList();
+
+    $("#findPurchase").on('click',function () {
+        getPurchasePageList();
+    });
+
+    //增加用户
+    $('#addPurchaseBtn').on('click', function () {
+        layer.open({
+            type: 2,
+            title: '新增订单',
+            fix: false,
+            maxmin: true,
+            shadeClose: true,
+            area: ['1000px', '600px'],
+            content: '/cargomanagement/purchase-order/addPurchase',
+            end: function () {
+                getPurchasePageList();
+            }
+        });
+    });
+
+    //修改用户
+    //修改之前的查询用户
+    var editEvent = function (id) {
+        layer.open({
+            type: 2,
+            title: '编辑用户',
+            fix: false,
+            maxmin: true,
+            shadeClose: true,
+            area: ['1000px', '600px'],
+            content: "/cargomanagement/purchase-order/selectById?id=" + id,
+            end: function () {
+                getPurchasePageList();
+            }
+        });
+    };
+
+
+
+    //删除用户
+    var delEvent = function (id) {
+        //确认对话框
+        layer.confirm('皇上您确认删除？', {
+            btn: ['我就删', '朕再想想']
+        }, function () {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/cargomanagement/purchase-order/deletePurchaseById',
+                data: {
+                    id: id
+                },
+                success: function () {
+                    getPurchasePageList();
+                    layer.msg("成功删除" + id, {icon: 5});
+                }
+            });
+        });
+    }
+
+
+    </script>
+</body>
+</html>

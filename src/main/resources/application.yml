@@ -1,0 +1,29 @@
+spring:
+  profiles:
+    active: dev
+
+---
+#开发环境配置
+spring:
+  profiles: dev
+
+server:
+  port: 8080
+
+
+---
+#测试环境配置
+spring:
+  profiles: stg
+
+server:
+  port: 8081
+
+
+---
+#生产环境配置
+spring:
+  profiles: prd
+
+server:
+  port: 8082
