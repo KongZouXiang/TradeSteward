@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yunhe.customermanagement.dao.SupplierMapper">
+    <sql id="sup">
+        id,sup_compname,sup_money,sup_tele,sup_flag,sup_linkman,sup_conn,sup_email,sup_remarks
+    </sql>
 
+
+    <select id="selectAllSupplier" parameterType="com.yunhe.customermanagement.entity.Supplier" resultType="com.yunhe.customermanagement.entity.Supplier">
+
+        select
+        <include refid="sup"/>
+        from trades_teward.supplier where sup_compname like
+        concat('%',#{supplier.sup_compname},'%')
+    </select>
 </mapper>

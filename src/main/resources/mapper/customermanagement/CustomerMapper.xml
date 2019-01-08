@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yunhe.customermanagement.dao.CustomerMapper">
+    <sql id="all">
+     id,cus_number,cus_compname,cus_money,cus_tele,cus_name,cus_flag,cus_connname,cus_address,cus_email,
+     cus_qq,cus_remarks
+ </sql>
+
+
+    <!--模糊查询-->
+    <select id="selectAllCustomer" parameterType="com.yunhe.customermanagement.entity.Customer" resultType="com.yunhe.customermanagement.entity.Customer">
+        select
+        <include refid="all"/>
+        from trades_teward.customer where cus_compname like
+        concat('%',#{customer.cusCompname},'%')
+    </select>
+
+
+
+</mapper>
 
 </mapper>
