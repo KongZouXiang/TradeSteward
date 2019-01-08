@@ -35,7 +35,7 @@ public class PurchaseHistoryController {
     }
 
     /**
-     * 这是一个为了上传才写的注释
+     * 这是一个为了上传才写的注释...
      * @return
      */
     @RequestMapping("/addPurchaseHistory")
