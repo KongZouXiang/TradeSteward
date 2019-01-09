@@ -1,6 +1,5 @@
 package com.yunhe.cargomanagement.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.cargomanagement.entity.PurchaseHistory;
 import com.baomidou.mybatisplus.extension.service.IService;
 
