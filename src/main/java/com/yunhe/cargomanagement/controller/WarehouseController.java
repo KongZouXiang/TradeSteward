@@ -4,6 +4,7 @@ package com.yunhe.cargomanagement.controller;
 import com.yunhe.cargomanagement.entity.Warehouse;
 import com.yunhe.cargomanagement.service.IWarehouseService;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -67,14 +68,14 @@ public class WarehouseController {
         HSSFRow row=sheet.createRow(0);
         //设置列宽，setColumnWidth的第二个参数要乘以256，这个参数的单位是1/256个字符宽度
         sheet.setColumnWidth(2,12*256);
-        sheet.setColumnWidth(3, 17*256);
+        sheet.setColumnWidth(3,17*256);
 
         //设置为居中加粗
         HSSFCellStyle style = workbook.createCellStyle();
         HSSFFont font = workbook.createFont();
         font.setBold(true);
         //设置居中样式
-        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        style.setAlignment(HorizontalAlignment.CENTER);
         // 调用字体样式对象
         style.setFont(font);
 
@@ -144,7 +145,7 @@ public class WarehouseController {
         style.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy h:mm"));
 
         //新增数据行，并且设置单元格数据
-        int rowNum = 1;
+        int rowNum=1;
         for (Warehouse warehouse : warehouses) {
             HSSFRow row = sheet.createRow(rowNum);
             row.createCell(0).setCellValue(warehouse.getId());
@@ -158,12 +159,12 @@ public class WarehouseController {
             row.createCell(8).setCellValue(warehouse.getWaSpForenter());
             row.createCell(9).setCellValue(warehouse.getWaCost());
             row.createCell(10).setCellValue(warehouse.getWaTotalSum());
-
+            rowNum++;
         }
         //输出Excel文件
         OutputStream output=response.getOutputStream();
         response.reset();
-        response.setHeader("Content-disposition","attachment; filename=库存报表.xls");
+        response.setHeader("Content-disposition","attachment; filename=warehouse.xls");
         response.setContentType("application/msexcel");
         workbook.write(output);
         output.close();
