@@ -32,5 +32,10 @@ public interface IPropertyService extends IService<Property> {
      * @param id 传过来要删除的id
      */
  public void deletepropoerty(int id);
+
+    /**
+     * 编辑商品属性
+     * @param property 传过来的属性值
+     */
  public void updateproperty(Property property);
 }

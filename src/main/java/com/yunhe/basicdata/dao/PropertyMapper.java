@@ -16,6 +16,14 @@ import java.util.List;
  * @since 2019-01-05
  */
 public interface PropertyMapper extends BaseMapper<Property> {
+  /**
+   * 查询属性列表
+   * @return  属性名
+   */
   public List<Property> selectproperty();
+  /**
+   * 查询属性列表
+   * @return  属性值
+   */
   public List<PropertyVal> selectproperty1();
 }

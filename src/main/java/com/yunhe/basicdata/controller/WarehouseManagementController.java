@@ -23,6 +23,13 @@ public class WarehouseManagementController {
     @Resource
     WarehouseManagementServiceImpl warehouseManagementService;
 
+    /**
+     * 分页查询仓库
+     * @param pageSize 每页显示条数
+     * @param pageNum 当前页
+     * @param warehouseManagement 模糊查询
+     * @return 查询后返回的数据
+     */
     @RequestMapping("/select")
   public Map select(int pageSize, int pageNum,WarehouseManagement warehouseManagement){
         Map map=new HashMap();
