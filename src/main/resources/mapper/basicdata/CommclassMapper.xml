@@ -2,5 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yunhe.basicdata.dao.CommclassMapper">
 
+    <!--查询商品列表-->
+ <select id="query" resultType="com.yunhe.basicdata.entity.Commclass">
+     select * from commclass
+ </select>
+    <!--添加商品分类之前查询名字是否重复-->
+    <select id="sel" resultType="com.yunhe.basicdata.entity.Commclass">
+        select * from commclass where cc_default=#{cc_default}
+    </select>
+    <!--添加商品分类-->
+    <insert id="add"  parameterType="string">
+        INSERT INTO commclass(cc_default) VALUES(#{name})
+    </insert>
+    <!--修改商品分类字段-->
+    <update id="updateCommclass" parameterType="map" >
+        UPDATE commclass SET cc_default=#{bb} WHERE cc_default=#{aa}
+    </update>
+    <!--删除商品分类-->
+    <delete id="deleteCommclass" parameterType="string" >
+        DELETE FROM commclass WHERE cc_default=#{name}
+    </delete>
 
 </mapper>
