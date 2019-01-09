@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.cargomanagement.entity.PurchaseHistory;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -24,4 +25,27 @@ public interface IPurchaseHistoryService extends IService<PurchaseHistory> {
      * @return 进货历史的数据
      */
     Map getPurchaseHistoryByPhNumber(int pageNum, int pageSize, PurchaseHistory purchaseHistory);
+
+
+    /**
+     * 新增进货历史
+     * @param purchaseHistory 实体类接收前台ajax传值的数据
+     * @return int
+     */
+    int insertPurchaseHistory(PurchaseHistory purchaseHistory);
+
+    /**
+     * 根据id删除进货历史
+     * @param id 进货历史表id
+     * @return int的数据
+     */
+    int deleteById(Serializable id);
+
+    /**
+     * 根据id修改进货历史
+     * @param purchaseHistory 进货历史实体类数据
+     * @return int
+     */
+    int updatePurchaseHistoryById(PurchaseHistory purchaseHistory);
+
 }
