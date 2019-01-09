@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunhe.cargomanagement.dao.PurchaseReturnHistoryMapper">
+    <sql id="purchase_return_history">
+        id
+        ,
+        prh_date,
+        prh_number,
+        prh_pur_order,
+        prh_supname,
+        prh_returnsup,
+        prh_total_amount,
+        prh_refund_amount,
+        prh_outgoing_warehouse,
+        prh_bill,
+        prh_jindate,
+        prh_maney_hu,
+        prh_experienced_person,
+        prh_single_person,
+        ph_other_expenses,
+        prh_outgoing_state,
+        prh_remarks
+    </sql>
+
+
+    <select id="selectPurchaseReturnHistoryPage" parameterType="com.yunhe.cargomanagement.entity.PurchaseReturnHistory"
+            resultType="com.yunhe.cargomanagement.entity.PurchaseReturnHistory">
+        select <include refid="purchase_return_history"/>
+        from purchase_return_history where prh_number like concat('%', #{purchaseReturnHistory.prhNumber}, '%') order by id desc;
+    </select>
+
+</mapper>
