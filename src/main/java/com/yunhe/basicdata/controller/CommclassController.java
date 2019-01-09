@@ -13,14 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 李恒奎, 唐凯宽
  * @since 2019-01-02
  */
-//@RestController
-//@RequestMapping("/basicdata/commclass")
-    @Controller
+@RestController
+@RequestMapping("/basicdata/commclass")
 public class CommclassController {
 
-    @RequestMapping("/aa")
-    public String index(){
-        return "basicdata/index";
-    }
+
 
 }
