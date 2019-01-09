@@ -120,7 +120,7 @@ public class SalesOrderHistoryController {
      * @return
      * @throws IOException
      */
-    @RequestMapping("/export")
+  /*  @RequestMapping("/export")
     public String createExcel(HttpServletResponse response) throws IOException {
         //获取查询结果的数据,只要对其进行封装就行了
         List<SalesOrderHistory> newlist = salesOrderHistoryService.selectAll();
@@ -171,7 +171,7 @@ public class SalesOrderHistoryController {
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//设置居中样式
         style.setFont(font); // 调用字体样式对象
         style.setWrapText(true);
-        /*style.setAlignment(HorizontalAlignment.CENTER);//设置居中样式*/
+        *//*style.setAlignment(HorizontalAlignment.CENTER);//设置居中样式*//*
 
         // 3.单元格应用样式
         cell.setCellStyle(style);
@@ -356,5 +356,5 @@ public class SalesOrderHistoryController {
         wb.write(output);
         output.close();
         return null;
-    }
+    }*/
 }
