@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yunhe.systemsetup.dao.CharaMangerMapper">
-
+    <select id="selectAll" resultType="com.yunhe.systemsetup.entity.CharaManger">
+        select id,ch_name,ch_detail  from chara_manger;
+    </select>
 </mapper>
