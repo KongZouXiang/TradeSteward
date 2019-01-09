@@ -3,13 +3,21 @@ package com.yunhe.customermanagement.controller;
 
 import com.yunhe.customermanagement.entity.Customer;
 import com.yunhe.customermanagement.service.ICustomerService;
+import org.apache.poi.hssf.usermodel.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * <p>
@@ -100,4 +108,121 @@ public class CustomerController {
         customerService.deleteCustomer(id);
         return "list";
     }
+
+    /**
+     * <p>
+     *     创建表头
+     * </p>
+     * @param workbook
+     * @param sheet
+     */
+    private void createTitle(HSSFWorkbook workbook, HSSFSheet sheet){
+        HSSFRow row = sheet.createRow(0);
+        //设置列宽，setColumnWidth的第二个参数要乘以256，这个参数的单位是1/256个字符宽度
+    sheet.setColumnWidth(2,12*256);
+    sheet.setColumnWidth(3,17*256);
+
+    //设置居中加粗
+        HSSFCellStyle style = workbook.createCellStyle();
+        HSSFFont font = workbook.createFont();
+        font.setBold(true);
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        style.setFont(font);
+
+        HSSFCell cell;
+        cell = row.createCell(0);
+        cell.setCellValue("序号");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(1);
+        cell.setCellValue("编号");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(2);
+        cell.setCellValue("公司名");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(3);
+        cell.setCellValue("应收欠款");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(4);
+        cell.setCellValue("电话");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(5);
+        cell.setCellValue("联系人");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(6);
+        cell.setCellValue("客户状态");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(7);
+        cell.setCellValue("关联人员");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(8);
+        cell.setCellValue("地址");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(9);
+        cell.setCellValue("邮箱");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(10);
+        cell.setCellValue("qq");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(0);
+        cell.setCellValue("备注");
+        cell.setCellStyle(style);
+
+    }
+
+    @SuppressWarnings({"unchecked","rawtypes"})
+    @RequestMapping("getExcel")
+    public String getExcel(HttpServletResponse response) throws IOException{
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet("统计表");
+        createTitle(workbook,sheet);
+        List<Customer> entities = (List<Customer>) customerService.sellectAll();
+
+        //设置日期格式
+        HSSFCellStyle style = workbook.createCellStyle();
+        style.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy h:mm"));
+
+        //新增数据航，并且设置单元格数据
+        int rowNum = 1;
+
+        for (Customer customer:entities
+             ) {
+            HSSFRow row = sheet.createRow(rowNum);
+
+            row.createCell(0).setCellValue(customer.getId());
+            row.createCell(1).setCellValue(customer.getCusNumber());
+            row.createCell(2).setCellValue(customer.getCusCompname());
+            row.createCell(3).setCellValue(customer.getCusMoney());
+            row.createCell(4).setCellValue(customer.getCusTele());
+            row.createCell(5).setCellValue(customer.getCusName());
+            row.createCell(6).setCellValue(customer.getCusFlag());
+            row.createCell(7).setCellValue(customer.getCusConnname());
+            row.createCell(8).setCellValue(customer.getCusAddress());
+            row.createCell(9).setCellValue(customer.getCusEmail());
+            row.createCell(10).setCellValue(customer.getCusQq());
+            row.createCell(11).setCellValue(customer.getCusRemarks());
+
+            rowNum++;
+
+        }
+
+        OutputStream output = response.getOutputStream();
+        response.reset();
+        response.setHeader("Content-disposition","attachment; filename=customer.xls");
+response.setContentType("application/msexcel");
+workbook.write(output);
+output.close();
+return null;
 }
+}
+

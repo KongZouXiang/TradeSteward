@@ -1,8 +1,10 @@
 package com.yunhe.customermanagement.service;
 
+import com.yunhe.customermanagement.entity.Customer;
 import com.yunhe.customermanagement.entity.Supplier;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,5 +54,7 @@ public interface ISupplierService extends IService<Supplier> {
      * @return int
      */
     int insertSupplier(Supplier supplier);
+
+
 
 }

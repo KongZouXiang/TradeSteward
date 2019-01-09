@@ -55,4 +55,12 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         return customerMapper.insert(customer);
     }
 
+    @Override
+    public List<Customer> sellectAll() {
+
+
+        return customerMapper.sellectAll();
+    }
+
+
 }

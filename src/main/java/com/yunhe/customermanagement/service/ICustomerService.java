@@ -3,6 +3,7 @@ package com.yunhe.customermanagement.service;
 import com.yunhe.customermanagement.entity.Customer;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -53,6 +54,14 @@ public interface ICustomerService extends IService<Customer> {
      * @return int
      */
     int insertCustomer(Customer customer);
+
+    /**
+     * <p>
+     *     excel表格导入导出
+     * </p>
+     * @return 客户列表
+     */
+    List<Customer> sellectAll();
 
 }
 
