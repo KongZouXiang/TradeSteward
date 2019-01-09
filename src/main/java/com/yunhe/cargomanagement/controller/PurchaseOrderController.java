@@ -74,7 +74,7 @@ public class PurchaseOrderController {
     @RequestMapping("/addPurchaseGoTo")
     public void insertPurchaseOrder(PurchaseOrder purchaseOrder){
         System.out.println(purchaseOrder.getPoNumber());
-        System.out.println(1+purchaseOrder.getPoYingMoney());
+        System.out.println(purchaseOrder.getPoYingMoney());
         System.out.println(purchaseOrder);
         purchaseOrderService.insertPurchaseOrder(purchaseOrder);
     }
@@ -107,7 +107,7 @@ public class PurchaseOrderController {
     @RequestMapping("/updatePurchaseById")
     public void updategetPurchaseById(PurchaseOrder purchaseOrder){
         System.out.println("*******"+purchaseOrder.getId());
-        //purchaseOrderService.updategetPurchaseById(purchaseOrder);
+        purchaseOrderService.updategetPurchaseById(purchaseOrder);
     }
 
     /**
