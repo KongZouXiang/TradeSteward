@@ -1,6 +1,7 @@
 package com.yunhe.basicdata.controller;
 
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,9 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 李恒奎, 唐凯宽
  * @since 2019-01-02
  */
-@RestController
-@RequestMapping("/basicdata/commclass")
+//@RestController
+//@RequestMapping("/basicdata/commclass")
+    @Controller
 public class CommclassController {
 
+    @RequestMapping("/aa")
+    public String index(){
+        return "basicdata/index";
+    }
 
 }

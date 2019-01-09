@@ -1,4 +1,3 @@
-
 mybatis-plus:
   #mybatis对应的映射文件路径
   mapper-locations: classpath*:mapper/*/*Mapper.xml
