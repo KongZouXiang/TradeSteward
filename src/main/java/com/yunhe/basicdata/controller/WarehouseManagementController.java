@@ -40,6 +40,7 @@ public class WarehouseManagementController {
   public Map select(int pageSize, int pageNum,WarehouseManagement warehouseManagement){
         Map map=new HashMap();
         map=warehouseManagementService.selectWareList(pageSize, pageNum);
+        System.out.println("pagesize===>"+pageSize);
       return map;
   }
 

@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/laypage.css">
+    <script type="text/javascript" src="/js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/vue/vue.min.js"></script>
+    <script type="text/javascript" src="/js/layer/layer.js"></script>
+    <script type="text/javascript" src="/js/laypage/laypage.js"></script>
 </head>
 <body>
 <div id="app" class="container">
@@ -35,7 +40,7 @@
             <tbody>
             <tr class="active" v-for="(item,index) in result">
                 <td>{{index+1}}</td>
-                <td>{{item.name}}</td>
+                <td>{{item.wm_name}}</td>
                 <td>{{item.age}}</td>
                 <td><a href="#" @click="editEvent(item.id)">编辑</a>
                     <a href="#" @click="delEvent(item.id)">删除</a></td>
@@ -45,7 +50,7 @@
         <div id="pagenav"></div>
     </div>
 </div>
-<script >
+<script type="text/javascript">
     var app=new Vue({
         el: '#app',
         data: {
@@ -57,7 +62,7 @@
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: '/getPage.do',
+            url: '/basicdata/warehouse-management/select',
             data: {
                 pageNum: curr || 1,
                 pageSize: 4,
@@ -67,7 +72,9 @@
                  console.log(msg)
                 console.log("msg.result====" + msg.result);
                  console.log("msg.totalPage====" + msg.tolPage);
-                app.result = msg.page;
+                app.result = msg.list;
+                console.log("msg.list.wm_name====" +msg.list.wm_name);
+                console.log("app.result ====" +app.result );
                 laypage({
                     cont: 'pagenav', //容器
                     pages: msg.totalPage,
@@ -88,58 +95,7 @@
 
     getUserPageList();
 
-    $("#findUser").click(function () {
-        getUserPageList();
-    });
-    //新增
-    $("#addUserBtn").click(function () {
-        layer.open({
-            type:2,
-            title:'添加用户',
-            fix:false,
-            maxmin:true,
-            shadeClose:true,
-            area:['1000px','500px'],
-            content:'user_add.html',
-            end:function(){
-                getUserPageList();
-            }
-        });
-    });
-    var editEvent=function (id) {
-        layer.open({
-            type: 2,
-            title:'编辑用户',
-            fix:false,
-            maxmin:true,
-            shadeClose:true,
-            area:['1000px',['600px']],
-            content:'/user/edit?id='+id,
-            end:function () {
-                getUserPageList();
-            }
-        });
-    }
-    //删除
-    var delEvent=function (id) {
-        //确认对话框
-        layer.confirm('真的要删除吗？',{
-            btn:['真的','不删了']
-        },function () {
-            $.ajax({
-                type:'get',
-                dataType:'json',
-                url:'/user/Del',
-                data:{
-                    id:id
-                },
-                success:function () {
-                    getUserPageList();
-                    layer.msg("删除成功"+id,{icon:6})
-                }
-            });
-        });
-    }
+
 
 
 </script>
