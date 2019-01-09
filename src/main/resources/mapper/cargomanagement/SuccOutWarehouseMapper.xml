@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunhe.cargomanagement.dao.SuccOutWarehouseMapper">
+
+    <sql id="Cols">
+    id,so_date,so_number,so_conn_num,so_company,so_house,so_goods,so_count,so_money,
+    so_create_date,so_opera,so_log_com,so_log_num,so_hander,so_maker,so_remark
+    </sql>
+    <select id="queryLikeSuccOutWarehouse" resultType="com.yunhe.cargomanagement.entity.SuccOutWarehouse">
+        select <include refid="Cols"/> from succ_out_warehouse
+    </select>
+</mapper>

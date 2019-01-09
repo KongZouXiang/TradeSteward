@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 销售退货历史
+ * 出库单
  * </p>
  *
  * @author 刘延琦
@@ -19,91 +19,85 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class SalesReturnHistory implements Serializable {
+public class SuccOutWarehouse implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     @TableId(value = "id" ,type = IdType.AUTO)
-    private Integer id;
+    private  Integer id;
     /**
      * 业务日期
      */
-    private String srhDate;
+    private String soDate;
 
     /**
      * 单据编号
      */
-    private String srhNumber;
+    private String soNumber;
 
     /**
-     * 关联销售单号
+     * 关联业务单号
      */
-    private String srhConNumber;
+    private String soConnNum;
 
     /**
-     * 客户名称
+     * 往来单位名称
      */
-    private String srhClient;
+    private String soCompany;
 
     /**
-     * 退货商品
+     * 出库仓库
      */
-    private String srhGoods;
+    private String soHouse;
 
     /**
-     * 总计金额
+     * 出库商品
      */
-    private Double srhMoney;
+    private String soGoods;
 
     /**
-     * 实退金额
+     * 出库量
      */
-    private Double srhRetMoney;
+    private Integer soCount;
 
     /**
-     * 入库仓库
+     * 运费
      */
-    private String srhHouse;
-
-    /**
-     * 入库状态
-     */
-    private String srhStatus;
-
-    /**
-     * 纸质单据
-     */
-    private String srhBills;
+    private Double soMoney;
 
     /**
      * 制单日期
      */
-    private String srhCreateDate;
+    private String soCreateDate;
 
     /**
-     * 其他费用
+     * 关联业务
      */
-    private String srhOther;
+    private String soOpera;
 
     /**
-     * 结算账户
+     * 物流公司
      */
-    private String srhEndComm;
+    private String soLogCom;
+
+    /**
+     * 物流单号
+     */
+    private String soLogNum;
 
     /**
      * 经手人
      */
-    private String srhHander;
+    private String soHander;
 
     /**
      * 制单人
      */
-    private String srhMaker;
+    private String soMaker;
 
     /**
      * 备注
      */
-    private String srhRemark;
+    private String soRemark;
 
 
 }
