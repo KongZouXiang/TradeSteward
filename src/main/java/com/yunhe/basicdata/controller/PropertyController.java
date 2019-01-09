@@ -30,8 +30,6 @@ public class PropertyController {
 
     /**
      * 属性设置列表
-     * @param curr 当前页
-     * @param pageSize 每页显示条数
      * @return
      */
     @PostMapping("/selectProperty")

@@ -3,6 +3,8 @@ import com.yunhe.basicdata.entity.WarehouseManagement;
 import com.yunhe.basicdata.service.impl.WarehouseManagementServiceImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +24,10 @@ import java.util.Map;
 public class WarehouseManagementController {
     @Resource
     WarehouseManagementServiceImpl warehouseManagementService;
+    @RequestMapping("/login")
+    public ModelAndView Login(){
+        return new ModelAndView("user_list") ;
+    }
 
     /**
      * 分页查询仓库
