@@ -120,8 +120,8 @@ public class cargomanagement {
         purchaseOrder.setPoSinglePerson("老板");
         purchaseOrder.setPoRemarks("测试");*/
 
-        /*int a= purchaseOrderMapper.insert(purchaseOrder);
-        System.out.println(a);*/
+        /*int NumberFactory= purchaseOrderMapper.insert(purchaseOrder);
+        System.out.println(NumberFactory);*/
 
 
         /**
