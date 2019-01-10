@@ -1,6 +1,5 @@
-package com.yunhe.core.config;
+package com.yunhe.config.swagger;
 
-import net.sf.jsqlparser.expression.operators.arithmetic.Concat;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;

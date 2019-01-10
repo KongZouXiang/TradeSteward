@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yunhe.cargomanagement.dao.SalesHistoryMapper">
+<sql id="Cols">
+    id,sh_date,sh_number,sh_connect,sh_client,sh_sell_goods,sh_sell_count,sh_discount,sh_mins,sh_profit,
+    sh_money,sh_true_money,sh_house,sh_bills,sh_create_date,sh_give_date,sh_other,sh_end_comm,sh_hander,
+    sh_maker,sh_type,sh_status,sh_remark
+</sql>
+    <select id="selectSalesHistory" resultType="com.yunhe.cargomanagement.entity.SalesHistory">
+        select <include refid="Cols"/>from sales_history
+        where sh_client like concat('%',#{salesHistory.shClient},'%')
+    </select>
+
 
 </mapper>

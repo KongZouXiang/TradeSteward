@@ -26,7 +26,7 @@ public class WarehouseManagementController {
     WarehouseManagementServiceImpl warehouseManagementService;
     @RequestMapping("/login")
     public ModelAndView Login(){
-        return new ModelAndView("/TankWide/user_list") ;
+        return new ModelAndView("basicdata/WareManage_list.html") ;
     }
 
     /**
@@ -40,7 +40,6 @@ public class WarehouseManagementController {
   public Map select(int pageSize, int pageNum,WarehouseManagement warehouseManagement){
         Map map=new HashMap();
         map=warehouseManagementService.selectWareList(pageSize, pageNum);
-        System.out.println("pagesize===>"+pageSize);
       return map;
   }
 
@@ -56,7 +55,6 @@ public class WarehouseManagementController {
         warehouseManagementService.deleteByid(id);
         return "success";
   }
-
     /**
      * <>
      *     修改仓库
@@ -69,7 +67,6 @@ public class WarehouseManagementController {
       warehouseManagementService.update(warehouseManagement);
       return "success";
   }
-
     /**
      * 根据id查找仓库
      * @param id 查找仓库的
@@ -82,7 +79,6 @@ public class WarehouseManagementController {
      map.put("data",warehouseManagement);
      return map;
   }
-
     /**
      * <>
      *     模糊查询
@@ -92,13 +88,10 @@ public class WarehouseManagementController {
      */
   @RequestMapping("/vagueselect")
 public Map vagueselect(String data){
-     List list= warehouseManagementService.vagueselect1(data);
-     Map map=new HashMap();
-     map.put("data",list);
+      Map map=new HashMap();
+      map= warehouseManagementService.vagueselect1(data);
      return map;
-
 }
-
 }
 
 

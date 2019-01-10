@@ -2,8 +2,11 @@ package com.yunhe.cargomanagement;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.cargomanagement.dao.PurchaseOrderMapper;
+import com.yunhe.cargomanagement.dao.SalesOrderHistoryMapper;
 import com.yunhe.cargomanagement.entity.PurchaseOrder;
+import com.yunhe.cargomanagement.entity.SalesOrderHistory;
 import com.yunhe.cargomanagement.service.IPurchaseOrderService;
+import com.yunhe.cargomanagement.service.impl.SalesOrderHistoryServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,11 +27,26 @@ public class cargomanagement {
     @Resource
     IPurchaseOrderService purchaseOrderService;
 
+    @Resource
+    SalesOrderHistoryMapper salesOrderHistoryMapper;
+
+    @Resource
+    SalesOrderHistoryServiceImpl salesOrderHistoryService;
     @Test
     public void qq() {
         System.out.println("1");
     }
 
+    @Test
+    public void ceshi1(){
+        SalesOrderHistory sales = new SalesOrderHistory();
+        sales.setId(2);
+        sales.setSoClient("yang1");
+        int i = salesOrderHistoryService.updateSale(sales);
+        System.out.println(i);
+        SalesOrderHistory salesOrderHistory = salesOrderHistoryMapper.selectById(2);
+        System.out.println(salesOrderHistory);
+    }
     @Test
     public void contextLoads() {
 
