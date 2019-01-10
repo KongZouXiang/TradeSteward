@@ -31,6 +31,11 @@ public class Employ implements Serializable {
     private String emRealname;
 
     /**
+     * 员工密码
+     */
+    private String emPassword;
+
+    /**
      * 角色
      */
     private String emRole;

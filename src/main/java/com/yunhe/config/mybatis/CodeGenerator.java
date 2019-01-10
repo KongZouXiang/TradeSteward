@@ -1,4 +1,4 @@
-package com.yunhe.core.mybatis;
+package com.yunhe.config.mybatis;
 
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;

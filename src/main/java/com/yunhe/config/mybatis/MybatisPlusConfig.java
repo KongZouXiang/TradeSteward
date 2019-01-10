@@ -1,4 +1,4 @@
-package com.yunhe.core.mybatis;
+package com.yunhe.config.mybatis;
 
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;

@@ -27,6 +27,14 @@ public class PurchaseHistoryController {
     @Resource
     private IPurchaseHistoryService purchaseHistoryService;
 
+    @RequestMapping("/Test22")
+    public ModelAndView test22(){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("cargomanagement/admin");
+        return mv;
+    }
+
+
     @RequestMapping("/Test1")
     public ModelAndView getGoToPurchaseHistory(){
         ModelAndView mv = new ModelAndView();
