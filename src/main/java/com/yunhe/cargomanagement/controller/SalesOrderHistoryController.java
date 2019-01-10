@@ -91,7 +91,7 @@ public class SalesOrderHistoryController {
      */
     @RequestMapping("/index")
     public ModelAndView index(){
-        return new ModelAndView("ceshi3");
+        return new ModelAndView("/cargomanagement/salesOrderHistory");
     }
 
     /**
