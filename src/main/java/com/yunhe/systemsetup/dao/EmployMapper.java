@@ -1,8 +1,11 @@
 package com.yunhe.systemsetup.dao;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.systemsetup.entity.Employ;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,5 +17,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface EmployMapper extends BaseMapper<Employ> {
+    public List<Employ> selectPageEmploy(Page page, Employ employ);
+
+    public  void  insertEmploy(Employ employ);
 
 }
