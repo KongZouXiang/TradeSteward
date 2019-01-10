@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import java.util.List;
+
 /**
  * <p>
  * 商品列表 Mapper 接口
@@ -51,6 +53,7 @@ public interface CommodityListMapper extends BaseMapper<CommodityList> {
      * @return 返回更改后的商品信息
      */
     int updateComm(CommodityList commodityList);
+
 
     /**
      * 删除商品的信息
