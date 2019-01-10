@@ -50,27 +50,63 @@ public class CommodiTytemplateController {
 
     /**
      * <P>
-     *     查询数据
-     * </P>
-     * @return 商品模板表：查询的结果集
-     */
-    public List<CommodiTytemplate> selectAll() {
-        return commodiTytemplateService.selectAll();
-    }
-
-
-
-    /**
-     * <P>
      *     增加数据
      * </P>
      * @param commodiTytemplate 增加的信息放在对象里
      * @return  增加模板表：增加是否成功
      */
     @RequestMapping(value = "/insertCt",method = RequestMethod.POST)
-    public List insertCt(CommodiTytemplate commodiTytemplate) {
+    public List<Integer> insertCt(CommodiTytemplate commodiTytemplate) {
+
         return commodiTytemplateService.insertCt(commodiTytemplate);
     }
+
+
+
+    /**
+     * <P>
+     *     删除数据
+     * </P>
+     * @param commodiTytemplate 查询条件放在对象里
+     * @return  商品模板表：删除是否成功
+     */
+    @RequestMapping(value = "/deleteCt",method = RequestMethod.POST)
+    public int deleteCt(CommodiTytemplate commodiTytemplate) {
+        return commodiTytemplateService.deleteCt(commodiTytemplate);
+    }
+
+
+
+
+
+    /**
+     * <P>
+     *     修改数据
+     * </P>
+     * @return  商品模板表：
+     */
+    @RequestMapping(value = "/updateCt",method = RequestMethod.POST)
+    public int updateCt(CommodiTytemplate commodiTytemplate) {
+        return commodiTytemplateService.updateCt(commodiTytemplate);
+    }
+
+
+
+
+
+    /**
+     * <P>
+     *     查询数据
+     * </P>
+     * @return 商品模板表：查询所有模板的结果集
+     */
+    @RequestMapping(value = "/selectAllCt",method = RequestMethod.POST)
+    public List<CommodiTytemplate> selectAllCt() {
+        return commodiTytemplateService.selectAllCt();
+    }
+
+
+
 
     /**
      * <P>
@@ -79,9 +115,13 @@ public class CommodiTytemplateController {
      * @param
      */
     @RequestMapping(value = "/selectCl",method = RequestMethod.POST)
-    public Map selectCl() {
-        return commodityListService.selectAllCommList(1,2,new CommodityList());
+
+    public Map selectCl(int current,int size,CommodityList commodityList) {
+
+        return commodityListService.selectAllCommList(1,3,commodityList);
     }
+
+
 
 
 }

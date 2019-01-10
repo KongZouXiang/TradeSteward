@@ -47,6 +47,7 @@ public class MerchandisePackageServiceImpl extends ServiceImpl<MerchandisePackag
     public List<MerchandisePackage> selectmp() {
         return merchandisePackageMapper.selectList(null);
     }
+
 }
 
 

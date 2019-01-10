@@ -2,27 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yunhe.basicdata.dao.CommodityListMapper">
     <!--从数据库中获取商品信息-->
-    <select id="selectAllCommmList" parameterType="CommodityList" resultType="CommodityList">
+    <select id="selectAllCommmList" parameterType="com.yunhe.basicdata.entity.CommodityList" resultType="com.yunhe.basicdata.entity.CommodityList">
         select *
         from commodity_list
-        where cl_number like concat('%', #{commodityList.clName}, '%')
-        order by id desc
+
     </select>
     <!--增加商品信息-->
-    <insert id="insertComm" parameterType="CommodityList">
+    <insert id="insertComm" parameterType="com.yunhe.basicdata.entity.CommodityList">
         insert into commodity_list (cl_number, cl_name, cc_id, cl_spec, us_id, cl_scan, cl_tag_prise, cl_who_price,
                                     cl_pur_price)
         values (#{clNumber}, #{clName}, #{ccId}, #{clSpec}, #{usId}, #{clScan}, #{clTagPrise}, #{clWhoPrice},
                 #{clPurPrice});
     </insert>
     <!--查询用户的详细信息-->
-    <select id="selectCommById" parameterType="CommodityList" resultType="CommodityList">
+    <select id="selectCommById" parameterType="com.yunhe.basicdata.entity.CommodityList" resultType="com.yunhe.basicdata.entity.CommodityList">
         select *
         from commodity_list
         where id = #{id}
     </select>
     <!--更改商品的信息-->
-    <update id="updateComm" parameterType="CommodityList">
+    <update id="updateComm" parameterType="com.yunhe.basicdata.entity.CommodityList">
         update commodity_list
         set cl_number=#{clNumber},
             cl_name=#{clName},
@@ -36,7 +35,7 @@
         where id = #{id}
     </update>
     <!--删除商品的信息-->
-    <delete id="deleteComm" parameterType="CommodityList">
+    <delete id="deleteComm" parameterType="com.yunhe.basicdata.entity.CommodityList">
         delete
         from commodity_list
         where id = #{id}

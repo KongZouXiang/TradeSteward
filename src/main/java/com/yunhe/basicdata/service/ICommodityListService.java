@@ -67,4 +67,6 @@ public interface ICommodityListService extends IService<CommodityList> {
      * @return 返回模糊查询的信息
      */
     List<CommodityList> selectCommstlist(String data);
+
+
 }

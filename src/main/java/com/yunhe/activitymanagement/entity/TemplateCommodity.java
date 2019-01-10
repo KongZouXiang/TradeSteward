@@ -1,6 +1,9 @@
 package com.yunhe.activitymanagement.entity;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -16,7 +19,8 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class TemplateCommodity implements Serializable {
+@TableName("template_commodity")
+public class TemplateCommodity extends Model<TemplateCommodity> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

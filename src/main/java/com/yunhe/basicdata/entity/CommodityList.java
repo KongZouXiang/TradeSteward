@@ -90,4 +90,10 @@ public class CommodityList implements Serializable {
     @TableField("cl_number")
     private String clNumber;
 
+    /**
+     * 商品模板.商品数量
+     * @author 刘栋
+     */
+    @TableField(exist = false)
+    private String tcNumber;
 }
