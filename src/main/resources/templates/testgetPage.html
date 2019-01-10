@@ -90,16 +90,16 @@
                 /*每页大小*/
                 pageSize: 1,
                 poNumber: $("#poNumber").val(),
-                poSupName:$("#poSupName").val()
+                poSupName: $("#poSupName").val()
                 //向服务端传的参数，此处只是演示
             },
-            success:function (msg) {
+            success: function (msg) {
                 app.result = msg.list;
                 laypage({
                     cont: 'pagenav',//容器  值支持id名、原生dom对象，jquery对象,
                     pages: msg.pages,//总页数
-                    first : '首页',
-                    last : '尾页',
+                    first: '首页',
+                    last: '尾页',
                     curr: curr || 1,//初始化页数
                     jump: function (obj, first) { //触发分页后的回调
                         if (!first) {     //点击跳页触发函数自身，并传递当前页：obj.curr
@@ -112,7 +112,7 @@
     };
     getPurchasePageList();
 
-    $("#findPurchase").on('click',function () {
+    $("#findPurchase").on('click', function () {
         getPurchasePageList();
     });
 
@@ -150,11 +150,10 @@
     };
 
 
-
     //删除用户
     var delEvent = function (id) {
         //确认对话框
-        layer.confirm('皇上您确认删除？', {
+        layer.confirm('您确认删除？', {
             btn: ['我就删', '朕再想想']
         }, function () {
             $.ajax({
@@ -164,15 +163,17 @@
                 data: {
                     id: id
                 },
-                success: function () {
+                success: function (msg) {
                     getPurchasePageList();
                     layer.msg("成功删除" + id, {icon: 5});
                 }
             });
+        },function (){
+
         });
-    }
+    };
 
 
-    </script>
+</script>
 </body>
 </html>

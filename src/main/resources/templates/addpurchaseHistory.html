@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>???</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/jquery/jquery.min.js"></script>
     <script src="/js/jquery.validation/1.14.0/jquery.validate.min.js"></script>
@@ -15,7 +15,7 @@
 </head>
 <body>
 <div class="container">
-    <form id="addPurchaseHistoryForm">
+    <form id="addPurchaseHistoryForm" name="addPurchaseHistoryForm">
         <br/>
         <div class="form-group">
             <label for="phDate">业务日期：</label>
@@ -106,7 +106,8 @@
         </div>
 
         <div class="form-group">
-            <button type="button" id="saveBtn" class="btn btn-success">提交</button>
+            <!--<button type="button" id="saveBtn" class="btn btn-success">提交</button>-->
+            <input type="button" id="saveBtn" class="btn btn-success" value="提交">
             <button type="button" id="cancelBtn" class="btn btn-default">取消</button>
         </div>
     </form>
@@ -114,9 +115,7 @@
 
 <script>
     var addPurchaseHistory = function () {
-        if (!check().form()) {
-            return ;
-        }
+
         $.ajax({
             type: "POST",
             dataType: "json",
@@ -146,7 +145,7 @@
     };
 
     $('#saveBtn').on('click',function () {
-        addPurchase();
+        addPurchaseHistory();
     });
 
     $('#cancelBtn').on('click',function () {
