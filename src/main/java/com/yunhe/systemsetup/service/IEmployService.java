@@ -1,7 +1,10 @@
 package com.yunhe.systemsetup.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.systemsetup.entity.Employ;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2019-01-02
  */
 public interface IEmployService extends IService<Employ> {
+    public List<Employ> selectPageEmploy(Page page, Employ employ);
 
+    public void insertEmploy(Employ employ);
 }

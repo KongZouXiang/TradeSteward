@@ -2,6 +2,9 @@ package com.yunhe.systemsetup.dao;
 
 import com.yunhe.systemsetup.entity.CharaManger;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * <p>
@@ -11,6 +14,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author 刘延奇,heyuji
  * @since 2019-01-02
  */
+@Repository
 public interface CharaMangerMapper extends BaseMapper<CharaManger> {
-
+    //查看所有的角色
+    public List<CharaManger> selectAll();
 }
