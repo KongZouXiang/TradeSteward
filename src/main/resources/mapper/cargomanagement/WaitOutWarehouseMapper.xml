@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunhe.cargomanagement.dao.WaitOutWarehouseMapper">
+    <sql id="Cols">
+        id,wo_date,wo_number,wo_type,wo_company,wo_house,wo_goods,wo_count
+        wo_create_date,wo_hander,wo_maker,wo_status
+    </sql>
+    <select id="queryLikeWaitOutWarehouse" resultType="com.yunhe.cargomanagement.entity.WaitOutWarehouse">
+        select <include refid="Cols"/>
+        from wait_out_warehouse;
+    </select>
+
+</mapper>

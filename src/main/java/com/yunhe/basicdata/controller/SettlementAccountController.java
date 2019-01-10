@@ -52,7 +52,6 @@ public class SettlementAccountController {
         map.put("data", vaguelist);
         return map;
     }
-
     /**
      * 增加账户的信息
      *
