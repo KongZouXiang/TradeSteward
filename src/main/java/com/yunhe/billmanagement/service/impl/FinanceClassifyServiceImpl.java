@@ -1,5 +1,6 @@
 package com.yunhe.billmanagement.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.billmanagement.entity.FinanceClassify;
 import com.yunhe.billmanagement.dao.FinanceClassifyMapper;
