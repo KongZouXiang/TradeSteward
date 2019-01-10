@@ -13,4 +13,9 @@
         from trades_teward.supplier where sup_compname like
         concat('%',#{supplier.sup_compname},'%')
     </select>
+
+    <select id="selectAll" resultType="com.yunhe.customermanagement.entity.Supplier">
+        SELECT * FROM trades_teward.supplier
+    </select>
+
 </mapper>

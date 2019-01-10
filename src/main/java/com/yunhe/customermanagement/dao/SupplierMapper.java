@@ -26,4 +26,13 @@ public interface SupplierMapper extends BaseMapper<Supplier> {
      */
     List<Supplier> selectAllSupplier(Page page, Supplier supplier);
 
+
+    /**
+     * <p>
+     *     excel表格导入导出
+     *</p>
+     * @return 供应商列表
+     */
+    List<Supplier> selectAll();
+
 }

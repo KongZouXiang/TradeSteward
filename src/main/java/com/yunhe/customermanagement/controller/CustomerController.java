@@ -184,7 +184,7 @@ public class CustomerController {
     @RequestMapping("getExcel")
     public String getExcel(HttpServletResponse response) throws IOException{
         HSSFWorkbook workbook = new HSSFWorkbook();
-        HSSFSheet sheet = workbook.createSheet("统计表");
+        HSSFSheet sheet = workbook.createSheet("客户统计表");
         createTitle(workbook,sheet);
         List<Customer> entities = (List<Customer>) customerService.sellectAll();
 
@@ -195,8 +195,7 @@ public class CustomerController {
         //新增数据航，并且设置单元格数据
         int rowNum = 1;
 
-        for (Customer customer:entities
-             ) {
+        for (Customer customer:entities) {
             HSSFRow row = sheet.createRow(rowNum);
 
             row.createCell(0).setCellValue(customer.getId());
@@ -219,15 +218,12 @@ public class CustomerController {
         OutputStream output = response.getOutputStream();
         response.reset();
         response.setHeader("Content-disposition","attachment; filename=customer.xls");
-response.setContentType("application/msexcel");
-workbook.write(output);
-output.close();
-return null;
-}
-
-
-
-}
+        response.setContentType("application/msexcel");
+        workbook.write(output);
+        output.close();
+        return null;
+     }
+   }
 
 
 

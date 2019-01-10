@@ -52,5 +52,10 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier> i
     public int insertSupplier(Supplier supplier) {
         return supplierMapper.insert(supplier);
     }
+
+    @Override
+    public List<Supplier> selectAll() {
+        return supplierMapper.selectAll();
+    }
 }
 

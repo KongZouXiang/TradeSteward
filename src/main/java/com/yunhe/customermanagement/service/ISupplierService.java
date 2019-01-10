@@ -55,6 +55,12 @@ public interface ISupplierService extends IService<Supplier> {
      */
     int insertSupplier(Supplier supplier);
 
-
+    /**
+     * <p>
+     *     excel表格导入导出
+     * </p>
+     * @return 供应商列表
+     */
+    List<Supplier> selectAll();
 
 }
