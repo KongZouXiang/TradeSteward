@@ -40,7 +40,6 @@ public class PurchaseHistoryController {
         mv.setViewName("addPurchaseHistory");
         return mv;
     }
-
     /**
      * 进货历史分页
      * @param pageNum 前台传过来的当前页数据
