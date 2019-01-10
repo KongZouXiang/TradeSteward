@@ -2,6 +2,7 @@ package com.yunhe.customermanagement.service;
 
 import com.yunhe.customermanagement.entity.Customer;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -62,6 +63,7 @@ public interface ICustomerService extends IService<Customer> {
      * @return 客户列表
      */
     List<Customer> sellectAll();
+
 
 }
 

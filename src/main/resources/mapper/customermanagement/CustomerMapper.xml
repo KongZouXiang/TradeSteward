@@ -19,6 +19,7 @@
        select <include refid="all"/> from trades_teward.customer
    </select>
 
+
 </mapper>
 
 

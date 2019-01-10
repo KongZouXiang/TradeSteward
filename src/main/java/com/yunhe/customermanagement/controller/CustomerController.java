@@ -4,20 +4,20 @@ package com.yunhe.customermanagement.controller;
 import com.yunhe.customermanagement.entity.Customer;
 import com.yunhe.customermanagement.service.ICustomerService;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.*;
+
 import org.springframework.web.bind.annotation.RequestMapping;
+
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.io.*;
+
+import java.util.*;
 
 /**
  * <p>
@@ -126,7 +126,7 @@ public class CustomerController {
         HSSFCellStyle style = workbook.createCellStyle();
         HSSFFont font = workbook.createFont();
         font.setBold(true);
-        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        style.setAlignment(HorizontalAlignment.CENTER);
         style.setFont(font);
 
         HSSFCell cell;
@@ -224,5 +224,12 @@ workbook.write(output);
 output.close();
 return null;
 }
+
+
+
 }
+
+
+
+
 
