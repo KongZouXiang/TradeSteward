@@ -5,8 +5,6 @@
     <select id="selectAllCommmList" parameterType="CommodityList" resultType="CommodityList">
         select *
         from commodity_list
-        where cl_number like concat('%', #{commodityList.clName}, '%')
-        order by id desc
     </select>
     <!--增加商品信息-->
     <insert id="insertComm" parameterType="CommodityList">

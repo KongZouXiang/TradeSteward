@@ -22,15 +22,12 @@ import java.util.List;
 public interface CommodityListMapper extends BaseMapper<CommodityList> {
     /**
      * 商品列表的分页
-     *
      * @param page 分页插件
      * @return 返回商品的信息
      */
     List<CommodityList> selectAllCommmList(Page page);
-
     /**
      * 增加商品的信息
-     *
      * @param commodityList 商品列表实体类
      * @return 无返回
      */
