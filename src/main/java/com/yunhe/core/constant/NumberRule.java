@@ -8,69 +8,48 @@ import com.yunhe.core.factory.NumberFactory;
  * @author 孔邹祥
  * @date 2016/10/31
  */
-public class NumberRule {
+public class NumberRule extends Number {
 
+    /**
+     * <per>
+     *      借入归还单     XSD
+     *      进货订单编号   JDD
+     *      销售订单编号   XDD
+     *      进货单编号     JHD
+     *      供应商编号     GYS
+     *      客户编号       KH
+     *      商品编号       SP
+     *      借出归还单     JCD
+     *      商品模板       MB
+     *      借入归还单     JRG
+     * </per>
+     *
+     * @author 孔邹祥
+     * @date 2019年1月10日
+     */
 
-    /**
-     * 销售单编号
-     */
-    private static Integer XSD = 0;
-    /**
-     * 进货订单编号
-     */
-    private static Integer JDD = 0;
-    /**
-     * 销售订单编号
-     */
-    private static Integer XDD = 0;
-    /**
-     * 进货单编号
-     */
-    private static Integer JHD = 0;
-    /**
-     * 供应商编号
-     */
-    private static Integer GYS = 0;
-    /**
-     * 客户编号
-     */
-    private static Integer KH = 0;
-    /**
-     * 商品编号
-     */
-    private static Integer SP = 0;
-    /**
-     * 借出归还单
-     */
-    private static Integer JCG = 0;
-    /**
-     * 商品模板
-     */
-    private static Integer MB = 0;
-    /**
-     * 借入归还单
-     */
-    private static Integer JRG = 0;
 
     public String XSD_NUMBER = "XSD" + NumberFactory.data(XSD);
 
-    public String XSD_NUMBER = "XSD" + NumberFactory.data();
+    public String JDD_NUMBER = "JDD" + NumberFactory.data(JDD);
 
-    public String XSD_NUMBER = "XSD" + NumberFactory.data();
+    public String XDD_NUMBER = "XDD" + NumberFactory.data(XDD);
 
-    public String XSD_NUMBER = "XSD" + NumberFactory.data();
+    public String XDD_NUMBER = "XSD" + NumberFactory.data(XDD);
 
-    public String XSD_NUMBER = "XSD" + NumberFactory.data();
+    public String JHD_NUMBER = "XSD" + NumberFactory.data(JHD);
 
-    public String XSD_NUMBER = "XSD" + NumberFactory.data();
+    public String GYS_NUMBER = "XSD" + NumberFactory.data(GYS);
 
-    public String XSD_NUMBER = "XSD" + NumberFactory.data();
+    public String KH_NUMBER = "XSD" + NumberFactory.data(KH);
 
-    public String XSD_NUMBER = "XSD" + NumberFactory.data();
+    public String SP_NUMBER = "XSD" + NumberFactory.data(SP);
 
-    public String XSD_NUMBER = "XSD" + NumberFactory.data();
+    public String JCG_NUMBER = "XSD" + NumberFactory.data(JCG);
 
-    public String XSD_NUMBER = "XSD" + NumberFactory.data();
+    public String MB_NUMBER = "XSD" + NumberFactory.data(MB);
+
+    public String JRG_NUMBER = "JRG" + NumberFactory.data(JRG);
 
 
 
