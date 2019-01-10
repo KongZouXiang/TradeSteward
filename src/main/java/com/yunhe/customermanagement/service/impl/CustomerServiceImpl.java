@@ -65,11 +65,24 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     }
 
     @Override
-    public List<Customer> sellectAll() {
-        return customerMapper.sellectAll();
+    public Map sellectAll(int current,int size) {
+
+        Map map = new HashMap();
+        Page<Customer> page = new Page(current, size);
+        List<Customer> list = customerMapper.sellectAll(page);
+
+        map.put("list",list);
+        map.put("current",current);
+        map.put("size",size);
+        map.put("totalPage", page.getTotal());
+        map.put("pages", page.getTotal());
+        return  map;
     }
 
-
+    @Override
+    public List sellectAllExcel() {
+        return customerMapper.sellectAllExcel();
+    }
 
 
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 
 import javax.annotation.Resource;
@@ -49,20 +50,28 @@ public class CustomerController {
     public Map selectAllCustomer(int current, int size, Customer customer) {
         return customerService.selectAllCustomer(current, size, customer);
     }
-
+    @RequestMapping("/login")
+    @ResponseBody
+    public ModelAndView selectAllCustomer1() {
+        return new ModelAndView("customermanagement/admin.html");
+    }
 
     /**
      * <p>
      *     查询所有
      * </p>
      *
-     * @param customer 查询客户
+     * @param
      * @return 客户
      */
     @RequestMapping("/selectCustomer")
     @ResponseBody
-    public Customer selectAllCustomer(Customer customer) {
-        return customer;
+    public Map selectAllCustomer(int current,int size) {
+        Map map = new HashMap();
+      map =  customerService.sellectAll(current, size);
+        System.out.println(current);
+        System.out.println(size);
+        return map;
     }
 
 
@@ -186,7 +195,7 @@ public class CustomerController {
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("客户统计表");
         createTitle(workbook,sheet);
-        List<Customer> entities = (List<Customer>) customerService.sellectAll();
+        List<Customer> entities = (List<Customer>) customerService.sellectAllExcel();
 
         //设置日期格式
         HSSFCellStyle style = workbook.createCellStyle();

@@ -31,12 +31,18 @@ public interface CustomerMapper extends BaseMapper<Customer> {
 
     /**
      * <p>
-     *     excel表格导入导出
+     *     分页
      *</p>
      * @return 客户列表
      */
-    List<Customer> sellectAll();
+    List<Customer> sellectAll(Page page);
 
-
+/**
+ * <p>
+ *     导出excel
+ *</p>
+ * @return 客户列表
+ */
+List<Customer> sellectAllExcel();
 }
 

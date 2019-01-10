@@ -62,8 +62,15 @@ public interface ICustomerService extends IService<Customer> {
      * </p>
      * @return 客户列表
      */
-    List<Customer> sellectAll();
+    Map sellectAll(int current,int size);
 
+/**
+ * <p>
+ *     excel表格导入导出
+ * </p>
+ * @return 客户列表
+ */
+List sellectAllExcel();
 
 }
 
