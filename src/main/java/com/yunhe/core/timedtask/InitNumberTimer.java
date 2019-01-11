@@ -20,12 +20,14 @@ public class InitNumberTimer {
     /**
      * 每间隔10秒输出时间
      */
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(cron = "0 0 0 * * ?")
     public void logTime(){
 
         /**
-         * 要初始化的编号
+         * 要初始化编号的业务
          */
+
+
         logger.info("定时任务，现在时间："+System.currentTimeMillis());
 
     }
