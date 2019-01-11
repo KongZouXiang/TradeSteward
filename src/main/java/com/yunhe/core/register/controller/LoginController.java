@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 public class LoginController {
-
+/*
     @Resource
     ILoginService loginService;
 
@@ -38,5 +38,5 @@ public class LoginController {
         }
 
         return "login";
-    }
+    }*/
 }

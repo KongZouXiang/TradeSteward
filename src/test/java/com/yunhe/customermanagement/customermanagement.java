@@ -15,7 +15,6 @@ public class customermanagement {
     @Test
     public void contextLoads() {
 
-        System.out.println(new NumberRule().XSD_NUMBER);
 
     }
 
