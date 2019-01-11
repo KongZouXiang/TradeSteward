@@ -43,5 +43,5 @@ public interface ISalesReturnHistoryService extends IService<SalesReturnHistory>
      * @param salesReturnHistory 条件参数
      * @return map
      */
-    Map QueryLikeSalesReturnHistory(int pageSize,int pageNum,SalesReturnHistory salesReturnHistory);
+    Map queryLikeSalesReturnHistory(int pageSize,int pageNum,SalesReturnHistory salesReturnHistory);
 }
