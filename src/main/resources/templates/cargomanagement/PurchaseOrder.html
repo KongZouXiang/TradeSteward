@@ -1,0 +1,314 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><!-- base href="http://web.zhsmjxc.com/UCenter-webapp/" -->
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>员工管理</title>
+    <link rel="stylesheet" href="/../css/style.css" type="text/css">
+    <link rel="stylesheet" href="/../css/layui.css" type="text/css">
+    <link rel="stylesheet" href="/../css/font.css" type="text/css">
+    <link rel="stylesheet" href="/../css/xadmin.css" type="text/css">
+    <link rel="stylesheet" href="/../css/jquery.css">
+    <link rel="stylesheet" href="/../css/zTreeStyle.css" type="text/css">
+    <link rel="stylesheet" href="/../css/Sortable.css" type="text/css">
+    <link rel="stylesheet" href="/../css/layui.css" type="text/css">
+    <link rel="stylesheet" href="/..//js/laypage/skin/laypage.css">
+    <script type="text/javascript" async="" src="/../js/vds.js"></script>
+    <script type="text/javascript" src="/../js/all_before.js"></script>
+    <link rel="stylesheet" href="/../css/layer.css" id="layuicss-skinlayercss">
+    <script type="text/javascript" src="/../js/highcharts.js"></script>
+    <script type="text/javascript" src="/../js/exporting.js"></script>
+    <script type="text/javascript" src="/../js/WdatePicker.js"></script>
+    <link href="/../css/WdatePicker.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/../js/jquery.js"></script>
+    <script type="text/javascript" src="/../js/all_after.js"></script>
+    <script type="text/javascript" src="/../js/flexigrid.js"></script>
+    <script type="text/javascript" src="/../js/wbi_common.js"></script>
+    <script type="text/javascript" src="/../js/wbill_common.js"></script>
+    <script type="text/javascript" src="/../js/filter.js"></script>
+    <script type="text/javascript" src="/../js/record.js"></script>
+
+    <script type="text/javascript" src="/../js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/../js/layer/layer.js"></script>
+    <script type="text/javascript" src="/../js/laypage/laypage.js"></script>
+    <script type="text/javascript" src="/../js/layui.js"></script>
+
+    <!--GrowingIO 全局引入  -->
+    <script type="text/javascript">
+        var _vds = _vds || [];
+        window._vds = _vds;
+
+        function addGrowingCS(csindex,csKey,valueKey){
+            var csValue = getValueFromRoot(valueKey);
+            if(csValue){
+                _vds.push(['setCS'+csindex, csKey, csValue]);
+            }
+        }
+
+        (function(){
+            _vds.push(['setAccountId', '96cf4aed2bf68eba']);
+
+            try{
+                addGrowingCS(1,'ContactId','contactid');
+                addGrowingCS(2,'UserId','userid');
+                addGrowingCS(3,'ProductCersion','productversion');
+                addGrowingCS(4,'IsPay','ispay');
+                addGrowingCS(5,'TradeCode','tradecode');
+            }catch(e){}
+
+            (function() {
+                var vds = document.createElement('script');
+                vds.type='text/javascript';
+                vds.async = true;
+                vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(vds, s);
+            })();
+        })();
+    </script>
+
+
+</head>
+<body style="background-image: none; cursor: default;">
+<input type="hidden" id="moduleName" value="SysUser" spellcheck="false">
+<input type="hidden" id="tabid" value="SysUser-List" spellcheck="false">
+<input type="hidden" id="issys" value="1" spellcheck="false">
+<input type="hidden" id="isroot" value="1" spellcheck="false">
+<input type="hidden" id="isdemo" value="1" spellcheck="false">
+<input type="hidden" id="hidproductversion" value="1" spellcheck="false">
+
+<input type="hidden" id="isShengchan" value="true" spellcheck="false">
+<input type="hidden" id="usercount" value="4" spellcheck="false">
+<input type="hidden" id="tel" value="400-886-1800" spellcheck="false">
+
+<div class="main" id="listSysUser">
+    <div class="whiteBox actionArea">
+        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+            <tbody><tr>
+                <td>
+                    <a  id="addPurchaseBtn" class="button blueButton withIcon">
+                        <span class="text">新增进货订单</span>
+                        <span class="text"></span>
+                    </a>
+                    <span style="display: none;" id="ProbationPeriodTip"></span>
+                </td>
+                <td align="right">
+                    <form action="">
+                        <div class="search fr mr5">
+                            <input type="text" id="poNumber" name="poNumber" class="inputText" title="搜索单号" size="35" placeholder="搜索单号" maxlength="30" spellcheck="false">
+                        </div>
+                        <div class="search fr mr5">
+                            <input type="text" id="poSupName" name="poSupName" class="inputText" title="搜索供应商" size="35" placeholder="搜索供应商" maxlength="30" spellcheck="false">
+                        </div>
+                        <button id="findempl" class="button fr" >搜索</button>
+                    </form>
+
+                </td>
+            </tr>
+            </tbody></table>
+    </div>
+    <div class="whiteBox">
+        <div  id="FlexiGridRootSysUser-page" class="flexigrid">
+            <div style="width:100%;overflow:scroll; display: flex; position:relative; border: solid 1px #d7d7d7; box-sizing: border-box;">
+                <div class="t_left" style="position: absolute; z-index: 999;"></div>
+                <div class="t_r">
+                <div class="hDiv" style="background-color: rgb(255, 255, 255); position: relative; width: 1772px;">
+                    <table class="tableStyle borderLTNone" style="position: relative; left: 0px;" width="1772" cellspacing="0" cellpadding="5">
+                <tbody>
+                <tr id="theader">
+                    <th id="th0" number="0" personwidth="45" info="false" display="序号" name="no" sortable="false" abbr="no" class="normal" checkbox="false" button="false" width="45" align="center">
+                        <span class="bg" style="width:45px">序号</span>
+                        <div id="dragLineDiv0" index="0" class="dragLine" style="left: 54px; top: 0px;"></div></th>
+                    <th id="th1" number="1" personwidth="150" info="false" display="操作" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">操作</span>
+                        <div id="dragLineDiv1" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                    <th id="th100" number="1" personwidth="150" info="false" display="业务日期" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">业务日期</span>
+                        <div id="dragLineDiv100" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                    <th id="th101" number="1" personwidth="150" info="false" display="单据编号" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">单据标号</span>
+                        <div id="dragLineDiv101" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                    <th id="th102" number="7" personwidth="100" info="false" display="处理状态" name="useremail" sortable="false" abbr="useremail" class="normal" checkbox="false" button="false" width="100" align="left">
+                        <span class="bg" style="width:100px">处理状态</span>
+                        <div id="dragLineDiv102" index="7" class="dragLine" style="left: 109px; top: 0px;"></div></th>
+                    <th id="th800" number="8" personwidth="100" info="false" display="审核人" name="userstatus" sortable="false" abbr="userstatus" class="normal" checkbox="false" button="false" width="100" align="center">
+                        <span class="bg" style="width:100px">审核人</span>
+                        <div id="dragLineDiv800" index="8" class="dragLine" style="left: 109px; top: 0px;"></div></th>
+                    <th id="th1001" number="1" personwidth="150" info="false" display="供应商" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">供应商</span>
+                        <div id="dragLineDiv1001" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                    <th id="1111" number="1" personwidth="150" info="false" display="进货订单商品" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">进货订单商品</span>
+                        <div id="dragLineDiv1011" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                    <th id="th10021" number="7" personwidth="100" info="false" display="进货订单数量" name="useremail" sortable="false" abbr="useremail" class="normal" checkbox="false" button="false" width="100" align="left">
+                        <span class="bg" style="width:100px">进货订单数量</span>
+                        <div id="dragLineDiv01021" index="7" class="dragLine" style="left: 109px; top: 0px;"></div></th>
+                    <th id="th1021" number="7" personwidth="100" info="false" display="应付金额" name="useremail" sortable="false" abbr="useremail" class="normal" checkbox="false" button="false" width="100" align="left">
+                        <span class="bg" style="width:100px">应付金额</span>
+                        <div id="dragLineDiv1021" index="7" class="dragLine" style="left: 109px; top: 0px;"></div></th>
+                    <th id="th100021" number="7" personwidth="100" info="false" display="纸质单据" name="useremail" sortable="false" abbr="useremail" class="normal" checkbox="false" button="false" width="100" align="left">
+                        <span class="bg" style="width:100px">纸质单据</span>
+                        <div id="dragLineDiv010021" index="7" class="dragLine" style="left: 109px; top: 0px;"></div></th>
+                    <th id="11111" number="1" personwidth="150" info="false" display="制单日期" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">制单日期</span>
+                        <div id="dragLi1eDiv1011" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                    <th id="1111111" number="1" personwidth="150" info="false" display="经手人" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">经手人</span>
+                        <div id="dragLi1eDiv111011" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                    <th id="111111111" number="1" personwidth="150" info="false" display="制单人" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">制单人</span>
+                        <div id="dragLi1eDiv11111011" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                    <th id="1111111111" number="1" personwidth="150" info="false" display="备注" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">备注</span>
+                        <div id="dragLi1e111Div111011" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                </tr>
+                </tbody>
+                    </table>
+                </div>
+                    <div id="app" style= "background-color: rgb(255, 255, 255); width: 1772px; height: 626px;" class="bDiv" >
+                        <table id="resultList" style="border-top: 0px none;" class="tableStyle borderLTNone" width="1772" cellspacing="0" cellpadding="5">
+                            <tbody>
+                            <tr id="row0" normalrow="true" style="" v-for="(item,index) in result">
+                                <td thid="th0" style="width: 45px; height: 26px;" thname="no" align="center">
+                                <div class="tableText" style="width: 45px;">{{index+1}}</div>
+                                </td>
+                                <td thid="th1" style="width: 150px; height: 26px;" thname="Action" align="center">
+                                <div class="tableText" style="width: 150px;">
+                                    <a title="删除" href="DeleteOrdserv1.do?oid=${li.oid}"><i class="layui-icon">&#xe640;</i></a><a title="删除" href="DeleteOrdserv1.do?oid=${li.oid}"><i class="layui-icon">&#xe640;</i></a>
+                                </div>
+                                </td>
+
+                                <!--业务日期-->
+                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="left">
+                                    <div class="tableText" style="width: 150px;">{{item.poDate}}</div>
+                                </td>
+                                <!--单据编号-->
+                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="left">
+                                    <div class="tableText" style="width: 150px;">{{item.poNumber}}</div>
+                                </td>
+                                <!--处理状态-->
+                                <td thid="th7" style="width: 100px; height: 26px;" thname="useremail" align="left">
+                                    <div class="tableText" style="width: 100px;">{{item.poState}}</div>
+                                </td>
+
+                                <td thid="th8" style="width: 100px; height: 26px;" thname="userstatus" align="center">
+                                    <div class="tableText" style="width: 100px;">{{item.poAuditor}}</div>
+                                </td>
+                                <!--供应商-->
+                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="left">
+                                    <div class="tableText" style="width: 150px;">{{item.poSupName}}</div>
+                                </td>
+                                <!--进货订单商品-->
+                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="left">
+                                    <div class="tableText" style="width: 150px;">{{item.poClName}}</div>
+                                </td>
+                                <!--进货订单数量-->
+                                <td thid="th7" style="width: 100px; height: 26px;" thname="useremail" align="left">
+                                    <div class="tableText" style="width: 100px;">{{item.poQuantityOfPurchase}}</div>
+                                </td>
+                                <!--应付金额-->
+                                <td thid="th7" style="width: 100px; height: 26px;" thname="useremail" align="left">
+                                    <div class="tableText" style="width: 100px;">{{item.poYingMoney}}</div>
+                                </td>
+                                <!--纸质单据-->
+                                <td thid="th7" style="width: 100px; height: 26px;" thname="useremail" align="left">
+                                    <div class="tableText" style="width: 100px;">{{item.poBill}}</div>
+                                </td>
+                                <!--制单日期-->
+                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="left">
+                                    <div class="tableText" style="width: 150px;">{{item.poDateOrder}}</div>
+                                </td>
+                                <!--经手人-->
+                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="left">
+                                    <div class="tableText" style="width: 150px;">{{item.poExperiencedPerson}}</div>
+                                </td>
+                                <!--制单人-->
+                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="left">
+                                    <div class="tableText" style="width: 150px;">{{item.poSinglePerson}}</div>
+                                </td>
+                                <!--备注-->
+                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="left">
+                                    <div class="tableText" style="width: 150px;">{{item.poRemarks}}</div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+    <!-- title -->
+
+
+</div>
+<script type="text/javascript">
+    var app = new Vue({
+        el:'#app',
+        data:{
+            result:[]
+        }
+    });
+
+    var getPurchasePageList = function (curr) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/cargomanagement/purchase-order/getPage',
+            data: {
+                /*当前页*/
+                pageNum: curr || 1,
+                /*每页大小*/
+                pageSize: 3,
+                poNumber: $("#poNumber").val(),
+                poSupName: $("#poSupName").val()
+                //向服务端传的参数，此处只是演示
+            },
+            success: function (msg) {
+                app.result = msg.list;
+                laypage({
+                    cont: 'pagenav',//容器  值支持id名、原生dom对象，jquery对象,
+                    pages: msg.pages,//总页数
+                    first: '首页',
+                    last: '尾页',
+                    curr: curr || 1,//初始化页数
+                    jump: function (obj, first) { //触发分页后的回调
+                        if (!first) {     //点击跳页触发函数自身，并传递当前页：obj.curr
+                            getPurchasePageList(obj.curr);
+                        }
+                    }
+                });
+            }
+        });
+    };
+    getPurchasePageList();
+    $("#findempl").on('click', function () {
+        getPurchasePageList();
+    });
+
+
+    //增加用户
+    $('#addPurchaseBtn').on('click', function () {
+        layer.open({
+            type: 2,
+            title: '新增订单',
+            fix: false,
+            maxmin: true,
+            shadeClose: true,
+            area: ['1000px', '600px'],
+            content: '/cargomanagement/purchase-order/addPurchase',
+            end: function () {
+                getPurchasePageList();
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

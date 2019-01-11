@@ -3,93 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="/js/jquery/jquery.min.js"></script>
-    <script src="/js/jquery.validation/1.14.0/jquery.validate.min.js"></script>
-    <script src="/js/jquery.validation/1.14.0/messages_zh.min.js"></script>
-    <style>
-        input.error {
-            border: 1px solid #E6594E;
-        }
-    </style>
+    <link rel="stylesheet" href="/../css/style.css" type="text/css">
+    <link rel="stylesheet" href="/../css/layui.css" type="text/css">
+    <link rel="stylesheet" href="/../css/font.css" type="text/css">
+    <link rel="stylesheet" href="/../css/xadmin.css" type="text/css">
+    <link rel="stylesheet" href="/../css/jquery.css">
+    <link rel="stylesheet" href="/../css/zTreeStyle.css" type="text/css">
+    <link rel="stylesheet" href="/../css/Sortable.css" type="text/css">
+    <link rel="stylesheet" href="/../css/layui.css" type="text/css">
+    <script type="text/javascript" async="" src="/../js/vds.js"></script>
+    <script type="text/javascript" src="/../js/all_before.js"></script>
+    <link rel="stylesheet" href="/../css/layer.css" id="layuicss-skinlayercss">
+    <script type="text/javascript" src="/../js/highcharts.js"></script>
+    <script type="text/javascript" src="/../js/exporting.js"></script>
+    <script type="text/javascript" src="/../js/WdatePicker.js"></script>
+    <link href="/../css/WdatePicker.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/../js/jquery.js"></script>
+    <script type="text/javascript" src="/../js/all_after.js"></script>
+    <script type="text/javascript" src="/../js/flexigrid.js"></script>
+    <script type="text/javascript" src="/../js/wbi_common.js"></script>
+    <script type="text/javascript" src="/../js/wbill_common.js"></script>
+    <script type="text/javascript" src="/../js/filter.js"></script>
+    <script type="text/javascript" src="/../js/record.js"></script>
+    <script type="text/javascript" src="/../js/vue/vue.min.js"></script>
+    <script type="text/javascript" src="/../js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/../js/layer/layer.js"></script>
+    <script type="text/javascript" src="/../js/laypage/laypage.js"></script>
+    <script type="text/javascript" src="/../lib/layui/layui.js" charset="utf-8"></script>
 </head>
 <body>
 <div class="container">
     <form id="addPurchaseForm">
         <br/>
-        <div class="form-group">
-            <label for="poDate">业务日期：</label>
-            <input type="text" class="form-control" id="poDate" name="poDate" placeholder="输入日期">
+        <br>
+        <br>
+        <br>
+        <br>
+        <div style="margin: auto;width: 800px;height: 500px">
+        <div class="layui-inline">
+            <label class="layui-form-label">业务日期</label>
+            <div class="layui-input-inline">
+                <input type="text" name="poDate" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="layui-inline">
+            <label class="layui-form-label">单据编号</label>
+            <div class="layui-input-inline">
+                <input type="tel" name="phone" id="poNumber" lay-verify="required|phone" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="layui-input-inline">
+            <label class="layui-form-label">处理状态</label>
+            <select name="quiz2">
+                <option value="">默认</option>
+                <option value="杭州">已审核</option>
+                <option value="杭州">未审核</option>
+            </select>
+        </div>
+        <br>
+        <br>
+        <div class="layui-inline">
+            <label class="layui-form-label">审核人</label>
+            <div class="layui-input-inline">
+                <input type="tel" name="phone" id="poAuditor" lay-verify="required|phone" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="layui-input-inline">
+            <label class="layui-form-label">供应商名称</label>
+            <select name="quiz2">
+                <option value="">默认</option>
+                <option value="杭州">一号供应商</option>
+                <option value="杭州">未审核</option>
+            </select>
+        </div>
+        <br>
+        <br>
+        <div class="layui-input-inline">
+            <label class="layui-form-label">商品名</label>
+            <select name="quiz2">
+                <option value="">默认</option>
+                <option value="杭州">一号供应商</option>
+                <option value="杭州">未审核</option>
+            </select>
+        </div>
+        <br>
+        <br>
+        <div class="layui-inline">
+            <label class="layui-form-label">进货数量</label>
+            <div class="layui-input-inline">
+                <input type="tel" name="phone" id="poQuantityOfPurchase" lay-verify="required|phone" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="layui-inline">
+            <label class="layui-form-label">应付金额</label>
+            <div class="layui-input-inline">
+                <input type="tel" name="phone" id="poYingMoney" lay-verify="required|phone" autocomplete="off" class="layui-input">
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="poNumber">单据编号：</label>
-            <input type="text" class="form-control" id="poNumber" name="poNumber" placeholder="输入编号" required="required">
+        <br>
+        <br>
+        <div class="layui-inline">
+            <label class="layui-form-label">纸质单据</label>
+            <button type="button" class="layui-btn layui-btn-danger" id="poBill"><i class="layui-icon"></i>上传图片</button>
         </div>
 
-        <div class="form-group">
-            <label for="poState">处理状态：</label>
-            <input type="text" class="form-control" id="poState" name="poState" placeholder="输入状态">
+        <br>
+        <br>
+        <div class="layui-inline">
+            <label class="layui-form-label">经手人</label>
+            <div class="layui-input-inline">
+                <input type="tel" name="phone" id="poExperiencedPerson" lay-verify="required|phone" autocomplete="off" class="layui-input">
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="poAuditor">审核人：</label>
-            <input type="text" class="form-control" id="poAuditor" name="poAuditor" placeholder="输入审核人">
+        <br>
+        <br>
+        <div class="layui-inline">
+            <label class="layui-form-label">制单人</label>
+            <div class="layui-input-inline">
+                <input type="tel" name="phone" id="poSinglePerson" lay-verify="required|phone" autocomplete="off" class="layui-input">
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="poSupName">供应商名称：</label>
-            <input type="text" class="form-control" id="poSupName" name="poSupName" placeholder="输入供应商">
+        <br>
+        <br>
+        <div class="layui-inline">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-inline">
+                <input type="tel" name="phone" id="poRemarks" lay-verify="required|phone" autocomplete="off" class="layui-input">
+            </div>
         </div>
-
-
-        <div class="form-group">
-            <label for="poClName">商品名（多）：</label>
-            <input type="text" class="form-control" id="poClName" name="poClName" placeholder="输入商品名">
+        <br>
+        <br>
+        <div class="layui-inline">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-inline">
+                <input type="tel" name="phone" id="poDateOrder" lay-verify="required|phone" autocomplete="off" class="layui-input">
+            </div>
         </div>
-
-
-        <div class="form-group">
-            <label for="poQuantityOfPurchase">进货数量：</label>
-            <input type="text" class="form-control" id="poQuantityOfPurchase" name="poQuantityOfPurchase" placeholder="输入商品数量">
+        <br>
+        <br>
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
-
-
-        <div class="form-group">
-            <label for="poYingMoney">应付金额：</label>
-            <input type="text" class="form-control" id="poYingMoney" name="poYingMoney" placeholder="输入应付金额">
-        </div>
-
-
-        <div class="form-group">
-            <label for="poBill">纸质单据：</label>
-            <input type="text" class="form-control" id="poBill" name="poBill" placeholder="输入纸质单据">
-        </div>
-
-
-        <div class="form-group">
-            <label for="poExperiencedPerson">经手人：</label>
-            <input type="text" class="form-control" id="poExperiencedPerson" name="poExperiencedPerson" placeholder="输入经手人">
-        </div>
-
-        <div class="form-group">
-            <label for="poSinglePerson">制单人：</label>
-            <input type="text" class="form-control" id="poSinglePerson" name="poSinglePerson" placeholder="输入制单人">
-        </div>
-
-        <div class="form-group">
-            <label for="poRemarks">备注：</label>
-            <input type="text" class="form-control" id="poRemarks" name="poRemarks" placeholder="输入备注">
-        </div>
-
-        <div class="form-group">
-            <label for="poDateOrder">制单日期：</label>
-            <input type="text" class="form-control" id="poDateOrder" name="poDateOrder" placeholder="输入制单日期">
-        </div>
-
-        <div class="form-group">
-            <button type="button" id="saveBtn" class="btn btn-success">提交</button>
-            <button type="button" id="cancelBtn" class="btn btn-default">取消</button>
         </div>
     </form>
 </div>
@@ -222,6 +286,23 @@
             }
         });
     }
+
+    //日期
+    laydate.render({
+        elem: '#date'
+    });
+    laydate.render({
+        elem: '#date1'
+    });
+
+    upload.render({
+        elem: '#poBill'
+        ,url: '/upload/'
+        ,size: 60 //限制文件大小，单位 KB
+        ,done: function(res){
+            console.log(res)
+        }
+    });
 
 </script>
 

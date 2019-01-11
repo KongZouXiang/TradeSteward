@@ -45,7 +45,7 @@ public class PurchaseOrderController {
     @RequestMapping("/addPurchase")
     public ModelAndView getaddPurchase(){
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("addPurchase");
+        mv.setViewName("cargomanagement/addPurchase");
         return mv;
     }
 
