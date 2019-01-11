@@ -25,8 +25,9 @@ public class LoginServiceImpl implements ILoginService {
     @Override
     public Employ login(Employ employ) {
 
-        return employMapper.selectOne(
+        Employ returnEmploy = employMapper.selectOne(
                 new QueryWrapper<Employ>().eq("em_username", employ.getEmUsername())
                         .and(i -> i.eq("em_password", employ.getEmPassword())));
+        return returnEmploy;
     }
 }

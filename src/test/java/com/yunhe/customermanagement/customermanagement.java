@@ -1,6 +1,6 @@
 package com.yunhe.customermanagement;
 
-import com.yunhe.core.constant.NumberRule;
+import com.yunhe.core.NumberSetting.constant.NumberRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

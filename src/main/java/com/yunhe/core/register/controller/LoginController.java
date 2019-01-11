@@ -1,6 +1,6 @@
 package com.yunhe.core.register.controller;
 
-import com.yunhe.core.constant.NumberRule;
+import com.yunhe.core.NumberSetting.constant.NumberRule;
 import com.yunhe.core.register.service.ILoginService;
 import com.yunhe.systemsetup.entity.Employ;
 import org.springframework.stereotype.Controller;
