@@ -238,7 +238,6 @@ insert  into `finance_classify`(`id`,`fc_type`,`fc_sort`,`fc_remark`) values
 (12,'其他支出','1','12e'),
 (13,'其他支出','收入','df'),
 (14,'邮费','支出','寄快递啊'),
-(15,'1','收入',''),
 (16,'2','收入','');
 
 /*Table structure for table `finance_order` */

@@ -1,6 +1,6 @@
-package com.yunhe.core.NumberSetting.constant;
+package com.yunhe.core.numbersetting.constant;
 
-import com.yunhe.core.NumberSetting.factory.NumberFactory;
+import com.yunhe.core.numbersetting.factory.NumberFactory;
 
 /**
  * Demo class

@@ -1,4 +1,4 @@
-package com.yunhe.core.NumberSetting.constant;
+package com.yunhe.core.numbersetting.constant;
 
 /**
  * <per>
