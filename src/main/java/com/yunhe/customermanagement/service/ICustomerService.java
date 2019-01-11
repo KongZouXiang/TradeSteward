@@ -2,7 +2,7 @@ package com.yunhe.customermanagement.service;
 
 import com.yunhe.customermanagement.entity.Customer;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import java.util.List;
 import java.util.Map;
@@ -58,7 +58,7 @@ public interface ICustomerService extends IService<Customer> {
 
     /**
      * <p>
-     *     excel表格导入导出
+     *     查询全部信息并分页
      * </p>
      * @return 客户列表
      */
