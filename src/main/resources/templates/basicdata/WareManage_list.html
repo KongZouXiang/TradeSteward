@@ -3,31 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/laypage.css">
+    <link href="/1.0.9/iconfont.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="/js/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/js/vue/vue.min.js"></script>
     <script type="text/javascript" src="/js/layer/layer.js"></script>
     <script type="text/javascript" src="/js/laypage/laypage.js"></script>
+
 </head>
 <body>
 <div id="app" class="container">
-
     <form class="form-inline bg-danger" role="form">
-
         <div class="form-group">
             <label class="sr-only" for="select">用户名称</label>
-            <input type="text" class="form-control" id="select" placeholder="搜索编号、名称、联系人、电话...">
+            <input type="text" class="form-control" id="select" placeholder="搜索编号、名称、联系人、电话..." >
         </div>
         <!--<div class="form-group">
             <label class="sr-only" for="userage">用户年龄</label>
             <input type="text" class="form-control" id="userage" placeholder="用户年龄">
         </div>-->
         <button type="button" id="findWare" class="btn btn-success">搜索</button>
+        <i class="Hui-iconfont">&#xe640;</i>
+        <i class="Hui-iconfont Hui-iconfont-gotop"></i>
        <!-- <button type="button" id="addUserBtn" class="btn btn-danger">增加用户</button>-->
     </form>
-
     <div class="table-responsive">
         <table class="table">
             <thead>
@@ -55,7 +55,8 @@
                 <td v-else>
                     禁用
                 </td>
-
+                <td>{{item.wm_name}}</td>
+                <td>{{item.age}}</td>
                 <td><a href="#" @click="editEvent(item.id)">编辑</a>
                     <a href="#" @click="delEvent(item.id)">删除</a></td>
             </tr>
@@ -120,9 +121,6 @@ $("#findWare").click(function () {
 })
 
     getUserPageList();
-
-
-
 
 </script>
 

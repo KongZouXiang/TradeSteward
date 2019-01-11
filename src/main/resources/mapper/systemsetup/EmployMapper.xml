@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yunhe.systemsetup.dao.EmployMapper">
+    <sql id="empl">
+        id,em_username,em_realname,em_role,em_sex,em_phone,em_email,em_status,
+        em_repo,em_shiro,em_sel_invoice,em_del_invoice,em_sel_user,em_address
+    </sql>
+    <sql id="empl3">
+        em_username,em_realname,em_role,em_sex,em_phone,em_email,em_status,
+        em_repo,em_shiro,em_sel_invoice,em_del_invoice,em_sel_user,em_address
+    </sql>
 
+    <sql id="empl2">
+        em_username like concat('%',#{employ.emUsername},'%')
+        or em_realname like concat('%',#{employ.emRealname},'%')
+        or em_phone like concat('%',#{employ.emPhone},'%')
+        <!--<if test="emUsername !=null">em_username like concat('%',#{employ.emUsername},'%')</if>
+       <if test="emUsername !=null and emRealname!=null">and em_realname like concat('%',#{employ.emRealname},'%')</if>
+        <if test="emUsername !=null and emRealname!=null and enPhone !=null"> and em_phone like concat('%',#{employ.emPhone},'%')</if>-->
+    </sql>
+
+    <select id="selectPageEmploy" resultType="com.yunhe.systemsetup.entity.Employ" parameterType="com.yunhe.systemsetup.entity.Employ">
+        select <include refid="empl"/>
+        from employ where <include refid="empl2"/>
+    </select>
+
+    <insert id="insertEmploy"  parameterType="com.yunhe.systemsetup.entity.Employ">
+        insert into employ(<include refid="empl3"/>) values (#{emUsername},#{emRealname},#{emRole},#{emSex},#{emPhone},#{emEmail},#{emStatus}
+        ,#{emRepo},#{emShiro},#{emSelInvoice},#{emDelInvoice},#{emSelUser},#{emAddress})
+    </insert>
 </mapper>
