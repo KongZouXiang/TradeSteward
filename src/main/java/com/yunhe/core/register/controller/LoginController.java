@@ -1,5 +1,6 @@
 package com.yunhe.core.register.controller;
 
+import com.yunhe.core.constant.NumberRule;
 import com.yunhe.core.register.service.ILoginService;
 import com.yunhe.systemsetup.entity.Employ;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,7 @@ public class LoginController {
 
     @PostMapping("login")
     public String login(Employ employ, HttpSession session) {
-
+        System.out.println(new NumberRule().XSD_NUMBER);
         if (loginService.login(employ) != null) {
             session.setAttribute("employ", employ);
             return "index";
