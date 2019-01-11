@@ -1,9 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>销售订单管理</title>
+<html><head><!-- base href="http://web.zhsmjxc.com/UCenter-webapp/" -->
 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>员工管理</title>
     <link rel="stylesheet" href="/../css/style.css" type="text/css">
     <link rel="stylesheet" href="/../css/jquery.css">
     <link rel="stylesheet" href="/../css/zTreeStyle.css" type="text/css">
@@ -26,30 +25,56 @@
     <script type="text/javascript" src="/../js/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/../js/layer/layer.js"></script>
     <script type="text/javascript" src="/../js/laypage/laypage.js"></script>
+
+    <!--GrowingIO 全局引入  -->
+    <script type="text/javascript">
+        var _vds = _vds || [];
+        window._vds = _vds;
+
+        function addGrowingCS(csindex,csKey,valueKey){
+            var csValue = getValueFromRoot(valueKey);
+            if(csValue){
+                _vds.push(['setCS'+csindex, csKey, csValue]);
+            }
+        }
+
+        (function(){
+            _vds.push(['setAccountId', '96cf4aed2bf68eba']);
+
+            try{
+                addGrowingCS(1,'ContactId','contactid');
+                addGrowingCS(2,'UserId','userid');
+                addGrowingCS(3,'ProductCersion','productversion');
+                addGrowingCS(4,'IsPay','ispay');
+                addGrowingCS(5,'TradeCode','tradecode');
+            }catch(e){}
+
+            (function() {
+                var vds = document.createElement('script');
+                vds.type='text/javascript';
+                vds.async = true;
+                vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(vds, s);
+            })();
+        })();
+    </script>
+
+
 </head>
-
-
-<body onload="init()" style="background-image: none; cursor: default;">
-<input type="hidden" id="salesman" value="1" spellcheck="false">
-<input type="hidden" id="moduleName" value="SaleOrder" spellcheck="false">
-<input type="hidden" id="hidIsOpenSaleTaxRate" value="0" spellcheck="false">
-<input type="hidden" id="hidIsOpenIO" value="0" spellcheck="false">
-<input type="hidden" id="hidoverdue" value="0" spellcheck="false">
+<body style="background-image: none; cursor: default;">
+<input type="hidden" id="moduleName" value="SysUser" spellcheck="false">
+<input type="hidden" id="tabid" value="SysUser-List" spellcheck="false">
+<input type="hidden" id="issys" value="1" spellcheck="false">
+<input type="hidden" id="isroot" value="1" spellcheck="false">
+<input type="hidden" id="isdemo" value="1" spellcheck="false">
 <input type="hidden" id="hidproductversion" value="1" spellcheck="false">
-<input type="hidden" id="hidisopenmultiplewarehouse" value="0" spellcheck="false">
-<input type="hidden" id="hidIsClientLine" value="false" spellcheck="false">
-<input type="hidden" id="hidIsOpenSaleDetailDiscount" value="1" spellcheck="false">
-<input type="hidden" id="hidOddProcess" value="0" spellcheck="false">
-<div class="main" id="listBuy">
-    <div id="navigatorDiv" class="whiteBoxTab" style="display: none;">
-        <ul>
-            <li class="tabS" style="width: auto; min-width: 100px;"><a href="javascript:void(0)" onclick="openUrl('/UCenter-webapp/SaleOrder/List.htm')">线下订单</a></li>
-            <li class="tabN" style="width: auto; min-width: 100px;"><a href="javascript:void(0)" onclick="openUrl('/UCenter-webapp/SaleOrder/OnlineList.htm')">线上订单
 
-            </a></li>
-        </ul>
-    </div>
-    <div id="navigatorClear" class="clear" style="display: none;"></div>
+<input type="hidden" id="isShengchan" value="true" spellcheck="false">
+<input type="hidden" id="usercount" value="4" spellcheck="false">
+<input type="hidden" id="tel" value="400-886-1800" spellcheck="false">
+
+<div class="main" id="listSysUser">
     <div class="whiteBox actionArea">
         <table width="100%" cellspacing="0" cellpadding="0" border="0">
             <tbody><tr>
@@ -111,10 +136,12 @@
                 <td align="right">
                     <input type="hidden" id="hidIsShowZF" value="0" spellcheck="false">
                     <a href="javascript:;" class="button fr" id="btnadvance" onclick="advance()">筛选</a>
-                    <div class="search fr mr5">
-                        <input name="" type="text" id="SearchKeyWord" title="搜索单号、客户名称、商品名称、备注" class="inputText mr5" size="35" placeholder="搜索单号、客户名称、商品名称、备注" onkeyup="bindKeySearch()" spellcheck="false"><a href="javascript:;" class="button" onclick="reload(0)">搜索</a> <input id="querytype" type="hidden" value="0" style="display: none" spellcheck="false">
+                    <div class="search fr mr5" style="display: block;">
+                        <input name="" type="text" id="SearchKeyWord" title="搜索单号、客户名称、处理状态、备注" class="inputText mr5" size="35" placeholder="搜索单号、客户名称、处理状态、备注" onkeyup="bindKeySearch()" spellcheck="false">
+                        <a class="button" id="selectSales">搜索</a>
+                        <input id="querytype" type="hidden" value="0" style="display: none" spellcheck="false">
                     </div>
-                    <span class="mr10 fr lh30"><input type="checkbox" id="chkShowZF" checked="checked" onclick="funIsShowZF()" spellcheck="false">
+                    <span class="mr10 fr lh30"><input type="checkbox" id="chkShowZF" checked="checked" onclick="funIsShowZF()" spellcheck="false" value="on">
 								<label for="chkShowZF">不显示已关闭</label>
 						</span></td>
             </tr>
@@ -227,7 +254,6 @@
                         <input name="txbEndDeliveryDate" id="txbEndDeliveryDate" type="text" class="inputText date" style="width:196px;" onclick="WdatePicker({minDate:'#F{$dp.$D(\'txbStartDeliveryDate\')}'})" spellcheck="false">
                     </div>
                 </div>
-                <!-- --%>
                 <!-- <div class="value">
                     <div class="title" style="width: 60px; text-align: right">销售类型</div>
                     <div class="text" style="width:140px;">
@@ -259,292 +285,260 @@
                 &nbsp;&nbsp;<a href="javascript:;" onclick="allclean()" class="button">清空所有条件</a></td>
         </tr>
         </tbody></table>
-    <!-- whiteBox -->
     <div class="whiteBox">
-        <div id="FlexiGridRootSaleOrder-Page" class="flexigrid" style="overflow: hidden;"><div style="width:100%;overflow:hidden; display: flex; position:relative; border: solid 1px #d7d7d7; box-sizing: border-box;"><div class="t_left" style="position: absolute; z-index: 999;"><div class="hDivLeft" style="background-color: rgb(255, 255, 255); position: relative; z-index: 101;"><table class="tableStyle borderLTNone" style="position: relative;" cellspacing="0" cellpadding="5"><tbody><tr id="theader"><th id="th0" number="0" personwidth="23" info="false" name="saleid" sortable="false" abbr="saleid" class="normal" checkbox="true" button="false" width="23" align="center"><input id="selectAllCheckbox" type="checkbox" onclick="selectAllCheckBox(this,'FlexiGridRootSaleOrder-Page');"><div id="dragLineDiv0" index="0" class="dragLine" style="left: 32px; top: 0px;"></div></th><th id="th1" number="1" personwidth="45" info="false" display="序号" name="no" sortable="false" abbr="no" class="normal" checkbox="false" button="false" width="45" align="center"><a id="set" class="set"></a><div id="dragLineDiv1" index="1" class="dragLine" style="left: 54px; top: 0px;"></div></th><th id="th2" number="2" personwidth="180" info="false" display="操作" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="180" align="center"><span class="bg" style="width:180px">操作</span><div id="dragLineDiv2" index="2" class="dragLine" style="left: 189px; top: 0px;"></div></th></tr></tbody></table></div><div style="background-color: rgb(255, 255, 255); overflow: hidden; position: relative; height: 609.233px;" class="bDivLeft"><table class="tableStyle borderLTNone" style="border-top: 0px none; position: relative; top: 0px;" cellspacing="0" cellpadding="5"><tbody><tr id="row0" normalrow="true" style="height: 37px; background: rgb(228, 243, 255) none repeat scroll 0% 0%;"><td thid="th0" style="width: 23px; height: 26px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;"><input count="1" page="1" onclick="rememberCheckbox(this)" id="fcheckbox1" name="fcheckbox" number="0" listcheck="0" type="checkbox" value="190509A3-EAF4-41EC-9E30-5BE5CDE8998F"></div></td><td thid="th1" style="width: 45px; height: 26px;" thname="no" align="center"><div class="tableText" style="width: 45px;">1</div></td><td thid="th2" style="width: 180px; height: 26px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"><div class="tableButtonArea"><a id="0" class="operate details" title="详细" onclickevent="moreRecord(0);"></a><a id="1" class="operate copy" title="复制新增" onclickevent="copyRecord(0);"></a><a id="2" class="operate edit" title="编辑" onclickevent="editRecord(0);"></a><a id="4" class="operate del" title="关闭" onclickevent="wbRecord(0);"></a></div></div></td></tr><tr id="row1" normalrow="true" class="greyLine" style="height: 59px;"><td thid="th0" style="width: 23px; height: 26px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;"><input count="2" page="1" onclick="rememberCheckbox(this)" id="fcheckbox2" name="fcheckbox" number="1" listcheck="0" type="checkbox" value="5285A5AF-9A6B-465B-93C2-29ADF04F36C9"></div></td><td thid="th1" style="width: 45px; height: 26px;" thname="no" align="center"><div class="tableText" style="width: 45px;">2</div></td><td thid="th2" style="width: 180px; height: 26px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"><div class="tableButtonArea"><a id="0" class="operate details" title="详细" onclickevent="moreRecord(1);"></a><a id="1" class="operate copy" title="复制新增" onclickevent="copyRecord(1);"></a><a id="2" class="operate edit" title="编辑" onclickevent="editRecord(1);"></a><a id="4" class="operate del" title="关闭" onclickevent="wbRecord(1);"></a></div></div></td></tr><tr id="row2" normalrow="true" style="height: 59px;"><td thid="th0" style="width: 23px; height: 26px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;"><input count="3" page="1" onclick="rememberCheckbox(this)" id="fcheckbox3" name="fcheckbox" number="2" listcheck="0" type="checkbox" value="FA7AA487-0E9F-4C0E-A5C2-D40F7655B4E2"></div></td><td thid="th1" style="width: 45px; height: 26px;" thname="no" align="center"><div class="tableText" style="width: 45px;">3</div></td><td thid="th2" style="width: 180px; height: 26px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"><div class="tableButtonArea"><a id="0" class="operate details" title="详细" onclickevent="moreRecord(2);"></a><a id="1" class="operate copy" title="复制新增" onclickevent="copyRecord(2);"></a><a id="3" class="operate sale" title="转销售" onclickevent="saleRecord(2);"></a><a id="4" class="operate del" title="关闭" onclickevent="wbRecord(2);"></a></div></div></td></tr><tr id="row3" normalrow="true" class="greyLine" style="height: 37px;"><td thid="th0" style="width: 23px; height: 26px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;"><input count="4" page="1" onclick="rememberCheckbox(this)" id="fcheckbox4" name="fcheckbox" number="3" listcheck="0" type="checkbox" value="530ECC43-492E-44A6-A9FB-141C910C384B"></div></td><td thid="th1" style="width: 45px; height: 26px;" thname="no" align="center"><div class="tableText" style="width: 45px;">4</div></td><td thid="th2" style="width: 180px; height: 26px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"><div class="tableButtonArea"><a id="0" class="operate details" title="详细" onclickevent="moreRecord(3);"></a><a id="1" class="operate copy" title="复制新增" onclickevent="copyRecord(3);"></a><a id="2" class="operate edit" title="编辑" onclickevent="editRecord(3);"></a><a id="4" class="operate del" title="关闭" onclickevent="wbRecord(3);"></a></div></div></td></tr><tr id="row4" normalrow="true" style="height: 37px;"><td thid="th0" style="width: 23px; height: 26px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;"><input count="5" page="1" onclick="rememberCheckbox(this)" id="fcheckbox5" name="fcheckbox" number="4" listcheck="0" type="checkbox" value="50C979F8-3FEC-4027-A3A9-804E8135A03E"></div></td><td thid="th1" style="width: 45px; height: 26px;" thname="no" align="center"><div class="tableText" style="width: 45px;">5</div></td><td thid="th2" style="width: 180px; height: 26px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"><div class="tableButtonArea"><a id="0" class="operate details" title="详细" onclickevent="moreRecord(4);"></a><a id="1" class="operate copy" title="复制新增" onclickevent="copyRecord(4);"></a><a id="2" class="operate edit" title="编辑" onclickevent="editRecord(4);"></a><a id="4" class="operate del" title="关闭" onclickevent="wbRecord(4);"></a></div></div></td></tr><tr id="row5" normalrow="true" class="greyLine" style="height: 37px;"><td thid="th0" style="width: 23px; height: 26px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;"><input count="6" page="1" onclick="rememberCheckbox(this)" id="fcheckbox6" name="fcheckbox" number="5" listcheck="0" type="checkbox" value="B5212112-3C66-4D09-BC66-640151003FA0"></div></td><td thid="th1" style="width: 45px; height: 26px;" thname="no" align="center"><div class="tableText" style="width: 45px;">6</div></td><td thid="th2" style="width: 180px; height: 26px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"><div class="tableButtonArea"><a id="0" class="operate details" title="详细" onclickevent="moreRecord(5);"></a><a id="1" class="operate copy" title="复制新增" onclickevent="copyRecord(5);"></a><a id="2" class="operate edit" title="编辑" onclickevent="editRecord(5);"></a><a id="4" class="operate del" title="关闭" onclickevent="wbRecord(5);"></a></div></div></td></tr><tr id="row6" normalrow="true" style="height: 37px;"><td thid="th0" style="width: 23px; height: 26px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;"><input count="7" page="1" onclick="rememberCheckbox(this)" id="fcheckbox7" name="fcheckbox" number="6" listcheck="0" type="checkbox" value="3F6A87DB-FCFE-41C4-8D16-44E94ECF5224"></div></td><td thid="th1" style="width: 45px; height: 26px;" thname="no" align="center"><div class="tableText" style="width: 45px;">7</div></td><td thid="th2" style="width: 180px; height: 26px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"><div class="tableButtonArea"><a id="0" class="operate details" title="详细" onclickevent="moreRecord(6);"></a><a id="1" class="operate copy" title="复制新增" onclickevent="copyRecord(6);"></a><a id="2" class="operate edit" title="编辑" onclickevent="editRecord(6);"></a><a id="4" class="operate del" title="关闭" onclickevent="wbRecord(6);"></a></div></div></td></tr><tr id="row7" normalrow="true" class="greyLine" style="height: 37px;"><td thid="th0" style="width: 23px; height: 26px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;"><input count="8" page="1" onclick="rememberCheckbox(this)" id="fcheckbox8" name="fcheckbox" number="7" listcheck="0" type="checkbox" value="01D8F9C2-E26A-469A-B165-9876810F8762"></div></td><td thid="th1" style="width: 45px; height: 26px;" thname="no" align="center"><div class="tableText" style="width: 45px;">8</div></td><td thid="th2" style="width: 180px; height: 26px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"><div class="tableButtonArea"><a id="0" class="operate details" title="详细" onclickevent="moreRecord(7);"></a><a id="1" class="operate copy" title="复制新增" onclickevent="copyRecord(7);"></a><a id="2" class="operate edit" title="编辑" onclickevent="editRecord(7);"></a><a id="4" class="operate del" title="关闭" onclickevent="wbRecord(7);"></a></div></div></td></tr><tr id="row8" normalrow="true" style="height: 37px;"><td thid="th0" style="width: 23px; height: 26px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;"><input count="9" page="1" onclick="rememberCheckbox(this)" id="fcheckbox9" name="fcheckbox" number="8" listcheck="0" type="checkbox" value="73EB5C03-506A-45D1-B3BD-F24DCC5AF944"></div></td><td thid="th1" style="width: 45px; height: 26px;" thname="no" align="center"><div class="tableText" style="width: 45px;">9</div></td><td thid="th2" style="width: 180px; height: 26px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"><div class="tableButtonArea"><a id="0" class="operate details" title="详细" onclickevent="moreRecord(8);"></a><a id="1" class="operate copy" title="复制新增" onclickevent="copyRecord(8);"></a><a id="3" class="operate sale" title="转销售" onclickevent="saleRecord(8);"></a><a id="4" class="operate del" title="关闭" onclickevent="wbRecord(8);"></a></div></div></td></tr><tr id="rowSum" sumrow="true" style="height: 37px;"><td thid="th0" style="height: 26px; width: 23px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;"></div></td><td thid="th1" style="height: 26px; width: 45px;" thname="no" align="center"><div class="tableText" style="width: 45px;">合计</div></td><td thid="th2" style="height: 26px; width: 180px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"></div></td></tr></tbody></table></div></div><div class="t_r"><div class="hDiv" style="background-color: rgb(255, 255, 255); position: relative; width: 1772px;"><table class="tableStyle borderLTNone" style="position: relative; border-left: 0px none; left: 0px;" width="2424" cellspacing="0" cellpadding="5"><tbody><tr id="theader"><th id="th0" number="0" personwidth="23" info="false" name="saleid" sortable="false" abbr="saleid" class="normal" checkbox="true" button="false" width="23" align="center"><input id="selectAllCheckbox" type="checkbox" onclick="selectAllCheckBox(this,'FlexiGridRootSaleOrder-Page');"><div id="dragLineDiv0" index="0" class="dragLine" style="left: 32px; top: 0px;"></div></th><th id="th1" number="1" personwidth="45" info="false" display="序号" name="no" sortable="false" abbr="no" class="normal" checkbox="false" button="false" width="45" align="center"><a id="set" class="set"></a><div id="dragLineDiv1" index="1" class="dragLine" style="left: 54px; top: 0px;"></div></th><th id="th2" number="2" personwidth="180" info="false" display="操作" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="180" align="center"><span class="bg" style="width:180px">操作</span><div id="dragLineDiv2" index="2" class="dragLine" style="left: 189px; top: 0px;"></div></th><th id="th3" number="3" personwidth="95" info="false" display="业务日期" name="saledate" sortable="true" abbr="saledate" class="normal sortable" sort="" checkbox="false" button="false" width="95" align="center"><span class="bg" style="width:95px">业务日期</span><div id="dragLineDiv3" index="3" class="dragLine" style="left: 104px; top: 0px;"></div></th><th id="th6" number="6" personwidth="150" info="false" display="单据编号" name="saleno" sortable="true" abbr="saleno" class="normal sortable" sort="" checkbox="false" button="false" width="150" align="left"><span class="bg" style="width:150px">单据编号</span><div id="dragLineDiv6" index="6" class="dragLine" style="left: 159px; top: 0px;"></div></th><th id="th7" number="7" personwidth="100" info="false" display="处理状态" name="auditstate" sortable="false" abbr="auditstate" class="normal" checkbox="false" button="false" width="100" align="left"><span class="bg" style="width:100px">处理状态</span><div id="dragLineDiv7" index="7" class="dragLine" style="left: 109px; top: 0px;"></div></th><th id="th8" number="8" personwidth="100" info="false" display="审核人" name="auditusername" sortable="false" abbr="auditusername" class="normal" checkbox="false" button="false" width="100" align="left"><span class="bg" style="width:100px">审核人</span><div id="dragLineDiv8" index="8" class="dragLine" style="left: 109px; top: 0px;"></div></th><th id="th9" number="9" personwidth="150" info="false" display="客户名称" name="clientname" sortable="true" abbr="clientname" class="normal sortable" sort="" checkbox="false" button="false" width="150" align="left"><span class="bg" style="width:150px">客户名称</span><div id="dragLineDiv9" index="9" class="dragLine" style="left: 159px; top: 0px;"></div></th><th id="th10" number="10" personwidth="150" info="false" display="销售订单商品" name="products" sortable="false" abbr="products" class="normal" checkbox="false" button="false" width="150" align="left"><span class="bg" style="width:150px">销售订单商品</span><div id="dragLineDiv10" index="10" class="dragLine" style="left: 159px; top: 0px;"></div></th><th id="th11" number="11" personwidth="150" info="false" display="销售订单数量" name="salecount" sortable="false" abbr="salecount" class="normal" checkbox="false" button="false" width="150" align="center"><span class="bg" style="width:150px">销售订单数量</span><div id="dragLineDiv11" index="11" class="dragLine" style="left: 159px; top: 0px;"></div></th><th id="th12" number="12" personwidth="130" info="true" display="折扣金额(元)" name="totaldisamt" sortable="true" abbr="totaldisamt" class="normal sortable" sort="" checkbox="false" button="false" width="130" align="center"><span class="bg" style="width:130px">折扣金额(元)</span><span class="info" onmouseover="$(this).children().show()" onmouseout="$(this).children().hide()"><span class="tips" style="top:25px;display:none"><h2></h2><h1>1、折扣金额 = 单行商品折扣金额之和+单据整个折扣金额 <br>2、单行商品折扣金额=(单价-折后单价)*数量 <br>3、如果单价为0，则该行商品不参与计算折扣额 </h1></span></span><div id="dragLineDiv12" index="12" class="dragLine" style="left: 139px; top: 0px;"></div></th><th id="th13" number="13" personwidth="110" info="false" display="总计金额(元)" name="fareceamt" sortable="true" abbr="fareceamt" class="normal sortable" sort="" checkbox="false" button="false" width="110" align="center"><span class="bg" style="width:110px">总计金额(元)</span><div id="dragLineDiv13" index="13" class="dragLine" style="left: 119px; top: 0px;"></div></th><th id="th14" number="14" personwidth="110" info="false" display="订金(元)" name="deposit" sortable="true" abbr="deposit" class="normal sortable" sort="" checkbox="false" button="false" width="110" align="center"><span class="bg" style="width:110px">订金(元)</span><div id="dragLineDiv14" index="14" class="dragLine" style="left: 119px; top: 0px;"></div></th><th id="th19" number="19" personwidth="60" info="false" display="纸质单据" name="busifilepath" sortable="false" abbr="busifilepath" class="normal" checkbox="false" button="false" width="60" align="center"><span class="bg" style="width:60px">纸质单据</span><div id="dragLineDiv19" index="19" class="dragLine" style="left: 69px; top: 0px;"></div></th><th style="display: table-cell;" id="th4" number="4" personwidth="95" info="false" display="制单日期" name="createdate" sortable="true" abbr="createdate" class="sortable down" sort="desc" checkbox="false" button="false" width="95" align="center"><span class="bg" style="width:95px">制单日期</span><div id="dragLineDiv4" index="4" class="dragLine" style="left: 104px; top: 0px;"></div></th><th style="display: table-cell;" id="th5" number="5" personwidth="95" info="false" display="送货日期" name="recedate" sortable="true" abbr="recedate" class="normal sortable" sort="" checkbox="false" button="false" width="95" align="center"><span class="bg" style="width:95px">送货日期</span><div id="dragLineDiv5" index="5" class="dragLine" style="left: 104px; top: 0px;"></div></th><th style="display: table-cell;" id="th15" number="15" personwidth="110" info="false" display="未转销售数量" name="noturncount" sortable="false" abbr="noturncount" class="normal" checkbox="false" button="false" width="110" align="center"><span class="bg" style="width:110px">未转销售数量</span><div id="dragLineDiv15" index="15" class="dragLine" style="left: 119px; top: 0px;"></div></th><th style="display: table-cell;" id="th16" number="16" personwidth="100" info="false" display="经手人" name="busiusername" sortable="false" abbr="busiusername" class="normal" checkbox="false" button="false" width="100" align="left"><span class="bg" style="width:100px">经手人</span><div id="dragLineDiv16" index="16" class="dragLine" style="left: 109px; top: 0px;"></div></th><th style="display: table-cell;" id="th17" number="17" personwidth="100" info="false" display="制单人" name="createusername" sortable="false" abbr="createusername" class="normal" checkbox="false" button="false" width="100" align="left"><span class="bg" style="width:100px">制单人</span><div id="dragLineDiv17" index="17" class="dragLine" style="left: 109px; top: 0px;"></div></th><th style="display: table-cell;" id="th18" number="18" personwidth="150" info="false" display="备注" name="saleremark" sortable="false" abbr="saleremark" class="normal" checkbox="false" button="false" width="150" align="left"><span class="bg" style="width:150px">备注</span><div id="dragLineDiv18" index="18" class="dragLine" style="left: 159px; top: 0px;"></div></th><th style="display: none;" id="th20" number="20" personwidth="42" info="false" display="FillEmptyColumn" name="FillEmptyColumn" sortable="false" abbr="FillEmptyColumn" class="normal" checkbox="false" button="false" width="42" align="center"></th></tr></tbody></table></div><div style="background-color: rgb(255, 255, 255); overflow-x: auto; width: 1772px; height: 624.233px;" class="bDiv"><table id="resultList" style="border-top: 0px none; border-left: 0px none;" class="tableStyle borderLTNone" width="2424" cellspacing="0" cellpadding="5"><tbody><tr id="row0" normalrow="true" style="background: rgb(228, 243, 255) none repeat scroll 0% 0%;"><td thid="th0" style="width: 23px; height: 26px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;">&nbsp;</div></td><td thid="th1" style="width: 45px; height: 26px;" thname="no" align="center"><div class="tableText" style="width: 45px;">1</div></td><td thid="th2" style="width: 180px; height: 26px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"><div class="tableButtonArea"><a id="0" class="operate details" title="详细" onclickevent="moreRecord(0);"></a><a id="1" class="operate copy" title="复制新增" onclickevent="copyRecord(0);"></a><a id="2" class="operate edit" title="编辑" onclickevent="editRecord(0);"></a><a id="4" class="operate del" title="关闭" onclickevent="wbRecord(0);"></a></div></div></td><td thid="th3" style="width: 95px; height: 26px;" thname="saledate" align="center"><div class="tableText" style="width: 95px;">2017-07-25</div></td><td thid="th6" style="width: 150px; height: 26px;" thname="saleno" align="left"><div class="tableText" style="width: 150px;">XDD20170725010</div></td><td thid="th7" style="width: 100px; height: 26px;" thname="auditstate" align="left"><div class="tableText" style="width: 100px;">未审核</div></td><td thid="th8" style="width: 100px; height: 26px;" thname="auditusername" align="left"><div class="tableText" style="width: 100px;"><span></span></div></td><td thid="th9" style="width: 150px; height: 26px;" thname="clientname" align="left"><div class="tableText" style="width: 150px;">欧阳倩</div></td><td thid="th10" style="width: 150px; height: 26px;" thname="products" align="left"><div class="tableText aui-ellipsis" style="width: 150px;">华为智能手表-MS01</div></td><td thid="th11" style="width: 150px; height: 26px;" thname="salecount" align="right"><div class="tableText" style="width: 150px;">1</div></td><td thid="th12" style="width: 130px; height: 26px;" thname="totaldisamt" align="right"><div class="tableText" style="width: 130px;">0.00</div></td><td thid="th13" style="width: 110px; height: 26px;" thname="fareceamt" align="right"><div class="tableText" style="width: 110px;">1,899.00</div></td><td thid="th14" style="width: 110px; height: 26px;" thname="deposit" align="right"><div class="tableText" style="width: 110px;"><span></span></div></td><td thid="th19" style="width: 60px; height: 26px;" thname="busifilepath" align="center"><div class="tableText" style="width: 60px;"><div class="" id="pDiv_190509A3-EAF4-41EC-9E30-5BE5CDE8998F">  <div id="ossfile_190509A3-EAF4-41EC-9E30-5BE5CDE8998F"></div>  <div id="container_190509A3-EAF4-41EC-9E30-5BE5CDE8998F" style="position: relative;">    <a id="selectfiles_190509A3-EAF4-41EC-9E30-5BE5CDE8998F" data-saleno="XDD20170725010" data-busiid="190509A3-EAF4-41EC-9E30-5BE5CDE8998F" data-filetype="31" href="javascript:void(0);" class="SelectFilesUpload" style="position: relative; z-index: 1;">上传</a>  <div id="html5_1d0qusefs10jb6r519831nlnlj63_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 4px; left: 18px; width: 24px; height: 16px; overflow: hidden; z-index: 0;"><input id="html5_1d0qusefs10jb6r519831nlnlj63" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" accept="image/jpeg,image/png"></div></div><span id="uploadingimg_190509A3-EAF4-41EC-9E30-5BE5CDE8998F" style="display: none;">上传中...</span></div></div></td><td thid="th4" style="display: table-cell; width: 95px; height: 26px;" thname="createdate" align="center"><div class="tableText" style="width: 95px;">2017-07-25</div></td><td thid="th5" style="display: table-cell; width: 95px; height: 26px;" thname="recedate" align="center"><div class="tableText" style="width: 95px;">&nbsp;</div></td><td thid="th15" style="display: table-cell; width: 110px; height: 26px;" thname="noturncount" align="center"><div class="tableText" style="width: 110px;"><span>1</span></div></td><td thid="th16" style="display: table-cell; width: 100px; height: 26px;" thname="busiusername" align="left"><div class="tableText" style="width: 100px;">老板</div></td><td thid="th17" style="display: table-cell; width: 100px; height: 26px;" thname="createusername" align="left"><div class="tableText" style="width: 100px;">老板</div></td><td thid="th18" style="display: table-cell; width: 150px; height: 26px;" thname="saleremark" align="left"><div class="tableText" style="width: 150px;">&nbsp;</div></td><td thid="th20" style="height: 26px; display: none; width: 42px;" thname="FillEmptyColumn" personwidth="42" align="center"></td></tr><tr id="row1" normalrow="true" class="greyLine" style=""><td thid="th0" style="width: 23px; height: 26px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;">&nbsp;</div></td><td thid="th1" style="width: 45px; height: 26px;" thname="no" align="center"><div class="tableText" style="width: 45px;">2</div></td><td thid="th2" style="width: 180px; height: 26px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"><div class="tableButtonArea"><a id="0" class="operate details" title="详细" onclickevent="moreRecord(1);"></a><a id="1" class="operate copy" title="复制新增" onclickevent="copyRecord(1);"></a><a id="2" class="operate edit" title="编辑" onclickevent="editRecord(1);"></a><a id="4" class="operate del" title="关闭" onclickevent="wbRecord(1);"></a></div></div></td><td thid="th3" style="width: 95px; height: 26px;" thname="saledate" align="center"><div class="tableText" style="width: 95px;">2017-07-25</div></td><td thid="th6" style="width: 150px; height: 26px;" thname="saleno" align="left"><div class="tableText" style="width: 150px;">XDD20170725011</div></td><td thid="th7" style="width: 100px; height: 26px;" thname="auditstate" align="left"><div class="tableText" style="width: 100px;">未审核</div></td><td thid="th8" style="width: 100px; height: 26px;" thname="auditusername" align="left"><div class="tableText" style="width: 100px;"><span></span></div></td><td thid="th9" style="width: 150px; height: 26px;" thname="clientname" align="left"><div class="tableText" style="width: 150px;">智慧商贸</div></td><td thid="th10" style="width: 150px; height: 26px;" thname="products" align="left"><div class="tableText aui-ellipsis" style="width: 150px;">小米-pro耳机、耳机卡通M-91</div></td><td thid="th11" style="width: 150px; height: 26px;" thname="salecount" align="right"><div class="tableText" style="width: 150px;">2</div></td><td thid="th12" style="width: 130px; height: 26px;" thname="totaldisamt" align="right"><div class="tableText" style="width: 130px;">0.00</div></td><td thid="th13" style="width: 110px; height: 26px;" thname="fareceamt" align="right"><div class="tableText" style="width: 110px;">164.00</div></td><td thid="th14" style="width: 110px; height: 26px;" thname="deposit" align="right"><div class="tableText" style="width: 110px;"><span></span></div></td><td thid="th19" style="width: 60px; height: 26px;" thname="busifilepath" align="center"><div class="tableText" style="width: 60px;"><div class="" id="pDiv_5285A5AF-9A6B-465B-93C2-29ADF04F36C9">  <div id="ossfile_5285A5AF-9A6B-465B-93C2-29ADF04F36C9"></div>  <div id="container_5285A5AF-9A6B-465B-93C2-29ADF04F36C9" style="position: relative;">    <a id="selectfiles_5285A5AF-9A6B-465B-93C2-29ADF04F36C9" data-saleno="XDD20170725011" data-busiid="5285A5AF-9A6B-465B-93C2-29ADF04F36C9" data-filetype="31" href="javascript:void(0);" class="SelectFilesUpload" style="position: relative; z-index: 1;">上传</a>  <div id="html5_1d0quseg11m081ckgcq1krgu6a6_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 4px; left: 18px; width: 24px; height: 16px; overflow: hidden; z-index: 0;"><input id="html5_1d0quseg11m081ckgcq1krgu6a6" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" accept="image/jpeg,image/png"></div></div><span id="uploadingimg_5285A5AF-9A6B-465B-93C2-29ADF04F36C9" style="display: none;">上传中...</span></div></div></td><td thid="th4" style="display: table-cell; width: 95px; height: 26px;" thname="createdate" align="center"><div class="tableText" style="width: 95px;">2017-07-25</div></td><td thid="th5" style="display: table-cell; width: 95px; height: 26px;" thname="recedate" align="center"><div class="tableText" style="width: 95px;">&nbsp;</div></td><td thid="th15" style="display: table-cell; width: 110px; height: 26px;" thname="noturncount" align="center"><div class="tableText" style="width: 110px;"><span>2</span></div></td><td thid="th16" style="display: table-cell; width: 100px; height: 26px;" thname="busiusername" align="left"><div class="tableText" style="width: 100px;">老板</div></td><td thid="th17" style="display: table-cell; width: 100px; height: 26px;" thname="createusername" align="left"><div class="tableText" style="width: 100px;">老板</div></td><td thid="th18" style="display: table-cell; width: 150px; height: 26px;" thname="saleremark" align="left"><div class="tableText" style="width: 150px;">&nbsp;</div></td><td thid="th20" style="height: 26px; display: none; width: 42px;" thname="FillEmptyColumn" personwidth="42" align="center"></td></tr><tr id="row2" normalrow="true" style=""><td thid="th0" style="width: 23px; height: 26px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;">&nbsp;</div></td><td thid="th1" style="width: 45px; height: 26px;" thname="no" align="center"><div class="tableText" style="width: 45px;">3</div></td><td thid="th2" style="width: 180px; height: 26px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"><div class="tableButtonArea"><a id="0" class="operate details" title="详细" onclickevent="moreRecord(2);"></a><a id="1" class="operate copy" title="复制新增" onclickevent="copyRecord(2);"></a><a id="3" class="operate sale" title="转销售" onclickevent="saleRecord(2);"></a><a id="4" class="operate del" title="关闭" onclickevent="wbRecord(2);"></a></div></div></td><td thid="th3" style="width: 95px; height: 26px;" thname="saledate" align="center"><div class="tableText" style="width: 95px;">2017-07-17</div></td><td thid="th6" style="width: 150px; height: 26px;" thname="saleno" align="left"><div class="tableText" style="width: 150px;">XDD20170725009</div></td><td thid="th7" style="width: 100px; height: 26px;" thname="auditstate" align="left"><div class="tableText" style="width: 100px;">部分转销售</div></td><td thid="th8" style="width: 100px; height: 26px;" thname="auditusername" align="left"><div class="tableText" style="width: 100px;">老板</div></td><td thid="th9" style="width: 150px; height: 26px;" thname="clientname" align="left"><div class="tableText" style="width: 150px;">刘琳衡山</div></td><td thid="th10" style="width: 150px; height: 26px;" thname="products" align="left"><div class="tableText aui-ellipsis" style="width: 150px;">键盘戴胜K300、华为智能手表-MS01、小米-pro耳机</div></td><td thid="th11" style="width: 150px; height: 26px;" thname="salecount" align="right"><div class="tableText" style="width: 150px;">6</div></td><td thid="th12" style="width: 130px; height: 26px;" thname="totaldisamt" align="right"><div class="tableText" style="width: 130px;">0.00</div></td><td thid="th13" style="width: 110px; height: 26px;" thname="fareceamt" align="right"><div class="tableText" style="width: 110px;">2,228.00</div></td><td thid="th14" style="width: 110px; height: 26px;" thname="deposit" align="right"><div class="tableText" style="width: 110px;"><span>400.00</span></div></td><td thid="th19" style="width: 60px; height: 26px;" thname="busifilepath" align="center"><div class="tableText" style="width: 60px;"><div class="" id="pDiv_FA7AA487-0E9F-4C0E-A5C2-D40F7655B4E2">  <div id="ossfile_FA7AA487-0E9F-4C0E-A5C2-D40F7655B4E2"></div>  <div id="container_FA7AA487-0E9F-4C0E-A5C2-D40F7655B4E2" style="position: relative;">    <a id="selectfiles_FA7AA487-0E9F-4C0E-A5C2-D40F7655B4E2" data-saleno="XDD20170725009" data-busiid="FA7AA487-0E9F-4C0E-A5C2-D40F7655B4E2" data-filetype="31" href="javascript:void(0);" class="SelectFilesUpload" style="position: relative; z-index: 1;">上传</a>  <div id="html5_1d0quseg5ipkneo1tns1kofgv99_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 4px; left: 18px; width: 24px; height: 16px; overflow: hidden; z-index: 0;"><input id="html5_1d0quseg5ipkneo1tns1kofgv99" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" accept="image/jpeg,image/png"></div></div><span id="uploadingimg_FA7AA487-0E9F-4C0E-A5C2-D40F7655B4E2" style="display: none;">上传中...</span></div></div></td><td thid="th4" style="display: table-cell; width: 95px; height: 26px;" thname="createdate" align="center"><div class="tableText" style="width: 95px;">2017-07-25</div></td><td thid="th5" style="display: table-cell; width: 95px; height: 26px;" thname="recedate" align="center"><div class="tableText" style="width: 95px;">&nbsp;</div></td><td thid="th15" style="display: table-cell; width: 110px; height: 26px;" thname="noturncount" align="center"><div class="tableText" style="width: 110px;"><span>1</span></div></td><td thid="th16" style="display: table-cell; width: 100px; height: 26px;" thname="busiusername" align="left"><div class="tableText" style="width: 100px;">财务</div></td><td thid="th17" style="display: table-cell; width: 100px; height: 26px;" thname="createusername" align="left"><div class="tableText" style="width: 100px;">老板</div></td><td thid="th18" style="display: table-cell; width: 150px; height: 26px;" thname="saleremark" align="left"><div class="tableText" style="width: 150px;">&nbsp;</div></td><td thid="th20" style="height: 26px; display: none; width: 42px;" thname="FillEmptyColumn" personwidth="42" align="center"></td></tr><tr id="row3" normalrow="true" class="greyLine" style=""><td thid="th0" style="width: 23px; height: 26px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;">&nbsp;</div></td><td thid="th1" style="width: 45px; height: 26px;" thname="no" align="center"><div class="tableText" style="width: 45px;">4</div></td><td thid="th2" style="width: 180px; height: 26px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"><div class="tableButtonArea"><a id="0" class="operate details" title="详细" onclickevent="moreRecord(3);"></a><a id="1" class="operate copy" title="复制新增" onclickevent="copyRecord(3);"></a><a id="2" class="operate edit" title="编辑" onclickevent="editRecord(3);"></a><a id="4" class="operate del" title="关闭" onclickevent="wbRecord(3);"></a></div></div></td><td thid="th3" style="width: 95px; height: 26px;" thname="saledate" align="center"><div class="tableText" style="width: 95px;">2017-07-06</div></td><td thid="th6" style="width: 150px; height: 26px;" thname="saleno" align="left"><div class="tableText" style="width: 150px;">XDD20170725008</div></td><td thid="th7" style="width: 100px; height: 26px;" thname="auditstate" align="left"><div class="tableText" style="width: 100px;">未审核</div></td><td thid="th8" style="width: 100px; height: 26px;" thname="auditusername" align="left"><div class="tableText" style="width: 100px;"><span></span></div></td><td thid="th9" style="width: 150px; height: 26px;" thname="clientname" align="left"><div class="tableText" style="width: 150px;">客户</div></td><td thid="th10" style="width: 150px; height: 26px;" thname="products" align="left"><div class="tableText aui-ellipsis" style="width: 150px;">键盘戴胜K300</div></td><td thid="th11" style="width: 150px; height: 26px;" thname="salecount" align="right"><div class="tableText" style="width: 150px;">4</div></td><td thid="th12" style="width: 130px; height: 26px;" thname="totaldisamt" align="right"><div class="tableText" style="width: 130px;">0.00</div></td><td thid="th13" style="width: 110px; height: 26px;" thname="fareceamt" align="right"><div class="tableText" style="width: 110px;">180.00</div></td><td thid="th14" style="width: 110px; height: 26px;" thname="deposit" align="right"><div class="tableText" style="width: 110px;"><span></span></div></td><td thid="th19" style="width: 60px; height: 26px;" thname="busifilepath" align="center"><div class="tableText" style="width: 60px;"><div class="" id="pDiv_530ECC43-492E-44A6-A9FB-141C910C384B">  <div id="ossfile_530ECC43-492E-44A6-A9FB-141C910C384B"></div>  <div id="container_530ECC43-492E-44A6-A9FB-141C910C384B" style="position: relative;">    <a id="selectfiles_530ECC43-492E-44A6-A9FB-141C910C384B" data-saleno="XDD20170725008" data-busiid="530ECC43-492E-44A6-A9FB-141C910C384B" data-filetype="31" href="javascript:void(0);" class="SelectFilesUpload" style="position: relative; z-index: 1;">上传</a>  <div id="html5_1d0quseg81l95lh1147k1u9evcmc_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 4px; left: 18px; width: 24px; height: 16px; overflow: hidden; z-index: 0;"><input id="html5_1d0quseg81l95lh1147k1u9evcmc" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" accept="image/jpeg,image/png"></div></div><span id="uploadingimg_530ECC43-492E-44A6-A9FB-141C910C384B" style="display: none;">上传中...</span></div></div></td><td thid="th4" style="display: table-cell; width: 95px; height: 26px;" thname="createdate" align="center"><div class="tableText" style="width: 95px;">2017-07-25</div></td><td thid="th5" style="display: table-cell; width: 95px; height: 26px;" thname="recedate" align="center"><div class="tableText" style="width: 95px;">&nbsp;</div></td><td thid="th15" style="display: table-cell; width: 110px; height: 26px;" thname="noturncount" align="center"><div class="tableText" style="width: 110px;"><span>4</span></div></td><td thid="th16" style="display: table-cell; width: 100px; height: 26px;" thname="busiusername" align="left"><div class="tableText" style="width: 100px;">销售</div></td><td thid="th17" style="display: table-cell; width: 100px; height: 26px;" thname="createusername" align="left"><div class="tableText" style="width: 100px;">老板</div></td><td thid="th18" style="display: table-cell; width: 150px; height: 26px;" thname="saleremark" align="left"><div class="tableText" style="width: 150px;">&nbsp;</div></td><td thid="th20" style="height: 26px; display: none; width: 42px;" thname="FillEmptyColumn" personwidth="42" align="center"></td></tr><tr id="row4" normalrow="true" style=""><td thid="th0" style="width: 23px; height: 26px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;">&nbsp;</div></td><td thid="th1" style="width: 45px; height: 26px;" thname="no" align="center"><div class="tableText" style="width: 45px;">5</div></td><td thid="th2" style="width: 180px; height: 26px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"><div class="tableButtonArea"><a id="0" class="operate details" title="详细" onclickevent="moreRecord(4);"></a><a id="1" class="operate copy" title="复制新增" onclickevent="copyRecord(4);"></a><a id="2" class="operate edit" title="编辑" onclickevent="editRecord(4);"></a><a id="4" class="operate del" title="关闭" onclickevent="wbRecord(4);"></a></div></div></td><td thid="th3" style="width: 95px; height: 26px;" thname="saledate" align="center"><div class="tableText" style="width: 95px;">2017-07-25</div></td><td thid="th6" style="width: 150px; height: 26px;" thname="saleno" align="left"><div class="tableText" style="width: 150px;">XDD20170725006</div></td><td thid="th7" style="width: 100px; height: 26px;" thname="auditstate" align="left"><div class="tableText" style="width: 100px;">未审核</div></td><td thid="th8" style="width: 100px; height: 26px;" thname="auditusername" align="left"><div class="tableText" style="width: 100px;"><span></span></div></td><td thid="th9" style="width: 150px; height: 26px;" thname="clientname" align="left"><div class="tableText" style="width: 150px;">邓娟娟</div></td><td thid="th10" style="width: 150px; height: 26px;" thname="products" align="left"><div class="tableText aui-ellipsis" style="width: 150px;">小米-pro耳机</div></td><td thid="th11" style="width: 150px; height: 26px;" thname="salecount" align="right"><div class="tableText" style="width: 150px;">1</div></td><td thid="th12" style="width: 130px; height: 26px;" thname="totaldisamt" align="right"><div class="tableText" style="width: 130px;">0.00</div></td><td thid="th13" style="width: 110px; height: 26px;" thname="fareceamt" align="right"><div class="tableText" style="width: 110px;">149.00</div></td><td thid="th14" style="width: 110px; height: 26px;" thname="deposit" align="right"><div class="tableText" style="width: 110px;"><span></span></div></td><td thid="th19" style="width: 60px; height: 26px;" thname="busifilepath" align="center"><div class="tableText" style="width: 60px;"><div class="" id="pDiv_50C979F8-3FEC-4027-A3A9-804E8135A03E">  <div id="ossfile_50C979F8-3FEC-4027-A3A9-804E8135A03E"></div>  <div id="container_50C979F8-3FEC-4027-A3A9-804E8135A03E" style="position: relative;">    <a id="selectfiles_50C979F8-3FEC-4027-A3A9-804E8135A03E" data-saleno="XDD20170725006" data-busiid="50C979F8-3FEC-4027-A3A9-804E8135A03E" data-filetype="31" href="javascript:void(0);" class="SelectFilesUpload" style="position: relative; z-index: 1;">上传</a>  <div id="html5_1d0qusega4dtci81ar580f1rjmf_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 4px; left: 18px; width: 24px; height: 16px; overflow: hidden; z-index: 0;"><input id="html5_1d0qusega4dtci81ar580f1rjmf" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" accept="image/jpeg,image/png"></div></div><span id="uploadingimg_50C979F8-3FEC-4027-A3A9-804E8135A03E" style="display: none;">上传中...</span></div></div></td><td thid="th4" style="display: table-cell; width: 95px; height: 26px;" thname="createdate" align="center"><div class="tableText" style="width: 95px;">2017-07-25</div></td><td thid="th5" style="display: table-cell; width: 95px; height: 26px;" thname="recedate" align="center"><div class="tableText" style="width: 95px;">&nbsp;</div></td><td thid="th15" style="display: table-cell; width: 110px; height: 26px;" thname="noturncount" align="center"><div class="tableText" style="width: 110px;"><span>1</span></div></td><td thid="th16" style="display: table-cell; width: 100px; height: 26px;" thname="busiusername" align="left"><div class="tableText" style="width: 100px;">老板</div></td><td thid="th17" style="display: table-cell; width: 100px; height: 26px;" thname="createusername" align="left"><div class="tableText" style="width: 100px;">老板</div></td><td thid="th18" style="display: table-cell; width: 150px; height: 26px;" thname="saleremark" align="left"><div class="tableText" style="width: 150px;">&nbsp;</div></td><td thid="th20" style="height: 26px; display: none; width: 42px;" thname="FillEmptyColumn" personwidth="42" align="center"></td></tr><tr id="row5" normalrow="true" class="greyLine" style=""><td thid="th0" style="width: 23px; height: 26px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;">&nbsp;</div></td><td thid="th1" style="width: 45px; height: 26px;" thname="no" align="center"><div class="tableText" style="width: 45px;">6</div></td><td thid="th2" style="width: 180px; height: 26px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"><div class="tableButtonArea"><a id="0" class="operate details" title="详细" onclickevent="moreRecord(5);"></a><a id="1" class="operate copy" title="复制新增" onclickevent="copyRecord(5);"></a><a id="2" class="operate edit" title="编辑" onclickevent="editRecord(5);"></a><a id="4" class="operate del" title="关闭" onclickevent="wbRecord(5);"></a></div></div></td><td thid="th3" style="width: 95px; height: 26px;" thname="saledate" align="center"><div class="tableText" style="width: 95px;">2017-07-25</div></td><td thid="th6" style="width: 150px; height: 26px;" thname="saleno" align="left"><div class="tableText" style="width: 150px;">XDD20170725007</div></td><td thid="th7" style="width: 100px; height: 26px;" thname="auditstate" align="left"><div class="tableText" style="width: 100px;">未审核</div></td><td thid="th8" style="width: 100px; height: 26px;" thname="auditusername" align="left"><div class="tableText" style="width: 100px;"><span></span></div></td><td thid="th9" style="width: 150px; height: 26px;" thname="clientname" align="left"><div class="tableText" style="width: 150px;">方鑫</div></td><td thid="th10" style="width: 150px; height: 26px;" thname="products" align="left"><div class="tableText aui-ellipsis" style="width: 150px;">键盘戴胜K200</div></td><td thid="th11" style="width: 150px; height: 26px;" thname="salecount" align="right"><div class="tableText" style="width: 150px;">3</div></td><td thid="th12" style="width: 130px; height: 26px;" thname="totaldisamt" align="right"><div class="tableText" style="width: 130px;">0.00</div></td><td thid="th13" style="width: 110px; height: 26px;" thname="fareceamt" align="right"><div class="tableText" style="width: 110px;">117.00</div></td><td thid="th14" style="width: 110px; height: 26px;" thname="deposit" align="right"><div class="tableText" style="width: 110px;"><span></span></div></td><td thid="th19" style="width: 60px; height: 26px;" thname="busifilepath" align="center"><div class="tableText" style="width: 60px;"><div class="" id="pDiv_B5212112-3C66-4D09-BC66-640151003FA0">  <div id="ossfile_B5212112-3C66-4D09-BC66-640151003FA0"></div>  <div id="container_B5212112-3C66-4D09-BC66-640151003FA0" style="position: relative;">    <a id="selectfiles_B5212112-3C66-4D09-BC66-640151003FA0" data-saleno="XDD20170725007" data-busiid="B5212112-3C66-4D09-BC66-640151003FA0" data-filetype="31" href="javascript:void(0);" class="SelectFilesUpload" style="position: relative; z-index: 1;">上传</a>  <div id="html5_1d0qusegco9s1mmi1rf01b2ifisi_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 4px; left: 18px; width: 24px; height: 16px; overflow: hidden; z-index: 0;"><input id="html5_1d0qusegco9s1mmi1rf01b2ifisi" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" accept="image/jpeg,image/png"></div></div><span id="uploadingimg_B5212112-3C66-4D09-BC66-640151003FA0" style="display: none;">上传中...</span></div></div></td><td thid="th4" style="display: table-cell; width: 95px; height: 26px;" thname="createdate" align="center"><div class="tableText" style="width: 95px;">2017-07-25</div></td><td thid="th5" style="display: table-cell; width: 95px; height: 26px;" thname="recedate" align="center"><div class="tableText" style="width: 95px;">&nbsp;</div></td><td thid="th15" style="display: table-cell; width: 110px; height: 26px;" thname="noturncount" align="center"><div class="tableText" style="width: 110px;"><span>3</span></div></td><td thid="th16" style="display: table-cell; width: 100px; height: 26px;" thname="busiusername" align="left"><div class="tableText" style="width: 100px;">老板</div></td><td thid="th17" style="display: table-cell; width: 100px; height: 26px;" thname="createusername" align="left"><div class="tableText" style="width: 100px;">老板</div></td><td thid="th18" style="display: table-cell; width: 150px; height: 26px;" thname="saleremark" align="left"><div class="tableText" style="width: 150px;">&nbsp;</div></td><td thid="th20" style="height: 26px; display: none; width: 42px;" thname="FillEmptyColumn" personwidth="42" align="center"></td></tr><tr id="row6" normalrow="true" style=""><td thid="th0" style="width: 23px; height: 26px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;">&nbsp;</div></td><td thid="th1" style="width: 45px; height: 26px;" thname="no" align="center"><div class="tableText" style="width: 45px;">7</div></td><td thid="th2" style="width: 180px; height: 26px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"><div class="tableButtonArea"><a id="0" class="operate details" title="详细" onclickevent="moreRecord(6);"></a><a id="1" class="operate copy" title="复制新增" onclickevent="copyRecord(6);"></a><a id="2" class="operate edit" title="编辑" onclickevent="editRecord(6);"></a><a id="4" class="operate del" title="关闭" onclickevent="wbRecord(6);"></a></div></div></td><td thid="th3" style="width: 95px; height: 26px;" thname="saledate" align="center"><div class="tableText" style="width: 95px;">2017-07-25</div></td><td thid="th6" style="width: 150px; height: 26px;" thname="saleno" align="left"><div class="tableText" style="width: 150px;">XDD20170725004</div></td><td thid="th7" style="width: 100px; height: 26px;" thname="auditstate" align="left"><div class="tableText" style="width: 100px;">未审核</div></td><td thid="th8" style="width: 100px; height: 26px;" thname="auditusername" align="left"><div class="tableText" style="width: 100px;"><span></span></div></td><td thid="th9" style="width: 150px; height: 26px;" thname="clientname" align="left"><div class="tableText" style="width: 150px;">易珍</div></td><td thid="th10" style="width: 150px; height: 26px;" thname="products" align="left"><div class="tableText aui-ellipsis" style="width: 150px;">小米-pro耳机</div></td><td thid="th11" style="width: 150px; height: 26px;" thname="salecount" align="right"><div class="tableText" style="width: 150px;">9</div></td><td thid="th12" style="width: 130px; height: 26px;" thname="totaldisamt" align="right"><div class="tableText" style="width: 130px;">0.00</div></td><td thid="th13" style="width: 110px; height: 26px;" thname="fareceamt" align="right"><div class="tableText" style="width: 110px;">1,341.00</div></td><td thid="th14" style="width: 110px; height: 26px;" thname="deposit" align="right"><div class="tableText" style="width: 110px;"><span>200.00</span></div></td><td thid="th19" style="width: 60px; height: 26px;" thname="busifilepath" align="center"><div class="tableText" style="width: 60px;"><div class="" id="pDiv_3F6A87DB-FCFE-41C4-8D16-44E94ECF5224">  <div id="ossfile_3F6A87DB-FCFE-41C4-8D16-44E94ECF5224"></div>  <div id="container_3F6A87DB-FCFE-41C4-8D16-44E94ECF5224" style="position: relative;">    <a id="selectfiles_3F6A87DB-FCFE-41C4-8D16-44E94ECF5224" data-saleno="XDD20170725004" data-busiid="3F6A87DB-FCFE-41C4-8D16-44E94ECF5224" data-filetype="31" href="javascript:void(0);" class="SelectFilesUpload" style="position: relative; z-index: 1;">上传</a>  <div id="html5_1d0quseggfb81vcdqri11a07atl_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 4px; left: 18px; width: 24px; height: 16px; overflow: hidden; z-index: 0;"><input id="html5_1d0quseggfb81vcdqri11a07atl" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" accept="image/jpeg,image/png"></div></div><span id="uploadingimg_3F6A87DB-FCFE-41C4-8D16-44E94ECF5224" style="display: none;">上传中...</span></div></div></td><td thid="th4" style="display: table-cell; width: 95px; height: 26px;" thname="createdate" align="center"><div class="tableText" style="width: 95px;">2017-07-25</div></td><td thid="th5" style="display: table-cell; width: 95px; height: 26px;" thname="recedate" align="center"><div class="tableText" style="width: 95px;">&nbsp;</div></td><td thid="th15" style="display: table-cell; width: 110px; height: 26px;" thname="noturncount" align="center"><div class="tableText" style="width: 110px;"><span>9</span></div></td><td thid="th16" style="display: table-cell; width: 100px; height: 26px;" thname="busiusername" align="left"><div class="tableText" style="width: 100px;">老板</div></td><td thid="th17" style="display: table-cell; width: 100px; height: 26px;" thname="createusername" align="left"><div class="tableText" style="width: 100px;">老板</div></td><td thid="th18" style="display: table-cell; width: 150px; height: 26px;" thname="saleremark" align="left"><div class="tableText" style="width: 150px;">&nbsp;</div></td><td thid="th20" style="height: 26px; display: none; width: 42px;" thname="FillEmptyColumn" personwidth="42" align="center"></td></tr><tr id="row7" normalrow="true" class="greyLine" style=""><td thid="th0" style="width: 23px; height: 26px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;">&nbsp;</div></td><td thid="th1" style="width: 45px; height: 26px;" thname="no" align="center"><div class="tableText" style="width: 45px;">8</div></td><td thid="th2" style="width: 180px; height: 26px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"><div class="tableButtonArea"><a id="0" class="operate details" title="详细" onclickevent="moreRecord(7);"></a><a id="1" class="operate copy" title="复制新增" onclickevent="copyRecord(7);"></a><a id="2" class="operate edit" title="编辑" onclickevent="editRecord(7);"></a><a id="4" class="operate del" title="关闭" onclickevent="wbRecord(7);"></a></div></div></td><td thid="th3" style="width: 95px; height: 26px;" thname="saledate" align="center"><div class="tableText" style="width: 95px;">2017-07-25</div></td><td thid="th6" style="width: 150px; height: 26px;" thname="saleno" align="left"><div class="tableText" style="width: 150px;">XDD20170725003</div></td><td thid="th7" style="width: 100px; height: 26px;" thname="auditstate" align="left"><div class="tableText" style="width: 100px;">未审核</div></td><td thid="th8" style="width: 100px; height: 26px;" thname="auditusername" align="left"><div class="tableText" style="width: 100px;"><span></span></div></td><td thid="th9" style="width: 150px; height: 26px;" thname="clientname" align="left"><div class="tableText" style="width: 150px;">欧阳倩</div></td><td thid="th10" style="width: 150px; height: 26px;" thname="products" align="left"><div class="tableText aui-ellipsis" style="width: 150px;">小米-pro耳机</div></td><td thid="th11" style="width: 150px; height: 26px;" thname="salecount" align="right"><div class="tableText" style="width: 150px;">4</div></td><td thid="th12" style="width: 130px; height: 26px;" thname="totaldisamt" align="right"><div class="tableText" style="width: 130px;">0.00</div></td><td thid="th13" style="width: 110px; height: 26px;" thname="fareceamt" align="right"><div class="tableText" style="width: 110px;">596.00</div></td><td thid="th14" style="width: 110px; height: 26px;" thname="deposit" align="right"><div class="tableText" style="width: 110px;"><span>100.00</span></div></td><td thid="th19" style="width: 60px; height: 26px;" thname="busifilepath" align="center"><div class="tableText" style="width: 60px;"><div class="" id="pDiv_01D8F9C2-E26A-469A-B165-9876810F8762">  <div id="ossfile_01D8F9C2-E26A-469A-B165-9876810F8762"></div>  <div id="container_01D8F9C2-E26A-469A-B165-9876810F8762" style="position: relative;">    <a id="selectfiles_01D8F9C2-E26A-469A-B165-9876810F8762" data-saleno="XDD20170725003" data-busiid="01D8F9C2-E26A-469A-B165-9876810F8762" data-filetype="31" href="javascript:void(0);" class="SelectFilesUpload" style="position: relative; z-index: 1;">上传</a>  <div id="html5_1d0quseghk057kl1enr1gv8cc3o_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 4px; left: 18px; width: 24px; height: 16px; overflow: hidden; z-index: 0;"><input id="html5_1d0quseghk057kl1enr1gv8cc3o" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" accept="image/jpeg,image/png"></div></div><span id="uploadingimg_01D8F9C2-E26A-469A-B165-9876810F8762" style="display: none;">上传中...</span></div></div></td><td thid="th4" style="display: table-cell; width: 95px; height: 26px;" thname="createdate" align="center"><div class="tableText" style="width: 95px;">2017-07-25</div></td><td thid="th5" style="display: table-cell; width: 95px; height: 26px;" thname="recedate" align="center"><div class="tableText" style="width: 95px;">&nbsp;</div></td><td thid="th15" style="display: table-cell; width: 110px; height: 26px;" thname="noturncount" align="center"><div class="tableText" style="width: 110px;"><span>4</span></div></td><td thid="th16" style="display: table-cell; width: 100px; height: 26px;" thname="busiusername" align="left"><div class="tableText" style="width: 100px;">仓管或采购</div></td><td thid="th17" style="display: table-cell; width: 100px; height: 26px;" thname="createusername" align="left"><div class="tableText" style="width: 100px;">老板</div></td><td thid="th18" style="display: table-cell; width: 150px; height: 26px;" thname="saleremark" align="left"><div class="tableText" style="width: 150px;">&nbsp;</div></td><td thid="th20" style="height: 26px; display: none; width: 42px;" thname="FillEmptyColumn" personwidth="42" align="center"></td></tr><tr id="row8" normalrow="true" style=""><td thid="th0" style="width: 23px; height: 26px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;">&nbsp;</div></td><td thid="th1" style="width: 45px; height: 26px;" thname="no" align="center"><div class="tableText" style="width: 45px;">9</div></td><td thid="th2" style="width: 180px; height: 26px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"><div class="tableButtonArea"><a id="0" class="operate details" title="详细" onclickevent="moreRecord(8);"></a><a id="1" class="operate copy" title="复制新增" onclickevent="copyRecord(8);"></a><a id="3" class="operate sale" title="转销售" onclickevent="saleRecord(8);"></a><a id="4" class="operate del" title="关闭" onclickevent="wbRecord(8);"></a></div></div></td><td thid="th3" style="width: 95px; height: 26px;" thname="saledate" align="center"><div class="tableText" style="width: 95px;">2017-07-25</div></td><td thid="th6" style="width: 150px; height: 26px;" thname="saleno" align="left"><div class="tableText" style="width: 150px;">XDD20170725002</div></td><td thid="th7" style="width: 100px; height: 26px;" thname="auditstate" align="left"><div class="tableText" style="width: 100px;">部分转销售</div></td><td thid="th8" style="width: 100px; height: 26px;" thname="auditusername" align="left"><div class="tableText" style="width: 100px;">老板</div></td><td thid="th9" style="width: 150px; height: 26px;" thname="clientname" align="left"><div class="tableText" style="width: 150px;">盈云公司</div></td><td thid="th10" style="width: 150px; height: 26px;" thname="products" align="left"><div class="tableText aui-ellipsis" style="width: 150px;">红米note3、诺基亚800</div></td><td thid="th11" style="width: 150px; height: 26px;" thname="salecount" align="right"><div class="tableText" style="width: 150px;">6</div></td><td thid="th12" style="width: 130px; height: 26px;" thname="totaldisamt" align="right"><div class="tableText" style="width: 130px;">0.00</div></td><td thid="th13" style="width: 110px; height: 26px;" thname="fareceamt" align="right"><div class="tableText" style="width: 110px;">11,394.00</div></td><td thid="th14" style="width: 110px; height: 26px;" thname="deposit" align="right"><div class="tableText" style="width: 110px;"><span></span></div></td><td thid="th19" style="width: 60px; height: 26px;" thname="busifilepath" align="center"><div class="tableText" style="width: 60px;"><div class="" id="pDiv_73EB5C03-506A-45D1-B3BD-F24DCC5AF944">  <div id="ossfile_73EB5C03-506A-45D1-B3BD-F24DCC5AF944"></div>  <div id="container_73EB5C03-506A-45D1-B3BD-F24DCC5AF944" style="position: relative;">    <a id="selectfiles_73EB5C03-506A-45D1-B3BD-F24DCC5AF944" data-saleno="XDD20170725002" data-busiid="73EB5C03-506A-45D1-B3BD-F24DCC5AF944" data-filetype="31" href="javascript:void(0);" class="SelectFilesUpload" style="position: relative; z-index: 1;">上传</a>  <div id="html5_1d0qusegkrgm18qivr215po1maqr_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 4px; left: 18px; width: 24px; height: 16px; overflow: hidden; z-index: 0;"><input id="html5_1d0qusegkrgm18qivr215po1maqr" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" accept="image/jpeg,image/png"></div></div><span id="uploadingimg_73EB5C03-506A-45D1-B3BD-F24DCC5AF944" style="display: none;">上传中...</span></div></div></td><td thid="th4" style="display: table-cell; width: 95px; height: 26px;" thname="createdate" align="center"><div class="tableText" style="width: 95px;">2017-07-25</div></td><td thid="th5" style="display: table-cell; width: 95px; height: 26px;" thname="recedate" align="center"><div class="tableText" style="width: 95px;">&nbsp;</div></td><td thid="th15" style="display: table-cell; width: 110px; height: 26px;" thname="noturncount" align="center"><div class="tableText" style="width: 110px;"><span>3</span></div></td><td thid="th16" style="display: table-cell; width: 100px; height: 26px;" thname="busiusername" align="left"><div class="tableText" style="width: 100px;">财务</div></td><td thid="th17" style="display: table-cell; width: 100px; height: 26px;" thname="createusername" align="left"><div class="tableText" style="width: 100px;">老板</div></td><td thid="th18" style="display: table-cell; width: 150px; height: 26px;" thname="saleremark" align="left"><div class="tableText" style="width: 150px;">&nbsp;</div></td><td thid="th20" style="height: 26px; display: none; width: 42px;" thname="FillEmptyColumn" personwidth="42" align="center"></td></tr><tr id="rowSum" sumrow="true" style=""><td thid="th0" style="height: 26px; width: 23px;" thname="saleid" align="center"><div class="tableText" style="width: 23px;"></div></td><td thid="th1" style="height: 26px; width: 45px;" thname="no" align="center"><div class="tableText" style="width: 45px;">合计</div></td><td thid="th2" style="height: 26px; width: 180px;" thname="Action" align="center"><div class="tableText" style="width: 180px;"></div></td><td thid="th3" style="height: 26px; width: 95px;" thname="saledate" align="center"><div class="tableText" style="width: 95px;"></div></td><td thid="th6" style="height: 26px; width: 150px;" thname="saleno" align="left"><div class="tableText" style="width: 150px;"></div></td><td thid="th7" style="height: 26px; width: 100px;" thname="auditstate" align="left"><div class="tableText" style="width: 100px;"></div></td><td thid="th8" style="height: 26px; width: 100px;" thname="auditusername" align="left"><div class="tableText" style="width: 100px;"></div></td><td thid="th9" style="height: 26px; width: 150px;" thname="clientname" align="left"><div class="tableText" style="width: 150px;"></div></td><td thid="th10" style="height: 26px; width: 150px;" thname="products" align="left"><div class="tableText" style="width: 150px;"></div></td><td thid="th11" style="height: 26px; width: 150px;" thname="salecount" align="right"><div class="tableText" style="width: 150px;">36</div></td><td thid="th12" style="height: 26px; width: 130px;" thname="totaldisamt" align="right"><div class="tableText" style="width: 130px;"><span class="font16 fontRed money">￥0.00</span></div></td><td thid="th13" style="height: 26px; width: 110px;" thname="fareceamt" align="right"><div class="tableText" style="width: 110px;"><span class="font16 fontRed money">￥18,068.00</span></div></td><td thid="th14" style="height: 26px; width: 110px;" thname="deposit" align="right"><div class="tableText" style="width: 110px;"><span class="font16 fontRed money">￥700.00</span></div></td><td thid="th19" style="height: 26px; width: 60px;" thname="busifilepath" align="center"><div class="tableText" style="width: 60px;"></div></td><td thid="th4" style="height: 26px; display: table-cell; width: 95px;" thname="createdate" align="center"><div class="tableText" style="width: 95px;"></div></td><td thid="th5" style="height: 26px; display: table-cell; width: 95px;" thname="recedate" align="center"><div class="tableText" style="width: 95px;"></div></td><td thid="th15" style="height: 26px; display: table-cell; width: 110px;" thname="noturncount" align="center"><div class="tableText" style="width: 110px;"></div></td><td thid="th16" style="height: 26px; display: table-cell; width: 100px;" thname="busiusername" align="left"><div class="tableText" style="width: 100px;"></div></td><td thid="th17" style="height: 26px; display: table-cell; width: 100px;" thname="createusername" align="left"><div class="tableText" style="width: 100px;"></div></td><td thid="th18" style="height: 26px; display: table-cell; width: 150px;" thname="saleremark" align="left"><div class="tableText" style="width: 150px;"></div></td><td thid="th20" style="height: 26px; display: none; width: 42px;" thname="FillEmptyColumn" personwidth="42" align="center"></td></tr></tbody></table></div></div></div><div class="pDiv" preresizewidth="1775"><table width="100%" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td><div style="margin: 0 auto; width: 470px;"><div class="pageTop"><span>每页显示</span><select id="changepagesize" name="" style="height:25px" class="fl mr5"><option value="10" selected="selected">10</option><option value="15">15</option><option value="20">20</option><option value="30">30</option><option value="50">50</option></select><span>条数据</span><a id="first" class="firstUnclickable"></a><a id="pre" class="preUnclickable"></a><span>当前在</span><input id="page" name="" style="height:19px" type="text" class="pageInput fl" size="3" value="1"><span>页</span><a id="next" class="nextUnclickable"></a><a id="last" class="lastUnclickable"></a><span>共<b id="pages">9</b>条数据</span></div></div></td><td align="right"><a id="refresh" class="refresh" style="display: none;"></a></td><input type="hidden" id="currentsortname" value="CreateDate"><input type="hidden" id="currentsortorder" value="desc"></tr></tbody></table><div style="height:10px"></div></div></div>
+        <div  id="FlexiGridRootSysUser-page" class="flexigrid">
+            <div style="width:100%;overflow:scroll; display: flex; position:relative; border: solid 1px #d7d7d7; box-sizing: border-box;">
+                <div class="t_left" style="position: absolute; z-index: 999;"></div>
+                <div class="t_r">
+                <div class="hDiv" style="background-color: rgb(255, 255, 255); position: relative; width: 1772px;">
+                    <table class="tableStyle borderLTNone" style="position: relative; left: 0px;" width="1772" cellspacing="0" cellpadding="5">
+                <tbody>
+                <tr id="theader">
+                    <th id="th0" number="0" personwidth="45" info="false" display="序号" name="no" sortable="false" abbr="no" class="normal" checkbox="false" button="false" width="45" align="center">
+                        <span class="bg" style="width:45px">序号</span>
+                        <div id="dragLineDiv0" index="0" class="dragLine" style="left: 54px; top: 0px;"></div></th>
+                    <th id="th1" number="1" personwidth="150" info="false" display="操作" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">操作</span>
+                        <div id="dragLineDiv1" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                    <th id="th100" number="1" personwidth="150" info="false" display="业务日期" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">业务日期</span>
+                        <div id="dragLineDiv100" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                    <th id="th101" number="1" personwidth="150" info="false" display="单据编号" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">单据标号</span>
+                        <div id="dragLineDiv101" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                    <th id="th102" number="7" personwidth="100" info="false" display="处理状态" name="useremail" sortable="false" abbr="useremail" class="normal" checkbox="false" button="false" width="100" align="center">
+                        <span class="bg" style="width:100px">处理状态</span>
+                        <div id="dragLineDiv102" index="7" class="dragLine" style="left: 109px; top: 0px;"></div></th>
+                    <th id="th800" number="8" personwidth="100" info="false" display="审核人" name="userstatus" sortable="false" abbr="userstatus" class="normal" checkbox="false" button="false" width="100" align="center">
+                        <span class="bg" style="width:100px">审核人</span>
+                        <div id="dragLineDiv800" index="8" class="dragLine" style="left: 109px; top: 0px;"></div></th>
+                    <th id="th1001" number="1" personwidth="150" info="false" display="客户名称" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">客户名称</span>
+                        <div id="dragLineDiv1001" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                    <th id="1111" number="1" personwidth="150" info="false" display="销售订单商品" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">销售订单商品</span>
+                        <div id="dragLineDiv1011" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                    <th id="th0025" number="1" personwidth="150" info="false" display="销售订单数量" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">销售订单数量</span>
+                        <div id="dragLineDiv0025" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                    <th id="th1021" number="7" personwidth="100" info="false" display="折扣金额" name="useremail" sortable="false" abbr="useremail" class="normal" checkbox="false" button="false" width="100" align="center">
+                        <span class="bg" style="width:100px">折扣金额</span>
+                        <div id="dragLineDiv1021" index="7" class="dragLine" style="left: 109px; top: 0px;"></div></th>
+                    <th id="th0021" number="7" personwidth="100" info="false" display="总计金额" name="useremail" sortable="false" abbr="useremail" class="normal" checkbox="false" button="false" width="100" align="center">
+                        <span class="bg" style="width:100px">总计金额</span>
+                        <div id="dragLineDiv0021" index="1" class="dragLine" style="left: 109px; top: 0px;"></div></th>
+                    <th id="th0022" number="7" personwidth="100" info="false" display="定金" name="useremail" sortable="false" abbr="useremail" class="normal" checkbox="false" button="false" width="100" align="center">
+                        <span class="bg" style="width:100px">定金</span>
+                        <div id="dragLineDiv0022" index="1" class="dragLine" style="left: 109px; top: 0px;"></div></th>
 
-    </div>
-</div>
-<div class="loadding" style="display: none;"></div>
+                    <th id="th0026" number="8" personwidth="100" info="false" display="纸质单据" name="userstatus" sortable="false" abbr="userstatus" class="normal" checkbox="false" button="false" width="100" align="center">
+                        <span class="bg" style="width:100px">纸质单据</span>
+                        <div id="dragLineDiv0026" index="8" class="dragLine" style="left: 109px; top: 0px;"></div></th>
 
-<div class="popArea clearPosition" style="width:630px; height:220px;display: none" id="exportdatediv">
-    <div class="title">
-        <div class="text">提示</div>
-        <div class="close">
-            <a href="javascript:void(0)" id="exportdatedivclose" class="closeButton"></a>
-        </div>
-    </div> <!-- title -->
-    <div class="content" style="width:547px; padding:30px;">
-        <div>
-            <span class="font16 fontBlue" id="exporttitle">确认导出</span><br>
-            <span class="font999">
-					<span id="noticemsg"></span>
-				    <span id="isneeddetailspan"><input class="mt2 mr5" type="checkbox" id="checkbtn00" spellcheck="false"><label for="checkbtn00">需要导出明细数据。</label><br></span>
-                    </span>
-        </div>
-    </div>
-    <div class="bottomButton">
-        <a href="javascript:void(0)" id="gotosearch" class="button blueButton">确定</a>
-        <a href="javascript:void(0)" id="exportdatebtn" class="button blueButton" onclick="exportdata()">导出数据</a>
-    </div> <!-- bottomButton -->
-</div>
-
-<input type="hidden" id="curNumberCount" name="curNumberCount" value="0" spellcheck="false">
-<div id="exportProcessDiv" style="display: none">
-    <div class="cover"></div>
-    <div class="popArea" style="width:300px; height:100px; padding:30px;position: absolute; box-shadow:0 0px 18px rgba(0,0,0,.5); top:35%; left:35%; z-index:1000; border-radius:5px;">
-        <p align="center"><span class="font24 fontB"><span id="importName1"></span></span><span id="numberSpan" style="display: none">共<span id="totalnumber" class="font24 fontB"></span>条，<span id="importName2">当前验证</span><span id="currentnumber" class="font24 fontB"></span>条</span></p>
-        <div class="progress">
-            <div id="progressimage" class="progressIN" style="width:0%; "></div>
-        </div>
-    </div>
-</div>
-
-
-
-<iframe id="iframeprint" name="iframeprint" scrolling="auto" src="" width="0" height="0" frameborder="0">
-</iframe>
-<div class="cover" style="display:none" id="cover"></div>
-
-<div id="auditTips" class="popArea" style="width: 600px; height: 260px; display: none;">
-    <!-- title -->
-    <div class="content">
-        <div id="auditTipsDiv" class=" wf100">
-		<span class="fl mt5" style="margin-left: 5px;margin-bottom: 5px;font-weight: bolder;">
-批量审核成功。以下单据中的商品库存不足，审核失败。</span>
-            <table id="serialNumberTable" class="tableStyle" width="100%" cellspacing="0" cellpadding="5" border="0">
-                <tbody><tr>
-                    <th class="normal" width="18" height="37" align="center">序号</th>
-                    <th class="normal" width="100" align="center">单据编号</th>
+                    <th id="11111" number="1" personwidth="150" info="false" display="制单日期" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">制单日期</span>
+                        <div id="dragLi1eDiv1011" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                    <th id="th0024" number="1" personwidth="150" info="false" display="未转销售数量" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">未转销售数量</span>
+                        <div id="dragLi1eDiv0024" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                    <th id="th0023" number="1" personwidth="150" info="false" display="送货日期" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">送货日期</span>
+                        <div id="dragLi1eDiv0023" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                    <th id="1111111" number="1" personwidth="150" info="false" display="经手人" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">经手人</span>
+                        <div id="dragLi1eDiv111011" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                    <th id="111111111" number="1" personwidth="150" info="false" display="制单人" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">制单人</span>
+                        <div id="dragLi1eDiv11111011" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
+                    <th id="1111111111" number="1" personwidth="150" info="false" display="备注" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                        <span class="bg" style="width:150px">备注</span>
+                        <div id="dragLi1e111Div111011" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
                 </tr>
-                </tbody></table>
-        </div>
-    </div>
-    <!-- content -->
-    <div class="bottomButton">
-        <a href="javascript:;" class="button blueButton" onclick="$('#cover').hide(); $('#auditTips').hide()">确认</a>
-    </div>
-    <!-- bottomButton -->
-</div>
-
-<!-- 批量操作错误提示 -->
-<div id="errorList" class="popArea cm" style="width: 391px; height: 283px; display: none;">
-		<span id="type1" class="title text">
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<span id="batchOperateDesc">批量出库成功</span>
-			，
-			<span id="batchOperateDesc2">以下单据不允许出库操作</span>
-			。
-		</span>
-    <div class=" wf100" style="height: 205px; overflow-y: scroll">
-        <table id="templateTable" class="tableStyle" width="100%" cellspacing="0" cellpadding="5" border="0">
-            <tbody><tr>
-                <th class="normal" width="150" align="center">单据编号</th>
-                <th class="normal" width="150" align="center">原因</th>
-            </tr>
-            <tr id="templateTr" style="display: none">
-                <td id="td1" valign="middle" bgcolor="#FFFFFF" align="center"></td>
-                <td id="td2" valign="middle" bgcolor="#FFFFFF" align="left"></td>
-            </tr>
-            </tbody></table>
-    </div>
-    <div style="" class="bottomButton cm_bt">
-        <a style="display:" id="batchSuccessPrintBillButton" href="javascript:;" onclick='$(".cover").hide(); $("#errorList").hide()' class="button3 button">打印成功单据</a>
-        <a style="display:" id="button4" href="javascript:;" onclick='$(".cover").hide(); $("#errorList").hide()' class="button3 button">关闭</a>
-    </div>
-</div>
-
-<!-- 批量选择仓库弹窗 -->
-
-
-
-<div id="batchTurnSaleChooseWarehouseIdDiv" style="display: none;">
-    <div class="popArea cm" style="width: 440px; height: 310px; top: 0px; left: 0px; position: absolute;">
-        <input type="hidden" id="friendlyTipType" value="1" spellcheck="false">
-        <div class="title">
-            <div class="text">温馨提示</div>
-            <div class="close">
-                <a href="javascript:;" class="closeButton" id="closeChooseTurnSaleWarehouseId"></a>
-            </div>
-        </div>
-        <div class="content">
-			<span class="font16">
-				<span>所选单据中有</span>
-				<span id="noChooseTurnSaleWarehouseIdCount">X</span>
-				<span>条单据未选择出库仓库，请为这些单据选择一个统一的出库仓库：</span>
-			</span>
-            <div class="mt10">
-                <div class="fl">出库仓库</div>
-                <span class="levelSelect mr10" id="levelSelect-batchTurnSalewarehouse">
-					<input type="text" class="ls-input" readonly="readonly" name="levelSelect-batchTurnSalewarehouse-input" onclick="levelSelect.show('batchTurnSalewarehouse');" placeholder="请选择" onfocus="this.blur()" spellcheck="false">
-					<input type="hidden" class="ls-input-parentval" id="choose-batchTurnSalewarehouse-parentval" spellcheck="false">
-					<input type="hidden" class="ls-input-val" id="choose-batchTurnSalewarehouse-val" onchange="" spellcheck="false">
-					<div id="levelSelect-batchTurnSalewarehouse-list" class="ls ls1" style="display: none;"></div>
-				</span>
-            </div>
-        </div>
-        <div class="bottomButton cm_bt">
-            <a href="javascript:;" id="confirmChooseTurnSaleWarehouseId" class="button blueButton">确认</a>
-            <a href="javascript:;" id="skipChooseTurnSaleWarehouseId" class="button" onmouseover="$(this).next().show();" onmouseout="$(this).next().hide();">跳过</a>
-            <div id="" class="btn-info" style="display: none; position: absolute; left: 333px; top: -65px;">
-                <div class="tips z-arrow_bt z-arrow_r">
-                    <h2></h2>
-                    <h1>
-                        点击该按钮表示不对这些单据进行转销售操作
-                        <br>
-                    </h1>
+                </tbody>
+                    </table>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- 批量选择结算账户弹窗 -->
+                    <div id="app" style= "background-color: rgb(255, 255, 255); width: 1772px; height: 626px;" class="bDiv" >
+                        <table id="resultList" style="border-top: 0px none;" class="tableStyle borderLTNone" width="1772" cellspacing="0" cellpadding="5">
+                            <tbody>
+                            <tr id="row0" normalrow="true" style="" v-for="(item,index) in result">
+                                <td thid="th0" style="width: 45px; height: 26px;" thname="no" align="center">
+                                <div class="tableText" style="width: 45px;">{{index+1}}</div>
+                                </td>
+                                <td thid="th1" style="width: 150px; height: 26px;" thname="Action" align="center">
+                                <div class="tableText" style="width: 150px;">
+                                    <div class="tableButtonArea">
+                                        <a id="0" class="operate details" title="详细" onclickevent="detailRecord({{item.id}});">
+                                        </a>
+                                    </div>
+                                </div>
+                                </td>
 
+                                <!--业务日期-->
+                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
+                                    <div class="tableText" style="width: 150px;">{{item.soDate}}</div>
+                                </td>
+                                <!--单据编号-->
+                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
+                                    <div class="tableText" style="width: 150px;">{{item.soOrderNum}}</div>
+                                </td>
+                                <!--处理状态-->
+                                <td thid="th7" style="width: 100px; height: 26px;" thname="useremail" align="center">
+                                    <div class="tableText" style="width: 100px;">{{item.soStatus}}</div>
+                                </td>
+                               <!-- 审核人-->
+                                <td thid="th8" style="width: 100px; height: 26px;" thname="userstatus" align="center">
+                                    <div class="tableText" style="width: 100px;">{{item.soAuditor}}</div>
+                                </td>
+                                <!--客户名称-->
+                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
+                                    <div class="tableText" style="width: 150px;">{{item.soClient}}</div>
+                                </td>
+                                <!--销售订单商品-->
+                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
+                                    <div class="tableText" style="width: 150px;">{{item.soOrderComm}}</div>
+                                </td>
+                                <!--销售订单数量-->
+                                <td thid="th5" style="width: 150px; height: 26px;" thname="usersex" align="center">
+                                    <div class="tableText" style="width: 150px;">{{item.soOrderCount}}</div>
+                                </td>
+                                <!--折扣金额-->
+                                <td thid="th7" style="width: 100px; height: 26px;" thname="useremail" align="center">
+                                    <div class="tableText" style="width: 100px;">{{item.soDiscount}}</div>
+                                </td>
+                                <!--总计金额-->
+                                <td thid="th7" style="width: 100px; height: 26px;" thname="useremail" align="center">
+                                    <div class="tableText" style="width: 100px;">{{item.soMoney}}</div>
+                                </td>
+                                <!--定金-->
+                                <td thid="th7" style="width: 100px; height: 26px;" thname="useremail" align="center">
+                                    <div class="tableText" style="width: 100px;">{{item.soEarnest}}</div>
+                                </td>
+                                <!--纸质单据-->
+                                <td thid="th5" style="width: 100px; height: 26px;" thname="usersex" align="center">
+                                    <div class="tableText" style="width: 100px;">{{item.soBills}}</div>
+                                </td>
+                                <!--制单日期-->
+                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
+                                    <div class="tableText" style="width: 150px;">{{item.soBillDate}}</div>
+                                </td>
+                                <!--未转销售数量-->
+                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
+                                    <div class="tableText" style="width: 150px;">{{item.soSellCount}}</div>
+                                </td>
 
+                                <!--送货日期-->
+                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
+                                    <div class="tableText" style="width: 150px;">{{item.soDevlierDate}}</div>
+                                </td>
 
-<div id="batchTurnSaleChooseAccountIdDiv" style="display: none;">
-    <div class="popArea cm" style="width: 440px; height: 310px; top: 0px; left: 0px; position: absolute;">
-        <input type="hidden" id="friendlyTipType" value="1" spellcheck="false">
-        <div class="title">
-            <div class="text">统一结算</div>
-            <div class="close">
-                <a href="javascript:;" class="closeButton" id="closeChooseTurnSaleAccountId"></a>
-            </div>
-        </div>
-        <div class="content">
-			<span>
-				<span class="font16">所选单据仅可进行统一结算，请选择统一的结算方式：</span>
-			</span>
-            <div>
-                <div>
-					<span>
-						<input id="debtTuranSaleChooseAccount" type="radio" value="" name="turnSaleChooseAccountRadioName" spellcheck="false">
-						<label for="debtTuranSaleChooseAccount" class="mr5">欠款结算</label>
-						<input id="chooseTuranSaleChooseAccount" type="radio" value="" name="turnSaleChooseAccountRadioName" checked="checked" spellcheck="false">
-						<label for="chooseTuranSaleChooseAccount">
-							批量收款结算
-							<span class="helpinfo" onmouseover="$(this).children().show()" onmouseout="$(this).children().hide()">
-								<span class="tips" style="left: -50px; display: none;">
-									<h2 style="margin-left: 128px;"></h2>
-									<h1>选择批量收款结算后，所选的单据自动带出实收金额且按照您选择的结算账户统一进行结算。</h1>
-								</span>
-							</span>
-						</label>
-					</span>
+                                <!--经手人-->
+                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
+                                    <div class="tableText" style="width: 150px;">{{item.soHander}}</div>
+                                </td>
+                                <!--制单人-->
+                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
+                                    <div class="tableText" style="width: 150px;">{{item.soMaker}}</div>
+                                </td>
+                                <!--备注-->
+                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
+                                    <div class="tableText" style="width: 150px;">{{item.soRemark}}</div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="mt10">
-                    <div>请选择结算账户：</div>
-                    <div class="fl">结算账户</div>
-                    <span class="levelSelect mr10 fl" id="levelSelect-batchTurnSaleChooseAccount">
-					<input type="text" class="ls-input" readonly="readonly" name="levelSelect-batchTurnSaleChooseAccount-input" onclick="levelSelect.show('batchTurnSaleChooseAccount');" placeholder="请选择" onfocus="this.blur()" spellcheck="false">
-					<input type="hidden" class="ls-input-parentval" id="choose-batchTurnSaleChooseAccount-parentval" spellcheck="false">
-					<input type="hidden" class="ls-input-val" id="choose-batchTurnSaleChooseAccount-val" onchange="" spellcheck="false">
-					<div id="levelSelect-batchTurnSaleChooseAccount-list" class="ls ls1" style="display: none;"></div>
-				</span>
-                </div>
+
             </div>
+            <div id="pagenav" style="text-align: center"></div>
         </div>
-        <div class="bottomButton cm_bt">
-            <a href="javascript:;" id="confirmChooseTurnSaleAccountId" class="button blueButton">确认</a>
-            <a href="javascript:;" id="skipChooseTurnSaleAccountId" class="button">取消</a>
-        </div>
-    </div>
-</div>
-<!-- 批量选择仓库弹窗 -->
 
-
-
-<div id="batchHasNoAccountDiv" class="dhjAlert_Tip" style="display: none;">
-    <div class="dhjAlert_TipTitle">
-        <a href="javascript:;" class="dhjAlert_TipGuanb fr batchHasNoAccountCloseButtonClass"></a>
-    </div>
-    <div class="Box" style="text-align: center; width: 400px;">
-        <div class="icon-gth" style="display: block;"></div>
-        <div class="font24 mb10 mt20">您无可选的结算账户</div>
-        <div class="font16 font999 mb30">批量转销售暂不支持选择移动支付结算账户</div>
-        <a href="javascript:;" class="dhjAlert_Btn mt10 Understood batchHasNoAccountCloseButtonClass">我知道了</a>
     </div>
 </div>
 
 
 
+    <!-- title -->
 
 
-
-
-
-
-
-
-<script type="text/javascript" async="" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/vds.js"></script><script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/all_before.js"></script>
-<script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/highcharts.js"></script>
-<script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/exporting.js"></script>
-
-<script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/WdatePicker.js"></script>
-<script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/jquery.js"></script>
-
-
-
-<script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/all_after.js"></script>
-<script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/flexigrid.js"></script>
-<script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/wbi_common.js"></script>
-<script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/wbill_common.js"></script>
-<script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/filter.js"></script>
-<script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/record.js"></script>
-
-<!--GrowingIO 全局引入  -->
+</div>
 <script type="text/javascript">
-    var _vds = _vds || [];
-    window._vds = _vds;
-
-    function addGrowingCS(csindex,csKey,valueKey){
-        var csValue = getValueFromRoot(valueKey);
-        if(csValue){
-            _vds.push(['setCS'+csindex, csKey, csValue]);
-        }
-    }
-
-    (function(){
-        _vds.push(['setAccountId', '96cf4aed2bf68eba']);
-
-        try{
-            addGrowingCS(1,'ContactId','contactid');
-            addGrowingCS(2,'UserId','userid');
-            addGrowingCS(3,'ProductCersion','productversion');
-            addGrowingCS(4,'IsPay','ispay');
-            addGrowingCS(5,'TradeCode','tradecode');
-        }catch(e){}
-
-        (function() {
-            var vds = document.createElement('script');
-            vds.type='text/javascript';
-            vds.async = true;
-            vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(vds, s);
-        })();
-    })();
-</script>
-
-<!-- add by wangsheng 阿里云前端性能监控 先在测试环境验证，不发生产 -->
-
-
-
-<script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/sale.js"></script>
-<script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/batch.js"></script>
-<script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/batchPrint.js"></script>
-<script type="text/javascript">
-    $(function() {
-        if('0'=='0'){
-            var sel_option = $('select[name="selauditstate"] option:eq(4)');
-            sel_option.wrap("<span style='display:none'></span>");
+    var app = new Vue({
+        el:'#app',
+        data:{
+            result:[]
         }
     });
+        var goAdd=function () {
+            layer.open({
+                type:2,
+                title:'添加用户',
+                fix:false,
+                maxmin:true,
+                shadeClose:true,
+                area:['1500px','900px'],
+                content:'/cargomanagement/sales-order-history/ceshi1',
+                end:function() {
+                    getUserPageList();
+                }
+            });
+        };
+
+    var getUserPageList = function(curr) {
+        $.ajax({
+            type:'post',
+            dataType:'json',
+            url:'/cargomanagement/sales-order-history/quertLikeList',
+            data:{
+                pageNum: curr || 1,
+                pageSize:4,
+                soClient:$("#SearchKeyWord").val(),
+               /* emPhone:$("#SearchKeyWord").val(),
+                emRealname:$("#SearchKeyWord").val(),*/
+
+            },
+            success:function(msg){
+                app.result = msg.page;
+                laypage({
+                    cont:'pagenav',
+                    pages:msg.totalPage,
+                    first:'首页',
+                    last:'尾页',
+                    skin: '#00A0E9',
+                    curr: curr || 1,
+                    jump: function (obj, first) {
+                        if (!first) {
+                            getUserPageList(obj.curr);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    getUserPageList();
+
+    /*查询销售订单历史记录*/
+    $("#selectSales").click(function () {
+        getUserPageList();
+    });
+
+    /*增加用户*/
+    $("#addUserBtn").click(function () {
+        layer.open({
+            type:2,
+            title:'添加用户',
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['1500px','900px'],
+            content:'/systemsetup/employ/addempl',
+            end:function() {
+                getUserPageList();
+            }
+        });
+    });
 </script>
-<script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/crypto.js"></script>
-<script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/hmac.js"></script>
-<script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/sha1.js"></script>
-<script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/base64.js"></script>
-<script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/plupload.js"></script>
-<script type="text/javascript" src="%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95%E5%8E%86%E5%8F%B21_files/upload.js"></script>
-</body></html>
+</body>
+
+</html>
