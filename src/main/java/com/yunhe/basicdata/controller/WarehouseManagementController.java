@@ -26,7 +26,7 @@ public class WarehouseManagementController {
     WarehouseManagementServiceImpl warehouseManagementService;
     @RequestMapping("/login")
     public ModelAndView Login(){
-        return new ModelAndView("basicdata/WareManage_list.html") ;
+        return new ModelAndView("basicdata/admin-list.html") ;
     }
 
     /**

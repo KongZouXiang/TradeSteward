@@ -39,7 +39,7 @@ public class WarehouseManagementServiceImpl extends ServiceImpl<WarehouseManagem
         Map map = new HashMap();
         map.put("pagenum", pageNum);
         map.put("pageSize", pageSize);
-        map.put("totalPage",page.getTotal());
+        map.put("totalPage",page.getPages());
         map.put("count",page.getTotal());
         map.put("list", list);
         return map;

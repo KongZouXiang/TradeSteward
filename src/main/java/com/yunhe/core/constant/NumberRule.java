@@ -35,7 +35,7 @@ public class NumberRule extends Number {
 
     public String XDD_NUMBER = "XDD" + NumberFactory.data(XDD);
 
-    public String XDD_NUMBER = "XSD" + NumberFactory.data(XDD);
+    //public String XDD_NUMBER = "XSD" + NumberFactory.data(XDD);
 
     public String JHD_NUMBER = "XSD" + NumberFactory.data(JHD);
 
