@@ -2,6 +2,7 @@ package com.yunhe.core.timedtask;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.util.logging.Logger;
 
@@ -13,14 +14,15 @@ import java.util.logging.Logger;
  * @author 孔邹祥
  * @date 2019年1月11日
  */
+@Component
 public class InitNumberTimer {
 
-    private final Logger logger = (Logger) LoggerFactory.getLogger(getClass());
+
 
     /**
      * 每间隔10秒输出时间
      */
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "1 0 0 * * ? ")
     public void logTime(){
 
         /**
@@ -28,7 +30,9 @@ public class InitNumberTimer {
          */
 
 
-        logger.info("定时任务，现在时间："+System.currentTimeMillis());
+        for (int i = 0; i <100 ; i++) {
+            System.out.println("定时器");
+        }
 
     }
 

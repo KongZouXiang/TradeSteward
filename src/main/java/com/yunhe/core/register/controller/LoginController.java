@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 public class LoginController {
-/*
+
     @Resource
     ILoginService loginService;
 
@@ -31,12 +31,11 @@ public class LoginController {
 
     @PostMapping("login")
     public String login(Employ employ, HttpSession session) {
-        System.out.println(new NumberRule().XSD_NUMBER);
         if (loginService.login(employ) != null) {
             session.setAttribute("employ", employ);
             return "index";
         }
 
         return "login";
-    }*/
+    }
 }
