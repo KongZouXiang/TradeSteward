@@ -28,8 +28,8 @@
     <script type="text/javascript" src="https://cdn.zhsmjxc.com/CDN/UCenter-webapp/js/product/list.js?version=5.7.0.201901051730"></script>
     <script src="https://cdn.zhsmjxc.com/CDN/UCenter-webapp/orderPlus/manager/js/product/common.js?version=5.7.0.201901051730"></script>-->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/laypage.css">
-    <script src="/js/vue/vue.min.js"></script>
+    <link rel="stylesheet" href="/js/laypage/skin/laypage.css">
+    <script src="/Vue/vue.min.js"></script>
     <script src="/js/jquery/jquery.min.js"></script>
     <script src="/js/laypage/laypage.js" charset="utf-8"></script>
     <script src="/js/layer/layer.js" charset="utf-8"></script>
@@ -256,13 +256,14 @@
         </div>
     </div>
 </div>-->
-<div id="app" class="container">
-<div class="table-responsive">
+<div id="app">
+<div>
     <form>
     <table class="table">
         <thead>
         <tr class="success">
             <td><input type="checkbox"></td>
+            <td>操作</td>
             <td>列配置</td>
             <td>编号</td>
             <td>名称</td>
@@ -270,12 +271,15 @@
             <td>零售价</td>
             <td>规格</td>
             <td>属性</td>
-            <td>编辑</td>
+
         </tr>
         </thead>
         <tbody>
         <tr class="active" v-for="(item,index) in result">
             <td><input type="checkbox"></td>
+            <td><a href="#" @click="editEvent(item.id)">编辑</a>    <a href="#" @click="delEvent(item.id)">删除</a>
+                <a href="#" @click="copyinsert(item.id)">复制新增</a>
+            </td>
             <td>{{index+1}}</td>
             <td>{{item.clNumber}}</td>
             <td>{{item.clName}}</td>
@@ -283,9 +287,6 @@
             <td>{{item.clTagPrise}}</td>
             <td>{{item.clSpec}}</td>
             <td>{{item.prId}}</td>
-            <td><a href="#" @click="editEvent(item.id)">编辑</a>    <a href="#" @click="delEvent(item.id)">删除</a>
-                <a href="#" @click="copyinsert(item.id)">复制新增</a>
-            </td>
         </tr>
         </tbody>
         <tr>
@@ -307,7 +308,7 @@
         $.ajax({
             type : "POST",
             dataType : "json",
-            url : "/basicdata/commodity-list/getpage",
+            url : "/../basicdata/commodity-list/getpage",
             data : {
                 current:curr || 1,
                 size:5,
@@ -377,7 +378,7 @@
             $.ajax({
                 type : "POST",
                 dataType : "json",
-                url : "/basicdata/commodity-list/deleteComm",
+                url : "/../basicdata/commodity-list/deleteComm",
                 data : {
                     id:id
                 },

@@ -8,11 +8,10 @@
  <script type="text/javascript" src="https://cdn.zhsmjxc.com/CDN/UCenter-webapp/js/product/product.js?version=5.7.0.201901051730"></script>
     <script src="https://cdn.zhsmjxc.com/CDN/UCenter-webapp/js/product/number.js?version=5.7.0.201901051730"></script>
     <script type="text/javascript" src="http://www.sz886.com/js/jquery-1.9.1.min.js"></script>
-   <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/jquery/jquery.min.js"></script>
-    <script src="/js/jquery.validation/1.14.0/jquery.validate.min.js"></script>
-    <script src="/js/jquery.validation/1.14.0/messages_zh.min.js"></script>
-
+    <script src="/jquery/validation.1.14.0/jquery.validate.js/jquery.validate.min.js"></script>
+    <script src="/jquery/validation.1.14.0/messages_zh.js/messages_zh.min.js"></script>
     <script type="text/javascript">
         //返回单个单位
      function returnSingleUnit() {
@@ -247,7 +246,7 @@
         $.ajax({
             type:"POST",
             dataType:"json",
-            url:"/basicdata/commodity-list/addpage",
+            url:"/../basicdata/commodity-list/addpage",
             data:{
                 tiaoxingma:$("#tiaoxingma").val(),
                 bianhao:$("#bianhao").val(),
