@@ -1,0 +1,205 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="Bookmark" href="/favicon.ico" >
+<link rel="Shortcut Icon" href="/favicon.ico" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="/lib/html5shiv.js"></script>
+<script type="text/javascript" src="/lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<script type="text/javascript" src="/js/vue/vue.min.js"></script>
+<link rel="stylesheet" href="/js/laypage/skin/laypage.css">
+<script type="text/javascript" src="/js/laypage/laypage.js"></script>
+	<title>收支项目管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 收支项目管理 <span class="c-gray en">&gt;</span> 收支项目列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<div class="text-c">
+		<input type="text" class="input-text" style="width:250px" placeholder="输入账目类型" id="fcType" name="fcType">
+		<button type="submit" class="btn btn-success" id="findFc" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索账目类型</button>
+	</div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20" data-validator-option="{theme:'simple_right'}">
+		<span class="l"><a href="javascript:;" id="daoFc" class="btn btn-success radius"><i class="Hui-iconfont">&#xe644;</i> Excel导出</a></span>
+		&nbsp;&nbsp;<a href="javascript:;" id="addFcBtn" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增账目</a>
+		<span class="r">共有数据：<strong th:text="${session.total}"></strong> 条</span>
+	</div>
+	<table class="table table-border table-bordered table-bg" id="app">
+		<thead>
+			<tr>
+				<th scope="col" colspan="9">收支分类列表</th>
+			</tr>
+			<tr class="text-c">
+				<th width="25"><input type="checkbox" name="" value=""></th>
+				<th width="100">操作</th>
+				<th width="40">ID</th>
+				<th width="150">账目类型</th>
+				<th width="150">收支类别</th>
+				<th>备注</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="text-c" v-for="(item,index) in result">
+				<td><input type="checkbox" value="1" name=""></td>
+				<td class="td-manage"><a title="编辑" href="javascript:;" @click="editEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+					<a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				<td>{{index+1}}</td>
+				<td>{{item.fcType}}</td>
+				<td>{{item.fcSort}}</td>
+				<td>{{item.fcRemark}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div id="pagenav" style="text-align: center;position:fixed;bottom:100px;left:0;right:0"></div>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el:'#app',
+        data:{
+            result:[]
+        }
+    });
+
+    var getFcPageList = function(curr) {
+        $.ajax({
+            type:'get',
+            dataType:'json',
+            url:'/billManagement/finance-classify/selectFcPage',
+            data:{
+                current: curr || 1,
+                size:5,
+                fcType:$("#fcType").val()
+            },
+            success:function(msg){
+                app.result = msg.list;
+                laypage({
+                    cont:'pagenav',
+                    pages:msg.pages,
+                    first:'首页',
+                    last:'尾页',
+                    skin: '#00A0E9',
+                    curr: curr || 1,
+                    jump: function (obj, first) {
+                        if (!first) {
+                            getFcPageList(obj.curr);
+                        }
+                    }
+                });
+            }
+        });
+    };
+
+    getFcPageList();
+
+    /*搜索*/
+    $("#findFc").click(function () {
+        getFcPageList();
+    });
+
+    /*新增账目*/
+    $("#addFcBtn").click(function () {
+        layer.open({
+            type:2,
+            title:'新增账目',
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['500px','350px'],
+            content:'/billManagement/finance-classify/toAdd',
+            end:function() {
+                getFcPageList();
+            }
+        });
+    });
+
+    /*修改账目*/
+    var editEvent = function (id) {
+        //alert(id);
+        layer.open({
+            type:2,
+            title: '修改账目',
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['500px','350px'],
+            content:'/billManagement/finance-classify/toUpdate?id='+id,
+            end:function() {
+                getFcPageList();
+            }
+        });
+    }
+
+    /*删除账目*/
+    var delEvent = function (id) {
+        layer.confirm('你确定要删除吗？',{
+            btn:['是','否']
+        },function () {
+            $.ajax({
+                type:'GET',
+                dataType:'json',
+                url: '/billManagement/finance-classify/deleteFc',
+                data:{id:id},
+                success:function (msg) {
+                    getFcPageList();
+                    layer.msg('成功删除账目' + id,{icon:5});
+                }
+            })
+        },function () {
+
+        });
+    };
+
+    function delAll (argument) {
+
+        var data = tableCheck.getData();
+        alert(data);
+        layer.confirm('确认要将它们都删除吗？',function(index){
+            //捉到所有被选中的，发异步进行删除
+            for(var i =0;i<data.length;i++){
+                $.ajax({
+                    url:"/billManagement/finance-classify/deleteFc",
+                    data:{"id":data[i]},
+
+                })
+                alert(data[i]);
+            }
+            // $(".layui-form-checked").not('.header').parents('tr').remove();
+            window.location.href="/billManagement/finance-classify/selectFcPage";
+            layer.msg('删除成功', {icon: 1});
+
+
+        });
+
+    }
+
+    /*Excel导出*/
+    $("#daoFc").click(function () {
+        window.location.href="/billManagement/finance-classify/export";
+    })
+</script>
+</body>
+</html>

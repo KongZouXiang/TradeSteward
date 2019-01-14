@@ -20,23 +20,22 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 public class LoginController {
-/*
+
     @Resource
     ILoginService loginService;
 
     @GetMapping("/")
     public String index() {
-        return "login";
+        return "index";
     }
 
-    @PostMapping("login")
+    @PostMapping("index")
     public String login(Employ employ, HttpSession session) {
-        System.out.println(new NumberRule().XSD_NUMBER);
         if (loginService.login(employ) != null) {
             session.setAttribute("employ", employ);
             return "index";
         }
 
-        return "login";
-    }*/
+        return "index";
+    }
 }

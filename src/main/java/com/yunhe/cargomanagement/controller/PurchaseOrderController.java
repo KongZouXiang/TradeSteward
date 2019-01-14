@@ -1,8 +1,11 @@
 package com.yunhe.cargomanagement.controller;
 
 
+import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
 import com.yunhe.cargomanagement.entity.PurchaseOrder;
 import com.yunhe.cargomanagement.service.IPurchaseOrderService;
+import com.yunhe.customermanagement.entity.Supplier;
+import com.yunhe.customermanagement.service.ISupplierService;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +31,26 @@ public class PurchaseOrderController {
     private IPurchaseOrderService purchaseOrderService;
 
     /**
+     * 供应商列表
+     */
+    @Resource
+    private ISupplierService supplierService;
+
+    /**
+     * 商品列表
+     */
+    @Resource
+    CommodityListServiceImpl commodityListService;
+
+    @RequestMapping("/Test22")
+    public ModelAndView test22(){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/cargomanagement/purorder-list");
+        return mv;
+    }
+
+
+    /**
      * 跳转到进货订单历史页面
      * @return 页面
      */
@@ -43,15 +66,32 @@ public class PurchaseOrderController {
      * @return 页面
      */
     @RequestMapping("/addPurchase")
-    public ModelAndView getaddPurchase(){
-
-
+    public ModelAndView getaddPurchase(HttpSession session){
+        /*List<Supplier> suppliers = supplierService.selectList();
+        session.setAttribute("suppliers",suppliers);*/
         ModelAndView mv = new ModelAndView();
         mv.setViewName("cargomanagement/Pur_order-add");
         return mv;
     }
 
+    /**
+     * 查询供应商
+     * @return 供应商数据
+     */
+    @RequestMapping("/getSupplieradd")
+    public Map getSupplieradd(){
+        return supplierService.selectList();
+    }
 
+
+    /**
+     * 查询商品
+     * @return 商品列表
+     */
+    @RequestMapping("/getCommodadd")
+    public Map getCommodadd(){
+        return commodityListService.selectList();
+    }
     /**
      * 进货订单历史分页
      * @param pageNum 前台传当前页

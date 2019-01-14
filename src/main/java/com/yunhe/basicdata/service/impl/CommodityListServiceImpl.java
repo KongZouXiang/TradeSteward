@@ -25,26 +25,25 @@ import java.util.Map;
 public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, CommodityList> implements ICommodityListService {
     @Resource
     CommodityListMapper commodityListMapper;
-
     /**
      * 查询列表 分页
-     *
      * @param current       当前页
      * @param size          每页的条数
      * @param commodityList 查询商品的实体类
      * @return 返回分页的信息
      */
     @Override
-    public Map selectAllCommList(int current, int size, CommodityList commodityList) {
-        Page page = new Page(current, size);
+    public Map selectAllcommList(int current, int size,CommodityList commodityList) {
+        Page page=new Page(current,size);
         List<CommodityList> comlist = commodityListMapper.selectAllCommmList(page);
         Map map = new HashMap();
         map.put("total", page.getTotal());
         map.put("pages", page.getPages());
-        map.put("commodityList", commodityList);
+        map.put("commodityList",commodityList);
         map.put("comlist", comlist);
         return map;
     }
+
 
     /**
      * 增加商品的信息
@@ -100,6 +99,14 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
     public List<CommodityList> selectCommstlist(String data) {
         List<CommodityList> commodityLists = (List<CommodityList>) commodityListMapper.selectList(new QueryWrapper<CommodityList>().like("cl_name", data).or().like("cl_scan", data));
         return commodityLists;
+    }
+
+    @Override
+    public Map selectList() {
+        List<CommodityList> list = commodityListMapper.selectList(new QueryWrapper<>());
+        Map<String, Object> map = new HashMap<>();
+        map.put("list",list);
+        return map;
     }
 
 }

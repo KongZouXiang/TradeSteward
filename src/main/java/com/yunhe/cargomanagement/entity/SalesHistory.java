@@ -28,6 +28,7 @@ public class SalesHistory implements Serializable {
 
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
+
     /**
      * 单据编号
      */

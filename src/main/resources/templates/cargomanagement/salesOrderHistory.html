@@ -1,467 +1,128 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html><head><!-- base href="http://web.zhsmjxc.com/UCenter-webapp/" -->
-
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>员工管理</title>
-    <link rel="stylesheet" href="/../css/style.css" type="text/css">
-    <link rel="stylesheet" href="/../css/jquery.css">
-    <link rel="stylesheet" href="/../css/zTreeStyle.css" type="text/css">
-    <link rel="stylesheet" href="/../css/Sortable.css" type="text/css">
-    <script type="text/javascript" async="" src="/../js/vds.js"></script>
-    <script type="text/javascript" src="/../js/all_before.js"></script>
-    <link rel="stylesheet" href="/../css/layer.css" id="layuicss-skinlayercss">
-    <script type="text/javascript" src="/../js/highcharts.js"></script>
-    <script type="text/javascript" src="/../js/exporting.js"></script>
-    <script type="text/javascript" src="/../js/WdatePicker.js"></script>
-    <link href="/../css/WdatePicker.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="/../js/jquery.js"></script>
-    <script type="text/javascript" src="/../js/all_after.js"></script>
-    <script type="text/javascript" src="/../js/flexigrid.js"></script>
-    <script type="text/javascript" src="/../js/wbi_common.js"></script>
-    <script type="text/javascript" src="/../js/wbill_common.js"></script>
-    <script type="text/javascript" src="/../js/filter.js"></script>
-    <script type="text/javascript" src="/../js/record.js"></script>
-    <script type="text/javascript" src="/../js/vue/vue.min.js"></script>
-    <script type="text/javascript" src="/../js/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/../js/layer/layer.js"></script>
-    <script type="text/javascript" src="/../js/laypage/laypage.js"></script>
-
-    <!--GrowingIO 全局引入  -->
-    <script type="text/javascript">
-        var _vds = _vds || [];
-        window._vds = _vds;
-
-        function addGrowingCS(csindex,csKey,valueKey){
-            var csValue = getValueFromRoot(valueKey);
-            if(csValue){
-                _vds.push(['setCS'+csindex, csKey, csValue]);
-            }
-        }
-
-        (function(){
-            _vds.push(['setAccountId', '96cf4aed2bf68eba']);
-
-            try{
-                addGrowingCS(1,'ContactId','contactid');
-                addGrowingCS(2,'UserId','userid');
-                addGrowingCS(3,'ProductCersion','productversion');
-                addGrowingCS(4,'IsPay','ispay');
-                addGrowingCS(5,'TradeCode','tradecode');
-            }catch(e){}
-
-            (function() {
-                var vds = document.createElement('script');
-                vds.type='text/javascript';
-                vds.async = true;
-                vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
-                var s = document.getElementsByTagName('script')[0];
-                s.parentNode.insertBefore(vds, s);
-            })();
-        })();
-    </script>
-
-
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="Bookmark" href="/favicon.ico" >
+    <link rel="Shortcut Icon" href="/favicon.ico" />
+    <script type="text/javascript" src="/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <script type="text/javascript" src="/js/vue/vue.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <title>管理员列表</title>
 </head>
-<body style="background-image: none; cursor: default;">
-<input type="hidden" id="moduleName" value="SysUser" spellcheck="false">
-<input type="hidden" id="tabid" value="SysUser-List" spellcheck="false">
-<input type="hidden" id="issys" value="1" spellcheck="false">
-<input type="hidden" id="isroot" value="1" spellcheck="false">
-<input type="hidden" id="isdemo" value="1" spellcheck="false">
-<input type="hidden" id="hidproductversion" value="1" spellcheck="false">
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 管理员管理 <span
+        class="c-gray en">&gt;</span> 管理员列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+                                               href="javascript:location.replace(location.href);" title="刷新"><i
+        class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div class="text-c"> <!--日期范围：
+        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin"
+               class="input-text Wdate" style="width:120px;">
+        -
+        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax"
+               class="input-text Wdate" style="width:120px;">-->
+        <input type="text" class="input-text" style="width:250px" placeholder="输入单号" id="poNumber" name="">
+        <input type="text" class="input-text" style="width:250px" placeholder="输入供应商" id="poSupName" name="">
+        <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜订单</button>
+    </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+            <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+        <a href="javascript:;" onclick="admin_add('添加管理员','admin-add.html','800','500')"
+            class="btn btn-primary radius">
+        <i class="Hui-iconfont">&#xe600;</i> 添加管理员</a>
+        <a href="javascript:;" onclick="admin_add('Excel导出','admin-add.html','800','500')"
+               class="btn btn-primary radius">
+        <i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
+    </span>
 
-<input type="hidden" id="isShengchan" value="true" spellcheck="false">
-<input type="hidden" id="usercount" value="4" spellcheck="false">
-<input type="hidden" id="tel" value="400-886-1800" spellcheck="false">
-
-<div class="main" id="listSysUser">
-    <div class="whiteBox actionArea">
-        <table width="100%" cellspacing="0" cellpadding="0" border="0">
-            <tbody><tr>
-                <td>
-
-                    <a href="javascript:;" class="button blueButton withIcon fl mr5" onclick="goAdd()">
-                        <span class="text">新增销售订单</span>
-
-                    </a>
-                    <a href="javascript:;" onclick="exportList()" class="button  withIcon fl mr5"> <span class="icon exportIcon"></span>
-                        <span class="text">导出</span>
-                    </a>
-
-                    <div id="batchOperateDiv" class="selectButton fl mr5" onmousemove="showBatchPP()" onmouseout="hideBatchPP()">
-                        <div class="title">
-                            <span class="text">更多操作</span>
-                            <span class="icon"></span>
-                        </div>
-                        <ul id="batchOperation" class="value" style="display: none;">
-                            <li class="normal">
-                                <a onclick="batchOperate(1)" herf="javascript:;">批量转销售</a>
-                            </li>
-                            <li class="normal">
-                                <a onclick="batchOperate(2)" href="javascript:;">批量关闭</a>
-                            </li>
-                            <li class="normal">
-                                <a onclick="batchPrint()" href="javascript:;">批量打印</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div id="batchOperateTip" class="btn-info" style="position: absolute; left: 312px; top: 44.8833px; display: none;">
-                        <div class="tips">
-                            <h2></h2>
-                            <h1>
-                                销售订单支持批量转销售、批量关闭啦~选择需要转销售或关闭的单据后，一键完成操作！
-                                <br>
-                                <a href="javascript:;" onclick="hidBatchOperateTip()" class="fr">知道了</a>
-                            </h1>
-                        </div>
-                    </div>
-
-
-                    <div class="impAndExp new-width mr5">
-                        <ul class="impAndExp-list">
-                            <li class="normal">
-                                <a href="javascript:;" onclick="batchAudit(1)" class="button  withIcon fl mr5">
-                                    <span class="text">审核&nbsp;</span>
-                                    <span class="impAndExp-list-icon"></span>
-                                </a>
-                            </li>
-                            <li class="normal">
-                                <a href="javascript:;" onclick="batchAudit(0)" class="button  withIcon fl mr5">
-                                    <span class="text">反审核</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </td>
-                <td align="right">
-                    <input type="hidden" id="hidIsShowZF" value="0" spellcheck="false">
-                    <a href="javascript:;" class="button fr" id="btnadvance" onclick="advance()">筛选</a>
-                    <div class="search fr mr5" style="display: block;">
-                        <input name="" type="text" id="SearchKeyWord" title="搜索单号、客户名称、处理状态、备注" class="inputText mr5" size="35" placeholder="搜索单号、客户名称、处理状态、备注" onkeyup="bindKeySearch()" spellcheck="false">
-                        <a class="button" id="selectSales">搜索</a>
-                        <input id="querytype" type="hidden" value="0" style="display: none" spellcheck="false">
-                    </div>
-                    <span class="mr10 fr lh30"><input type="checkbox" id="chkShowZF" checked="checked" onclick="funIsShowZF()" spellcheck="false" value="on">
-								<label for="chkShowZF">不显示已关闭</label>
-						</span></td>
+        <span class="r">共有数据：<strong>54</strong> 条</span></div>
+    <div id="app" style="overflow: scroll;height: 500px"  >
+        <table class="table table-border table-bordered table-bg">
+            <thead>
+            <tr>
+                <th scope="col" colspan="9">员工列表</th>
             </tr>
-            </tbody></table>
+            <tr class="text-c">
+                <th width="25"><input type="checkbox" name="" value=""></th>
+                <th width="40">ID</th>
+                <th width="130">操作</th>
+                <th width="150">业务日期</th>
+                <th width="150">单据编号</th>
+                <th width="90">处理状态</th>
+                <th width="90">审核人</th>
+                <th width="130">客户名称</th>
+                <th width="150">销售订单商品</th>
+                <th width="100">销售订单数量</th>
+                <th width="100">折扣金额</th>
+                <th width="100">总计金额</th>
+                <th width="100">订金</th>
+                <th width="70">纸质单据</th>
+                <th width="150">制单日期</th>
+                <th width="150">未转销售数量</th>
+                <th width="150">送货日期</th>
+                <th width="90">经手人</th>
+                <th width="90">制单人</th>
+                <th width="150">备注</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-c" v-for="(item,index) in result">
+                <td><input type="checkbox" value="" name=""></td>
+                <td>{{index+1}}</td>
+                <td class="td-manage">
+                    <a style="text-decoration:none" class="ml-5" @click="article_edit('编辑','/cargomanagement/sales-order-history/edit?id='+(item.id))" href="javascript:;" title="编辑">
+                        <i class="Hui-iconfont">&#xe6df;</i>
+                    </a>
+                    <a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none">
+                        <i class="Hui-iconfont">&#xe6e2;</i>
+                    </a>
+                    <a title="详情" href="#" class="ml-5" style="text-decoration:none">
+                        <i class="icon Hui-iconfont">&#xe627;</i>
+                    </a>
+                </td>
+                <td>{{item.soDate}}</td>
+                <td>{{item.soOrderNum}}</td>
+                <td>{{item.soStatus}}</td>
+                <td>{{item.soAuditor}}</td>
+                <td>{{item.soClient}}</td>
+                <td>{{item.soOrderComm}}</td>
+                <td>{{item.soOrderCount}}</td>
+                <td>{{item.soDiscount}}</td>
+                <td>{{item.soMoney}}</td>
+                <td>{{item.soEarnest}}</td>
+                <td>{{item.soBills}}</td>
+                <td>{{item.soBillDate}}</td>
+                <td>{{item.soSellCount}}</td>
+                <td>{{item.soDevlierDate}}</td>
+                <td>{{item.soHander}}</td>
+                <td>{{item.soMaker}}</td>
+                <td>{{item.soRemark}}</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <table class="expertSearch" style="display: none;" width="100%" cellspacing="0" cellpadding="10" border="0">
-        <tbody><tr>
-            <td style="border-right: 1px solid #d7d7d7;">
-                <div class="value">
-                    <div class="title" style="width: 60px; text-align: right">单据编号</div>
-                    <div class="text" style="width:140px;">
-                        <input name="txbBillNo" id="txbBillNo" type="text" class="inputText" maxlength="100" spellcheck="false">
-                    </div>
-                </div>
-                <div class="value">
-                    <div class="title" style="width: 60px; text-align: right">商品名称</div>
-                    <div class="text" style="width:140px;">
-                        <input name="txbProducts" id="txbProducts" type="text" class="inputText" maxlength="100" spellcheck="false">
-                    </div>
-                </div>
-                <div class="value">
-                    <div class="title" style="width: 60px; text-align: right">备注</div>
-                    <div class="text" style="width:140px;">
-                        <input name="txbRemark" id="txbRemark" type="text" class="inputText" maxlength="100" spellcheck="false">
-                    </div>
-                </div>
-                <div class="value">
-                    <div class="title" style="width: 60px; text-align: right">客户名称</div>
-                    <div class="text" style="width:140px;">
-                        <input name="txbCr" id="txbCr" type="text" class="inputText" maxlength="100" spellcheck="false">
-                    </div>
-                </div>
-                <div class="value">
-                    <div class="title" style="width: 60px; text-align: right">业务日期</div>
-                    <div class="text">
-                        <input name="txbStartBusiDate" id="txbStartBusiDate" type="text" class="inputText date" onclick="WdatePicker({maxDate:'#F{$dp.$D(\'txbEndBusiDate\')}'})" spellcheck="false">
-
-                    </div>
-                    <div class="title">~</div>
-                    <div class="text">
-                        <input name="txbEndBusiDate" id="txbEndBusiDate" type="text" class="inputText date" style="width:196px;" onclick="WdatePicker({minDate:'#F{$dp.$D(\'txbStartBusiDate\')}'})" spellcheck="false">
-                    </div>
-                </div>
-                <div class="value">
-                    <div class="title" style="width: 60px; text-align: right">处理状态</div>
-                    <div class="text" style="width:140px;">
-                        <select id="selauditstate" name="selauditstate" class="wf100">
-                            <option value="" selected="selected">请选择</option>
-                            <option value="0">未审核</option>
-                            <option value="1">已审核未转销售</option>
-                            <option value="2">部分转销售</option>
-                            <span style="display:none"><option value="3" style="display:none">全部转销售</option></span>
-                        </select>
-                    </div>
-                </div>
-                <div class="value">
-                    <div class="title" style="width: 60px; text-align: right">经手人</div>
-                    <div class="text" style="width:140px;">
-							<span class="levelSelect mr10" id="levelSelect-OperUser">
-								 <input type="text" class="ls-input" readonly="readonly" name="levelSelect-OperUser-input" onclick="levelSelect.show('OperUser');" onfocus="this.blur()" style="width:112px;" spellcheck="false" value="全部">
-								<input type="hidden" id="choose-OperUser-parentval" spellcheck="false">
-								<input type="hidden" class="ls-input-val" id="choose-OperUser-val" spellcheck="false" value="" beforelevelselectchoose="">
-								<div id="levelSelect-OperUser-list" class="ls ls1" style="display: none;"><div class="firstList"><ul id="ls-ul1-OperUser"><input type="hidden" class="ls-input-init-text" value="全部"><input type="hidden" class="ls-input-init-val" value=""><input type="hidden" class="ls-input-init-parentval" value="0381D14F-31FC-4506-9701-5AF58ED71F17"><input type="hidden" class="ls-input-init-parenttext" value=""><li class="normal" id="ls-li-OperUser" onclick="levelSelect.choose('OperUser', '全部','', '0381D14F-31FC-4506-9701-5AF58ED71F17','');"><span title="全部">全部</span></li><li class="normal" tabindex="0" id="ls-li-OperUser-4393726E-DB70-4903-AF08-5AFEFDDF1541" onclick="levelSelect.choose('OperUser', '老板', '4393726E-DB70-4903-AF08-5AFEFDDF1541','0381D14F-31FC-4506-9701-5AF58ED71F17',null,0,'null');"><span title="老板">老板</span></li><li class="normal" tabindex="0" id="ls-li-OperUser-28ED28C9-6903-48F0-86EF-1C0EE6F1C97E" onclick="levelSelect.choose('OperUser', '财务', '28ED28C9-6903-48F0-86EF-1C0EE6F1C97E','0381D14F-31FC-4506-9701-5AF58ED71F17',null,0,'null');"><span title="财务">财务</span></li><li class="normal" tabindex="0" id="ls-li-OperUser-BBC88C96-7FF3-4FCC-AAA5-4B0F83C14122" onclick="levelSelect.choose('OperUser', '仓管或采购', 'BBC88C96-7FF3-4FCC-AAA5-4B0F83C14122','0381D14F-31FC-4506-9701-5AF58ED71F17',null,0,'null');"><span title="仓管或采购">仓管或采购</span></li><li class="normal" tabindex="0" id="ls-li-OperUser-C3108DCA-AC53-4456-A745-C7B22015E160" onclick="levelSelect.choose('OperUser', '销售', 'C3108DCA-AC53-4456-A745-C7B22015E160','0381D14F-31FC-4506-9701-5AF58ED71F17',null,0,'null');"><span title="销售">销售</span></li></ul></div></div>
-							</span>
-                    </div>
-                </div>
-
-
-                <div class="value">
-                    <div class="title" style="width: 60px; text-align: right">制单日期</div>
-                    <div class="text">
-                        <input name="txbStartCreateDate" id="txbStartCreateDate" type="text" class="inputText date" onclick="WdatePicker({maxDate:'#F{$dp.$D(\'txbEndCreateDate\')}'})" spellcheck="false">
-                    </div>
-                    <div class="title">~</div>
-                    <div class="text">
-                        <input name="txbEndCreateDate" id="txbEndCreateDate" type="text" class="inputText date" style="width:196px;" onclick="WdatePicker({minDate:'#F{$dp.$D(\'txbStartCreateDate\')}'})" spellcheck="false">
-                    </div>
-                </div>
-                <!-- <div class="value free">
-                    <div class="title" style="width: 60px; text-align: right">出库仓库</div>
-                    <div class="text" style="width:140px;">
-                        <span class="levelSelect mr10" id="levelSelect-Warehouse">
-                             <input type="text" class="ls-input" readonly name="levelSelect-Warehouse-input"
-                            onclick="levelSelect.show('Warehouse');" onfocus="this.blur()" style="width:112px;"/>
-                            <input type="hidden" id="choose-Warehouse-parentval" />
-                            <input type="hidden" class="ls-input-val" id="choose-Warehouse-val" />
-                            <div id="levelSelect-Warehouse-list" class="ls ls1" style="display: none;"></div>
-                        </span>
-                    </div>
-                </div> -->
-                <div class="value">
-                    <div class="title" style="width: 60px; text-align: right">制单人</div>
-                    <div class="text" style="width:140px;">
-							<span class="levelSelect mr10" id="levelSelect-CreateUser">
-								 <input type="text" class="ls-input" readonly="readonly" name="levelSelect-CreateUser-input" onclick="levelSelect.show('CreateUser');" onfocus="this.blur()" style="width:112px;" spellcheck="false" value="全部">
-								<input type="hidden" id="choose-CreateUser-parentval" spellcheck="false">
-								<input type="hidden" class="ls-input-val" id="choose-CreateUser-val" spellcheck="false" value="" beforelevelselectchoose="">
-								<div id="levelSelect-CreateUser-list" class="ls ls1" style="display: none;"><div class="firstList"><ul id="ls-ul1-CreateUser"><input type="hidden" class="ls-input-init-text" value="全部"><input type="hidden" class="ls-input-init-val" value=""><input type="hidden" class="ls-input-init-parentval" value="0381D14F-31FC-4506-9701-5AF58ED71F17"><input type="hidden" class="ls-input-init-parenttext" value=""><li class="normal" id="ls-li-CreateUser" onclick="levelSelect.choose('CreateUser', '全部','', '0381D14F-31FC-4506-9701-5AF58ED71F17','');"><span title="全部">全部</span></li><li class="normal" tabindex="0" id="ls-li-CreateUser-4393726E-DB70-4903-AF08-5AFEFDDF1541" onclick="levelSelect.choose('CreateUser', '老板', '4393726E-DB70-4903-AF08-5AFEFDDF1541','0381D14F-31FC-4506-9701-5AF58ED71F17',null,0,'null');"><span title="老板">老板</span></li><li class="normal" tabindex="0" id="ls-li-CreateUser-28ED28C9-6903-48F0-86EF-1C0EE6F1C97E" onclick="levelSelect.choose('CreateUser', '财务', '28ED28C9-6903-48F0-86EF-1C0EE6F1C97E','0381D14F-31FC-4506-9701-5AF58ED71F17',null,0,'null');"><span title="财务">财务</span></li><li class="normal" tabindex="0" id="ls-li-CreateUser-BBC88C96-7FF3-4FCC-AAA5-4B0F83C14122" onclick="levelSelect.choose('CreateUser', '仓管或采购', 'BBC88C96-7FF3-4FCC-AAA5-4B0F83C14122','0381D14F-31FC-4506-9701-5AF58ED71F17',null,0,'null');"><span title="仓管或采购">仓管或采购</span></li><li class="normal" tabindex="0" id="ls-li-CreateUser-C3108DCA-AC53-4456-A745-C7B22015E160" onclick="levelSelect.choose('CreateUser', '销售', 'C3108DCA-AC53-4456-A745-C7B22015E160','0381D14F-31FC-4506-9701-5AF58ED71F17',null,0,'null');"><span title="销售">销售</span></li></ul></div></div>
-							</span>
-                    </div>
-                </div>
-
-                <div class="value free">
-                    <div class="title" style="width: 60px; text-align: right">送货日期</div>
-                    <div class="text">
-                        <input name="txbStartDeliveryDate" id="txbStartDeliveryDate" type="text" class="inputText date" onclick="WdatePicker({maxDate:'#F{$dp.$D(\'txbEndDeliveryDate\')}'})" spellcheck="false">
-                    </div>
-                    <div class="title">~</div>
-                    <div class="text">
-                        <input name="txbEndDeliveryDate" id="txbEndDeliveryDate" type="text" class="inputText date" style="width:196px;" onclick="WdatePicker({minDate:'#F{$dp.$D(\'txbStartDeliveryDate\')}'})" spellcheck="false">
-                    </div>
-                </div>
-                <!-- <div class="value">
-                    <div class="title" style="width: 60px; text-align: right">销售类型</div>
-                    <div class="text" style="width:140px;">
-                        <select id="selSaleType" name="selSaleType" class="wf100"><option></option>
-                            <option value="0">零售</option>
-                            <option value="1">批发</option></select>
-                    </div>
-                </div> -->
-                <div class="value" style="display: none;">
-                    <div class="title">送货路线</div>
-                    <div class="text">
-                        <input name="txbClientLine" id="txbClientLine" type="text" class="inputText" spellcheck="false">
-                    </div>
-                </div>
-
-                <div class="value">
-                    <div class="title" style="width: 75px; text-align: right">单据上传状态</div>
-                    <div class="text" style="width: 140px;">
-                        <select id="selUploadState" name="selUploadState" class="wf100">
-                            <option value="" selected="selected">全部</option>
-                            <option value="1">已上传</option>
-                            <option value="0">未上传</option>
-                        </select>
-                    </div>
-                </div>
-
-            </td>
-            <td width="195" valign="middle" align="center"><a href="javascript:;" class=" button blueButton" onclick="reload(1)">搜索</a>
-                &nbsp;&nbsp;<a href="javascript:;" onclick="allclean()" class="button">清空所有条件</a></td>
-        </tr>
-        </tbody></table>
-    <div class="whiteBox">
-        <div  id="FlexiGridRootSysUser-page" class="flexigrid">
-            <div style="width:100%;overflow:scroll; display: flex; position:relative; border: solid 1px #d7d7d7; box-sizing: border-box;">
-                <div class="t_left" style="position: absolute; z-index: 999;"></div>
-                <div class="t_r">
-                <div class="hDiv" style="background-color: rgb(255, 255, 255); position: relative; width: 1772px;">
-                    <table class="tableStyle borderLTNone" style="position: relative; left: 0px;" width="1772" cellspacing="0" cellpadding="5">
-                <tbody>
-                <tr id="theader">
-                    <th id="th0" number="0" personwidth="45" info="false" display="序号" name="no" sortable="false" abbr="no" class="normal" checkbox="false" button="false" width="45" align="center">
-                        <span class="bg" style="width:45px">序号</span>
-                        <div id="dragLineDiv0" index="0" class="dragLine" style="left: 54px; top: 0px;"></div></th>
-                    <th id="th1" number="1" personwidth="150" info="false" display="操作" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
-                        <span class="bg" style="width:150px">操作</span>
-                        <div id="dragLineDiv1" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
-                    <th id="th100" number="1" personwidth="150" info="false" display="业务日期" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
-                        <span class="bg" style="width:150px">业务日期</span>
-                        <div id="dragLineDiv100" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
-                    <th id="th101" number="1" personwidth="150" info="false" display="单据编号" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
-                        <span class="bg" style="width:150px">单据标号</span>
-                        <div id="dragLineDiv101" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
-                    <th id="th102" number="7" personwidth="100" info="false" display="处理状态" name="useremail" sortable="false" abbr="useremail" class="normal" checkbox="false" button="false" width="100" align="center">
-                        <span class="bg" style="width:100px">处理状态</span>
-                        <div id="dragLineDiv102" index="7" class="dragLine" style="left: 109px; top: 0px;"></div></th>
-                    <th id="th800" number="8" personwidth="100" info="false" display="审核人" name="userstatus" sortable="false" abbr="userstatus" class="normal" checkbox="false" button="false" width="100" align="center">
-                        <span class="bg" style="width:100px">审核人</span>
-                        <div id="dragLineDiv800" index="8" class="dragLine" style="left: 109px; top: 0px;"></div></th>
-                    <th id="th1001" number="1" personwidth="150" info="false" display="客户名称" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
-                        <span class="bg" style="width:150px">客户名称</span>
-                        <div id="dragLineDiv1001" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
-                    <th id="1111" number="1" personwidth="150" info="false" display="销售订单商品" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
-                        <span class="bg" style="width:150px">销售订单商品</span>
-                        <div id="dragLineDiv1011" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
-                    <th id="th0025" number="1" personwidth="150" info="false" display="销售订单数量" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
-                        <span class="bg" style="width:150px">销售订单数量</span>
-                        <div id="dragLineDiv0025" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
-                    <th id="th1021" number="7" personwidth="100" info="false" display="折扣金额" name="useremail" sortable="false" abbr="useremail" class="normal" checkbox="false" button="false" width="100" align="center">
-                        <span class="bg" style="width:100px">折扣金额</span>
-                        <div id="dragLineDiv1021" index="7" class="dragLine" style="left: 109px; top: 0px;"></div></th>
-                    <th id="th0021" number="7" personwidth="100" info="false" display="总计金额" name="useremail" sortable="false" abbr="useremail" class="normal" checkbox="false" button="false" width="100" align="center">
-                        <span class="bg" style="width:100px">总计金额</span>
-                        <div id="dragLineDiv0021" index="1" class="dragLine" style="left: 109px; top: 0px;"></div></th>
-                    <th id="th0022" number="7" personwidth="100" info="false" display="定金" name="useremail" sortable="false" abbr="useremail" class="normal" checkbox="false" button="false" width="100" align="center">
-                        <span class="bg" style="width:100px">定金</span>
-                        <div id="dragLineDiv0022" index="1" class="dragLine" style="left: 109px; top: 0px;"></div></th>
-
-                    <th id="th0026" number="8" personwidth="100" info="false" display="纸质单据" name="userstatus" sortable="false" abbr="userstatus" class="normal" checkbox="false" button="false" width="100" align="center">
-                        <span class="bg" style="width:100px">纸质单据</span>
-                        <div id="dragLineDiv0026" index="8" class="dragLine" style="left: 109px; top: 0px;"></div></th>
-
-                    <th id="11111" number="1" personwidth="150" info="false" display="制单日期" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
-                        <span class="bg" style="width:150px">制单日期</span>
-                        <div id="dragLi1eDiv1011" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
-                    <th id="th0024" number="1" personwidth="150" info="false" display="未转销售数量" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
-                        <span class="bg" style="width:150px">未转销售数量</span>
-                        <div id="dragLi1eDiv0024" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
-                    <th id="th0023" number="1" personwidth="150" info="false" display="送货日期" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
-                        <span class="bg" style="width:150px">送货日期</span>
-                        <div id="dragLi1eDiv0023" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
-                    <th id="1111111" number="1" personwidth="150" info="false" display="经手人" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
-                        <span class="bg" style="width:150px">经手人</span>
-                        <div id="dragLi1eDiv111011" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
-                    <th id="111111111" number="1" personwidth="150" info="false" display="制单人" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
-                        <span class="bg" style="width:150px">制单人</span>
-                        <div id="dragLi1eDiv11111011" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
-                    <th id="1111111111" number="1" personwidth="150" info="false" display="备注" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
-                        <span class="bg" style="width:150px">备注</span>
-                        <div id="dragLi1e111Div111011" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
-                </tr>
-                </tbody>
-                    </table>
-                </div>
-                    <div id="app" style= "background-color: rgb(255, 255, 255); width: 1772px; height: 626px;" class="bDiv" >
-                        <table id="resultList" style="border-top: 0px none;" class="tableStyle borderLTNone" width="1772" cellspacing="0" cellpadding="5">
-                            <tbody>
-                            <tr id="row0" normalrow="true" style="" v-for="(item,index) in result">
-                                <td thid="th0" style="width: 45px; height: 26px;" thname="no" align="center">
-                                <div class="tableText" style="width: 45px;">{{index+1}}</div>
-                                </td>
-                                <td thid="th1" style="width: 150px; height: 26px;" thname="Action" align="center">
-                                <div class="tableText" style="width: 150px;">
-                                    <div class="tableButtonArea">
-                                        <a id="0" class="operate details" title="详细" onclickevent="detailRecord({{item.id}});">
-                                        </a>
-                                    </div>
-                                </div>
-                                </td>
-
-                                <!--业务日期-->
-                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
-                                    <div class="tableText" style="width: 150px;">{{item.soDate}}</div>
-                                </td>
-                                <!--单据编号-->
-                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
-                                    <div class="tableText" style="width: 150px;">{{item.soOrderNum}}</div>
-                                </td>
-                                <!--处理状态-->
-                                <td thid="th7" style="width: 100px; height: 26px;" thname="useremail" align="center">
-                                    <div class="tableText" style="width: 100px;">{{item.soStatus}}</div>
-                                </td>
-                               <!-- 审核人-->
-                                <td thid="th8" style="width: 100px; height: 26px;" thname="userstatus" align="center">
-                                    <div class="tableText" style="width: 100px;">{{item.soAuditor}}</div>
-                                </td>
-                                <!--客户名称-->
-                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
-                                    <div class="tableText" style="width: 150px;">{{item.soClient}}</div>
-                                </td>
-                                <!--销售订单商品-->
-                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
-                                    <div class="tableText" style="width: 150px;">{{item.soOrderComm}}</div>
-                                </td>
-                                <!--销售订单数量-->
-                                <td thid="th5" style="width: 150px; height: 26px;" thname="usersex" align="center">
-                                    <div class="tableText" style="width: 150px;">{{item.soOrderCount}}</div>
-                                </td>
-                                <!--折扣金额-->
-                                <td thid="th7" style="width: 100px; height: 26px;" thname="useremail" align="center">
-                                    <div class="tableText" style="width: 100px;">{{item.soDiscount}}</div>
-                                </td>
-                                <!--总计金额-->
-                                <td thid="th7" style="width: 100px; height: 26px;" thname="useremail" align="center">
-                                    <div class="tableText" style="width: 100px;">{{item.soMoney}}</div>
-                                </td>
-                                <!--定金-->
-                                <td thid="th7" style="width: 100px; height: 26px;" thname="useremail" align="center">
-                                    <div class="tableText" style="width: 100px;">{{item.soEarnest}}</div>
-                                </td>
-                                <!--纸质单据-->
-                                <td thid="th5" style="width: 100px; height: 26px;" thname="usersex" align="center">
-                                    <div class="tableText" style="width: 100px;">{{item.soBills}}</div>
-                                </td>
-                                <!--制单日期-->
-                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
-                                    <div class="tableText" style="width: 150px;">{{item.soBillDate}}</div>
-                                </td>
-                                <!--未转销售数量-->
-                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
-                                    <div class="tableText" style="width: 150px;">{{item.soSellCount}}</div>
-                                </td>
-
-                                <!--送货日期-->
-                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
-                                    <div class="tableText" style="width: 150px;">{{item.soDevlierDate}}</div>
-                                </td>
-
-                                <!--经手人-->
-                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
-                                    <div class="tableText" style="width: 150px;">{{item.soHander}}</div>
-                                </td>
-                                <!--制单人-->
-                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
-                                    <div class="tableText" style="width: 150px;">{{item.soMaker}}</div>
-                                </td>
-                                <!--备注-->
-                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="center">
-                                    <div class="tableText" style="width: 150px;">{{item.soRemark}}</div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-            </div>
-            <div id="pagenav" style="text-align: center"></div>
-        </div>
-
-    </div>
+    <div id="pagenav" style="text-align: center"></div>
 </div>
-
-
-
-    <!-- title -->
-
-
-</div>
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
     var app = new Vue({
         el:'#app',
@@ -469,22 +130,8 @@
             result:[]
         }
     });
-        var goAdd=function () {
-            layer.open({
-                type:2,
-                title:'添加用户',
-                fix:false,
-                maxmin:true,
-                shadeClose:true,
-                area:['1500px','900px'],
-                content:'/cargomanagement/sales-order-history/ceshi1',
-                end:function() {
-                    getUserPageList();
-                }
-            });
-        };
 
-    var getUserPageList = function(curr) {
+    var getPurchasePageList = function (curr) {
         $.ajax({
             type:'post',
             dataType:'json',
@@ -492,53 +139,66 @@
             data:{
                 pageNum: curr || 1,
                 pageSize:4,
-                soClient:$("#SearchKeyWord").val(),
-               /* emPhone:$("#SearchKeyWord").val(),
-                emRealname:$("#SearchKeyWord").val(),*/
+                soClient:$("#poNumber").val(),
+                /* emPhone:$("#SearchKeyWord").val(),
+                 emRealname:$("#SearchKeyWord").val(),*/
 
             },
-            success:function(msg){
+            success: function (msg) {
                 app.result = msg.page;
                 laypage({
-                    cont:'pagenav',
-                    pages:msg.totalPage,
-                    first:'首页',
-                    last:'尾页',
-                    skin: '#00A0E9',
-                    curr: curr || 1,
-                    jump: function (obj, first) {
-                        if (!first) {
-                            getUserPageList(obj.curr);
+                    cont: 'pagenav',//容器  值支持id名、原生dom对象，jquery对象,
+                    pages: msg.totalPage,//总页数
+                    first: '首页',
+                    last: '尾页',
+                    curr: curr || 1,//初始化页数
+                    jump: function (obj, first) { //触发分页后的回调
+                        if (!first) {     //点击跳页触发函数自身，并传递当前页：obj.curr
+                            getPurchasePageList(obj.curr);
                         }
                     }
                 });
             }
         });
+    };
+    getPurchasePageList();
+    $("#findempl").on('click', function () {
+        getPurchasePageList();
+    });
+
+
+    /*删除账目*/
+    var delEvent = function (id) {
+        layer.confirm('你确定要删除吗？',{
+            btn:['是','否']
+        },function () {
+            $.ajax({
+                type:'GET',
+                dataType:'json',
+                url: '/cargomanagement/purchase-order/deletePurchaseById',
+                data:{
+                    id:id
+                },
+                success:function (msg) {
+                    getPurchasePageList();
+                    layer.msg('成功删除' + id,{icon:5});
+                }
+            })
+        },function () {
+
+        });
+    };
+
+    /*编辑修改*/
+    function article_edit(title,url){
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
     }
 
-    getUserPageList();
-
-    /*查询销售订单历史记录*/
-    $("#selectSales").click(function () {
-        getUserPageList();
-    });
-
-    /*增加用户*/
-    $("#addUserBtn").click(function () {
-        layer.open({
-            type:2,
-            title:'添加用户',
-            fix:false,
-            maxmin:true,
-            shadeClose:true,
-            area:['1500px','900px'],
-            content:'/systemsetup/employ/addempl',
-            end:function() {
-                getUserPageList();
-            }
-        });
-    });
 </script>
 </body>
-
 </html>
