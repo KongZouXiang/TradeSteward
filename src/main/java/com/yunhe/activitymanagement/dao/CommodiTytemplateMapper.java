@@ -37,4 +37,12 @@ public interface CommodiTytemplateMapper extends BaseMapper<CommodiTytemplate> {
      */
     List<CommodityList> selectCt(Integer ctId);
 
+
+    /**
+     * 插入新的商品模板
+     * @param commodiTytemplate
+     * @return
+     */
+
+
 }

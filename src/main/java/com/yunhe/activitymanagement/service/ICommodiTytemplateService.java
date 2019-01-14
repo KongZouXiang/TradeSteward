@@ -2,6 +2,7 @@ package com.yunhe.activitymanagement.service;
 
 import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yunhe.activitymanagement.entity.TemplateDetails;
 import com.yunhe.basicdata.entity.CommodityList;
 
 import java.util.List;
@@ -55,7 +56,6 @@ public interface ICommodiTytemplateService extends IService<CommodiTytemplate> {
      * @param commodiTytemplate 查询条件放在对象里
      * @return  商品模板表：增加是否成功
      */
-    List<Integer> insertCt(CommodiTytemplate commodiTytemplate);
 
 
 

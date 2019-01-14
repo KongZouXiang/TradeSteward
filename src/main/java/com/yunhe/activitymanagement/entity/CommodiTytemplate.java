@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.models.auth.In;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -60,7 +59,7 @@ public class CommodiTytemplate implements Serializable {
     @TableField(value = "ct_remarks")
     private String ctRemarks;
 
-    @TableField(exist = false)
+   /* @TableField(exist = false)
     private List<Integer> commodityId;
-
+*/
 }

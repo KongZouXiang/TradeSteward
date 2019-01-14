@@ -28,8 +28,7 @@ public class CommodiTytemplateController {
 
 
     @Resource
-    private ICommodiTytemplateService commodiTytemplateService;
-
+    ICommodiTytemplateService commodiTytemplateService;
     @Resource
     ICommodityListService commodityListService;
 
@@ -55,13 +54,10 @@ public class CommodiTytemplateController {
      * @param commodiTytemplate 增加的信息放在对象里
      * @return  增加模板表：增加是否成功
      */
-    @RequestMapping(value = "/insertCt",method = RequestMethod.POST)
-    public List<Integer> insertCt(CommodiTytemplate commodiTytemplate) {
-
-        return commodiTytemplateService.insertCt(commodiTytemplate);
-    }
-
-
+    /*@RequestMapping("/insertCt")
+    public int insertCt(CommodiTytemplate commodiTytemplate){
+        return  commodiTytemplateService.insertCt(commodiTytemplate);
+    }*/
 
     /**
      * <P>
@@ -76,9 +72,6 @@ public class CommodiTytemplateController {
     }
 
 
-
-
-
     /**
      * <P>
      *     修改数据
@@ -89,8 +82,6 @@ public class CommodiTytemplateController {
     public int updateCt(CommodiTytemplate commodiTytemplate) {
         return commodiTytemplateService.updateCt(commodiTytemplate);
     }
-
-
 
 
 

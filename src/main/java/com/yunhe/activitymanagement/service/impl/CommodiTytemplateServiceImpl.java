@@ -1,17 +1,16 @@
 package com.yunhe.activitymanagement.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.yunhe.activitymanagement.dao.CommodiTytemplateMapper;
-import com.yunhe.activitymanagement.entity.TemplateCommodity;
 import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yunhe.activitymanagement.service.ITemplateDetailsService;
 import com.yunhe.basicdata.dao.CommodityListMapper;
 import com.yunhe.basicdata.entity.CommodityList;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.event.TransactionalEventListener;
+
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -36,6 +35,9 @@ public class CommodiTytemplateServiceImpl extends ServiceImpl<CommodiTytemplateM
     @Resource
     CommodityListMapper commodityListMapper;
 
+    @Resource
+    ITemplateDetailsService templateDetailsService;
+
 
         @Override
     public Map selectAllPage (int current, int size, CommodiTytemplate commodiTytemplate) {
@@ -53,38 +55,23 @@ public class CommodiTytemplateServiceImpl extends ServiceImpl<CommodiTytemplateM
         return map;
     }
 
-
-/**
- * 增加
- * */
     @Override
-    @Transactional
-    public List<Integer> insertCt(CommodiTytemplate commodiTytemplate) {
+    public List<CommodiTytemplate> selectAllCt() {
+        return null;
+    }
 
-//        1.插入商品模板
-        commodiTytemplateMapper.insert(commodiTytemplate);
-//        2.查询出刚刚插入的商品模板id
-        CommodiTytemplate id = commodiTytemplateMapper.selectOne(new QueryWrapper<CommodiTytemplate>().eq("id", commodiTytemplate.getId()));
-//        3.用于拼接模板商品属性
-        String sb="";
-//        4.根据传进来的commodiTytemplate.setCommodityId() 商品列表id一次插入关联表
-        for (Integer i : commodiTytemplate.getCommodityId()) {
-//            获取商品模板id属性和商品列表id属性
-            TemplateCommodity templateCommodity = new TemplateCommodity();
-            templateCommodity.setCtId(id.getId());
-            templateCommodity.setClId(i);
-//            插入关联表
-            templateCommodity.insert();
-//            5.拼接模板商品属性
-            sb+=(commodityListMapper.selectCommById(i).getClName());
-        }
-//        6.修改模板商品的模板商品
-        CommodiTytemplate commo = new CommodiTytemplate();
-        commo.setId(id.getId());
-        commo.setCtTemplategoods(sb);
-        commodiTytemplateMapper.updateById(commo);
-        return commodiTytemplate.getCommodityId();
-        }
+    @Override
+    public List<CommodityList> selectCt(Integer ctId) {
+        return null;
+    }
+
+
+
+    /**
+     * 增加商品模板
+     * */
+
+
 
 
 
@@ -109,18 +96,6 @@ public class CommodiTytemplateServiceImpl extends ServiceImpl<CommodiTytemplateM
     public int updateCt(CommodiTytemplate commodiTytemplate) {
         return commodiTytemplateMapper.updateById(commodiTytemplate);
     }
-/**
-* 查询
-* */
-    @Override
-    public List<CommodityList> selectAllCt(Integer ctId) {
-        List<CommodityList> commodityLists = commodiTytemplateMapper.selectCt(ctId);
-        for (CommodityList commodityList : commodityLists) {
-            if (commodityList.getId())
-        }
-        return commodityLists;
-    }
-
 }
 
 
