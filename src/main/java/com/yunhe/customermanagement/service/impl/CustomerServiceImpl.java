@@ -75,7 +75,6 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         map.put("current",current);
         map.put("size",size);
         map.put("totalPage", page.getPages());
-       // map.put("pages", page.getPages());
         return  map;
     }
 
