@@ -40,8 +40,7 @@
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
             <a href="javascript:;" id="deletell"  class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
-        <a href="javascript:;" onclick="addSales('添加','/cargomanagement/sales-order-history/ceshi1','800','500')"
-            class="btn btn-primary radius">
+        <a href="/cargomanagement/sales-order-history/ceshi1" class="btn btn-primary radius">
         <i class="Hui-iconfont">&#xe600;</i> 添加销售订单历史</a>
         <a href="javascript:;" onclick="Excel_out()"
                class="btn btn-primary radius">
@@ -247,7 +246,7 @@
         layer.full(index);
     };
     /*添加*/
-    var addSales =function (title,url,h,w) {
+   /* var addSales =function (title,url,h,w) {
         layer.open({
             type:2,
             title:title,
@@ -260,7 +259,7 @@
                 getUserPageList();
             }
         });
-    }
+    }*/
 
     var Excel_out =function () {
         window.location.href="/cargomanagement/sales-order-history/export";

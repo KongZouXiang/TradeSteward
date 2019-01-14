@@ -49,7 +49,7 @@ public class SalesOrderHistoryController {
      */
     @RequestMapping("/ceshi1")
     public ModelAndView ceshi1(){
-        return new ModelAndView("cargomanagement/ceshi1");
+        return new ModelAndView("cargomanagement/salesOrderHistory-add");
     }
 
     public int insertSale(SalesOrderHistory sa){
