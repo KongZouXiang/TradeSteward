@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>收支分类管理</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/js/laypage/skin/laypage.css">
+    <script type="text/javascript" src="/js/vue/vue.min.js"></script>
+    <script type="text/javascript" src="/js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/layer/layer.js"></script>
+    <script type="text/javascript" src="/js/laypage/laypage.js"></script>
+</head>
+<body>
+
+<div id="app" class="container">
+
+    <form class="form-inline bg-danger" role="form">
+        查询条件:
+        <div class="form-group">
+            <label class="sr-only" for="fcType">账目类型</label>
+            <input type="text" class="form-control" id="fcType" placeholder="顾客姓名">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="fcSort">收支类别</label>
+            <input type="text" class="form-control" id="fcSort" placeholder="时间">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="fcRemark">备注</label>
+            <input type="text" class="form-control" id="fcRemark" placeholder="状态">
+        </div>
+        <button type="button"  id="findFc" class="btn btn-success">搜索账目类型</button>
+        <button type="button" id="addFcBtn" class="btn btn-danger">新增账目</button>
+        <button type="button" id="daoUsers" class="btn btn-success">导出</button>
+    </form>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr class="success">
+                <td>序号</td>
+                <td>账目类型</td>
+                <td>收支类别</td>
+                <td>备注</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+<!--
+            <tr class="active" th:each="prod:${'#msg.list'}">
+                <td>{{index+1}}</td>
+                <td>{{prod.fcType}}</td>
+                <td>{{prod.fcSort}}</td>
+                <td>{{prod.fcRemark}}</td>
+                <td><NumberFactory href="#" @click="editEvent(item.id)">修改</NumberFactory> <NumberFactory href="#" @click="delEvent(item.id)">删除</NumberFactory></td>
+            </tr>-->
+            <tr class="active" v-for="(item,index) in result">
+                <td>{{index+1}}</td>
+                <td>{{item.soClient}}</td>
+                <td>{{item.soDate}}</td>
+                <td>{{item.soStatus}}</td>
+                <td><a href="#" @click="editEvent(item.id)">修改</a> <a href="#" @click="delEvent(item.id)">删除</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="pagenav"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    var app = new Vue({
+        el:'#app',
+        data:{
+            result:[]
+        }
+    });
+
+    var getFcPageList = function(curr) {
+        $.ajax({
+            type:'get',
+            dataType:'json',
+            url:'/cargomanagement/sales-order-history/quertLikeList',
+            data:{
+                pageNum:curr || 1,
+                pageSize:1,
+                soClient:$("#fcType").val()
+            },
+            success:function(msg){
+                app.result = msg.page;
+                laypage({
+                    cont:'pagenav',
+                    pages: msg.totalPage,
+                    first:'首页',
+                    last:'尾页',
+                    skin: '#00A0E9',
+                    curr: curr || 1,
+                    jump: function (obj, first) {
+                        if (!first) {
+                            getFcPageList(obj.curr);
+                        }
+                    }
+                });
+            }
+        });
+    };
+
+    getFcPageList();
+
+    /*查询用户*/
+    $("#findUser").click(function () {
+        getFcPageList();
+    });
+
+    /*增加销售历史*/
+    $("#addFcBtn").click(function () {
+        layer.open({
+            type:2,
+            title:'添加用户',
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['1100px','600px'],
+            content:'/cargomanagement/sales-order-history/ceshi1',
+            end:function() {
+                getUserPageList();
+            }
+        });
+    });
+
+    /*修改用户*/
+    var editEvent = function (id) {
+        layer.open({
+            type:2,
+            title: '修改用户',
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['1100px','600px'],
+            content:'/cargomanagement/sales-order-history/edit?id='+id,
+            end:function() {
+                getUserPageList();
+            }
+        });
+    }
+
+    /*删除用户*/
+    var delEvent = function (uid) {
+        alert(uid);
+        layer.confirm('你确定要删除吗？',{
+            btn:['是','否']
+        },function () {
+            $.ajax({
+                type:'GET',
+                dataType:'json',
+                url: '/cargomanagement/sales-order-history/delete?id='+id,
+                data:{uid:uid},
+                success:function (msg) {
+                    getUserPageList();
+                    layer.msg('成功删除用户' + uid,{icon:5});
+                }
+            })
+        },function () {
+
+        });
+    }
+
+    /*用户注册*/
+    $("#registerBtn").click(function () {
+        layer.open({
+            type:2,
+            title:'用户注册',
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['1100px','600px'],
+            content:'/register.ftl',
+            end:function() {
+                getUserPageList();
+            }
+        });
+    });
+
+    /*用户登录*/
+    $("#loginBtn").click(function () {
+        layer.open({
+            type:2,
+            title:'用户登录',
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['1100px','600px'],
+            content:'/login.ftl',
+            end:function() {
+                getUserPageList();
+            }
+        });
+    });
+
+    /*Excel导出*/
+    $("#daoUsers").click(function () {
+        window.location.href="/cargomanagement/sales-order-history/export";
+    })
+
+</script>
+</body>
+</html>
