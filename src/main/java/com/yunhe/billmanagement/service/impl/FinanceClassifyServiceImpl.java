@@ -2,14 +2,13 @@ package com.yunhe.billmanagement.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yunhe.billmanagement.entity.FinanceClassify;
-import com.yunhe.billmanagement.dao.FinanceClassifyMapper;
-import com.yunhe.billmanagement.service.IFinanceClassifyService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yunhe.billmanagement.dao.FinanceClassifyMapper;
+import com.yunhe.billmanagement.entity.FinanceClassify;
+import com.yunhe.billmanagement.service.IFinanceClassifyService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.sql.Wrapper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,7 @@ public class FinanceClassifyServiceImpl extends ServiceImpl<FinanceClassifyMappe
 
 
     @Override
-    public Map selectFcPage(int current, int size,FinanceClassify financeClassify) {
+    public Map selectFcPage(int current, int size, FinanceClassify financeClassify) {
         Map map = new HashMap();
         Page page = new Page(current,size);
         System.out.println("每页条数："+size);
@@ -52,6 +51,11 @@ public class FinanceClassifyServiceImpl extends ServiceImpl<FinanceClassifyMappe
     @Override
     public int insertFc(FinanceClassify financeClassify) {
         return financeClassifyMapper.insert(financeClassify);
+    }
+
+    @Override
+    public FinanceClassify selectFcById(int id) {
+        return financeClassifyMapper.selectById(id);
     }
 
     @Override
