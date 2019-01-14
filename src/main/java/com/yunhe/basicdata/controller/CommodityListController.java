@@ -1,16 +1,20 @@
 package com.yunhe.basicdata.controller;
+
 import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 /**
  * <p>
  * 商品列表 前端控制器
  * </p>
+ *
  * @author 李恒逵, 唐凯宽
  * @since 2019-01-02
  */
@@ -33,6 +37,7 @@ public class CommodityListController {
     public Map selectCommPage(int current, int size, CommodityList commodityList) {
         return commodityListService.selectAllcommList(current, size, commodityList);
     }
+
     /**
      * 增加商品的信息
      * 前端页面传过来的商品名称
@@ -64,6 +69,7 @@ public class CommodityListController {
 
     /**
      * 查询商品的详细信息
+     *
      * @param id 传过来的id
      * @return 商品的一条数据
      */
@@ -75,6 +81,7 @@ public class CommodityListController {
         map.put("commodityList", commodityList);
         return map;
     }
+
     /**
      * 更改商品的信息
      *
@@ -95,6 +102,7 @@ public class CommodityListController {
         map.put("commodityList", commodityList);
         return map;
     }
+
     /**
      * 更改商品的信息
      *
@@ -107,8 +115,10 @@ public class CommodityListController {
         commodityList.setId(id);
         commodityListService.deleteComm(commodityList);
     }
+
     /**
      * 模糊查询
+     *
      * @param poKeyword 模糊查询的信息
      * @return 商品的一条信息
      */
@@ -120,10 +130,12 @@ public class CommodityListController {
         map.put("data", list);
         return map;
     }
+
     @RequestMapping("/addcommlist")
     public ModelAndView addcomm() {
         return new ModelAndView("basicdata/addCommodityList");
     }
+
     @RequestMapping("/getcommdityfenye")
     public ModelAndView selectfenye() {
         return new ModelAndView("basicdata/admincommodity-list");
