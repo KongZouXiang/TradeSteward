@@ -1,6 +1,5 @@
 package com.yunhe.customermanagement.service;
 
-import com.yunhe.customermanagement.entity.Customer;
 import com.yunhe.customermanagement.entity.Supplier;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -63,4 +62,11 @@ public interface ISupplierService extends IService<Supplier> {
      */
     List<Supplier> selectAll();
 
+
+    /**
+     * @author 史江浩
+     * @since 2019-01-14
+     * @return 查询所有供应商信息
+     */
+    Map selectList();
 }

@@ -25,16 +25,16 @@ public class LoginController {
 
     @GetMapping("/")
     public String index() {
-        return "login";
+        return "index";
     }
 
-    @PostMapping("login")
+    @PostMapping("index")
     public String login(Employ employ, HttpSession session) {
         if (loginService.login(employ) != null) {
             session.setAttribute("employ", employ);
             return "index";
         }
 
-        return "login";
+        return "index";
     }
 }

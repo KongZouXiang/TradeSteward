@@ -101,4 +101,12 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
         return commodityLists;
     }
 
+    @Override
+    public Map selectList() {
+        List<CommodityList> list = commodityListMapper.selectList(new QueryWrapper<>());
+        Map<String, Object> map = new HashMap<>();
+        map.put("list",list);
+        return map;
+    }
+
 }
