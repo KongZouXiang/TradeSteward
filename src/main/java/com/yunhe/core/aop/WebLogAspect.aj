@@ -24,7 +24,7 @@ public class WebLogAspect {
     @Pointcut(value = "execution(public * com.yunhe.basicdata.controller.*(..))")
     public void webLog(){}
 
-    @Pointcut(value = "execution( public * com.yunhe.core.register.controller.LoginController.login(..))")
+    @Pointcut(value = "execution( public * com.yunhe.core.common.login.controller.LoginController.login(..))")
     public void webLoginLog(){}
     /**
      *
@@ -36,7 +36,6 @@ public class WebLogAspect {
 
         log.info("log");
         System.out.println("doBefore");
-
     }
     /**
      *

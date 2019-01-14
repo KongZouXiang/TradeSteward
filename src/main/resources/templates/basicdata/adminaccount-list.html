@@ -1,0 +1,265 @@
+﻿<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/js/laypage/skin/laypage.css">
+<link rel="Bookmark" href="/favicon.ico" >
+<link rel="Shortcut Icon" href="/favicon.ico" />
+<script type="text/javascript" src="/lib/html5shiv.js"></script>
+<script type="text/javascript" src="/lib/respond.min.js"></script>
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/all_after.js"></script>
+<script type="text/javascript" src="/js/flexigrid.js"></script>
+<script type="text/javascript" src="/js/wbi_common.js"></script>
+<script type="text/javascript" src="/js/wbill_common.js"></script>
+<script type="text/javascript" src="/js/filter.js"></script>
+<script type="text/javascript" src="/js/record.js"></script>
+	<script  src="/js/jquery/jquery.min.js"></script>
+	<script src="/js/layer/layer.js"></script>
+	<script  src="/js/laypage/laypage.js"></script>
+<script type="text/javascript" src="/js/vue/vue.min.js"></script>
+	<script type="text/javascript" src="/Vue/vue.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>结算账户</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 新手引导 <span class="c-gray en">&gt;</span> 结算账户<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<div class="text-c">
+		<input type="text" class="input-text" style="width:250px;margin-left: 1200px" placeholder="账户名称、开户银行" id="SearchKeyWord" name="SearchKeyWord">
+		<button type="submit" class="btn btn-success" id="findempl" name="findempl"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+	</div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		<span class="l">
+		<button id="addAccountBtn"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加账户</button>
+		</span>
+		<span class="r">共有数据：<strong>54</strong> 条</span>
+	</div>
+	<div  id="app">
+	<table class="table table-border table-bordered table-bg">
+		<thead>
+			<tr>
+				<th scope="col" colspan="9">结算账户</th>
+			</tr>
+			<tr class="text-c">
+				<th width="40">序号</th>
+				<th width="100">操作</th>
+				<th width="150">账户名称</th>
+				<th width="90">开户银行</th>
+				<th width="150">账户余额(元)</th>
+				<th width="150">状态</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			<tr class="text-c" v-for="(item,index) in result">
+				<td>{{index+1}}</td>
+				<td class="td-manage">
+					<input type="button" value="点击显示" id="dainji" @click="xaingqingAccount(item.id)"> <i class="icon Hui-iconfont">&#xe627;</i>
+					<a title="编辑" href="#" @click="editEventAccount(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+					<a title="删除" href="#" @click="deleteAccount(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				<td>{{item.saName}}</td>
+				<td>{{item.saBank}}</td>
+				<td>{{item.saBalance}}</td>
+				<td>{{item.saState}}</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</div>
+<div id="pagenav" style="text-align:center;position: fixed;left: 0px;bottom :50px;width: 100%;height: 50px"></div>
+<div id="xaingqingdiv" style="border: #00AA91 1px solid;width: 100px;height: 100px;display: none"></div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+<!--<script type="text/javascript">
+/*
+	参数解释：
+	title	标题
+	url		请求的url
+	id		需要操作的数据id
+	w		弹出层宽度（缺省调默认值）
+	h		弹出层高度（缺省调默认值）
+*/
+/*管理员-增加*/
+function admin_add(title,url,w,h){
+	layer_show(title,url,w,h);
+}
+/*管理员-删除*/
+function admin_del(obj,id){
+	layer.confirm('确认要删除吗？',function(index){
+		$.ajax({
+			type: 'POST',
+			url: '',
+			dataType: 'json',
+			success: function(data){
+				$(obj).parents("tr").remove();
+				layer.msg('已删除!',{icon:1,time:1000});
+			},
+			error:function(data) {
+				console.log(data.msg);
+			},
+		});		
+	});
+}
+
+/*管理员-编辑*/
+function admin_edit(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+/*管理员-停用*/
+function admin_stop(obj,id){
+	layer.confirm('确认要停用吗？',function(index){
+		//此处请求后台程序，下方是成功后的前台处理……
+		
+		$(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_start(this,id)" href="javascript:;" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>');
+		$(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">已禁用</span>');
+		$(obj).remove();
+		layer.msg('已停用!',{icon: 5,time:1000});
+	});
+}
+
+/*管理员-启用*/
+function admin_start(obj,id){
+	layer.confirm('确认要启用吗？',function(index){
+		//此处请求后台程序，下方是成功后的前台处理……
+		$(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_stop(this,id)" href="javascript:;" title="停用" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>');
+		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
+		$(obj).remove();
+		layer.msg('已启用!', {icon: 6,time:1000});
+	});
+}
+</script>-->
+<script>
+	var app = new Vue({
+		el:'#app',
+		data:{
+			result:[]
+		}
+	});
+	/*查询分页*/
+	var getAccountPageList = function(curr) {
+		$.ajax({
+			type:'POST',
+			dataType:'json',
+			url:'/basicdata/settlement-account/getrAccounlist',
+			data:{
+				current: curr || 1,
+				size:2,
+			},
+			success:function(msg){
+				app.result = msg.accountList;
+				laypage({
+					cont:'pagenav',
+					pages:msg.pages,
+					first:'首页',
+					last:'尾页',
+					skin: '#00A0E9',
+					curr: curr || 1,
+					jump: function (obj, first) {
+						if (!first) {
+							getAccountPageList(obj.curr);
+						}
+					}
+				});
+			}
+		});
+	}
+	getAccountPageList();
+	/*模糊查询*/
+	$("#findempl").click(function () {
+		$.ajax({
+			type:'POST',
+			dataType:'json',
+			url:"/basicdata/settlement-account/vaguelist",
+			data:{
+				keyword:$("#SearchKeyWord").val(),
+			},
+			success:function (dd) {
+				app.result=dd.data;
+			}
+		});
+	})
+	/*增加用户*/
+	$("#addAccountBtn").click(function () {
+		layer.open({
+			type:2,
+			title:'添加账户',
+			fix:false,
+			maxmin:true,
+			shadeClose:true,
+			area:['1500px','900px'],
+			content:'/basicdata/settlement-account/addacounthtml',
+			end:function() {
+				getAccountPageList();
+			}
+		});
+	});
+
+	//编辑用户事件
+	var editEventAccount = function(id) {
+		layer.open({
+			type : 2,
+			title : '编辑账户',
+			fix : false,
+			maxmin : true,
+			shadeClose : true,
+			area : [ '1100px', '600px' ],
+			content : '/basicdata/settlement-account/selectAccountByid?id='+id,
+			end : function() {
+				getAccountPageList();
+			}
+		});
+	}
+	/*删除账户*/
+	var deleteAccount = function(id) {
+		//询问框
+		layer.confirm('您确定要删除么？', {
+			btn : [ '是', '否' ]
+			//按钮
+		}, function() {
+			//是
+			$.ajax({
+				type : "POST",
+				dataType : "json",
+				url : "/basicdata/settlement-account/deleteAccount",
+				data : {
+					id:id
+				},
+				success : function(msg) {
+					getAccountPageList ();
+					layer.msg('已经成功删除记录' + id,{icon:5});
+				}
+			});
+		}, function() {
+			//否
+		});
+	}
+
+</script>
+<!--详情的script-->
+<script type="text/javascript">
+	$("#dainji").click(function () {
+	})
+</script>
+</body>
+</html>

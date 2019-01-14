@@ -6,7 +6,7 @@
         em_repo,em_shiro,em_sel_invoice,em_del_invoice,em_sel_user,em_address
     </sql>
     <sql id="empl3">
-        em_username,em_realname,em_role,em_sex,em_phone,em_email,em_status,
+        em_username,em_password,em_realname,em_role,em_sex,em_phone,em_email,em_status,
         em_repo,em_shiro,em_sel_invoice,em_del_invoice,em_sel_user,em_address
     </sql>
 
@@ -25,7 +25,7 @@
     </select>
 
     <insert id="insertEmploy"  parameterType="com.yunhe.systemsetup.entity.Employ">
-        insert into employ(<include refid="empl3"/>) values (#{emUsername},#{emRealname},#{emRole},#{emSex},#{emPhone},#{emEmail},#{emStatus}
+        insert into employ(<include refid="empl3"/>) values (#{emUsername},#{emPassword},#{emRealname},#{emRole},#{emSex},#{emPhone},#{emEmail},#{emStatus}
         ,#{emRepo},#{emShiro},#{emSelInvoice},#{emDelInvoice},#{emSelUser},#{emAddress})
     </insert>
 </mapper>

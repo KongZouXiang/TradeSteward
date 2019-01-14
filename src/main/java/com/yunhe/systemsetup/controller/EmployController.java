@@ -9,9 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.systemsetup.entity.Employ;
 import com.yunhe.systemsetup.service.impl.EmployServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
@@ -35,7 +33,7 @@ public class EmployController {
 
     @RequestMapping(value = "/selectpage")
     public Map selectPage(Integer pageSize, Integer pageNum, Employ employ){
-
+        System.out.println("进入Controleer");
         System.out.println(employ.getEmUsername());
         Page page = new Page();
         page.setSize(pageSize);
@@ -51,12 +49,12 @@ public class EmployController {
 
     @RequestMapping(value = "/list")
     public ModelAndView toList(){
-        return new ModelAndView("admin" );
+        return new ModelAndView("/systemsetup/admin" );
     }
     @RequestMapping(value = "/addempl")
     public ModelAndView toAdd(){
 
-        return new ModelAndView("admin-add");
+        return new ModelAndView("/systemsetup/admin-add");
     }
 
     @RequestMapping(value = "/insertempl")

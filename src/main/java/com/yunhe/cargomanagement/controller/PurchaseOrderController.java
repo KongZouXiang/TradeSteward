@@ -1,7 +1,6 @@
 package com.yunhe.cargomanagement.controller;
 
 
-import com.github.pagehelper.Page;
 import com.yunhe.cargomanagement.entity.PurchaseOrder;
 import com.yunhe.cargomanagement.service.IPurchaseOrderService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,8 +44,10 @@ public class PurchaseOrderController {
      */
     @RequestMapping("/addPurchase")
     public ModelAndView getaddPurchase(){
+        
+
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("addPurchase");
+        mv.setViewName("cargomanagement/Pur_order-add");
         return mv;
     }
 
@@ -95,9 +95,9 @@ public class PurchaseOrderController {
      * @param id  进货订单历史表id  前台传的
      */
     @RequestMapping("/deletePurchaseById")
-    public void deletePurchById(int id){
+    public int deletePurchById(int id){
         System.out.println("这条数据的id"+id);
-        purchaseOrderService.deleteById(id);
+        return purchaseOrderService.deleteById(id);
     }
 
     /**
@@ -120,7 +120,7 @@ public class PurchaseOrderController {
         PurchaseOrder purchaseOrder = purchaseOrderService.selectById(id);
         httpSession.setAttribute("purchase",purchaseOrder);
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("updatePurchase");
+        mv.setViewName("cargomanagement/article-add");
         return mv;
     }
 
