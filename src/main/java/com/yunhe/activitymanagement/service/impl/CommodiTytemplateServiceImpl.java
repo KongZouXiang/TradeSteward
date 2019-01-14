@@ -55,6 +55,13 @@ public class CommodiTytemplateServiceImpl extends ServiceImpl<CommodiTytemplateM
         return map;
     }
 
+
+    /**
+     * <P>
+     *     查询数据
+     * </P>
+     * @return 商品模板表：查询所有模板的结果集
+     */
     @Override
     public List<CommodiTytemplate> selectAllCt() {
         return null;
