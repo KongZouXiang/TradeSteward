@@ -30,31 +30,36 @@
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 客户应收欠款 <span class="c-gray en">&gt;</span> 客户应收欠款列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
 	<div class="text-c">
-		<input type="text" class="input-text" style="width:250px" placeholder="输入收支类型" id="foFlag" name="foFlag">
-		<input type="text" class="input-text" style="width:250px" placeholder="输入单据编号" id="foNumList" name="foNumList">
-		<button type="submit" class="btn btn-success" id="findFo" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索账目类型</button>
+		<input type="text" class="input-text" style="width:250px" placeholder="输入客户编号" id="fcdNumList" name="fcdNumList">
+		<input type="text" class="input-text" style="width:250px" placeholder="输入客户名称" id="fcdName" name="fcdName">
+		<input type="text" class="input-text" style="width:250px" placeholder="输入收支类型" id="fcdLinkman" name="fcdLinkman">
+		<input type="text" class="input-text" style="width:250px" placeholder="输入联系电话" id="fcdTelephone" name="fcdTelephone">
+		<button type="submit" class="btn btn-success" id="findFcd" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-20" data-validator-option="{theme:'simple_right'}">
-		<span class="l"><a href="javascript:;" id="daoFo" class="btn btn-success radius"><i class="Hui-iconfont">&#xe644;</i> Excel导出</a></span>
-		&nbsp;&nbsp;<a href="javascript:;" id="addFoBtn" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增账目</a>
+		<span class="l"><a href="javascript:;" id="daoFcd" class="btn btn-success radius"><i class="Hui-iconfont">&#xe644;</i> Excel导出</a></span>
+		&nbsp;&nbsp;<a href="javascript:;" id="addFcdBtn" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增账目</a>
 		<span class="r">共有数据：<strong th:text="${session.total}"></strong> 条</span>
 	</div>
 	<table class="table table-border table-bordered table-bg" id="app">
 		<thead>
 		<tr>
-			<th scope="col" colspan="9">收支分类列表</th>
+			<th scope="col" colspan="9">客户应收欠款列表</th>
 		</tr>
 		<tr class="text-c">
 			<th width="25"><input type="checkbox" name="" value=""></th>
 			<th width="100">操作</th>
 			<th width="40">ID</th>
-			<th width="150">单据编号</th>
-			<th width="150">业务日期</th>
-			<th width="150">账目类型</th>
-			<th width="150">金额</th>
-			<th width="150">收入账户</th>
-			<th width="150">收支类型</th>
-			<th>备注</th>
+			<th width="150">客户编号</th>
+			<th width="150">客户名称</th>
+			<th width="150">联系人</th>
+			<th width="150">联系电话</th>
+			<th width="150">期初欠款(元)</th>
+			<th width="150">增加应收欠款(元)</th>
+			<th width="150">收回欠款(元)</th>
+			<th width="150">优惠(元)</th>
+			<th width="150">抵消欠款(元)</th>
+			<th width="150">应收欠款(元)</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -63,13 +68,16 @@
 			<td class="td-manage"><a title="详情" href="javascript:;" @click="editEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
 				<a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 			<td>{{index+1}}</td>
-			<td>{{item.foNumList}}</td>
-			<td>{{item.foTime}}</td>
-			<td>{{item.fcId}}</td>
-			<td>{{item.foMoney}}</td>
-			<td>{{item.foAccount}}</td>
-			<td>{{item.foFlag}}</td>
-			<td>{{item.foRemark}}</td>
+			<td>{{item.fcdNumList}}</td>
+			<td>{{item.fcdName}}</td>
+			<td>{{item.fcdLinkman}}</td>
+			<td>{{item.fcdTelephone}}</td>
+			<td>{{item.fcdBeginDebt}}</td>
+			<td>{{item.fcdAddDebt}}</td>
+			<td>{{item.fcdBackDebt}}</td>
+			<td>{{item.fcdDiscount}}</td>
+			<td>{{item.fcdOffsetDeb}}</td>
+			<td>{{item.fcdReceivable}}</td>
 		</tr>
 		</tbody>
 	</table>
@@ -93,16 +101,18 @@
         }
     });
 
-    var getFoPageList = function(curr) {
+    var getFcdPageList = function(curr) {
         $.ajax({
             type:'get',
             dataType:'json',
-            url:'/billManagement/finance-order/selectFoPage',
+            url:'/billManagement/fund-client-debt/selectFcdPage',
             data:{
                 current: curr || 1,
                 size:5,
-                foFlag:$("#foFlag").val(),
-                foNumList:$("#foNumList").val()
+                fcdNumList:$("#fcdNumList").val(),
+                fcdName:$("#fcdName").val(),
+                fcdLinkman:$("#fcdLinkman").val(),
+                fcdTelephone:$("#fcdTelephone").val()
             },
             success:function(msg){
                 app.result = msg.list;
@@ -123,15 +133,15 @@
         });
     };
 
-    getFoPageList();
+    getFcdPageList();
 
     /*搜索*/
-    $("#findFo").click(function () {
-        getFoPageList();
+    $("#findFcd").click(function () {
+        getFcdPageList();
     });
 
     /*新增收支*/
-    $("#addFoBtn").click(function () {
+    $("#addFcdBtn").click(function () {
         layer.open({
             type:2,
             title:'新增收支',
@@ -139,9 +149,9 @@
             maxmin:true,
             shadeClose:true,
             area:['1100px','600px'],
-            content:'/billManagement/finance-order/toAdd',
+            content:'/billManagement/fund-client-debt/toAdd',
             end:function() {
-                getFoPageList();
+                getFcdPageList();
             }
         });
     });
@@ -165,7 +175,7 @@
 
     /*Excel导出*/
     $("#daoFo").click(function () {
-        window.location.href="/billManagement/finance-order/export";
+        window.location.href="/billManagement/fund-client-debt/export";
     })
 </script>
 </body>

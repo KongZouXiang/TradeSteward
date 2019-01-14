@@ -58,7 +58,7 @@ public class SalesHistoryController {
     }
 
     /**
-     * 分页查询所有的销售历史
+     * 0
      * @param pageNum 当前页
      * @param pageSize 每页条数
      * @param salesHistory 条件

@@ -21,7 +21,7 @@ public interface IFundClientDebtService extends IService<FundClientDebt> {
      * @param size 每页条数
      * @return 客户应收欠款表:分页的结果集
      */
-    Map selectFcdPage(int current, int size);
+    Map selectFcdPage(int current, int size,FundClientDebt fundClientDebt);
 
     /**
      * <P>

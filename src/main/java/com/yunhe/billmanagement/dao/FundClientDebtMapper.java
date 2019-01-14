@@ -24,5 +24,5 @@ public interface FundClientDebtMapper extends BaseMapper<FundClientDebt> {
      * @param page 分页的参数存在一个对象里
      * @return 客户应收欠款表：分页的结果集
      */
-    List<FundClientDebt> selectFcdPage(Page page);
+    List<FundClientDebt> selectFcdPage(Page page,FundClientDebt fundClientDebt);
 }

@@ -26,7 +26,7 @@ public class FundClientDebtController {
 
     /**
      * <P>
-     *    进入日客户应收欠款页面
+     *    进入客户应收欠款页面
      * </P>
      * @return 进入FinanceOrder.html
      */
@@ -44,8 +44,8 @@ public class FundClientDebtController {
      * @return 客户应收欠款表：分页的结果集
      */
     @RequestMapping(value = "/selectFcdPage",method = RequestMethod.POST)
-    public Map selectFcdPage(int current,int size) {
-        return fundClientDebtService.selectFcdPage(current,size);
+    public Map selectFcdPage(int current,int size,FundClientDebt fundClientDebt) {
+        return fundClientDebtService.selectFcdPage(current,size,fundClientDebt);
     }
 
     /**

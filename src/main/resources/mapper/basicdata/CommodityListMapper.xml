@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yunhe.basicdata.dao.CommodityListMapper">
-
     <insert id="inta"></insert>
-
     <select id="select" resultType="com.yunhe.basicdata.entity.CommodityList"></select>
-
     <!--从数据库中获取商品信息-->
     <select id="selectAllCommmList" parameterType="CommodityList" resultType="com.yunhe.basicdata.entity.CommodityList">
         select *
         from commodity_list
-        where cl_number like concat('%', #{commodityList.clName}, '%')
-        order by id desc
     </select>
     <!--增加商品信息-->
     <insert id="insertComm" parameterType="CommodityList">
