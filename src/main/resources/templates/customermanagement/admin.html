@@ -42,9 +42,9 @@
         <a href="javascript:;" onclick="admin_add('添加客户','admin-add.html','800','500')"
            class="btn btn-primary radius">
         <i class="Hui-iconfont">&#xe600;</i> 添加客户</a>
-        <a href="javascript:;" onclick="excel('Excel导出','admin-add.html','800','500')"
+        <a href="#" @click="exportexcel()"
            class="btn btn-success radius">
-        <i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
+        <i class="Hui-iconfont" >&#xe644;</i> Excel导出</a>
     </span>
 
         <span class="r">共有数据：<strong>54</strong> 条</span></div>
@@ -177,6 +177,10 @@
 
         });
     };
+
+    function exportexcel() {
+
+    }
 
     /*编辑修改*/
     function article_edit(title,url){
