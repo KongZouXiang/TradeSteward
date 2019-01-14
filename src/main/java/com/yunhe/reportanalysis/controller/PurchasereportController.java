@@ -1,4 +1,4 @@
-package com.yunhe.reportanalysis;
+package com.yunhe.reportanalysis.controller;
 
 import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;

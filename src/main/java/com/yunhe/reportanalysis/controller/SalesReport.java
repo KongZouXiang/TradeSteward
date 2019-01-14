@@ -1,4 +1,4 @@
-package com.yunhe.reportanalysis;
+package com.yunhe.reportanalysis.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
