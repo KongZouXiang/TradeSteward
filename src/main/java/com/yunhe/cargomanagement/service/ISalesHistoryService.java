@@ -40,10 +40,11 @@ public interface ISalesHistoryService extends IService<SalesHistory> {
      */
     int updateSalesHistory(SalesHistory salesHistory);
 
+    SalesHistory selectById(int id);
     /**
      * 分页查询所有的信息
      * @param
      * @return
      */
-    Map queryLikeSalesHistory(int pageSize, int pageNum, SalesHistory salesHistory);
+    Map queryLikeSalesHistory(int pageNum, int pageSize, SalesHistory salesHistory);
 }

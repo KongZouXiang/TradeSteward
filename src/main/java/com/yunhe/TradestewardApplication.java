@@ -10,8 +10,6 @@ public class TradestewardApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(TradestewardApplication.class, args);
-
-
     }
 
 }

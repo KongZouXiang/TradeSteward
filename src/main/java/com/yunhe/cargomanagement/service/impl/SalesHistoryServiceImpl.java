@@ -45,7 +45,13 @@ public class SalesHistoryServiceImpl extends ServiceImpl<SalesHistoryMapper, Sal
     }
 
     @Override
-    public Map queryLikeSalesHistory(int pageSize,int pageNum,SalesHistory salesHistory) {
+    public SalesHistory selectById(int id) {
+        SalesHistory salesHistory = salesHistoryMapper.selectById(id);
+        return salesHistory;
+    }
+
+    @Override
+    public Map queryLikeSalesHistory(int pageNum,int pageSize,SalesHistory salesHistory) {
         //SalesHistory salesHistory = new SalesHistory();
         Page page = new Page();
         page.setCurrent(pageNum);
