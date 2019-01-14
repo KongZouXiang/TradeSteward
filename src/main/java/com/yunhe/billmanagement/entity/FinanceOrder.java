@@ -1,13 +1,14 @@
 package com.yunhe.billmanagement.entity;
 
-import java.io.Serializable;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -20,6 +21,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
+@TableName("finance_order")
 public class FinanceOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,11 +44,12 @@ public class FinanceOrder implements Serializable {
     @TableField(value = "fo_time")
     private String foTime;
 
+
     /**
-     * 账目类型
+     * 账目类型id
      */
-    @TableField(value = "fo_fc_type")
-    private String foFcType;
+    @TableField(value = "fc_id")
+    private Integer fcId;
 
     /**
      * 金额
@@ -79,9 +82,9 @@ public class FinanceOrder implements Serializable {
     private String foImage;
 
     /**
-     * 日常收支 标志 ： 0代表日常支出，1代表日常收入
+     * 收支类型 标志 ： 0代表日常支出，1代表日常收入
      */
     @TableField(value = "fo_flag")
-    private int foFlag;
+    private String foFlag;
 
 }

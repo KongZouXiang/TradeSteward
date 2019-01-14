@@ -1,10 +1,10 @@
 package com.yunhe.billmanagement.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yunhe.billmanagement.entity.FundClientDebt;
-import com.yunhe.billmanagement.dao.FundClientDebtMapper;
-import com.yunhe.billmanagement.service.IFundClientDebtService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yunhe.billmanagement.dao.FundClientDebtMapper;
+import com.yunhe.billmanagement.entity.FundClientDebt;
+import com.yunhe.billmanagement.service.IFundClientDebtService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -39,5 +39,10 @@ public class FundClientDebtServiceImpl extends ServiceImpl<FundClientDebtMapper,
         map.put("pages",page.getPages());
         System.out.println("总页数："+page.getPages());
         return map;
+    }
+
+    @Override
+    public int insertFcd(FundClientDebt fundClientDebt) {
+        return fundClientDebtMapper.insert(fundClientDebt);
     }
 }

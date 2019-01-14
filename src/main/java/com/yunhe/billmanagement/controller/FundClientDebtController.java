@@ -1,11 +1,10 @@
 package com.yunhe.billmanagement.controller;
 
 
+import com.yunhe.billmanagement.entity.FundClientDebt;
 import com.yunhe.billmanagement.service.IFundClientDebtService;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.Map;
@@ -24,6 +23,18 @@ public class FundClientDebtController {
 
     @Resource
     private IFundClientDebtService fundClientDebtService;
+
+    /**
+     * <P>
+     *    进入日客户应收欠款页面
+     * </P>
+     * @return 进入FinanceOrder.html
+     */
+    @GetMapping("/toFcd")
+    public ModelAndView toFcd(){
+        System.out.println("toFcd进入controller");
+        return new ModelAndView("billmanagement/bill-FundClientDebt");
+    }
     /**
      * <P>
      *     客户应收欠款表
@@ -37,4 +48,15 @@ public class FundClientDebtController {
         return fundClientDebtService.selectFcdPage(current,size);
     }
 
+    /**
+     * <P>
+     *     增加数据
+     * </P>
+     * @param fundClientDebt 新增收款的参数存在一个对象里
+     * @return  客户应收欠款表：增加是否成功
+     */
+    @PostMapping("/insertFcd")
+    public int insertFcd(FundClientDebt fundClientDebt){
+        return fundClientDebtService.insertFcd(fundClientDebt);
+    }
 }
