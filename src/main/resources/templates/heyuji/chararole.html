@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/css/jquery.css">
+    <link rel="stylesheet" href="/css/zTreeStyle.css" type="text/css">
+    <link rel="stylesheet" href="/css/Sortable.css" type="text/css">
+    <script type="text/javascript" async="" src="/js/vds.js"></script>
+    <script type="text/javascript" src="/js/all_before.js"></script>
+    <link rel="stylesheet" href="/css/layer.css" id="layuicss-skinlayercss">
+    <script type="text/javascript" src="/js/highcharts.js"></script>
+    <script type="text/javascript" src="/js/exporting.js"></script>
+    <script type="text/javascript" src="/js/WdatePicker.js"></script>
+    <link href="/css/WdatePicker.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/all_after.js"></script>
+    <script type="text/javascript" src="/js/flexigrid.js"></script>
+    <script type="text/javascript" src="/js/wbi_common.js"></script>
+    <script type="text/javascript" src="/js/wbill_common.js"></script>
+    <script type="text/javascript" src="/js/filter.js"></script>
+    <script type="text/javascript" src="/js/record.js"></script>
+    <script type="text/javascript" src="/js/vue/vue.min.js"></script>
+    <script type="text/javascript" src="/js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/layer/layer.js"></script>
+    <script type="text/javascript" src="/js/laypage/laypage.js"></script>
+
+</head>
+
+<body>
+<div id="console"></div>
+
+<div class="main" id="">
+    <div class="whiteBox actionArea">
+        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+            <tbody><tr>
+                <td><a href="javascript:;" class="button blueButton withIcon" onclick="goAdd()"> <span class="text">新增角色</span>
+                </a>
+                </td>
+
+            </tr>
+            </tbody></table>
+    </div>
+    <div class="whiteBox">
+        <div id="FlexiGridRootSysRole-page" class="flexigrid" style="overflow: hidden;">
+            <div style="width:100%;overflow:hidden; display: flex; position:relative; border: solid 1px #d7d7d7; box-sizing: border-box;">
+                <div class="t_left" style="position: absolute; z-index: 999;">
+                    <div class="hDivLeft" style="background-color: rgb(255, 255, 255); position: relative; z-index: 101;">
+                        <table class="tableStyle borderLTNone" style="position: relative;" cellspacing="0" cellpadding="5">
+
+                        </table>
+                    </div>
+                </div>
+                <div class="t_r">
+                    <div class="hDiv" style="background-color: rgb(255, 255, 255); position: relative; width: 1857px;">
+                        <table class="tableStyle borderLTNone" style="position: relative; border-left: 0px none; left: 0px;" width="1857" cellspacing="0" cellpadding="5">
+                            <tbody><tr id="theader">
+                                <th id="th0" number="0" personwidth="40" info="false" display="序号" name="no" sortable="false" abbr="no" class="normal" checkbox="false" button="false" width="40" align="center">
+                                    <span class="bg" style="width:40px">序号</span>
+                                    <div id="dragLineDiv0" index="0" class="dragLine" style="left: 49px; top: 0px;">
+                                    </div>
+                                </th>
+                                <th id="th1" number="1" personwidth="150" info="false" display="操作" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
+                                    <span class="bg" style="width:150px">操作</span>
+                                    <div id="dragLineDiv1" index="1" class="dragLine" style="left: 159px; top: 0px;">
+                                    </div>
+                                </th>
+                                <th id="th2" number="2" personwidth="100" info="false" display="角色名称" name="rolename" sortable="false" abbr="rolename" class="normal" checkbox="false" button="false" width="100" align="left">
+                                    <span class="bg" style="width:100px">角色名称</span>
+                                    <div id="dragLineDiv2" index="2" class="dragLine" style="left: 109px; top: 0px;"></div>
+                                </th>
+                                <th id="th3" number="3" personwidth="700" info="false" display="角色描述" name="roledesc" sortable="false" abbr="roledesc" class="normal" checkbox="false" button="false" width="700" align="left">
+                                    <span class="bg" style="width:700px">角色描述</span>
+                                    <div id="dragLineDiv3" index="3" class="dragLine" style="left: 709px; top: 0px;">
+                                    </div>
+                                </th>
+                                <th style="display: table-cell;" id="th4" number="4" personwidth="800" info="false" display="FillEmptyColumn" name="FillEmptyColumn" sortable="false" abbr="FillEmptyColumn" class="normal" checkbox="false" button="false" align="center">
+
+                                </th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="app" style="background-color: rgb(255, 255, 255); overflow-x: auto; width: 1857px; height: 723px;" class="bDiv">
+                        <table id="resultList" style="border-top: 0px none; border-left: 0px none;" class="tableStyle borderLTNone" width="1857" cellspacing="0" cellpadding="5">
+                            <tbody>
+                            <tr id="row0" normalrow="true" v-for="(item,index) in result">
+                                <td thid="th0" style="width: 40px; height: 26px;" thname="no" align="center">
+                                    <div class="tableText" style="width: 40px;">{{index+1}}</div>
+                                </td>
+                                <td thid="th1" style="width: 150px; height: 26px;" thname="Action" align="center">
+                                    <div class="tableText" style="width: 150px;">
+                                        <div class="tableButtonArea">
+                                            <a id="0" class="operate permissionIcon" title="设置权限" onclickevent="operateRecord(0);"></a>
+                                            <a id="1" class="operate edit" title="编辑" onclickevent="editRecord(0);"></a>
+                                            <a id="2" class="operate del" title="删除" onclickevent="deleteRecord(0);"></a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td thid="th2" style="width: 100px; height: 26px;" thname="rolename" align="left">
+                                    <div class="tableText" style="width: 100px;">{{item.chName}}</div>
+                                </td>
+                                <td thid="th3" style="width: 700px; height: 26px;" thname="roledesc" align="left">
+                                    <div class="tableText" style="width: 700px;">{{item.chDetail}}</div>
+                                </td>
+                                <td thid="th4" style="height: 26px;" thname="FillEmptyColumn" personwidth="800" align="center">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div  id="pagenav" style="height:10px"></div>
+                    </div></div>
+
+    </div>
+
+
+    <div class="bottomButton moveArea">
+        <a onclick="doSave(this)" class="button blueButton noActionButton">保存</a>
+        <a onclick="doCancel()" class="button">取消</a>
+    </div>
+    <!-- bottomButton -->
+</div>
+
+</div>
+</div>
+<script type="text/javascript">
+    var app = new Vue({
+        el:'#app',
+        data:{
+            result:[]
+        }
+    });
+
+    var getUserPageList = function(curr) {
+        $.ajax({
+            type:'get',
+            dataType:'json',
+            url:'/systemsetup/chara-manger/charalist',
+            data:{
+                pageNum: curr || 1,
+                pageSize:10,
+
+            },
+            success:function(msg){
+                app.result = msg.list;
+                laypage({
+                    cont:'pagenav',
+                    pages:msg.totalPage,
+                    first:'首页',
+                    last:'尾页',
+                    skin: '#00A0E9',
+                    curr: curr || 1,
+                    jump: function (obj, first) {
+                        if (!first) {
+                            getUserPageList(obj.curr);
+                        }
+                    }
+                });
+            }
+
+        });
+    }
+
+    getUserPageList();
+
+    /*查询用户*/
+    $("#findUser").click(function () {
+        getUserPageList();
+    });
+
+    /*增加用户*/
+    $("#addUserBtn").click(function () {
+        layer.open({
+            type:2,
+            title:'添加用户',
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['1100px','600px'],
+            content:'/systemsetup/employ/addempl',
+            end:function() {
+                getUserPageList();
+            }
+        });
+    });
+
+    /*修改用户*/
+    var editEvent = function (id) {
+        //alert(uid);
+        layer.open({
+            type:2,
+            title: '修改用户',
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['1100px','600px'],
+            content:'/systemsetup/chara-manger/chara_edit?id='+id,
+            end:function() {
+                getUserPageList();
+            }
+        });
+    }
+
+    /*删除用户*/
+    var delEvent = function (uid) {
+            alert(uid);
+            layer.confirm('你确定要删除吗？',{
+                btn:['是','否']
+            },function () {
+                $.ajax({
+                    type:'GET',
+                    dataType:'json',
+                    url: '/user/deleteUser.do',
+                    data:{uid:uid},
+                    success:function (msg) {
+                        getUserPageList();
+                        layer.msg('成功删除用户' + uid,{icon:5});
+                    }
+                })
+            },function () {
+
+            });
+        }
+        </script>
+</body>
+
+
+</html>

@@ -1,7 +1,9 @@
 package com.yunhe.cargomanagement.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -11,8 +13,8 @@ import lombok.experimental.Accessors;
  * 销售退货历史
  * </p>
  *
- * @author 史江浩
- * @since 2019-01-02
+ * @author 刘延琦
+ * @since 2019-01-09
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -21,8 +23,10 @@ public class SalesReturnHistory implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value = "id" ,type = IdType.AUTO)
+    private Integer id;
     /**
-     * 业务处理日期
+     * 业务日期
      */
     private String srhDate;
 
@@ -32,30 +36,74 @@ public class SalesReturnHistory implements Serializable {
     private String srhNumber;
 
     /**
-     * 客户id(外键)
+     * 关联销售单号
      */
-    private Integer cusId;
+    private String srhConNumber;
 
     /**
-     * 仓库id(外键)
+     * 客户名称
      */
-    private Integer waId;
+    private String srhClient;
+
+    /**
+     * 退货商品
+     */
+    private String srhGoods;
+
+    /**
+     * 总计金额
+     */
+    private Double srhMoney;
+
+    /**
+     * 实退金额
+     */
+    private Double srhRetMoney;
 
     /**
      * 入库仓库
      */
-    @TableField("srh_Warehouse")
-    private String srhWarehouse;
+    private String srhHouse;
 
     /**
      * 入库状态
      */
-    private Integer srhState;
+    private String srhStatus;
 
     /**
      * 纸质单据
      */
-    private String srhBill;
+    private String srhBills;
+
+    /**
+     * 制单日期
+     */
+    private String srhCreateDate;
+
+    /**
+     * 其他费用
+     */
+    private String srhOther;
+
+    /**
+     * 结算账户
+     */
+    private String srhEndComm;
+
+    /**
+     * 经手人
+     */
+    private String srhHander;
+
+    /**
+     * 制单人
+     */
+    private String srhMaker;
+
+    /**
+     * 备注
+     */
+    private String srhRemark;
 
 
 }

@@ -10,8 +10,8 @@ import lombok.experimental.Accessors;
  * 销售订单历史
  * </p>
  *
- * @author 史江浩
- * @since 2019-01-02
+ * @author 刘延琦
+ * @since 2019-01-05
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -20,65 +20,21 @@ public class SalesOrderHistory implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private Integer id;
     /**
-     * 商品数量
+     * 业务日期
      */
-    private Integer soNumber;
+    private String soDate;
 
     /**
-     * 单位
+     * 订单编号
      */
-    private String soCompany;
-
-    /**
-     * 折扣
-     */
-    private Integer soDiscount;
-
-    /**
-     * 折后单价
-     */
-    private Double soZUnitPrice;
-
-    /**
-     * 总价
-     */
-    private Double soTotalPrice;
-
-    /**
-     * 备注
-     */
-    private String soRemarks;
-
-    /**
-     * 定金
-     */
-    private Double soEarnestMoney;
-
-    /**
-     * 付款方式
-     */
-    private String soPaymentMethod;
-
-    /**
-     * 单据
-     */
-    private String soBill;
-
-    /**
-     * 销售类型
-     */
-    private String soType;
-
-    /**
-     * 用户id（外键）
-     */
-    private Integer cusId;
+    private String soOrderNum;
 
     /**
      * 处理状态
      */
-    private Integer soState;
+    private String soStatus;
 
     /**
      * 审核人
@@ -86,9 +42,69 @@ public class SalesOrderHistory implements Serializable {
     private String soAuditor;
 
     /**
-     * 商品id（外键）
+     * 客户名称
      */
-    private Integer clId;
+    private String soClient;
+
+    /**
+     * 销售订单商品
+     */
+    private String soOrderComm;
+
+    /**
+     * 销售订单数量
+     */
+    private Integer soOrderCount;
+
+    /**
+     * 折扣金额
+     */
+    private Double soDiscount;
+
+    /**
+     * 总计金额
+     */
+    private Double soMoney;
+
+    /**
+     * 定金
+     */
+    private Double soEarnest;
+
+    /**
+     * 纸质单据
+     */
+    private String soBills;
+
+    /**
+     * 制单日期
+     */
+    private String soBillDate;
+
+    /**
+     * 未转销售数量
+     */
+    private Integer soSellCount;
+
+    /**
+     * 送货日期
+     */
+    private String soDevlierDate;
+
+    /**
+     * 经手人
+     */
+    private String soHander;
+
+    /**
+     * 制单人
+     */
+    private String soMaker;
+
+    /**
+     * 备注
+     */
+    private String soRemark;
 
 
 }

@@ -63,7 +63,12 @@ public interface PurchaseOrderMapper extends BaseMapper<PurchaseOrder> {
     PurchaseOrder selectById(Serializable id);
 
 
-
+    /**
+     *  增进货订单历史
+     * @param purchaseOrder 实体类数据
+     * @return int
+     */
+    int insert(PurchaseOrder purchaseOrder);
 
 
 
@@ -86,14 +91,6 @@ public interface PurchaseOrderMapper extends BaseMapper<PurchaseOrder> {
      * @return
      */
     List<PurchaseOrder> selectByMap(@Param(Constants.COLUMN_MAP) Map<String, Object> columnMap);
-
-
-    /**
-     * 测试 增
-     * @param purchaseOrder
-     * @return
-     */
-    int insert(PurchaseOrder purchaseOrder);
 
     /**
      * 测试 改

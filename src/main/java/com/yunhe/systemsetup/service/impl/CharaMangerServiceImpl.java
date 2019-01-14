@@ -4,7 +4,10 @@ import com.yunhe.systemsetup.entity.CharaManger;
 import com.yunhe.systemsetup.dao.CharaMangerMapper;
 import com.yunhe.systemsetup.service.ICharaMangerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,5 +19,18 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CharaMangerServiceImpl extends ServiceImpl<CharaMangerMapper, CharaManger> implements ICharaMangerService {
+    @Autowired
+    public CharaMangerMapper charaMangerMapper;
+    @Override
+    public List<CharaManger> selectAll() {
+        return charaMangerMapper.selectAll();
+    }
 
+    public CharaMangerMapper getCharaMangerMapper() {
+        return charaMangerMapper;
+    }
+
+    public void setCharaMangerMapper(CharaMangerMapper charaMangerMapper) {
+        this.charaMangerMapper = charaMangerMapper;
+    }
 }

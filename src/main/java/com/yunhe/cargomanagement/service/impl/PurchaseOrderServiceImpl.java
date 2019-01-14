@@ -31,15 +31,13 @@ public class PurchaseOrderServiceImpl extends ServiceImpl<PurchaseOrderMapper, P
         Page page = new Page(pageNum,pageSize);
         page.setCurrent(pageNum);
         page.setSize(pageSize);
-        System.out.println("每页条数："+pageSize);
-        System.out.println("当前页数："+pageNum);
+
         List<PurchaseOrder> list = purchaseOrderMapper.getPurchaseByPoNumber(page,purchaseOrder);
         Map<String, Object> map = new HashMap<>();
+        System.out.println("");
+        map.put("list",list);
         map.put("total",page.getTotal());
         map.put("pages",page.getPages());
-        map.put("list",list);
-        System.out.println("总条数："+page.getTotal());
-        System.out.println("总页数："+page.getPages());
         return map;
     }
 
