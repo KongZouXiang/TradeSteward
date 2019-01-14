@@ -3,6 +3,7 @@ package com.yunhe.billmanagement.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yunhe.billmanagement.entity.FundClientDebt;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,4 +33,11 @@ public interface IFundClientDebtService extends IService<FundClientDebt> {
      */
     int insertFcd(FundClientDebt fundClientDebt);
 
+    /**
+     * <P>
+     *     查询所有记录
+     * </P>
+     * @return 客户应收欠款的条数
+     */
+    List<FundClientDebt> selectFcd();
 }
