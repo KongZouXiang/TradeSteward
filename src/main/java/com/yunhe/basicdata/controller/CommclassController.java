@@ -39,9 +39,7 @@ public class CommclassController {
         Map map=new HashMap();
         map.put("commclass",list);
         return map;
-
     }
-
     /**
      * <p>
      *   增加商品分类前查重
