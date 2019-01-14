@@ -39,9 +39,9 @@ public interface ISalesReturnHistoryService extends IService<SalesReturnHistory>
     /**
      * 分页查询
      * @param pageSize 每页条数
-        * @param pageNum  当前页
-        * @param salesReturnHistory 条件参数
-        * @return map
-        */
-        Map QueryLikeSalesReturnHistory(int pageSize,int pageNum,SalesReturnHistory salesReturnHistory);
-        }
+     * @param pageNum  当前页
+     * @param salesReturnHistory 条件参数
+     * @return map
+     */
+    Map queryLikeSalesReturnHistory(int pageSize,int pageNum,SalesReturnHistory salesReturnHistory);
+}
