@@ -3463,7 +3463,7 @@ jQuery.extend( {
 		var tuples = [
 
 				// action, add listener, callbacks,
-				// ... .then handlers, argument index, [final constant]
+				// ... .then handlers, argument index, [final state]
 				[ "notify", "progress", jQuery.Callbacks( "memory" ),
 					jQuery.Callbacks( "memory" ), 2 ],
 				[ "resolve", "done", jQuery.Callbacks( "once memory" ),
@@ -3698,13 +3698,13 @@ jQuery.extend( {
 			// promise.fail = list.add
 			promise[ tuple[ 1 ] ] = list.add;
 
-			// Handle constant
+			// Handle state
 			if ( stateString ) {
 				list.add(
 					function() {
 
-						// constant = "resolved" (i.e., fulfilled)
-						// constant = "rejected"
+						// state = "resolved" (i.e., fulfilled)
+						// state = "rejected"
 						state = stateString;
 					},
 
@@ -4836,7 +4836,7 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 		input = document.createElement( "input" );
 
 	// Support: Android 4.0 - 4.3 only
-	// Check constant lost if the name is set (#11217)
+	// Check state lost if the name is set (#11217)
 	// Support: Windows Web Apps (WWA)
 	// `name` and `type` must use .setAttribute for WWA (#14901)
 	input.setAttribute( "type", "radio" );
@@ -4846,7 +4846,7 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 	div.appendChild( input );
 
 	// Support: Android <=4.1 only
-	// Older WebKit doesn't clone checked constant correctly in fragments
+	// Older WebKit doesn't clone checked state correctly in fragments
 	support.checkClone = div.cloneNode( true ).cloneNode( true ).lastChild.checked;
 
 	// Support: IE <=11 only
@@ -5320,7 +5320,7 @@ jQuery.event = {
 		},
 		click: {
 
-			// For checkbox, fire native event so checked constant will be right
+			// For checkbox, fire native event so checked state will be right
 			trigger: function() {
 				if ( this.type === "checkbox" && this.click && nodeName( this, "input" ) ) {
 					this.click();
@@ -5670,11 +5670,11 @@ function cloneCopyEvent( src, dest ) {
 function fixInput( src, dest ) {
 	var nodeName = dest.nodeName.toLowerCase();
 
-	// Fails to persist the checked constant of a cloned checkbox or radio button.
+	// Fails to persist the checked state of a cloned checkbox or radio button.
 	if ( nodeName === "input" && rcheckableType.test( src.type ) ) {
 		dest.checked = src.checked;
 
-	// Fails to return the selected option to the default selected constant when cloning options
+	// Fails to return the selected option to the default selected state when cloning options
 	} else if ( nodeName === "input" || nodeName === "textarea" ) {
 		dest.defaultValue = src.defaultValue;
 	}
@@ -7239,7 +7239,7 @@ jQuery.speed = function( speed, easing, fn ) {
 		easing: fn && easing || easing && !isFunction( easing ) && easing
 	};
 
-	// Go to the end constant if fx are off
+	// Go to the end state if fx are off
 	if ( jQuery.fx.off ) {
 		opt.duration = 0;
 
@@ -8920,7 +8920,7 @@ jQuery.extend( {
 			// Url cleanup var
 			urlAnchor,
 
-			// Request constant (becomes false upon send and true upon completion)
+			// Request state (becomes false upon send and true upon completion)
 			completed,
 
 			// To know if global events are to be dispatched
