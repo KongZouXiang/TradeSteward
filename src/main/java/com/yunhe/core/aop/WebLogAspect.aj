@@ -1,12 +1,11 @@
 package com.yunhe.core.aop;
 
-import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 import java.util.logging.Logger;
 
 /**
@@ -16,24 +15,38 @@ import java.util.logging.Logger;
  *@author 孔邹祥
  *@date 2019年1月10日
  */
-public aspect WebLogAspect {
+@Component
+@Aspect
+public class WebLogAspect {
 
     private Logger log = Logger.getLogger("");
 
+    @Pointcut(value = "execution(public * com.yunhe.basicdata.controller.*(..))")
+    public void webLog(){}
 
-    //请求method前打印内容
-    @Before(value = "controllerAspect()")
-    public void methodBefore(JoinPoint joinPoint) {
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = requestAttributes.getRequest();
+    @Pointcut(value = "execution( public * com.yunhe.core.common.login.controller.LoginController.login(..))")
+    public void webLoginLog(){}
+    /**
+     *
+     * @Before 在方法执行之前执行
+     *
+     * */
+    @Before("webLog()")
+    public void log() {
 
-        //打印请求内容
-        log.info("===============请求内容===============");
-        log.info("请求地址:" + request.getRequestURL().toString());
-        log.info("请求方式:" + request.getMethod());
-        log.info("请求类方法:" + joinPoint.getSignature());
-        log.info("请求类方法参数:" + Arrays.toString(joinPoint.getArgs()));
-        log.info("===============请求内容===============");
-
+        log.info("log");
+        System.out.println("doBefore");
     }
+    /**
+     *
+     * @After 在方法执行之后执行
+     *
+     * */
+    @After("webLoginLog()")
+    public void doAfter(){
+
+        log.info("doAfter");
+        System.out.println("doAfter");
+    }
+
 }
