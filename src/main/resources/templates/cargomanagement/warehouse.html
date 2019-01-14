@@ -136,7 +136,7 @@
                     pages: msg.totalPage,//总页数
                     first: '首页',
                     last: '尾页',
-                    current: curr || 1,//初始化页数
+                    curr: curr || 1,//初始化页数
                     jump: function (obj, first) { //触发分页后的回调
                         if (!first) {     //点击跳页触发函数自身，并传递当前页：obj.curr
                             getPurchasePageList(obj.curr);

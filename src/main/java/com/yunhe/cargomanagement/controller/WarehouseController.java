@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,14 +41,15 @@ public class WarehouseController {
      *
      * @param current 当前页
      * @param size 每页显示条数
-     * @param warehouse 实体类
-     * @return list集合
+     * @return map集合
      */
     @RequestMapping("/getPage")
     @ResponseBody
-    public Map selectWareHousePage(int current, int size, Warehouse warehouse){
+    public Map selectWareHousePage(int current, int size){
+        Map map=new HashMap();
+        map=warehouseService.selectWareHousePage(current,size);
 
-        return warehouseService.selectWareHousePage(current,size,warehouse);
+        return map;
     }
 
     @RequestMapping("/getPages")
