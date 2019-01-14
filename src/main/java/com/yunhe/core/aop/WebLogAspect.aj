@@ -4,9 +4,9 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import java.util.logging.Logger;
 
 /**
  * <p>
@@ -19,12 +19,12 @@ import java.util.logging.Logger;
 @Aspect
 public class WebLogAspect {
 
-    private Logger log = Logger.getLogger("");
+    Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
 
     @Pointcut(value = "execution(public * com.yunhe.basicdata.controller.*(..))")
     public void webLog(){}
 
-    @Pointcut(value = "execution( public * com.yunhe.core.register.controller.LoginController.login(..))")
+    @Pointcut(value = "execution( public * com.yunhe.core.common.login.controller.LoginController.login(..))")
     public void webLoginLog(){}
     /**
      *
@@ -34,7 +34,7 @@ public class WebLogAspect {
     @Before("webLog()")
     public void log() {
 
-        log.info("log");
+        logger.info("log");
         System.out.println("doBefore");
     }
     /**
@@ -45,7 +45,7 @@ public class WebLogAspect {
     @After("webLoginLog()")
     public void doAfter(){
 
-        log.info("doAfter");
+        logger.info("doAfter");
         System.out.println("doAfter");
     }
 

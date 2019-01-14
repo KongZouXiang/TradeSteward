@@ -42,7 +42,7 @@ public class PurchaseOrderController {
     @Resource
     CommodityListServiceImpl commodityListService;
 
-    @RequestMapping("/Test22")
+    @RequestMapping("/Purlist")
     public ModelAndView test22(){
         ModelAndView mv = new ModelAndView();
         mv.setViewName("/cargomanagement/purorder-list");
