@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
  * @author 孔邹祥
  * @date 2019年1月9日
  */
-@Controller
+//@Controller
 public class LoginController {
 
     @Resource
