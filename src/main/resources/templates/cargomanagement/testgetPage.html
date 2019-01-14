@@ -142,7 +142,7 @@
             maxmin: true,
             shadeClose: true,
             area: ['1000px', '600px'],
-            content: "/cargomanagement/purchase-order/selectById?id=" + id,
+            content: "" + id,
             end: function () {
                 getPurchasePageList();
             }
@@ -150,28 +150,7 @@
     };
 
 
-    //删除用户
-    var delEvent = function (id) {
-        //确认对话框
-        layer.confirm('您确认删除？', {
-            btn: ['我就删', '朕再想想']
-        }, function () {
-            $.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: '/cargomanagement/purchase-order/deletePurchaseById',
-                data: {
-                    id: id
-                },
-                success: function (msg) {
-                    getPurchasePageList();
-                    layer.msg("成功删除" + id, {icon: 5});
-                }
-            });
-        },function (){
 
-        });
-    };
 
 
 </script>

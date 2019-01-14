@@ -10,7 +10,11 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 
 /**
- *
+ * <p>
+ *     AOP日志切面
+ * </p>
+ *@author 孔邹祥
+ *@date 2019年1月10日
  */
 public aspect WebLogAspect {
 

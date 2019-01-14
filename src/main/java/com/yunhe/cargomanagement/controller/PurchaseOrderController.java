@@ -93,9 +93,9 @@ public class PurchaseOrderController {
      * @param id  进货订单历史表id  前台传的
      */
     @RequestMapping("/deletePurchaseById")
-    public void deletePurchById(int id){
+    public int deletePurchById(int id){
         System.out.println("这条数据的id"+id);
-        purchaseOrderService.deleteById(id);
+        return purchaseOrderService.deleteById(id);
     }
 
     /**
@@ -118,7 +118,7 @@ public class PurchaseOrderController {
         PurchaseOrder purchaseOrder = purchaseOrderService.selectById(id);
         httpSession.setAttribute("purchase",purchaseOrder);
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("updatePurchase");
+        mv.setViewName("cargomanagement/article-add");
         return mv;
     }
 
