@@ -62,8 +62,6 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, Warehouse
         map.put("current",current);
         map.put("size",size);
         map.put("totalPage",page.getPages());
-        System.out.println("总记录数："+page.getTotal());
-        System.out.println("总分页数："+page.getPages());
         return map;
     }
 

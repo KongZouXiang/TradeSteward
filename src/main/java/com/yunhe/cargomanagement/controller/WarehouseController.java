@@ -48,6 +48,8 @@ public class WarehouseController {
     public Map selectWareHousePage(int current, int size){
         Map map=new HashMap();
         map=warehouseService.selectWareHousePage(current,size);
+        System.out.println("当前页"+current);
+        System.out.println("每页数据条数"+size);
 
         return map;
     }
