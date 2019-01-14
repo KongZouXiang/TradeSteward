@@ -1,9 +1,11 @@
 package com.yunhe.cargomanagement.controller;
 
 
-import com.github.pagehelper.Page;
+import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
 import com.yunhe.cargomanagement.entity.PurchaseOrder;
 import com.yunhe.cargomanagement.service.IPurchaseOrderService;
+import com.yunhe.customermanagement.entity.Supplier;
+import com.yunhe.customermanagement.service.ISupplierService;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,26 @@ public class PurchaseOrderController {
     private IPurchaseOrderService purchaseOrderService;
 
     /**
+     * 供应商列表
+     */
+    @Resource
+    private ISupplierService supplierService;
+
+    /**
+     * 商品列表
+     */
+    @Resource
+    CommodityListServiceImpl commodityListService;
+
+    @RequestMapping("/Purlist")
+    public ModelAndView test22(){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/cargomanagement/purorder-list");
+        return mv;
+    }
+
+
+    /**
      * 跳转到进货订单历史页面
      * @return 页面
      */
@@ -45,13 +66,32 @@ public class PurchaseOrderController {
      * @return 页面
      */
     @RequestMapping("/addPurchase")
-    public ModelAndView getaddPurchase(){
+    public ModelAndView getaddPurchase(HttpSession session){
+        /*List<Supplier> suppliers = supplierService.selectList();
+        session.setAttribute("suppliers",suppliers);*/
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("addPurchase");
+        mv.setViewName("cargomanagement/Pur_order-add");
         return mv;
     }
 
+    /**
+     * 查询供应商
+     * @return 供应商数据
+     */
+    @RequestMapping("/getSupplieradd")
+    public Map getSupplieradd(){
+        return supplierService.selectList();
+    }
 
+
+    /**
+     * 查询商品
+     * @return 商品列表
+     */
+    @RequestMapping("/getCommodadd")
+    public Map getCommodadd(){
+        return commodityListService.selectList();
+    }
     /**
      * 进货订单历史分页
      * @param pageNum 前台传当前页
@@ -95,9 +135,9 @@ public class PurchaseOrderController {
      * @param id  进货订单历史表id  前台传的
      */
     @RequestMapping("/deletePurchaseById")
-    public void deletePurchById(int id){
+    public int deletePurchById(int id){
         System.out.println("这条数据的id"+id);
-        purchaseOrderService.deleteById(id);
+        return purchaseOrderService.deleteById(id);
     }
 
     /**
@@ -120,7 +160,7 @@ public class PurchaseOrderController {
         PurchaseOrder purchaseOrder = purchaseOrderService.selectById(id);
         httpSession.setAttribute("purchase",purchaseOrder);
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("updatePurchase");
+        mv.setViewName("cargomanagement/article-add");
         return mv;
     }
 

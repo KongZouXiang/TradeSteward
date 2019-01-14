@@ -1,10 +1,9 @@
 package com.yunhe.basicdata.controller;
-
-
 import com.yunhe.basicdata.entity.SettlementAccount;
 import com.yunhe.basicdata.service.impl.SettlementAccountServiceImpl;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.Map;
  * <p>
  * 结算帐户 前端控制器
  * </p>
- *
  * @author 李恒逵, 唐凯宽
  * @since 2019-01-02
  */
@@ -37,17 +35,15 @@ public class SettlementAccountController {
     public Map selectAccountPage(int current, int size, SettlementAccount settlementAccount) {
         return settlementAccountService.selectAllAcountList(current, size, settlementAccount);
     }
-
     /**
      * 模糊查询
-     *
-     * @param data 模糊查询的条件
+     * @param keyword 模糊查询的条件
      * @return 根据data返回的数据
      */
     @RequestMapping(value = "/vaguelist", method = RequestMethod.POST)
     @ResponseBody
-    public Map vagueAccountList(String data) {
-        List vaguelist = settlementAccountService.vagueAccountList(data);
+    public Map vagueAccountList(@RequestParam("keyword") String keyword) {
+        List vaguelist = settlementAccountService.vagueAccountList(keyword);
         Map map = new HashMap();
         map.put("data", vaguelist);
         return map;
@@ -55,73 +51,85 @@ public class SettlementAccountController {
     /**
      * 增加账户的信息
      *
-     * @param saName 账户的名称
-     * @param saBank 开户银行
+     * @param zhanghu 账户的名称
+     * @param sabanknumber 开户银行
      * @return 无返回
      */
     @RequestMapping(value = "/insertaccount", method = RequestMethod.POST)
-    public String insertAccountinfo(@RequestParam("saName") String saName, @RequestParam("saBank") String saBank) {
+    public String insertAccountinfo(@RequestParam("zhanghu") String zhanghu, @RequestParam("sabank") String sabank,
+                                    @RequestParam("sabanknumber") String sabanknumber ,@RequestParam("beginbalance") String beginbalance ,
+                                    @RequestParam("zhangbalance") double zhangbalance,@RequestParam("zhangstate")int zhangstate) {
         SettlementAccount settlementAccount = new SettlementAccount();
-        settlementAccount.setSaName(saName);
-        settlementAccount.setSaBank(saBank);
+        System.out.println("taiozahung");
+        settlementAccount.setSaName(zhanghu);
+        settlementAccount.setSaBank(sabank);
+        settlementAccount.setSaBankNumber(sabanknumber);
+        settlementAccount.setSaBeginBalance(beginbalance);
+        settlementAccount.setSaBalance(zhangbalance);
+        settlementAccount.setSaState(zhangstate);
         settlementAccountService.insertAccount(settlementAccount);
         return null;
     }
-
     /**
      * 查询账户的详细信息
-     *
      * @param id 查询账户的id
      * @return 根据id返回的信息
      */
-    @PostMapping("/selectAccountByid")
+    @GetMapping("/selectAccountByid")
     @ResponseBody
-    public Map selectAccountById(int id) {
-        Map map = new HashMap();
-        SettlementAccount selectAccountById = settlementAccountService.selectAccountById(id);
-        map.put("selectAccountById", selectAccountById);
-        return map;
+    public ModelAndView selectAccountById(@RequestParam("id") Integer id, Model model) {
+        SettlementAccount settlementAccountid = settlementAccountService.selectAccountById(id);
+        model.addAttribute("settlementAccountid",settlementAccountid);
+        return new ModelAndView("basicdata/editaccount");
     }
-
     /**
      * 修改账户的信息
-     *
-     * @param saName         账户名称
-     * @param saBank         开户银行
-     * @param saBalance      账户余额
-     * @param saState        状态
-     * @param saBankNumber   银行账号
-     * @param saBeginBalance 期初余额
+     * @param zhanghu         账户名称
+     * @param sabank         开户银行
+     * @param sabanknumber      账户余额
+     * @param zhangstate        状态
+     * @param sabanknumber   银行账号
+     * @param beginbalance 期初余额
      * @param id             账户id
      * @return 修改后的账户信息
      */
     @RequestMapping(value = "/updateAccount", method = RequestMethod.POST)
     @ResponseBody
-    public String updateAccountInfo(String saName, String saBank, Double saBalance, Integer saState, String saBankNumber, String saBeginBalance, int id) {
+    public ModelAndView updateAccountInfo(@RequestParam("zhanghu") String zhanghu, @RequestParam("sabank") String sabank,
+                                          @RequestParam("sabanknumber") String sabanknumber, @RequestParam("beginbalance") String beginbalance,
+                                          @RequestParam("zhangbalance") double zhangbalance, @RequestParam("zhangstate") int  zhangstate,
+                                          @RequestParam("id") int id) {
         SettlementAccount settlementAccount = new SettlementAccount();
-        settlementAccount.setSaName(saName);
-        settlementAccount.setSaBank(saBank);
-        settlementAccount.setSaBalance(saBalance);
+        settlementAccount.setSaName(zhanghu);
+        settlementAccount.setSaBank(sabank);
+        settlementAccount.setSaBalance(zhangbalance);
         settlementAccount.setId(id);
-        settlementAccount.setSaBankNumber(saBankNumber);
-        settlementAccount.setSaBeginBalance(saBeginBalance);
-        settlementAccount.setSaState(saState);
+        settlementAccount.setSaBankNumber(sabanknumber);
+        settlementAccount.setSaBeginBalance(beginbalance);
+        settlementAccount.setSaState(zhangstate);
         settlementAccountService.updateAccount(settlementAccount);
-        return null;
+        return new ModelAndView("adminaccount1");
     }
-
     /**
      * 删除账户的信息
-     *
      * @param id 删除账户的id
      * @return 删除成功
      */
     @PostMapping(value = "/deleteAccount")
     @ResponseBody
-    public String deleteAccount(int id) {
+    public String deleteAccount(@RequestParam("id") int id) {
         SettlementAccount settlementAccount = new SettlementAccount();
+        System.out.println(id);
         settlementAccount.setId(id);
         settlementAccountService.deleteAccount(settlementAccount);
         return null;
+    }
+    @RequestMapping("/addacounthtml")
+    public ModelAndView AddAcount(){
+        return new ModelAndView("basicdata/addacount");
+    }
+    @RequestMapping("/jumpaccount")
+    public ModelAndView admingaccount(){
+        return new ModelAndView("basicdata/adminaccount-list");
     }
 }

@@ -1,0 +1,54 @@
+员工表
+
+序号 int
+用户名  String
+员工姓名 String
+角色 String
+性别 String
+手机号 String
+邮箱 String
+状态 String
+地址 String
+关联仓库 String
+价格权限 String
+查看他人单据 String
+作废他人单据 String
+查看他人客户 String
+
+
+角色管理
+
+序号 int
+角色名称 String
+角色描述 String
+
+单号规则表
+
+序号 int
+编号类型 String
+网页版编号规则 String
+网页版编号位数 int
+网页版当前编号 int
+电脑版编号规则 String
+安卓版编号规则 String
+苹果版编号规则 String
+
+企业资料
+商户代码
+用户数  long
+开户日期
+管理员姓名
+所属行业	
+联系人
+电子邮件
+备注
+管理员账号
+商户名称
+到期时间
+公司地址
+网址
+联系电话
+QQ账号
+企业logo 
+
+

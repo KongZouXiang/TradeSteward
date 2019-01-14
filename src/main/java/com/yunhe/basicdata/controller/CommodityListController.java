@@ -1,9 +1,9 @@
 package com.yunhe.basicdata.controller;
 
-
 import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -17,7 +17,6 @@ import java.util.Map;
  *
  * @author 李恒逵, 唐凯宽
  * @since 2019-01-02
- *
  */
 @RestController
 @RequestMapping("/basicdata/commodity-list")
@@ -35,22 +34,36 @@ public class CommodityListController {
      */
     @RequestMapping(value = "/getpage", method = RequestMethod.POST)
     @ResponseBody
-    public Map selectCommPage(int size, int current, CommodityList commodityList) {
-        return commodityListService.selectAllCommList(current, size, commodityList);
+    public Map selectCommPage(int current, int size, CommodityList commodityList) {
+        return commodityListService.selectAllcommList(current, size, commodityList);
     }
 
     /**
      * 增加商品的信息
+     * 前端页面传过来的商品名称
      *
-     * @param clName 前端页面传过来的商品名称
      * @return 无返回
      */
     @RequestMapping(value = "/addpage", method = RequestMethod.POST)
     @ResponseBody
-    public String insertComm(@RequestParam("clName") String clName) {
+    public String insertComm(@RequestParam("tiaoxingma") String tiaoxingma, @RequestParam("bianhao") String bianhao,
+                             @RequestParam("mingcheng") String mingcheng, @RequestParam("fenlei") int fenlei,
+                             @RequestParam("jibendanwei") int jibendanwei, @RequestParam("guige") String guige,
+                             @RequestParam("cankaojinhuo") String cankaojinhuo, @RequestParam("pifajia") String pifajia,
+                             @RequestParam("lingshoujia") String lingshoujia) {
         CommodityList commodityList = new CommodityList();
-        commodityList.setClName(clName);
-        commodityListService.insertComm(commodityList);
+        System.out.println(tiaoxingma);
+        commodityList.setClScan(tiaoxingma);
+        commodityList.setClName(mingcheng);
+        commodityList.setUsId(jibendanwei);
+        commodityList.setClSpec(guige);
+        commodityList.setClPurPrice(cankaojinhuo);
+        commodityList.setClWhoPrice(pifajia);
+        commodityList.setClTagPrise(lingshoujia);
+        commodityList.setCcId(fenlei);
+        commodityList.setClNumber(bianhao);
+        /*commodityListService.insertComm(commodityList);*/
+        System.out.println("太区庄");
         return null;
     }
 
@@ -106,16 +119,25 @@ public class CommodityListController {
     /**
      * 模糊查询
      *
-     * @param data 模糊查询的信息
+     * @param poKeyword 模糊查询的信息
      * @return 商品的一条信息
      */
     @RequestMapping(value = "/vaguelist", method = RequestMethod.POST)
     @ResponseBody
-    public Map vagueList(String data) {
-        List list = commodityListService.selectCommstlist(data);
+    public Map vagueList(@RequestParam("poKeyword") String poKeyword) {
+        List list = commodityListService.selectCommstlist(poKeyword);
         Map map = new HashMap();
         map.put("data", list);
         return map;
     }
 
+    @RequestMapping("/addcommlist")
+    public ModelAndView addcomm() {
+        return new ModelAndView("basicdata/addCommodityList");
+    }
+
+    @RequestMapping("/getcommdityfenye")
+    public ModelAndView selectfenye() {
+        return new ModelAndView("basicdata/admincommodity-list");
+    }
 }

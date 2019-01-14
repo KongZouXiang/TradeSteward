@@ -7,7 +7,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -24,11 +23,31 @@ import java.util.Map;
 public class WarehouseManagementController {
     @Resource
     WarehouseManagementServiceImpl warehouseManagementService;
+
+    /**
+     * 跳转列表页面
+     * @return 列表页面
+     */
     @RequestMapping("/login")
     public ModelAndView Login(){
-        return new ModelAndView("/TankWide/user_list") ;
+        return new ModelAndView("basicdata/admin-list.html") ;
     }
-
+    /**
+     * 跳转增加仓库页面
+     * @return 增加仓库页面
+     */
+    @RequestMapping("/addWare")
+    public ModelAndView addWare(){
+        return new ModelAndView("basicdata/admin-add.html") ;
+    }
+    /**
+     * 跳转修改仓库页面
+     * @return  修改仓库页面
+     */
+    @RequestMapping("/UpdateWareHouse")
+    public ModelAndView UpdateWareHouse(){
+        return new ModelAndView("basicdata/editWareHouse.html") ;
+    }
     /**
      * 分页查询仓库
      * @param pageSize 每页显示条数
@@ -40,7 +59,6 @@ public class WarehouseManagementController {
   public Map select(int pageSize, int pageNum,WarehouseManagement warehouseManagement){
         Map map=new HashMap();
         map=warehouseManagementService.selectWareList(pageSize, pageNum);
-        System.out.println("pagesize===>"+pageSize);
       return map;
   }
 
@@ -56,7 +74,6 @@ public class WarehouseManagementController {
         warehouseManagementService.deleteByid(id);
         return "success";
   }
-
     /**
      * <>
      *     修改仓库
@@ -69,7 +86,6 @@ public class WarehouseManagementController {
       warehouseManagementService.update(warehouseManagement);
       return "success";
   }
-
     /**
      * 根据id查找仓库
      * @param id 查找仓库的
@@ -82,7 +98,6 @@ public class WarehouseManagementController {
      map.put("data",warehouseManagement);
      return map;
   }
-
     /**
      * <>
      *     模糊查询
@@ -92,14 +107,25 @@ public class WarehouseManagementController {
      */
   @RequestMapping("/vagueselect")
 public Map vagueselect(String data){
-     List list= warehouseManagementService.vagueselect1(data);
-     Map map=new HashMap();
-     map.put("data",list);
+      Map map=new HashMap();
+      map= warehouseManagementService.vagueselect1(data);
      return map;
+}
 
+    /**
+     * 增加仓库
+     * @param warehouseManagement 增加仓库的数据
+     * @return 视图
+     */
+    @RequestMapping("/addWarehouse")
+public ModelAndView addWarehouse(WarehouseManagement warehouseManagement){
+    System.out.println("asd==="+warehouseManagement);
+      warehouseManagementService.addWarehouse(warehouseManagement);
+      return new ModelAndView("basicdata/admin-list.html");
 }
 
 }
+
 
 
 

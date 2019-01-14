@@ -3,7 +3,6 @@ package com.yunhe.cargomanagement.controller;
 
 import com.yunhe.cargomanagement.entity.PurchaseHistory;
 import com.yunhe.cargomanagement.service.IPurchaseHistoryService;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +26,8 @@ public class PurchaseHistoryController {
     @Resource
     private IPurchaseHistoryService purchaseHistoryService;
 
+
+
     @RequestMapping("/Test1")
     public ModelAndView getGoToPurchaseHistory(){
         ModelAndView mv = new ModelAndView();
@@ -44,7 +45,6 @@ public class PurchaseHistoryController {
         mv.setViewName("addPurchaseHistory");
         return mv;
     }
-
 
     /**
      * 进货历史分页

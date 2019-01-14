@@ -84,6 +84,6 @@ public interface IWarehouseService extends IService<Warehouse> {
      * @param warehouse 实体对象 分页信息
      * @return map集合
      */
-    Map selectWareHousePage(int current, int size, Warehouse warehouse);
+    Map selectWareHousePage(int current, int size);
 
 }

@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,14 +41,24 @@ public class WarehouseController {
      *
      * @param current 当前页
      * @param size 每页显示条数
-     * @param warehouse 实体类
-     * @return list集合
+     * @return map集合
      */
     @RequestMapping("/getPage")
     @ResponseBody
-    public Map selectWareHousePage(int current, int size, Warehouse warehouse){
+    public Map selectWareHousePage(int current, int size){
+        Map map=new HashMap();
+        map=warehouseService.selectWareHousePage(current,size);
+        System.out.println("当前页"+current);
+        System.out.println("每页数据条数"+size);
 
-        return warehouseService.selectWareHousePage(current,size,warehouse);
+        return map;
+    }
+
+    @RequestMapping("/getPages")
+    @ResponseBody
+    public ModelAndView getPage(){
+
+        return new ModelAndView("cargomanagement/warehouse.html");
     }
 
     @RequestMapping("/selectWareHouse")
