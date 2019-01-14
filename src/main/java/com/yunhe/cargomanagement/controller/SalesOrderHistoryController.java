@@ -46,7 +46,7 @@ public class SalesOrderHistoryController {
      */
     @RequestMapping("/ceshi1")
     public ModelAndView ceshi1(){
-        return new ModelAndView("ceshi1");
+        return new ModelAndView("cargomanagement/ceshi1");
     }
 
     public int insertSale(SalesOrderHistory sa){
@@ -89,11 +89,15 @@ public class SalesOrderHistoryController {
      *主页面的页面跳转-分页查询所有销售订单记录
      * @return web页面
      */
-    @RequestMapping("/index")
+    @RequestMapping("/index1")
     public ModelAndView index(){
-        return new ModelAndView("ceshi3");
+        return new ModelAndView("/cargomanagement/salesOrderHistory");
     }
 
+    @RequestMapping("/index")
+    public ModelAndView index1(){
+        return new ModelAndView("/index");
+    }
     /**
      * 分页模糊查询销售订单历史
      * @param pageNum
