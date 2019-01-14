@@ -84,15 +84,16 @@ public class CommodityList implements Serializable {
      */
     @TableField("wm_id")
     private Integer wmId;
+
+    /**
+     *属性表(外键)
+     */
+    private Integer prId;
+
     /**
      * 商品编号
      */
     @TableField("cl_number")
     private String clNumber;
-    /**
-     * 属性表的外键
-     */
-    @TableField("pr_id")
-    private Integer prId;
 
 }

@@ -34,12 +34,17 @@ public class PurchaseHistoryController {
         return mv;
     }
 
+    /**
+     * 这是一个为了上传才写的注释....
+     * @return
+     */
     @RequestMapping("/addPurchaseHistory")
     public ModelAndView getPurchaseHistory(){
         ModelAndView mv = new ModelAndView();
         mv.setViewName("addPurchaseHistory");
         return mv;
     }
+
     /**
      * 进货历史分页
      * @param pageNum 前台传过来的当前页数据
@@ -50,13 +55,49 @@ public class PurchaseHistoryController {
     @RequestMapping("/getPurchaseHistoryPage")
     public Map getPurchaseHistoryByPhNumber(int pageNum, int pageSize, PurchaseHistory purchaseHistory){
         Map purchaseHistpage = purchaseHistoryService.getPurchaseHistoryByPhNumber(pageNum,pageSize,purchaseHistory);
-        System.out.println(purchaseHistpage);
         return purchaseHistpage;
     }
 
+    /**
+     * 新增进货历史
+     * @param purchaseHistory 进货历史实体类接收的数据
+     * @return int
+     */
     @RequestMapping("/addPurchaseHistoryGoTo")
-    public void addPurchaseHistoryById(PurchaseHistory purchaseHistory){
-        
+    public int addPurchaseHistoryById(PurchaseHistory purchaseHistory){
+        System.out.println(purchaseHistory+"..............");
+        return purchaseHistoryService.insertPurchaseHistory(purchaseHistory);
+    }
+
+    /**
+     * 根据id删除进货历史
+     * @param id 前台传值id
+     * @return int
+     */
+    @RequestMapping("/deletePurchaseHistoryById")
+    public int deletePurchaseHistoryById(int id){
+        System.out.println("*******"+id);
+        return purchaseHistoryService.deleteById(id);
+    }
+
+    /**
+     * 根据id修改进货历史
+     * @param purchaseHistory 进货历史实体类接收的数据
+     * @return int
+     */
+    @RequestMapping("/updatePurchaseHistoryById")
+    public int updatePurchaseHistoryById(PurchaseHistory purchaseHistory){
+        System.out.println("*****"+purchaseHistory.getId());
+        return purchaseHistoryService.updatePurchaseHistoryById(purchaseHistory);
+    }
+
+
+    public IPurchaseHistoryService getPurchaseHistoryService() {
+        return purchaseHistoryService;
+    }
+
+    public void setPurchaseHistoryService(IPurchaseHistoryService purchaseHistoryService) {
+        this.purchaseHistoryService = purchaseHistoryService;
     }
 
 }
