@@ -1,5 +1,6 @@
 package com.yunhe.reportanalysis.controller;
 
+import com.yunhe.basicdata.entity.Commclass;
 import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
 import com.yunhe.cargomanagement.entity.PurchaseOrder;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,7 +48,14 @@ public class PurchasereportController {
     @PostMapping("/getallbypurch")
     @ResponseBody
     public Map selectbyallcomm(int size, int current, CommodityList commodityList){
-        return commodityListService.selectAllCommList(current,size,commodityList);
+        return commodityListService.selectAllcommList(current,size,commodityList);
+    }
+
+    public Map selectList(){
+        List<Commclass> list=commodityListService.selectAllcommList();
+        Map map=new HashMap();
+        map.put("commclass",list);
+        return map;
     }
 
     /*@PostMapping("/getallbySupp")
