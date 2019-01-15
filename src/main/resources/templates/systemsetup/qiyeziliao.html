@@ -1,0 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><!-- base href="http://web.zhsmjxc.com/UCenter-webapp/" -->
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>企业资料</title>
+
+	<link rel="stylesheet" href="/../css/style.css" type="text/css">
+	<link rel="stylesheet" href="/../css/jquery.css">
+	<link rel="stylesheet" href="/../css/zTreeStyle.css" type="text/css">
+	<link rel="stylesheet" href="/../css/Sortable.css" type="text/css">
+	<link rel="stylesheet" href="/../css/WdatePicker.css"  type="text/css">
+	<link rel="stylesheet" href="/../css/layer.css" id="layuicss-skinlayercss">
+	<script type="text/javascript" async="" src="/../js/vds.js"></script>
+	<script type="text/javascript" src="/../js/all_before.js"></script>
+
+	<script type="text/javascript" src="/../js/highcharts.js"></script>
+	<script type="text/javascript" src="/../js/exporting.js"></script>
+	<script type="text/javascript" src="/../js/WdatePicker.js"></script>
+
+	<script type="text/javascript" src="/../js/jquery.js"></script>
+	<script type="text/javascript" src="/../js/all_after.js"></script>
+	<script type="text/javascript" src="/../js/flexigrid.js"></script>
+	<script type="text/javascript" src="/../js/wbi_common.js"></script>
+	<script type="text/javascript" src="/../js/wbill_common.js"></script>
+	<script type="text/javascript" src="/../js/filter.js"></script>
+	<script type="text/javascript" src="/../js/record.js"></script>
+	<script type="text/javascript" src="/../js/vue/vue.min.js"></script>
+	<script type="text/javascript" src="/../js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/../js/layer/layer.js"></script>
+	<script type="text/javascript" src="/../js/laypage/laypage.js"></script>
+
+    <!--GrowingIO 全局引入  -->
+    <script type="text/javascript">
+        var _vds = _vds || [];
+        window._vds = _vds;
+
+        function addGrowingCS(csindex,csKey,valueKey){
+            var csValue = getValueFromRoot(valueKey);
+            if(csValue){
+                _vds.push(['setCS'+csindex, csKey, csValue]);
+            }
+        }
+
+        (function(){
+            _vds.push(['setAccountId', '96cf4aed2bf68eba']);
+
+            try{
+                addGrowingCS(1,'ContactId','contactid');
+                addGrowingCS(2,'UserId','userid');
+                addGrowingCS(3,'ProductCersion','productversion');
+                addGrowingCS(4,'IsPay','ispay');
+                addGrowingCS(5,'TradeCode','tradecode');
+            }catch(e){}
+
+            (function() {
+                var vds = document.createElement('script');
+                vds.type='text/javascript';
+                vds.async = true;
+                vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(vds, s);
+            })();
+        })();
+    </script>
+
+    <!-- add by wangsheng 阿里云前端性能监控 先在测试环境验证，不发生产 -->
+
+
+
+
+
+    <script type="text/javascript">
+        $(function()
+        {
+            if(!isNotFree())
+            {
+                $(".freeShow").show();
+            }
+        });
+    </script>
+</head>
+<body style="background-image: none;">
+<input type="hidden" id="hidproductversion" value="1" spellcheck="false">
+<div class="main" id="listAccount">
+    <div class="whiteBoxTab">
+        <ul>
+            <li class="tabS" index="1" style="width: auto;"><a href="javascript:;">账户信息</a></li>
+            <li class="tabN" index="2" style="width: auto;"><a href="javascript:;">企业LOGO</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+    <div class="whiteBox actionArea">
+        <table width="100%" height="500" cellspacing="0" cellpadding="0" border="0">
+            <tbody><tr>
+                <td valign="top">
+                    <div class="text">
+
+							<span name="tabList" id="tab1" style="display: inline;"> <br>
+								<table id="tab_body_1" width="100%" cellspacing="0" cellpadding="8" border="0">
+									<tbody>
+
+											<tr>
+												<td class="font14" width="100" align="right">商户代码</td>
+												<td width="200" align="left"><input class="inputText wf100" disabled="True" id="ContactCode" name="ContactCode" size="40" type="text" value="19212345678" spellcheck="false"></td>
+												<td class="font999" align="left"></td>
+												<td class="font14" width="100" align="right">管理员账号</td>
+												<td width="200" align="left"><input class="inputText wf100" disabled="True" id="AdminLoginName" name="AdminLoginName" size="40" type="text" value="19212345678" spellcheck="false"></td>
+												<td class="font999" align="left"></td>
+											</tr>
+											<tr>
+												<td class="font14" width="100" align="right">用户数</td>
+												<td width="200" align="left"><input class="inputText wf100" disabled="True" id="AllowEmpCountShow" name="AllowEmpCountShow" size="40" type="text" value="10" spellcheck="false">
+												</td>
+												<td class="font999" align="left"></td>
+												<td class="font14" width="100" align="right">商户名称</td>
+												<td width="200" align="left"><input class="inputText wf100" id="txcontactname" maxlength="50" name="txcontactname" size="40" type="text" value="夜猫小食铺" spellcheck="false"></td>
+												<td class="font999" align="left"></td>
+											</tr>
+											<tr class="free">
+												<td class="font14" width="100" align="right">开户日期</td>
+												<td width="200" align="left"><input class="inputText wf100" disabled="True" id="StartDateShow" name="StartDateShow" size="40" type="text" value="2017-07-24" spellcheck="false"></td>
+												<td class="font999" align="left"></td>
+												<td class="font14 free" width="100" align="right">到期日期</td>
+												<td class="free" width="200" align="left"><input class="inputText wf100" disabled="True" id="EndDateShow" name="EndDateShow" size="40" type="text" value="2099-01-01" spellcheck="false"></td>
+												<td class="font999 free" align="left"></td>
+											</tr>
+											<tr>
+												<td class="font14" width="100" align="right">
+													<font color="red">*</font>管理员姓名
+												</td>
+												<td width="200" align="left"><input class="inputText wf100" id="txusername" maxlength="50" name="txusername" size="40" type="text" value="老板" spellcheck="false"></td>
+												<td class="font999" align="left"></td>
+												<td class="font14" width="100" align="right">公司地址</td>
+												<td width="200" align="left"><input class="inputText wf100" id="txaddress" maxlength="100" name="txaddress" size="40" type="text" spellcheck="false"></td>
+												<td class="font999" align="left"></td>
+											</tr>
+											<tr>
+												<td class="font14" width="100" align="right"><font color="red">*</font>所属行业</td>
+												<td width="200" align="left"><select class="DropDown1 w90 wf100" id="seltradecode" name="seltradecode">
+
+														<option value="">请选择行业</option>
+
+
+															<option value="3" selected="selected">烟酒食品</option>
+
+
+															<option value="8">家电数码</option>
+
+
+															<option value="4">服装箱包</option>
+
+
+															<option value="18">家装建材</option>
+
+
+															<option value="11">母婴玩具</option>
+
+
+															<option value="6">日化用品</option>
+
+
+															<option value="7">文体图书</option>
+
+
+															<option value="16">汽修汽配</option>
+
+
+															<option value="15">其他行业</option>
+
+												</select></td>
+												<td class="font999" align="left"></td>
+												<td class="font14" width="100" align="right">网址</td>
+												<td width="200" align="left"><input class="inputText wf100" id="txwebsite" maxlength="50" name="txwebsite" size="40" type="text" spellcheck="false"></td>
+												<td class="font999" align="left"></td>
+											</tr>
+											<tr>
+												<td class="font14" width="100" align="right">联系人</td>
+												<td width="200" align="left"><input class="inputText wf100" id="txtel" maxlength="20" name="txtel" size="20" type="text" spellcheck="false"></td>
+												<td class="font999" align="left"></td>
+												<td class="font14" width="100" align="right">
+													<font color="red"></font>	联系电话
+												</td>
+												<td width="200" align="left">
+													<input class="inputText wf100" id="txbusitel" maxlength="50" name="txbusitel" size="40" type="text" spellcheck="false">
+												</td>
+												<td class="font999" align="left"></td>
+											</tr>
+											<tr>
+												<td class="font14" width="100" align="right">电子邮件</td>
+												<td width="200" align="left"><input class="inputText wf100" id="txemail" maxlength="50" name="txemail" size="40" type="text" spellcheck="false"></td>
+												<td class="font999" align="left"></td>
+												<td class="font14" width="100" align="right">QQ帐号</td>
+												<td width="200" align="left"><input class="inputText wf100" id="txqq" maxlength="50" name="txqq" size="40" type="text" spellcheck="false"></td>
+
+											</tr>
+
+
+											<tr class="freeShow">
+												<td class="font14" width="100" align="right">备注</td>
+												<td width="200" align="left">
+													<textarea class="inputText wf100" cols="20" id="txremark1" maxlength="200" name="txremark" rows="2" style="height: 50px" spellcheck="false"></textarea>
+												</td>
+											</tr>
+
+
+
+									</tbody>
+								</table>
+								<table width="100%" cellspacing="0" cellpadding="8" border="0">
+									<tbody><tr>
+										<td width="45%" align="right"></td>
+										<td align="left"><a class="button blueButton" onclick="save()" style="text-align: center;">提交</a></td>
+									</tr>
+								</tbody></table>
+							</span> <span name="tabList" id="tab2" style="display: none;"> <!--设置头像-->
+								<table style="border-top: 1px solid #FFF;" width="100%" cellspacing="0" cellpadding="0" border="0">
+									<tbody><tr>
+										<td width="230" valign="top" bgcolor="#f1f1f1">
+											<div style="padding: 1px; border: 1px solid #d9d9d9; width: 200px; height: 200px; float: left; margin: 30px 15px 10px 15px;">
+												<input id="ContactLogo" name="ContactLogo" type="hidden" value="" spellcheck="false">
+
+
+
+
+														<img id="imgPicture" src="%E4%BC%81%E4%B8%9A%E8%B5%84%E6%96%99_files/defaultlogo.png" width="200" height="200">
+
+
+
+
+											</div>
+											<div style="font-size: 14px; width: 200px; text-align: center;">当前企业logo预览</div>
+											<div class="clear"></div>
+										</td>
+										<td style="padding-left: 15px;" valign="top">
+											<div style="text-align: left;">
+											<div id="ossfile"></div>
+        								    <div id="container" style="position: relative;">
+											<a id="selectfiles" href="javascript:void(0);" class="btn" style="position: relative; z-index: 1;">选择文件</a>
+											<div id="flash_1adq765be6v91spg1r5q7a1168e3_container" class="moxie-shim moxie-shim-flash" style="position: absolute; top: 0px; left: 0px; width: 82px; height: 34px; overflow: hidden;">
+											<object id="flash_1adq765be6v91spg1r5q7a1168e3" type="application/x-shockwave-flash" data="%E4%BC%81%E4%B8%9A%E8%B5%84%E6%96%99_files/Moxie.swf" style="outline:0" width="100%" height="100%">
+											<param name="movie" value="lib/plupload-2.1.2/js/Moxie.swf">
+											<param name="flashvars" value="uid=flash_1adq765be6v91spg1r5q7a1168e3&amp;target=moxie.core.EventTarget.instance.dispatchEvent">
+											<param name="wmode" value="transparent">
+											<param name="allowscriptaccess" value="always">
+											</object>
+											</div>
+											<div id="html5_1d0r5iorn1vaa1s2t13sqnin95i3_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 0px; left: 0px; width: 82px; height: 34px; overflow: hidden; z-index: 0;"><input id="html5_1d0r5iorn1vaa1s2t13sqnin95i3" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" multiple="" accept=""></div></div>
+
+
+												<span class="font999">仅支持JPG、JPEG、PNG格式（500K以下）</span>
+											</div>
+											<div class="clear"></div>
+											<div class="avatar_box">
+												<div class="avatar_big_warp">
+													<div class="avatar_big_box">
+														<div class="avatar_big_pic">
+															<img id="target" src="%E4%BC%81%E4%B8%9A%E8%B5%84%E6%96%99_files/pic_bg.png" style="display: none; visibility: hidden; width: 180px; height: 180px;"><div style="width: 180px; height: 180px; position: relative; background-color: black;" class="jcrop-holder"><div style="position: absolute; z-index: 600;"><div style="width: 100%; height: 100%; z-index: 310; position: absolute; overflow: hidden;"><img src="%E4%BC%81%E4%B8%9A%E8%B5%84%E6%96%99_files/pic_bg.png" style="border: medium none; visibility: visible; margin: 0px; padding: 0px; position: absolute; top: 0px; left: 0px; width: 180px; height: 180px;"><div style="position: absolute; opacity: 0.4;" class="jcrop-hline"></div><div style="position: absolute; opacity: 0.4;" class="jcrop-hline bottom"></div><div style="position: absolute; opacity: 0.4;" class="jcrop-vline right"></div><div style="position: absolute; opacity: 0.4;" class="jcrop-vline"></div><div class="jcrop-tracker" style="cursor: move; position: absolute; z-index: 360;"></div></div><div style="width: 100%; height: 100%; z-index: 320; display: none;"><div style="cursor: n-resize; position: absolute; z-index: 370;" class="ord-n jcrop-dragbar"></div><div style="cursor: s-resize; position: absolute; z-index: 371;" class="ord-s jcrop-dragbar"></div><div style="cursor: e-resize; position: absolute; z-index: 372;" class="ord-e jcrop-dragbar"></div><div style="cursor: w-resize; position: absolute; z-index: 373;" class="ord-w jcrop-dragbar"></div><div style="cursor: n-resize; position: absolute; z-index: 374; opacity: 0.5; width: 7px; height: 7px;" class="ord-n jcrop-handle"></div><div style="cursor: s-resize; position: absolute; z-index: 375; opacity: 0.5; width: 7px; height: 7px;" class="ord-s jcrop-handle"></div><div style="cursor: e-resize; position: absolute; z-index: 376; opacity: 0.5; width: 7px; height: 7px;" class="ord-e jcrop-handle"></div><div style="cursor: w-resize; position: absolute; z-index: 377; opacity: 0.5; width: 7px; height: 7px;" class="ord-w jcrop-handle"></div><div style="cursor: nw-resize; position: absolute; z-index: 378; opacity: 0.5; width: 7px; height: 7px;" class="ord-nw jcrop-handle"></div><div style="cursor: ne-resize; position: absolute; z-index: 379; opacity: 0.5; width: 7px; height: 7px;" class="ord-ne jcrop-handle"></div><div style="cursor: se-resize; position: absolute; z-index: 380; opacity: 0.5; width: 7px; height: 7px;" class="ord-se jcrop-handle"></div><div style="cursor: sw-resize; position: absolute; z-index: 381; opacity: 0.5; width: 7px; height: 7px;" class="ord-sw jcrop-handle"></div></div></div><div class="jcrop-tracker" style="width: 184px; height: 184px; position: absolute; top: -2px; left: -2px; z-index: 290; cursor: crosshair;"></div><input type="radio" style="position: fixed; left: -120px; width: 12px;"><img src="%E4%BC%81%E4%B8%9A%E8%B5%84%E6%96%99_files/pic_bg.png" style="display: block; visibility: visible; width: 180px; height: 180px; border: medium none; margin: 0px; padding: 0px; position: absolute; top: 0px; left: 0px;"></div>
+														</div>
+													</div>
+												</div>
+												<div class="avatar_small_warp">
+													<div class="avatar_small_box" style="background-color: #f4f4f4">
+														<div class="avatar_small_pic">
+															<img id="preview" src="%E4%BC%81%E4%B8%9A%E8%B5%84%E6%96%99_files/pic_bg.png">
+														</div>
+													</div>
+													<p style="text-align: left;">
+														<strong>头像预览区</strong>
+													</p>
+													<p style="text-align: left;">生成头像大小200px*200px，上传图片后，左侧选取图片合适大小，点击下面的提交按钮。</p>
+												</div>
+											</div> <input id="hidContactLogo" name="hidContactLogo" type="hidden" value="" spellcheck="false"> <input id="hideX1" name="hideX1" type="hidden" value="0" spellcheck="false"> <input id="hideY1" name="hideY1" type="hidden" value="0" spellcheck="false"> <input id="hideWidth" name="hideWidth" type="hidden" value="0" spellcheck="false"> <input id="hideHeight" name="hideHeight" type="hidden" value="0" spellcheck="false">
+										</td>
+									</tr>
+								</tbody></table>
+								<table width="100%" cellspacing="0" cellpadding="8" border="0">
+									<tbody><tr>
+										<td width="45%" align="right"></td>
+										<td align="left"><a class="button blueButton" onclick="savelogo()" style="text-align: center;">提交</a></td>
+									</tr>
+								</tbody></table>
+							</span>
+
+                    </div>
+                </td>
+            </tr>
+            </tbody></table>
+    </div>
+</div>
+
+
+<link rel="stylesheet" href="/css/style.css">
+<script type="text/javascript" src="/js/crypto.js"></script>
+<script type="text/javascript" src="/js/hmac.js"></script>
+<script type="text/javascript" src="/js/sha1.js"></script>
+<script type="text/javascript" src="/js/base64.js"></script>
+<script type="text/javascript" src="/js/plupload.js"></script>
+<script type="text/javascript" src="/js/upload.js"></script>
+</body></html>

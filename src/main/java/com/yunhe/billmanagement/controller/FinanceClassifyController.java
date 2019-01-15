@@ -31,10 +31,6 @@ import java.util.Map;
 @RequestMapping("/billManagement/finance-classify")
 public class FinanceClassifyController {
 
-    private Integer id;
-    private String fcType;
-    private String fcSort;
-    private String fcRemark;
     @Resource
     IFinanceClassifyService financeClassifyService;
 
@@ -246,25 +242,21 @@ public class FinanceClassifyController {
             HSSFRow rowx=sheet.createRow(i+2);
             Map<String,Object> map = solist.get(i);
             //这里的hospitalid,idnumber等都是前面定义的全局变量
-            id = (Integer) map.get("id");
             HSSFCell cell00=rowx.createCell(0);
             cell00.setCellStyle(style);
-            cell00.setCellValue(id);
+            cell00.setCellValue((Integer) map.get("id"));
 
-            fcType = (String) map.get("fcType");
             HSSFCell cell01=rowx.createCell(1);
             cell01.setCellStyle(style);
-            cell01.setCellValue(fcType);
+            cell01.setCellValue((String) map.get("fcType"));
 
-            fcSort = (String) map.get("fcSort");
             HSSFCell cell02=rowx.createCell(2);
             cell02.setCellStyle(style);
-            cell02.setCellValue(fcSort);
+            cell02.setCellValue((String) map.get("fcSort"));
 
-            fcRemark = (String) map.get("fcRemark");
             HSSFCell cell03=rowx.createCell(3);
             cell03.setCellStyle(style);
-            cell03.setCellValue(fcRemark);
+            cell03.setCellValue((String) map.get("fcRemark"));
 
         }
         //输出Excel文件
@@ -278,35 +270,4 @@ public class FinanceClassifyController {
         return null;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getFcType() {
-        return fcType;
-    }
-
-    public void setFcType(String fcType) {
-        this.fcType = fcType;
-    }
-
-    public String getFcSort() {
-        return fcSort;
-    }
-
-    public void setFcSort(String fcSort) {
-        this.fcSort = fcSort;
-    }
-
-    public String getFcRemark() {
-        return fcRemark;
-    }
-
-    public void setFcRemark(String fcRemark) {
-        this.fcRemark = fcRemark;
-    }
 }

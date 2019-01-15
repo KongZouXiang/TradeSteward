@@ -68,4 +68,9 @@ public class WarehouseManagementServiceImpl extends ServiceImpl<WarehouseManagem
         map.put("list",warehouseManagements);
         return map;
     }
+
+    @Override
+    public void addWarehouse(WarehouseManagement warehouseManagement) {
+        warehouseManagementMapper.insert(warehouseManagement);
+    }
 }

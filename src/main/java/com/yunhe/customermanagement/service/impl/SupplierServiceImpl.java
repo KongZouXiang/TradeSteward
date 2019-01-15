@@ -1,5 +1,6 @@
 package com.yunhe.customermanagement.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.customermanagement.entity.Supplier;
 import com.yunhe.customermanagement.dao.SupplierMapper;
@@ -56,6 +57,14 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier> i
     @Override
     public List<Supplier> selectAll() {
         return supplierMapper.selectAll();
+    }
+
+    @Override
+    public Map selectList() {
+        List<Supplier> list = supplierMapper.selectList(new QueryWrapper<>());
+        Map<String, Object> map = new HashMap<>();
+        map.put("list",list);
+        return map;
     }
 }
 

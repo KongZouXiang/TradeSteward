@@ -34,5 +34,4 @@ public interface SupplierMapper extends BaseMapper<Supplier> {
      * @return 供应商列表
      */
     List<Supplier> selectAll();
-
 }
