@@ -17,7 +17,7 @@
         prh_maney_hu,
         prh_experienced_person,
         prh_single_person,
-        ph_other_expenses,
+        prh_other_expenses,
         prh_outgoing_state,
         prh_remarks
     </sql>
@@ -25,8 +25,10 @@
 
     <select id="selectPurchaseReturnHistoryPage" parameterType="com.yunhe.cargomanagement.entity.PurchaseReturnHistory"
             resultType="com.yunhe.cargomanagement.entity.PurchaseReturnHistory">
-        select <include refid="purchase_return_history"/>
-        from purchase_return_history where prh_number like concat('%', #{purchaseReturnHistory.prhNumber}, '%') order by id desc;
+        select
+        <include refid="purchase_return_history"/>
+        from purchase_return_history where prh_number like concat('%', #{purchaseReturnHistory.prhNumber}, '%') and
+        prh_supname like concat('%', #{purchaseReturnHistory.prhSupname}, '%') order by id desc
     </select>
 
 </mapper>
