@@ -109,7 +109,7 @@ public class CommodiTytemplateController {
 
     public Map selectCl(int current,int size,CommodityList commodityList) {
 
-        return commodityListService.selectAllCommList(1,3,commodityList);
+        return commodityListService.selectAllcommList(1,3,commodityList);
     }
 
 

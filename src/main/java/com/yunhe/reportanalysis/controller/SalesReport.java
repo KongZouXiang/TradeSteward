@@ -38,7 +38,7 @@ public class SalesReport {
     @PostMapping("/getallbypurch")
     @ResponseBody
     public Map selectbyallcomm(int size, int current, CommodityList commodityList){
-        return commodityListService.selectAllCommList(current,size,commodityList);
+        return commodityListService.selectAllcommList(current,size,commodityList);
     }
     /*销售报表商品查询，后半段*/
     @PostMapping("/getSales")
