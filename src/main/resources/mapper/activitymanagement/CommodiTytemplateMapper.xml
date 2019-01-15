@@ -3,8 +3,7 @@
 <mapper namespace="com.yunhe.activitymanagement.dao.CommodiTytemplateMapper">
 
     <sql id="ctCols">
-        id
-        ,
+        id,
         ct_template_number,
         ct_tytemplate_name,
         ct_templategoods,

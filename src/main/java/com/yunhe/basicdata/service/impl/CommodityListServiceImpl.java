@@ -101,4 +101,9 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
         return commodityLists;
     }
 
+    @Override
+    public Map selectAllCommList(int size, int current, CommodityList commodityList) {
+        return null;
+    }
+
 }

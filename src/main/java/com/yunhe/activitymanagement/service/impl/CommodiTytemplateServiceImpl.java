@@ -64,7 +64,7 @@ public class CommodiTytemplateServiceImpl extends ServiceImpl<CommodiTytemplateM
      */
     @Override
     public List<CommodiTytemplate> selectAllCt() {
-        return null;
+        return commodiTytemplateMapper.selectList(null);
     }
 
     @Override

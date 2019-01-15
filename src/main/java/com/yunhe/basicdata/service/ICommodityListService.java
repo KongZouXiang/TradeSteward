@@ -66,4 +66,5 @@ public interface ICommodityListService extends IService<CommodityList> {
     List<CommodityList> selectCommstlist(String data);
 
 
+    Map selectAllCommList(int size, int current, CommodityList commodityList);
 }

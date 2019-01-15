@@ -19,7 +19,7 @@ import java.util.Map;
 public interface ISalesHistoryService extends IService<SalesHistory> {
 
 
-    /**
+    /*
      * 增加一条销售历史
      * @param salesHistory 增加的数据的实体类
      * @return 插入的条数
