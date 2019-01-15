@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.InputStream;
+import java.sql.Wrapper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -82,6 +83,5 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     public List sellectAllExcel() {
         return customerMapper.sellectAllExcel();
     }
-
 
 }
