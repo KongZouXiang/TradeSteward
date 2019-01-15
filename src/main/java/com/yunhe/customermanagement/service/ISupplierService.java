@@ -25,16 +25,7 @@ public interface ISupplierService extends IService<Supplier> {
      */
     int updateSupplier(Supplier supplier);
 
-    /**
-     * <p>
-     *     查询并分页
-     * </p>
-     * @param current  当前页
-     * @param size     每页显示的条数
-     * @param supplier 供应商对象
-     * @return
-     */
-    Map selectAllSupplier(int current, int size, Supplier supplier);
+
 
     /**
      * <p>
@@ -60,7 +51,19 @@ public interface ISupplierService extends IService<Supplier> {
      * </p>
      * @return 供应商列表
      */
-    List<Supplier> selectAll();
+    List<Supplier> selectAllExcel();
+
+    /**
+     * <p>
+     *     查询并分页
+     * </p>
+     * @param current  当前页
+     * @param size     每页显示的条数
+
+     * @return
+     */
+    Map selectAll(int current,int size);
+
 
 
     /**

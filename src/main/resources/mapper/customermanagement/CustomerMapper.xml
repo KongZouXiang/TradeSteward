@@ -12,7 +12,7 @@
         select
         <include refid="all"/>
         from trades_teward.customer where cus_compname like
-        concat('%',#{customer.cusCompname},'%')
+        concat('%',#{customer.cusCompname},'%') or concat('%',#{customer.cusName},'%')
     </select>
 
    <select id="sellectAll" resultType="com.yunhe.customermanagement.entity.Customer">
