@@ -44,25 +44,28 @@
 	<table class="table table-border table-bordered table-bg">
 		<thead>
 			<tr>
-				<th scope="col" colspan="9">仓库列表</th>
+				<th scope="col" colspan="9" width="100%">仓库列表</th>
 			</tr>
 			<tr class="text-c">
-				<th width="25"><input type="checkbox" name="" value=""></th>
+				<th width="25">
 				<th width="40">序号</th>
 				<th width="150">操作</th>
 				<th width="90">编号</th>
 				<th width="150">名称</th>
-				<th>联系人</th>
+				<th width="150">联系人</th>
 				<th width="130">联系电话</th>
 				<th width="100">状态</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="text-c" v-for="(item,index) in result">
-				<td><input type="checkbox" value="1" name=""></td>
+			<tr class="text-c" v-for="(item,index) in result" >
+				<td></td>
 				<td>{{index+1}}</td>
-				<td>  <a href="#" @click="EditWarHouse(item.id)" class="Hui-iconfont Hui-iconfont-edit"></a>
-					<a href="#"  @click="deletea(item.id)" class="Hui-iconfont Hui-iconfont-del3"></a></td>
+				<td>
+					<a href="#" @click="detail(item.id)" class="Hui-iconfont Hui-iconfont-gengduo3" title="详细"></a>
+					<a href="#" @click="EditWarHouse(item.id)" class="Hui-iconfont Hui-iconfont-edit" title="编辑"></a>
+					<a href="#"  @click="deletea(item.id)" class="Hui-iconfont Hui-iconfont-del3" title="删除"></a>
+				</td>
 				<td>{{item.wmNumber}}</td>
 				<td>{{item.wmName}}</td>
 				<td>{{item.wmPerson}}</td>
@@ -76,6 +79,30 @@
 				<td>{{item.wm_name}}</td>
 				<td>{{item.age}}</td>
 			</tr>
+<div>
+	<tr style="display: none"  v-for="(item,index) in result" id="details">
+				<th>仓库名:<td>{{item.wmName}}</td></th>
+				<th>仓库编号:</th>
+				<th>{{item.wmNumber}}</th>
+				<th>状态:</th>
+					<th>{{item.wmTel}}</th>
+					<th v-if="item.wmState===1">
+						启用
+					</th>
+					<th v-else>
+						禁用
+					</th>
+				<th>备注:</th>
+					<th>{{item.wmRemark}}</th>
+				<td>联系人:</td>
+				    <th>{{item.wmPerson}}</th>
+					<th>邮箱:</th>
+				<th>{{item.wmPostcode}}</th>
+					<th>仓库地址:</th>
+				<th>{{item.wmAddress}}</th>
+			</tr>
+</div>
+
 		</tbody>
 	</table>
 	<div id="pagenav" style="text-align:center;position: fixed;left: 0px;width: 100%;"></div>
@@ -116,7 +143,7 @@ var getUserPageList = function(curr) {
             pageSize:2,
         },
         success:function(msg){
-            console.log(msg)
+
             app.result = msg.list;
             laypage({
                 cont:'pagenav',
@@ -178,7 +205,7 @@ $("#findWare").click(function () {
 			app.result=da.list;
 		}
 	})
-})
+});
 /*增加仓库*/
 var  addWare = function () {
             layer.open({
@@ -211,6 +238,13 @@ var  addWare = function () {
                 });
 
     }
+    /*详细*/
+
+var detail=function (id) {
+	var s=document.getElementById("details")
+	s.style.display="block";
+}
+
 
 </script>
 </body>
