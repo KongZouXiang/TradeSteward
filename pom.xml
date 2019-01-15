@@ -127,6 +127,23 @@
             <version>3.17</version>
         </dependency>
 
+        <!--
+     taglibs依赖
+     增加人:唐凯宽
+     依赖描述:实现El表达式依赖
+     -->
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
 
     </dependencies>
 
