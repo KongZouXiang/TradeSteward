@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>账户详情</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/js/laypage/skin/laypage.css">
+    <script src="/Vue/vue.min.js"></script>
+    <script src="/js/jquery/jquery.min.js"></script>
+    <script src="/js/laypage/laypage.js" charset="utf-8"></script>
+    <script src="/js/layer/layer.js" charset="utf-8"></script>
+    <script src="/js/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+    <script src="/js/jquery.validation/1.14.0/messages_zh.min.js"></script>
+</head>
+<body>
+<div class="container"  id="app">
+    <form id="updateAccountForm">
+        <br/>
+        <tr v-for="(item,index) in result">
+            <div >
+                <label for="zhanghu">开户银行：</label>
+                <input type="text" class="form-control"  id="zhanghu" name="zhanghu" th:value="${detailaccount.saName}"  >
+            </div>
+            <div class="form-group">
+                <label for="sabank">账户余额：</label>
+                <input type="text" class="form-control" id="sabank" name="sabank" th:value="${detailaccount.saBank}" >
+            </div>
+            <div class="form-group">
+                <label for="sabanknumber">银行账号：</label>
+                <input type="text" class="form-control" id="sabanknumber" name="sabanknumber" th:value="${detailaccount.saBankNumber}" >
+            </div>
+            <div class="form-group">
+                <label for="beginbalance">期初余额：</label>
+                <input type="text" class="form-control" id="beginbalance" name="beginbalance" th:value="${detailaccount.saBeginBalance}">
+            </div>
+            <div class="form-group">
+                <label for="zhangbalance">备注：</label>
+                <input type="text" class="form-control" id="zhangbalance" name="zhangbalance"  th:value="${detailaccount.saBalance}" >
+</div>
+            <div class="form-group">
+                <button type="button" id="cancelBtn" class="btn btn-default">取消</button>
+            </div>
+        </tr>
+    </form>
+</div>
+<!--<script>
+    var selectAccountList = function(id) {
+        $.ajax({
+            type:'POST',
+            dataType:'json',
+            url:'/basicdata/settlement-account/selectAccountByid？id='+id,
+            data:{
+            },
+            success:function(msg){
+                app.result = msg.settlementAccountid;
+
+            }
+        });
+    }
+
+    $("#cancelBtn").click(function () {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.getAccountPageList ();
+        parent.layer.close(index);
+
+    })
+    }
+</script>-->
+</body>
+</html>
