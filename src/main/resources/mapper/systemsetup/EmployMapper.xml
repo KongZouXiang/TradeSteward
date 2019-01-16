@@ -21,11 +21,23 @@
 
     <select id="selectPageEmploy" resultType="com.yunhe.systemsetup.entity.Employ" parameterType="com.yunhe.systemsetup.entity.Employ">
         select <include refid="empl"/>
-        from employ where <include refid="empl2"/>
+        from employ where <include refid="empl2"/> order by id desc
     </select>
 
     <insert id="insertEmploy"  parameterType="com.yunhe.systemsetup.entity.Employ">
         insert into employ(<include refid="empl3"/>) values (#{emUsername},#{emPassword},#{emRealname},#{emRole},#{emSex},#{emPhone},#{emEmail},#{emStatus}
         ,#{emRepo},#{emShiro},#{emSelInvoice},#{emDelInvoice},#{emSelUser},#{emAddress})
     </insert>
+
+   <select id="checkemname" parameterType="com.yunhe.systemsetup.entity.Employ" resultType="String">
+        select em_username from employ where em_username =#{emUsername}
+    </select>
+
+    <update id="updatePass" parameterType="com.yunhe.systemsetup.entity.Employ">
+        update employ set em_password = #{emPassword} where id =#{id}
+    </update>
+
+    <update id="updatemess" parameterType="com.yunhe.systemsetup.entity.Employ">
+        update employ set  em_username=#{emUsername},em_realname=#{emRealname},em_role=#{emRole},em_sex=#{emSex},em_phone=#{emPhone},em_email=#{emEmail},em_status=#{emStatus},em_address=#{emAddress} where id=#{id}
+</update>
 </mapper>

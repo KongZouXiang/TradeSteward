@@ -11,11 +11,19 @@ import java.util.List;
  * 员工管理 服务类
  * </p>
  *
- * @author 刘延奇,heyuji
+ * @author heyuji
  * @since 2019-01-02
  */
 public interface IEmployService extends IService<Employ> {
     public List<Employ> selectPageEmploy(Page page, Employ employ);
 
-    public void insertEmploy(Employ employ);
+    public int insertEmploy(Employ employ);
+
+    public boolean checkname(Employ employ);
+
+    Employ selectEmployById(int id);
+
+    public  int updatePassword(Employ employ);
+
+    public int updateMessage(Employ employ);
 }

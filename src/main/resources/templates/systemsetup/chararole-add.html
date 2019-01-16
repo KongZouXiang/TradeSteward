@@ -14,19 +14,20 @@
     <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
 </head>
 <body>
-<form class="layui-form" action="">
+
+<form class="layui-form" action="" style="margin-top: 30px">
     <div class="layui-form-item">
-        <label class="layui-form-label"></label>
-        <div class="layui-input-block">
-            <input type="text" name="username" lay-verify="required" placeholder="角色名称" autocomplete="off" class="layui-input">
+        <label class="layui-form-label">角色名称</label>
+        <div class="layui-input-block" style="width: 200px;height: 40px">
+            <input type="text" id="chname" name="username" lay-verify="username" placeholder="角色名称" autocomplete="off" class="layui-input">
         </div>
     </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label"></label>
-        <div class="layui-input-block">
-            <input type="text" name="username" lay-verify="required" placeholder="角色描述" autocomplete="off" class="layui-input">
-        </div>
+    <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">角色描述</label>
+    <div class="layui-input-block"  style="width: 300px;height: 150px">
+        <textarea placeholder="角色描述" id="roledec" class="layui-textarea"></textarea>
     </div>
+</div>
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn"  lay-submit="" lay-filter="add">立即提交</button>
@@ -34,6 +35,61 @@
         </div>
     </div>
 </form>
+<script>
+    layui.use(['form','jquery'],function () {
+        var $ = layui.jquery;
+        var form = layui.form;
+        form.verify({
+           username:function (value) {
+               if (value.trim()==""){
+                   return '角色名称不能为空'
+               }
+                var checkrole = "";
+                $.ajax({
+                    url: "/systemsetup/chara-manger/checkchara",
+                    type: "GET",
+                    data: {
+                        chName: $("#chname").val()
+                    },
+                    async: false,
+                    success: function (result) {
+                        if (result == false) {
+                            checkrole = "该账号已经存在";
+                        }
+                    }
 
+                })
+               return checkrole;
+            }
+        })
+        form.on('submit(add)',function (data) {
+
+            $.ajax({
+                type:'get',
+                url:'/systemsetup/chara-manger/addrole',
+                data:{
+                    chName: $("#chname").val(),
+                    chDetail:$("#roledec").val(),
+
+                },
+                success:function (rest) {
+                    if (rest==1){
+                        parent.layer.msg('添加成功',{time:2000,icon:1});
+                    }else {
+                        parent.layer.msg("服务器繁忙请稍后再试",{time:2000,icon:2});
+                    }
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.getUserPageList();
+                    parent.layer.close(index);
+                }
+
+            })
+            return false;
+        })
+
+
+
+    })
+</script>
 </body>
 </html>
