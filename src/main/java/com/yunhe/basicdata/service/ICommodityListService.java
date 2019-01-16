@@ -12,7 +12,6 @@ import java.util.Map;
  * <p>
  * 商品列表 服务类
  * </p>
- *
  * @author 李恒逵, 唐凯宽
  * @since 2019-01-02
  */
@@ -20,17 +19,15 @@ import java.util.Map;
 public interface ICommodityListService extends IService<CommodityList> {
     /**
      * 查询商品列表 分页
-     *
+     *  三个参数
      * @param current       当前页
      * @param size          每页的条数
      * @param commodityList 实体类
      * @return f返回商品的信息
      */
-    Map selectAllCommList(int current, int size, CommodityList commodityList);
-
+    Map selectAllcommList(int current, int size,CommodityList commodityList);
     /**
      * 新增商品列表
-     *
      * @param commodityList 新增商品的实体类
      * @return 返回增加的商品
      */
