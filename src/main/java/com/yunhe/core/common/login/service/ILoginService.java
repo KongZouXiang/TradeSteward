@@ -1,9 +1,6 @@
-package com.yunhe.core.register.service;
+package com.yunhe.core.common.login.service;
 
-import com.yunhe.systemsetup.dao.EmployMapper;
 import com.yunhe.systemsetup.entity.Employ;
-
-import javax.annotation.Resource;
 
 /**
  * <p>

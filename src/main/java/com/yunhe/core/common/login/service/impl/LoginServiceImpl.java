@@ -1,7 +1,7 @@
-package com.yunhe.core.register.service.impl;
+package com.yunhe.core.common.login.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.yunhe.core.register.service.ILoginService;
+import com.yunhe.core.common.login.service.ILoginService;
 import com.yunhe.systemsetup.dao.EmployMapper;
 import com.yunhe.systemsetup.entity.Employ;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,6 @@
-package com.yunhe.core.register.controller;
+package com.yunhe.core.common.login.controller;
 
-import com.yunhe.core.numbersetting.constant.NumberRule;
-import com.yunhe.core.register.service.ILoginService;
+import com.yunhe.core.common.login.service.ILoginService;
 import com.yunhe.systemsetup.entity.Employ;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
