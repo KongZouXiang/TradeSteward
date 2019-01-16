@@ -1,5 +1,6 @@
 package com.yunhe.cargomanagement.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.pagehelper.Page;
 import com.yunhe.cargomanagement.entity.Warehouse;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -87,6 +88,29 @@ public interface IWarehouseService extends IService<Warehouse> {
      * @return Page
      */
     Map selectWareHousePage(int pageNum,int pageSize);
+
+    /**
+     * <p>
+     * 模糊查询
+     * </p>
+     *
+     * @param warehouse 实体对象
+     * @return list集合
+     */
+    List<Warehouse> selectWareHouseLike(Warehouse warehouse);
+
+
+    /**
+     * <p>
+     *     分页加模糊查询
+     * </p>
+     *
+     * @param pageNum 当前页
+     * @param pageSize 每页数据条数
+     * @param warehouse 实体对象
+     * @return IPage
+     */
+    IPage<Warehouse> selectPage(int pageNum,int pageSize,Warehouse warehouse);
 
 
 }

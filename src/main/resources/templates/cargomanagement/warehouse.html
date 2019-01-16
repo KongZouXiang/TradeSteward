@@ -33,8 +33,8 @@
         <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax"
                class="input-text Wdate" style="width:120px;">-->
         <!--<input type="text" class="input-text" style="width:250px" placeholder="输入单号" id="poNumber" name="">-->
-        <input type="text" class="input-text" style="width:250px" placeholder="输入商品名称" id="poSupName" name="">
-        <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜订单</button>
+        <input type="text" class="input-text" style="width:250px" placeholder="输入商品名称或商品编号" id="poSupName" name="">
+        <button type="button" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜库存</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
@@ -120,19 +120,20 @@
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: '/cargomanagement/warehouse/getPage',
+            url: '/cargomanagement/warehouse/selectPage',
             data: {
                 /*当前页*/
                 pageNum: curr || 1,
                 /*每页大小*/
                 pageSize: 1,
-
+                waNumber:$("#poSupName").val(),
+                waSpName:$("#poSupName").val(),
             },
             success: function (msg) {
-                app.result = msg.list;
+                app.result = msg.records;
                 laypage({
                     cont: 'pagenav',//容器  值支持id名、原生dom对象，jquery对象,
-                    pages: msg.totalPage,//总页数
+                    pages: msg.total,//总页数
                     first: '首页',
                     last: '尾页',
                     skin: '#00A0E9',

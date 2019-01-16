@@ -1,6 +1,7 @@
 package com.yunhe.cargomanagement.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.pagehelper.Page;
 import com.yunhe.cargomanagement.entity.Warehouse;
 import com.yunhe.cargomanagement.service.IWarehouseService;
@@ -61,11 +62,38 @@ public class WarehouseController {
         return new ModelAndView("cargomanagement/warehouse.html");
     }
 
-    @RequestMapping("/selectWareHouse")
-    @ResponseBody
-    public  Warehouse selectWareHousePage(Warehouse warehouse){
+    /**
+     * <p>
+     *  模糊查询
+     * </p>
+     *
+     * @param warehouse 实体对象
+     * @return list集合
+     */
 
-        return warehouse;
+    @RequestMapping("/getWareHouseLike")
+    @ResponseBody
+    public List<Warehouse> selectWareHouseLike(Warehouse warehouse){
+
+        return warehouseService.selectWareHouseLike(warehouse);
+    }
+
+
+    /**
+     * <p>
+     *     分页加模糊查询
+     * </p>
+     *
+     * @param pageNum 当前页
+     * @param pageSize 每页数据条数
+     * @param warehouse 实体对象
+     * @return IPage
+     */
+    @RequestMapping("/selectPage")
+    @ResponseBody
+    public IPage<Warehouse> selectPage(int pageNum, int pageSize, Warehouse warehouse){
+
+        return warehouseService.selectPage(pageNum,pageSize,warehouse);
     }
 
     /**
