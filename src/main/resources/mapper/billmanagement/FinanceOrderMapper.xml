@@ -3,11 +3,20 @@
 <mapper namespace="com.yunhe.billmanagement.dao.FinanceOrderMapper">
 
     <sql id="foCols">
-        id,fo_num_list,fo_time,fo_fc_type,fo_money,fo_account,fo_person,fo_remark,fo_image
+        id,fo_num_list,fo_time,fo_money,fo_account,fo_person,fo_remark,fo_image,fc_id,fo_flag
     </sql>
     <select id="selectFoPage" resultType="com.yunhe.billmanagement.entity.FinanceOrder">
-        select <include refid="foCols"/> from finance_order where (fo_fc_type like concat('%',#{financeOrder.foFcType},'%')) or (fo_num_list like concat('%',#{financeOrder.foNumList},'%')) order by id desc
+        select <include refid="foCols"/> from finance_order where (fo_flag like concat('%',#{financeOrder.foFlag},'%')) and (fo_num_list like concat('%',#{financeOrder.foNumList},'%')) order by id desc
     </select>
 
-
+    <!--自动显示编码的SQL语句-->
+    <select id="maxId" resultType="int">
+        select max(id) from finance_order
+    </select>
+    <!--<insert id="tianFo" parameterType="map">
+        insert into user(uname,upass,uage,usex) values(#{user.uname},#{user.upass},#{user.uage},#{user.usex})
+    </insert>-->
+    <update id="gaiFo" parameterType="map">
+        update finance_order set fo_num_list = concat('SZ',DATE_FORMAT(now(), '%Y%m%d'),'00',#{maxId}),fo_time = DATE_FORMAT(now(), '%Y-%m-%d') where id=#{maxId}
+    </update>
 </mapper>

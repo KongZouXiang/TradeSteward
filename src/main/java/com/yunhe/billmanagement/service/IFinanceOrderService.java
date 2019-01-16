@@ -1,8 +1,8 @@
 package com.yunhe.billmanagement.service;
 
 
-import com.yunhe.billmanagement.entity.FinanceOrder;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yunhe.billmanagement.entity.FinanceOrder;
 
 import java.util.List;
 import java.util.Map;
@@ -25,16 +25,15 @@ public interface IFinanceOrderService extends IService<FinanceOrder> {
      * @param financeOrder 条件参数存在financeOrder中
      * @return 日常收支表：分页的结果集
      */
-    Map selectFoPage(int size,int current,FinanceOrder financeOrder);
+    Map selectFoPage(int size, int current, FinanceOrder financeOrder);
 
     /**
      * <P>
      *     查询数据
      * </P>
-     * @param foFlag
      * @return 日常收支表：查询的结果集
      */
-    List<FinanceOrder> selectFo(int foFlag);
+    List<FinanceOrder> selectFo();
 
     /**
      * <P>
@@ -44,6 +43,15 @@ public interface IFinanceOrderService extends IService<FinanceOrder> {
      * @return  日常收支表：增加是否成功
      */
     int insertFo(FinanceOrder financeOrder);
+
+    /**
+     * <P>
+     *     通过id查找数据，显示详情
+     * </P>
+     * @param id  查询数据的条件
+     * @return FinanceOrder对象
+     */
+    FinanceOrder detailById(int id);
 
     /**
      * <P>
@@ -62,4 +70,21 @@ public interface IFinanceOrderService extends IService<FinanceOrder> {
      * @return  日常收支表：删除是否成功
      */
     int deleteFo(FinanceOrder financeOrder);
+
+    /**
+     * <P>
+     *     自动显示编码的SQL语句
+     * </P>
+     * @return 当前所有数据中最大ID
+     */
+    int maxId();
+
+    /**
+     * <P>
+     *      修改订单编号
+     * </P>
+     * @param map 需要修改的参数信息
+     * @return 修改是否成功
+     */
+    int gaiFo(Map<String, Object> map);
 }
