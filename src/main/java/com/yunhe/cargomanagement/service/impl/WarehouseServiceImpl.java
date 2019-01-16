@@ -54,15 +54,14 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, Warehouse
     }
 
     @Override
-    public Map selectWareHousePage(int current, int size, Warehouse warehouse) {
-        Page page=new Page(current,size);
-        List<Warehouse> warehouses=warehouseMapper.selectAll(page,warehouse);
-        Map<String, Object> map=new HashMap<>();
-        map.put("total",page.getTotal());
-        map.put("pages",page.getPages());
-        map.put("warehouses",warehouses);
-        System.out.println("总记录数："+page.getTotal());
-        System.out.println("总分页数："+page.getPages());
+    public Map selectWareHousePage(int current, int size) {
+        Map map=new HashMap();
+        Page<Warehouse> page=new Page<>(current,size);
+        List<Warehouse> list=warehouseMapper.selectAll();
+        map.put("list",list);
+        map.put("current",current);
+        map.put("size",size);
+        map.put("totalPage",page.getPages());
         return map;
     }
 

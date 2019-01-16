@@ -60,4 +60,10 @@ public interface IWarehouseManagementService extends IService<WarehouseManagemen
      * @return 根据查询得到的仓库信息
      */
     Map vagueselect1(String data);
+
+    /**
+     * 增加仓库
+     * @param warehouseManagement 要增加仓库的实体类
+     */
+    void addWarehouse(WarehouseManagement warehouseManagement);
 }
