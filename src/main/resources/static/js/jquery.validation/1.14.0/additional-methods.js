@@ -171,7 +171,7 @@ $.validator.addMethod( "cifES", function( value ) {
 	 *	M. Old format
 	 *	N. Nonresident entities
 	 *	P. Local authorities
-	 *	Q. Autonomous bodies, constant or not, and the like, and congregations and religious institutions
+	 *	Q. Autonomous bodies, state or not, and the like, and congregations and religious institutions
 	 *	R. Congregations and religious institutions (since 2008 ORDER EHA/451/2008)
 	 *	S. Organs of State Administration and regions
 	 *	V. Agrarian Transformation
@@ -912,7 +912,7 @@ $.validator.addMethod("stateUS", function(value, element, options) {
 	regex = caseSensitive ? new RegExp(regex) : new RegExp(regex, "i");
 	return this.optional(element) || regex.test(value);
 },
-"Please specify a valid constant");
+"Please specify a valid state");
 
 // TODO check if value starts with <, otherwise don't try stripping anything
 $.validator.addMethod("strippedminlength", function(value, element, param) {
