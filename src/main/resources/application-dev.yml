@@ -34,4 +34,5 @@ spring:
     #不设置静态页面缓存
     cache: false
     encoding: UTF-8
+
     mode: HTML5
