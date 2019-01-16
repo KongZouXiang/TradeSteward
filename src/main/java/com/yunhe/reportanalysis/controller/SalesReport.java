@@ -3,11 +3,11 @@ package com.yunhe.reportanalysis.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.basicdata.entity.CommodityList;
-import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
-import com.yunhe.billmanagement.service.impl.FundClientDebtServiceImpl;
+import com.yunhe.basicdata.service.ICommodityListService;
+import com.yunhe.billmanagement.entity.FundClientDebt;
+import com.yunhe.billmanagement.service.IFundClientDebtService;
 import com.yunhe.cargomanagement.entity.SalesHistory;
-import com.yunhe.cargomanagement.service.impl.SalesHistoryServiceImpl;
-import com.yunhe.cargomanagement.service.impl.SalesOrderHistoryServiceImpl;
+import com.yunhe.cargomanagement.service.ISalesHistoryService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,35 +29,70 @@ import java.util.Map;
 @RequestMapping("/reportanalysis/Sales")
 public class SalesReport {
     @Resource
-    SalesHistoryServiceImpl salesHistoryService;
-    CommodityListServiceImpl commodityListService;
-    SalesOrderHistoryServiceImpl salesOrderHistoryService;
-    FundClientDebtServiceImpl fundClientDebtService;
+    ISalesHistoryService salesHistoryService;
+    @Resource
+    ICommodityListService commodityListService;
+    @Resource
+    ISalesHistoryService salesOrderHistoryService;
+    @Resource
+    IFundClientDebtService fundClientDebtService;
 
-    /*销售报表商品查询，前半段*/
+    /**
+     * <p>
+     *     销售报表商品查询，前半段
+     * </p>
+     * @param size
+     * @param current
+     * @param commodityList
+     * @return
+     */
     @PostMapping("/getallbypurch")
     @ResponseBody
     public Map selectbyallcomm(int size, int current, CommodityList commodityList){
         return commodityListService.selectAllcommList(current,size,commodityList);
     }
-    /*销售报表商品查询，后半段*/
+
+    /**
+     * <p>
+     *     销售报表商品查询，后半段
+     * </p>
+     * @param size
+     * @param current
+     * @param salesHistory
+     * @return
+     */
     @PostMapping("/getSales")
     @ResponseBody
     public Map selectSalesHistory(int size, int current, SalesHistory salesHistory){
         return salesHistoryService.queryLikeSalesHistory(current,size,salesHistory);
     }
-    /*销售历史*/
+
+    /**
+     * <p>
+     *     销售历史
+     * </p>
+     * @param cond
+     * @return
+     */
     @PostMapping("/getSalesOrd")
     @ResponseBody
-    public Page queryLikeList(Map cond){
-        return salesOrderHistoryService.queryLikeList(cond);
+    public Page queryLikeList(int cond){
+        return salesOrderHistoryService.queryLikeSalesHistory(cond);
     }
 
-    /*客户表*/
+    /**
+     * <p>
+     *     客户表
+     * </p>
+     * @param current
+     * @param size
+     * @param fundClientDebt
+     * @return
+     */
     @PostMapping("/getFcPage")
     @ResponseBody
-    public Map selectFcdPage(int current, int size){
-        return fundClientDebtService.selectFcdPage(current,size);
+    public Map selectFcdPage(int current, int size, FundClientDebt fundClientDebt){
+        return fundClientDebtService.selectFcdPage(1,2,fundClientDebt);
     }
 
 }
