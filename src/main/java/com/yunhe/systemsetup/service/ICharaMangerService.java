@@ -1,5 +1,6 @@
 package com.yunhe.systemsetup.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.systemsetup.entity.CharaManger;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -19,5 +20,11 @@ public interface ICharaMangerService extends IService<CharaManger> {
      * @return List<CHaraManger><
      * 查看所有的角色
      */
-    public List<CharaManger> selectAll();
+    public List<CharaManger> selectAll(Page page);
+
+    /**
+     * @return int
+     * 插入新的角色
+     */
+    public int insertRole(CharaManger charaManger);
 }
