@@ -1,12 +1,10 @@
 package com.yunhe.activitymanagement.controller;
 
 
-import com.yunhe.basicdata.entity.CommodityList;
-import com.yunhe.basicdata.service.ICommodityListService;
 import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
+import com.yunhe.basicdata.service.ICommodityListService;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +27,7 @@ public class CommodiTytemplateController {
 
     @Resource
     ICommodiTytemplateService commodiTytemplateService;
+
     @Resource
     ICommodityListService commodityListService;
 

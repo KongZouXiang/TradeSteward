@@ -1,4 +1,5 @@
-﻿<html lang="en">
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -21,7 +22,7 @@
     <script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-    <title>H-ui.admin v3.1</title>
+    <title>贸易管家</title>
     <meta name="keywords" content="H-ui.admin v3.1,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
     <meta name="description" content="H-ui.admin v3.1，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
 </head>
@@ -89,9 +90,12 @@
                            href="javascript:void(0)">销售订单历史</a></li>
                     <li><a data-href="article-list.html" data-title="销售历史" href="javascript:void(0)">销售历史</a></li>
                     <li><a data-href="article-list.html" data-title="销售退货历史" href="javascript:void(0)">销售退货历史</a></li>
-                    <li><a data-href="/cargomanagement/purchase-order/Purlist" data-title="进货订单历史" href="javascript:void(0)">进货订单历史</a></li>
-                    <li><a data-href="/cargomanagement/purchase-history/purchasehistoryList" data-title="进货历史" href="javascript:void(0)">进货历史</a></li>
-                    <li><a data-href="/cargomanagement/purchase-return-history/purchaseReturnHistoryList" data-title="进货退货历史" href="javascript:void(0)">进货退货历史</a></li>
+                    <li><a data-href="/cargomanagement/purchase-order/Purlist" data-title="进货订单历史"
+                           href="javascript:void(0)">进货订单历史</a></li>
+                    <li><a data-href="/cargomanagement/purchase-history/purchasehistoryList" data-title="进货历史"
+                           href="javascript:void(0)">进货历史</a></li>
+                    <li><a data-href="/cargomanagement/purchase-return-history/purchaseReturnHistoryList"
+                           data-title="进货退货历史" href="javascript:void(0)">进货退货历史</a></li>
                     <li><a data-href="article-list.html" data-title="出库历史" href="javascript:void(0)">出库历史</a></li>
                     <li><a data-href="article-list.html" data-title="入库历史" href="javascript:void(0)">入库历史</a></li>
                     <li><a data-href="article-list.html" data-title="库存查询" href="javascript:void(0)">库存查询</a></li>
@@ -120,8 +124,6 @@
                            href="javascript:void(0)">客户管理</a></li>
                     <li><a data-href="article-list.html" data-title="客户等级价" href="javascript:void(0)">客户等级价</a></li>
                     <li><a data-href="article-list.html" data-title="供应商管理" href="javascript:void(0)">供应商管理</a></li>
-
-
                 </ul>
             </dd>
         </dl>
@@ -160,8 +162,9 @@
                 </ul>
             </dd>
         </dl>
+
         <dl id="menu-system">
-            <dt><i class="Hui-iconfont">&#xe62e;</i> 系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dt><i class="Hui-iconfont">&#xe62e;</i>系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
                     <li><a data-href="system-base.html" data-title="系统设置" href="javascript:void(0)">系统设置</a></li>
@@ -181,7 +184,7 @@
         <div class="Hui-tabNav-wp">
             <ul id="min_title_list" class="acrossTab cl">
                 <li class="active">
-                    <span title="我的桌面" data-href="/welcome">我的桌面</span>
+                    <span title="我的桌面" data-href="welcome.html">我的桌面</span>
                     <em></em></li>
             </ul>
         </div>
@@ -193,7 +196,7 @@
     <div id="iframe_box" class="Hui-article">
         <div class="show_iframe">
             <div style="display:none" class="loading"></div>
-            <iframe scrolling="yes" frameborder="0" src="/welcome"></iframe>
+            <iframe scrolling="yes" frameborder="0" src="welcome.html"></iframe>
         </div>
     </div>
 </section>
@@ -213,7 +216,7 @@
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="/lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
 <script type="text/javascript">
-    $(function(){
+    $(function () {
         /*$("#min_title_list li").contextMenu('Huiadminmenu', {
             bindings: {
                 'closethis': function(t) {
@@ -228,21 +231,22 @@
             }
         });*/
     });
+
     /*个人信息*/
-    function myselfinfo(){
+    function myselfinfo() {
         layer.open({
             type: 1,
-            area: ['300px','200px'],
+            area: ['300px', '200px'],
             fix: false, //不固定
             maxmin: true,
-            shade:0.4,
+            shade: 0.4,
             title: '查看信息',
             content: '<div>管理员信息</div>'
         });
     }
 
     /*资讯-添加*/
-    function article_add(title,url){
+    function article_add(title, url) {
         var index = layer.open({
             type: 2,
             title: title,
@@ -250,8 +254,9 @@
         });
         layer.full(index);
     }
+
     /*图片-添加*/
-    function picture_add(title,url){
+    function picture_add(title, url) {
         var index = layer.open({
             type: 2,
             title: title,
@@ -259,8 +264,9 @@
         });
         layer.full(index);
     }
+
     /*产品-添加*/
-    function product_add(title,url){
+    function product_add(title, url) {
         var index = layer.open({
             type: 2,
             title: title,
@@ -268,12 +274,25 @@
         });
         layer.full(index);
     }
+
     /*用户-添加*/
-    function member_add(title,url,w,h){
-        layer_show(title,url,w,h);
+    function member_add(title, url, w, h) {
+        layer_show(title, url, w, h);
     }
 
 
 </script>
+
+<!--此乃百度统计代码，请自行删除-->
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?080836300300be57b7f34f4b3e97d911";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+<!--/此乃百度统计代码，请自行删除-->
 </body>
 </html>

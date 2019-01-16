@@ -50,6 +50,9 @@ public class CustomerController {
     public Map selectAllCustomer(int current, int size, Customer customer) {
         return customerService.selectAllCustomer(current, size, customer);
     }
+
+
+
     @RequestMapping("/login")
     @ResponseBody
     public ModelAndView selectAllCustomer1() {

@@ -7,7 +7,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -24,11 +23,31 @@ import java.util.Map;
 public class WarehouseManagementController {
     @Resource
     WarehouseManagementServiceImpl warehouseManagementService;
+
+    /**
+     * 跳转列表页面
+     * @return 列表页面
+     */
     @RequestMapping("/login")
     public ModelAndView Login(){
         return new ModelAndView("basicdata/admin-list.html") ;
     }
-
+    /**
+     * 跳转增加仓库页面
+     * @return 增加仓库页面
+     */
+    @RequestMapping("/addWare")
+    public ModelAndView addWare(){
+        return new ModelAndView("basicdata/admin-add.html") ;
+    }
+    /**
+     * 跳转修改仓库页面
+     * @return  修改仓库页面
+     */
+    @RequestMapping("/UpdateWareHouse")
+    public ModelAndView UpdateWareHouse(){
+        return new ModelAndView("basicdata/editWareHouse.html") ;
+    }
     /**
      * 分页查询仓库
      * @param pageSize 每页显示条数
@@ -92,6 +111,19 @@ public Map vagueselect(String data){
       map= warehouseManagementService.vagueselect1(data);
      return map;
 }
+
+    /**
+     * 增加仓库
+     * @param warehouseManagement 增加仓库的数据
+     * @return 视图
+     */
+    @RequestMapping("/addWarehouse")
+public ModelAndView addWarehouse(WarehouseManagement warehouseManagement){
+    System.out.println("asd==="+warehouseManagement);
+      warehouseManagementService.addWarehouse(warehouseManagement);
+      return new ModelAndView("basicdata/admin-list.html");
+}
+
 }
 
 

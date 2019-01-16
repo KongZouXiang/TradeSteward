@@ -32,19 +32,19 @@
                class="input-text Wdate" style="width:120px;">
         <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax"
                class="input-text Wdate" style="width:120px;">-->
-        <input type="text" class="input-text" style="width:250px" placeholder="输入手机号" id="poNumber" name="">
-        <input type="text" class="input-text" style="width:250px" placeholder="输入客户" id="poSupName" name="">
-        <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜索</button>
+        <input type="text" class="input-text" style="width:250px" placeholder="输入单号" id="poNumber" name="">
+        <input type="text" class="input-text" style="width:250px" placeholder="输入供应商" id="poSupName" name="">
+        <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜订单</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
             <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
-        <a href="javascript:;" onclick="admin_add('添加客户','admin-add.html','800','500')"
+        <a href="javascript:;" onclick="admin_add('添加管理员','admin-add.html','800','500')"
            class="btn btn-primary radius">
-        <i class="Hui-iconfont">&#xe600;</i> 添加客户</a>
-        <a href="#" @click="exportexcel()"
+        <i class="Hui-iconfont">&#xe600;</i> 添加管理员</a>
+        <a href="javascript:;" onclick="admin_add('Excel导出','admin-add.html','800','500')"
            class="btn btn-success radius">
-        <i class="Hui-iconfont" >&#xe644;</i> Excel导出</a>
+        <i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
     </span>
 
         <span class="r">共有数据：<strong>54</strong> 条</span></div>
@@ -56,19 +56,18 @@
             </tr>
             <tr class="text-c">
                 <th width="25"><input type="checkbox" name="" value=""></th>
-                <th width="40">ID</th>
+                <th width="40">序号</th>
                 <th width="130">操作</th>
-                <th width="150">编号</th>
-                <th width="150">公司名</th>
-                <th width="90">应收欠款</th>
-                <th width="90">联系方式</th>
-                <th width="130">联系人</th>
-                <th width="150">客户状态</th>
-                <th width="100">关联人员</th>
-                <th width="100">公司地址</th>
-                <th width="70">公司邮箱</th>
-                <th width="150">联系人qq</th>
-                <th width="150">备注</th>
+                <th width="150">商品编号</th>
+                <th width="150">商品名称</th>
+                <th width="90">规格</th>
+                <th width="90">单位</th>
+                <th width="130">可用库存量</th>
+                <th width="150">当前存货</th>
+                <th width="100">待出库量</th>
+                <th width="100">待入库量</th>
+                <th width="70">成本价</th>
+                <th width="150">总金额</th>
             </tr>
             </thead>
             <tbody>
@@ -86,18 +85,16 @@
                         <i class="icon Hui-iconfont">&#xe627;</i>
                     </a>
                 </td>
-                <td>{{item.cusNumber}}</td>
-                <td>{{item.cusCompname}}</td>
-                <td>{{item.cusMoney}}</td>
-                <td>{{item.cusTele}}</td>
-                <td>{{item.cusName}}</td>
-                <td>{{item.cusFlag}}</td>
-                <td>{{item.cusConnname}}</td>
-                <td>{{item.cusAddress}}</td>
-                <td>{{item.cusEmail}}</td>
-                <td>{{item.cusQq}}</td>
-                <td>{{item.cusRemarks}}</td>
-
+                <td>{{item.waNumber}}</td>
+                <td>{{item.waSpName}}</td>
+                <td>{{item.waSpSpecifications}}</td>
+                <td>{{item.waSpCompany}}</td>
+                <td>{{item.waSpLnventory}}</td>
+                <td>{{item.waSpCurrentInventory}}</td>
+                <td>{{item.waSpForout}}</td>
+                <td>{{item.waSpForente}}</td>
+                <td>{{item.waCost}}</td>
+                <td>{{item.waTotalSum}}</td>
             </tr>
             </tbody>
         </table>
@@ -123,7 +120,7 @@
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: '/customermanagement/customer/selectCustomer',
+            url: '/cargomanagement/warehouse/getPage',
             data: {
                 /*当前页*/
                 current: curr || 1,
@@ -139,9 +136,8 @@
                     pages: msg.totalPage,//总页数
                     first: '首页',
                     last: '尾页',
-                    curr: curr || 1 ,//初始化页数
-                    jump: function (obj, first) {
-                        //触发分页后的回调
+                    curr: curr || 1,//初始化页数
+                    jump: function (obj, first) { //触发分页后的回调
                         if (!first) {     //点击跳页触发函数自身，并传递当前页：obj.curr
                             getPurchasePageList(obj.curr);
                         }
@@ -151,7 +147,7 @@
         });
     };
     getPurchasePageList();
-   $("#findempl").on('click', function () {
+    $("#findempl").on('click', function () {
         getPurchasePageList();
     });
 
@@ -178,21 +174,14 @@
         });
     };
 
-    function exportexcel() {
-
-    }
-
     /*编辑修改*/
-    function article_edit(title,url){
+    function article_edit(title,url,id,w,h){
         var index = layer.open({
             type: 2,
             title: title,
             content: url
         });
         layer.full(index);
-    }
-      function excel() {
-
     }
 
 </script>
