@@ -29,7 +29,7 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-
+      <!--solr搜索引擎-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-solr</artifactId>
@@ -109,6 +109,7 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.9.2</version>
         </dependency>
+
         <!--
                 Excel依赖
                 增加人:杨明月
@@ -119,6 +120,7 @@
             <artifactId>poi</artifactId>
             <version>3.17</version>
         </dependency>
+
         <!--
         Excel依赖
         增加人:杨明月
@@ -129,7 +131,6 @@
             <artifactId>poi-ooxml</artifactId>
             <version>3.17</version>
         </dependency>
-
 
     </dependencies>
 
