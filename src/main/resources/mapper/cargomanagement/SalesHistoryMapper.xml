@@ -9,6 +9,7 @@
     <select id="selectSalesHistory" resultType="com.yunhe.cargomanagement.entity.SalesHistory">
         select <include refid="Cols"/>from sales_history
         where sh_client like concat('%',#{salesHistory.shClient},'%')
+        and sh_number like concat('%',#{salesHistory.shNumber},'%')
     </select>
 
 

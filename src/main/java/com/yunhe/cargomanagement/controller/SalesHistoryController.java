@@ -6,11 +6,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.cargomanagement.entity.SalesHistory;
 import com.yunhe.cargomanagement.service.impl.SalesHistoryServiceImpl;
 import com.yunhe.cargomanagement.service.impl.SalesOrderHistoryServiceImpl;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +43,13 @@ public class SalesHistoryController {
         return  salesHistoryService.addSalesHistory(salesHistory);
     }
 
+    @RequestMapping("/edit")
+    public ModelAndView edit(int id, HttpSession httpSessionsion){
+        System.out.println(id);
+        SalesHistory salesHistory = salesHistoryService.selectById(id);
+        httpSessionsion.setAttribute("sales",salesHistory);
+        return new ModelAndView("/cargomanagement/ceshi2");
+    }
     /**
      * 根据id修改销售历史 _已测试成功
      * @param salesHistory
@@ -57,6 +67,10 @@ public class SalesHistoryController {
         return salesHistoryService.deleteSalesHistory(id);
     }
 
+    @RequestMapping("/tiao")
+    public ModelAndView tiaozhuan(){
+        return new ModelAndView("/cargomanagement/salesHistory");
+    }
     /**
      * 0
      * @param pageNum 当前页
@@ -65,8 +79,12 @@ public class SalesHistoryController {
      * @return map
      */
     @RequestMapping("/quertLikeListSalesHistory")
-    public Map quertLikeListSalesHistory(int pageNum, int pageSize,SalesHistory salesHistory){
+    public Map quertLikeListSalesHistory(int pageNum, int pageSize, SalesHistory salesHistory, Model m){
+        System.out.println(pageNum);
+        System.out.println(pageSize);
         Map map = salesHistoryService.queryLikeSalesHistory(pageNum, pageSize, salesHistory);
+        List<SalesHistory> list = (List<SalesHistory>) map.get("list");
+        m.addAttribute("list",list);
         return map;
     }
 }

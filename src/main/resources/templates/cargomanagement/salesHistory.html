@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE HTML>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -19,11 +19,11 @@
     <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
     <script type="text/javascript" src="/lib/respond.min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
-    <title>销售订单历史</title>
+    <title>销售历史</title>
 </head>
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 云管货 <span
-        class="c-gray en">&gt;</span> 订单销售历史 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+        class="c-gray en">&gt;</span> 销售历史 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
                                                href="javascript:location.replace(location.href);" title="刷新"><i
         class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
@@ -33,8 +33,8 @@
         -
         <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax"
                class="input-text Wdate" style="width:120px;">-->
-        <input type="text" class="input-text" style="width:250px" placeholder="输入单号" id="soNumber" name="">
-        <input type="text" class="input-text" style="width:250px" placeholder="客户名称" id="soClient" name="">
+        <input type="text" class="input-text" style="width:250px" placeholder="输入单号" id="shNumber" name="">
+        <input type="text" class="input-text" style="width:250px" placeholder="客户名称" id="shClient" name="">
         <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜订单</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -61,20 +61,24 @@
                 <th width="130">操作</th>
                 <th width="150">业务日期</th>
                 <th width="150">单据编号</th>
-                <th width="90">处理状态</th>
-                <th width="90">审核人</th>
-                <th width="130">客户名称</th>
-                <th width="150">销售订单商品</th>
-                <th width="100">销售订单数量</th>
-                <th width="100">折扣金额</th>
+                <th width="90">客户名称</th>
+                <th width="90">销售商品</th>
+                <th width="130">销售数量</th>
+                <th width="150">折扣金额</th>
+                <th width="100">扣除金额</th>
+                <th width="100">销售毛利</th>
                 <th width="100">总计金额</th>
-                <th width="100">订金</th>
-                <th width="70">纸质单据</th>
+                <th width="100">实收金额</th>
+                <th width="70">出库仓库</th>
+                <th width="150">纸质单据</th>
                 <th width="150">制单日期</th>
-                <th width="150">未转销售数量</th>
                 <th width="150">送货日期</th>
+                <th width="150">其他费用</th>
+                <th width="150">结算账户</th>
                 <th width="90">经手人</th>
                 <th width="90">制单人</th>
+                <th width="150">销售类型</th>
+                <th width="150">出库状态</th>
                 <th width="150">备注</th>
             </tr>
             </thead>
@@ -96,23 +100,28 @@
                         <i class="icon Hui-iconfont">&#xe627;</i>
                     </a>
                 </td>
-                <td>{{item.soDate}}</td>
-                <td>{{item.soOrderNum}}</td>
-                <td>{{item.soStatus}}</td>
-                <td>{{item.soAuditor}}</td>
-                <td>{{item.soClient}}</td>
-                <td>{{item.soOrderComm}}</td>
-                <td>{{item.soOrderCount}}</td>
-                <td>{{item.soDiscount}}</td>
-                <td>{{item.soMoney}}</td>
-                <td>{{item.soEarnest}}</td>
-                <td>{{item.soBills}}</td>
-                <td>{{item.soBillDate}}</td>
-                <td>{{item.soSellCount}}</td>
-                <td>{{item.soDevlierDate}}</td>
-                <td>{{item.soHander}}</td>
-                <td>{{item.soMaker}}</td>
-                <td>{{item.soRemark}}</td>
+                <td>{{item.shDate}}</td>
+                <td>{{item.shNumber}}</td>
+                <td>{{item.shConnect}}</td>
+                <td>{{item.shClient}}</td>
+                <td>{{item.shSellGoods}}</td>
+                <td>{{item.shSellCount}}</td>
+                <td>{{item.shDiscount}}</td>
+                <td>{{item.shMins}}</td>
+                <td>{{item.shProfit}}</td>
+                <td>{{item.shMoney}}</td>
+                <td>{{item.shTrueMoney}}</td>
+                <td>{{item.shHouse}}</td>
+                <td>{{item.shBills}}</td>
+                <td>{{item.shCreateDate}}</td>
+                <td>{{item.shGiveDate}}</td>
+                <td>{{item.shOther}}</td>
+                <td>{{item.shEndComm}}</td>
+                <td>{{item.shHander}}</td>
+                <td>{{item.shMaker}}</td>
+                <td>{{item.shType}}</td>
+                <td>{{item.shStatus}}</td>
+                <td>{{item.shRemark}}</td>
             </tr>
             </tbody>
         </table>
@@ -153,7 +162,6 @@
         }else{
             if(confirm("你确定要删除吗？？？")){
                 var ids = new Array();
-
                 checkedbox.each(function(){
                     ids.push(this.value);
                 });
@@ -177,15 +185,15 @@
         $.ajax({
             type:'post',
             dataType:'json',
-            url:'/cargomanagement/sales-order-history/quertLikeList',
+            url:'/cargomanagement/sales-history/quertLikeListSalesHistory',
             data:{
                 pageNum: curr || 1,
                 pageSize:4,
-                soClient:$("#soClient").val(),
-                soOrderNum:$("#soNumber").val(),
+                shClient:$("#shClient").val(),
+                shNumber:$("#shNumber").val(),
             },
             success: function (msg) {
-                app.result = msg.page;
+                app.result = msg.list;
                 $("#strong").html(msg.total);
                 laypage({
                     cont: 'pagenav',//容器  值支持id名、原生dom对象，jquery对象,
@@ -254,7 +262,7 @@
             fix:false,
             maxmin:true,
             shadeClose:true,
-            area:['h','w'],
+            area:['1000px','800px'],
             content:url,
             end:function() {
                 getUserPageList();
@@ -263,7 +271,7 @@
     }
 
     var Excel_out =function () {
-        window.location.href="/cargomanagement/sales-order-history/export";
+        window.location.href="/cargomanagement/sales-history/export";
     }
 
 </script>
