@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yunhe.cargomanagement.dao.SalesReturnHistoryMapper">
-
+    <sql id="Cols">
+        id,srh_date,srh_number,srh_con_number,srh_client,srh_goods,srh_money,srh_ret_money,srh_house,srh_status,
+        srh_bills,srh_create_date,srh_other,srh_end_comm,srh_hander,srh_maker,srh_remark
+    </sql>
+    <select id="QueryLikeSalesReturnHistory" resultType="com.yunhe.cargomanagement.entity.SalesReturnHistory">
+        select <include refid="Cols"/>from sales_return_history
+    </select>
 </mapper>

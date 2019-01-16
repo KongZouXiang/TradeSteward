@@ -1,10 +1,13 @@
 package com.yunhe.basicdata.entity;
 
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * <p>
@@ -17,24 +20,25 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
+@TableName("property")
 public class Property implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     /**
-     * 品牌
+     * 属性名的主键
      */
-    private String prBrand;
-
+    @TableId(value = "id",type = IdType.AUTO)
+    private Integer pnid;
     /**
-     * 产地
+     * 属性名
      */
-    private String prPlace;
-
+    @TableField("propertyname")
+    private String propertyname;
     /**
-     * 自定义属性
+     *外表
      */
-    private String prZidingyi;
+
+
 
 
 }

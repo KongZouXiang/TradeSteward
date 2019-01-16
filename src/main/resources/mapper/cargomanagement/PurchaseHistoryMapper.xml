@@ -22,10 +22,50 @@
         ph_remarks
     </sql>
 
+    <sql id="purchase_hi">
+        ph_date
+        ,
+        ph_number,
+        ph_supname,
+        ph_clname,
+        ph_quantity,
+        ph_amount_payable,
+        ph_amount_paid,
+        ph_warehouse,
+        ph_bill,
+        ph_jindate,
+        ph_maney_hu,
+        ph_experienced_person,
+        ph_single_person,
+        ph_other_expenses,
+        ph_warehousing_status,
+        ph_remarks
+    </sql>
+
     <select id="getPurchaseHistoryByPhNumber" resultType="com.yunhe.cargomanagement.entity.PurchaseHistory"
             parameterType="com.yunhe.cargomanagement.entity.PurchaseHistory">
         select
         <include refid="purchase_history"/>
         from purchase_history where ph_number like concat('%', #{purchaseHistory.phNumber}, '%') order by id desc
     </select>
+
+    <update id="updatePurchaseHistoryById" parameterType="com.yunhe.cargomanagement.entity.PurchaseHistory">
+        update purchase_history
+        set ph_date=#{phDate},
+            ph_number=#{phNumber},
+            ph_supname=#{phSupname},
+            ph_clname=#{phClname},
+            ph_quantity=#{phQuantity},
+            ph_amount_payable=#{phAmountPayable},
+            ph_amount_paid=#{phAmountPaid},
+            ph_warehouse=#{phWarehouse},
+            ph_bill=#{phBill},
+            ph_jindate=#{phJindate},
+            ph_maney_hu=#{phManeyHu},
+            ph_experienced_person=#{phExperiencedPerson},
+            ph_single_person=#{phSinglePerson},
+            ph_other_expenses=#{phOtherExpenses},
+            ph_warehousing_status=#{phWarehousingStatus},
+            ph_remarks=#{phRemarks} where id=#{id}
+    </update>
 </mapper>
