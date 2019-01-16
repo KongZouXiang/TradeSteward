@@ -46,7 +46,7 @@ public class CommodityListController {
      */
     @RequestMapping(value = "/addpage", method = RequestMethod.POST)
     @ResponseBody
-    public String insertComm(@RequestParam("tiaoxingma") String tiaoxingma, @RequestParam("bianhao") String bianhao,
+    public int insertComm(@RequestParam("tiaoxingma") String tiaoxingma, @RequestParam("bianhao") String bianhao,
                              @RequestParam("mingcheng") String mingcheng, /*@RequestParam("fenlei") String fenlei,*/
                              /*@RequestParam("jibendanwei") String jibendanwei,*/ @RequestParam("guige") String guige,
                              @RequestParam("cankaojinhuo") String cankaojinhuo, @RequestParam("pifajia") String pifajia,
@@ -62,9 +62,8 @@ public class CommodityListController {
         commodityList.setClTagPrise(lingshoujia);
         commodityList.setCcId(1);
         commodityList.setClNumber(bianhao);
-        commodityListService.insertComm(commodityList);
         System.out.println("太区庄");
-        return null;
+        return commodityListService.insertComm(commodityList);
     }
     /**
      * 查询商品的详细信息
@@ -87,7 +86,7 @@ public class CommodityListController {
      * @return 修改后的商品的信息
      */
     @RequestMapping(value = "/updateComm", method = RequestMethod.POST)
-    public ModelAndView updateComm(@RequestParam("id") int id,@RequestParam("tiaoxingma") String tiaoxingma,
+    public int  updateComm(@RequestParam("id") int id,@RequestParam("tiaoxingma") String tiaoxingma,
                           @RequestParam("bianhao") String bianhao,@RequestParam("mingcheng") String mingcheng,
                           @RequestParam("guige") String guige,@RequestParam("cankaojinhuo") String cankaojinhuo,
                           @RequestParam("pifajia") String pifajia,@RequestParam("lingshoujia") String lingshoujia) {
@@ -102,10 +101,7 @@ public class CommodityListController {
         commodityList.setClTagPrise(lingshoujia);
         commodityList.setCcId(1);
         commodityList.setClNumber(bianhao);
-        commodityListService.updateComm(commodityList);
-        ModelAndView  mv=new ModelAndView();
-        mv.setViewName("basicdata/admincommodity-list");
-        return mv;
+        return commodityListService.updateComm(commodityList);
     }
     @GetMapping("/detailcommodity")
        public ModelAndView detailcommodity(@RequestParam("id") Integer id){
@@ -121,10 +117,10 @@ public class CommodityListController {
      */
     @RequestMapping(value = "/deleteComm", method = RequestMethod.POST)
     @ResponseBody
-    public void deleteCommList(@RequestParam("id") Integer id) {
+    public int deleteCommList(@RequestParam("id") Integer id) {
         CommodityList commodityList = new CommodityList();
         commodityList.setId(id);
-        commodityListService.deleteComm(commodityList);
+       return commodityListService.deleteComm(commodityList);
     }
     /**
      * 模糊查询

@@ -9,6 +9,7 @@
     <script src="https://cdn.zhsmjxc.com/CDN/UCenter-webapp/js/product/number.js?version=5.7.0.201901051730"></script>
     <script type="text/javascript" src="http://www.sz886.com/js/jquery-1.9.1.min.js"></script>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/layer/layer.js" charset="utf-8"></script>
     <script src="/js/jquery/jquery.min.js"></script>
   <!-- <script src="/jquery/validation.1.14.0/jquery.validate.js/jquery.validate.min.js"></script>
     <script src="/jquery/validation.1.14.0/messages_zh.js/messages_zh.min.js"></script>-->
@@ -265,17 +266,17 @@
                 guige:$("#guige").val(),
                 cankaojinhuo:$("#cankaojinhuo").val(),
                 pifajia:$("#pifajia").val(),
-                lingshoujia:$("#lingshoujia").val(),
+                lingshoujia:$("#lingshoujia").val()
             },
             success:function (msg) {
                 $("#CancelBtnn").click();
             }
         });
-    };
+    }
    $('#UpdateBtn').on('click',function () {
        updatecommodity();
     });
-  $('#CancelBtnn').on('click',function () {
+  $('#CancelBtnn').click(function () {
         var index=parent.layer.getFrameIndex(window.name);
         parent.getCommdityPageList();
         parent.layer.close(index);

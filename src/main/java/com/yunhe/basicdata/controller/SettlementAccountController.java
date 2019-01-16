@@ -55,7 +55,7 @@ public class SettlementAccountController {
      * @return 无返回
      */
     @RequestMapping(value = "/insertaccount", method = RequestMethod.POST)
-    public String insertAccountinfo(@RequestParam("zhanghu") String zhanghu, @RequestParam("sabank") String sabank,
+    public int insertAccountinfo(@RequestParam("zhanghu") String zhanghu, @RequestParam("sabank") String sabank,
                                     @RequestParam("sabanknumber") String sabanknumber ,@RequestParam("beginbalance") String beginbalance ,
                                     @RequestParam("zhangbalance") double zhangbalance,@RequestParam("zhangstate")int zhangstate) {
         SettlementAccount settlementAccount = new SettlementAccount();
@@ -66,8 +66,7 @@ public class SettlementAccountController {
         settlementAccount.setSaBeginBalance(beginbalance);
         settlementAccount.setSaBalance(zhangbalance);
         settlementAccount.setSaState(zhangstate);
-        settlementAccountService.insertAccount(settlementAccount);
-        return null;
+        return   settlementAccountService.insertAccount(settlementAccount);
     }
     /**
      * 查询账户的详细信息
@@ -109,7 +108,7 @@ public class SettlementAccountController {
      */
     @RequestMapping(value = "/updateAccount", method = RequestMethod.GET)
     @ResponseBody
-    public ModelAndView updateAccountInfo(@RequestParam("zhanghu") String zhanghu, @RequestParam("sabank") String sabank,
+    public int  updateAccountInfo(@RequestParam("zhanghu") String zhanghu, @RequestParam("sabank") String sabank,
                                           @RequestParam("sabanknumber") String sabanknumber, @RequestParam("beginbalance") String beginbalance,
                                           @RequestParam("zhangbalance") double zhangbalance, @RequestParam("zhangstate") int  zhangstate,
                                           @RequestParam("id") int id) {
@@ -121,8 +120,7 @@ public class SettlementAccountController {
         settlementAccount.setSaBankNumber(sabanknumber);
         settlementAccount.setSaBeginBalance(beginbalance);
         settlementAccount.setSaState(zhangstate);
-        settlementAccountService.updateAccount(settlementAccount);
-        return new ModelAndView("basicdata/adminaccount-list");
+        return  settlementAccountService.updateAccount(settlementAccount);
     }
     /**
      * 删除账户的信息
@@ -131,12 +129,11 @@ public class SettlementAccountController {
      */
     @PostMapping(value = "/deleteAccount")
     @ResponseBody
-    public String deleteAccount(@RequestParam("id") int id) {
+    public int deleteAccount(@RequestParam("id") int id) {
         SettlementAccount settlementAccount = new SettlementAccount();
         System.out.println(id);
         settlementAccount.setId(id);
-        settlementAccountService.deleteAccount(settlementAccount);
-        return null;
+        return  settlementAccountService.deleteAccount(settlementAccount);
     }
     @RequestMapping("/addacounthtml")
     public ModelAndView AddAcount(){
