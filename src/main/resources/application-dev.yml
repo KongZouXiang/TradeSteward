@@ -11,7 +11,7 @@ spring:
     #连接密码
     password: root
     #连接地址
-    url: jdbc:mysql://localhost:3306/trades_teward?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://172.16.35.99:3306/trades_teward?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
     #连接类型
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
@@ -34,5 +34,4 @@ spring:
     #不设置静态页面缓存
     cache: false
     encoding: UTF-8
-
     mode: HTML5

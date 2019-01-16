@@ -40,7 +40,7 @@ public class Employ implements Serializable {
     private String emUsername;
 
     /**
-     * 密码
+     * 员工密码
      */
     @TableField("em_password")
     private String emPassword;
@@ -50,11 +50,6 @@ public class Employ implements Serializable {
      */
     @TableField("em_realname")
     private String emRealname;
-
-    /**
-     * 员工密码
-     */
-    private String emPassword;
 
     /**
      * 角色
