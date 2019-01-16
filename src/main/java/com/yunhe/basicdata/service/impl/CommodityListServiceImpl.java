@@ -43,11 +43,8 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
         map.put("comlist", comlist);
         return map;
     }
-
-
     /**
      * 增加商品的信息
-     *
      * @param commodityList 增加商品的实体类
      * @return 返回增加后的商品信息
      */
@@ -58,7 +55,6 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
 
     /**
      * 查询用户的详细信息
-     *
      * @param id 查询用户的id
      * @return 根据id查询的信息
      */
@@ -101,4 +97,12 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
         return commodityLists;
     }
 
+    /**
+     * 导出excel
+     * @return
+     */
+    @Override
+    public List<CommodityList> ExportExcel() {
+        return commodityListMapper.selectExcel();
+    }
 }
