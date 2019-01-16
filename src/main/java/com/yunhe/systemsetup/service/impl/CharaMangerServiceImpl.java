@@ -1,5 +1,6 @@
 package com.yunhe.systemsetup.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.systemsetup.entity.CharaManger;
 import com.yunhe.systemsetup.dao.CharaMangerMapper;
 import com.yunhe.systemsetup.service.ICharaMangerService;
@@ -22,8 +23,13 @@ public class CharaMangerServiceImpl extends ServiceImpl<CharaMangerMapper, Chara
     @Autowired
     public CharaMangerMapper charaMangerMapper;
     @Override
-    public List<CharaManger> selectAll() {
-        return charaMangerMapper.selectAll();
+    public List<CharaManger> selectAll(Page page) {
+        return charaMangerMapper.selectAll(page);
+    }
+
+    @Override
+    public int insertRole(CharaManger charaManger) {
+        return charaMangerMapper.insertRole(charaManger);
     }
 
     public CharaMangerMapper getCharaMangerMapper() {

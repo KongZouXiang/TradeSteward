@@ -25,11 +25,10 @@ import java.util.Map;
          *  查询所有库存信息并分页
          * </p>
          *
-         * @param page      实体类
-         * @param warehouse 实体类
+         * @param page
          * @return list集合
          */
-        List<Warehouse> selectAll(Page page, Warehouse warehouse);
+        List<Warehouse> selectAll(Page page);
 
         /**
          * <p>
@@ -49,5 +48,10 @@ import java.util.Map;
          * @return list集合
          */
         List<Warehouse> selectAll();
+
+
+
+
+
 
 }

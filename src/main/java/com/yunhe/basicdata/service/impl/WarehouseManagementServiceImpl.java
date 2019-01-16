@@ -31,6 +31,7 @@ public class WarehouseManagementServiceImpl extends ServiceImpl<WarehouseManagem
 
     @Override
     public Map selectWareList(int pageSize, int pageNum) {
+
         Page<WarehouseManagement> page = new Page<WarehouseManagement>();
         page.setSize(pageSize);
         page.setCurrent(pageNum);
@@ -38,6 +39,8 @@ public class WarehouseManagementServiceImpl extends ServiceImpl<WarehouseManagem
         Map map = new HashMap();
         map.put("pagenum", pageNum);
         map.put("pageSize", pageSize);
+        map.put("totalPage",page.getPages());
+        map.put("count",page.getTotal());
         map.put("list", list);
         return map;
     }
@@ -60,10 +63,16 @@ public class WarehouseManagementServiceImpl extends ServiceImpl<WarehouseManagem
     }
 
     @Override
-    public List<WarehouseManagement> vagueselect1(String data) {
-
-        List<WarehouseManagement> warehouseManagements = (List<WarehouseManagement>) warehouseManagementMapper.selectList(new QueryWrapper<WarehouseManagement>().like("wm_number", data).or().like("wm_person", data).or().like("wm_tel", data)
+    public Map vagueselect1(String data) {
+        Map map = new HashMap();
+        List<WarehouseManagement> warehouseManagements = (List<WarehouseManagement>) warehouseManagementMapper.selectList(new QueryWrapper<WarehouseManagement>().like("wm_number", data).or().like("wm_name", data).or().like("wm_person", data).or().like("wm_tel",data).or().like("wm_address",data).or().like("wm_remark",data)
         );
-        return warehouseManagements;
+        map.put("list",warehouseManagements);
+        return map;
+    }
+
+    @Override
+    public void addWarehouse(WarehouseManagement warehouseManagement) {
+        warehouseManagementMapper.insert(warehouseManagement);
     }
 }

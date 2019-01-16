@@ -1,6 +1,9 @@
 package com.yunhe.cargomanagement.entity;
 
 import java.io.Serializable;
+import java.util.List;
+
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -20,6 +23,7 @@ public class SalesOrderHistory implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId("id")
     private Integer id;
     /**
      * 业务日期
@@ -106,5 +110,5 @@ public class SalesOrderHistory implements Serializable {
      */
     private String soRemark;
 
-
+    private List<OrderConnectComm> orderConnectComms;
 }

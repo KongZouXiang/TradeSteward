@@ -1,5 +1,6 @@
 package com.yunhe.cargomanagement.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yunhe.cargomanagement.dao.SalesReturnHistoryMapper;
 import com.yunhe.cargomanagement.entity.SalesReturnHistory;
@@ -8,6 +9,9 @@ import com.yunhe.cargomanagement.service.ISalesReturnHistoryService;
 
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,6 +25,7 @@ import java.util.Map;
 @Service
 public class SalesReturnHistoryServiceImpl extends ServiceImpl<SalesReturnHistoryMapper, SalesReturnHistory> implements ISalesReturnHistoryService {
 
+    @Resource
     private SalesReturnHistoryMapper salesReturnHistoryMapper;
 
     @Override
@@ -31,16 +36,25 @@ public class SalesReturnHistoryServiceImpl extends ServiceImpl<SalesReturnHistor
 
     @Override
     public int deleteSalesReturnHistory(int id) {
-        return 0;
+
+        return salesReturnHistoryMapper.deleteById(id);
     }
 
     @Override
     public int updateSalesReturnHistory(SalesReturnHistory salesReturnHistory) {
-        return 0;
+        return salesReturnHistoryMapper.updateById(salesReturnHistory);
     }
 
     @Override
-    public Map QueryLikeSalesReturnHistory(int pageSize, int pageNum, SalesReturnHistory salesReturnHistory) {
-        return null;
+    public Map queryLikeSalesReturnHistory(int pageSize, int pageNum, SalesReturnHistory salesReturnHistory) {
+        Page page = new Page();
+        page.setCurrent(pageNum);
+        page.setSize(pageSize);
+        List<SalesReturnHistory> list = salesReturnHistoryMapper.QueryLikeSalesReturnHistory(page, salesReturnHistory);
+        Map<String, Object> map = new HashMap<>();
+        map.put("total",page.getTotal());
+        map.put("pages",page.getPages());
+        map.put("list",list);
+        return map;
     }
 }

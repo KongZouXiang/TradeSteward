@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑账户</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/js/laypage/skin/laypage.css">
+    <script src="/Vue/vue.min.js"></script>
+    <script src="/js/jquery/jquery.min.js"></script>
+    <script src="/js/laypage/laypage.js" charset="utf-8"></script>
+    <script src="/js/layer/layer.js" charset="utf-8"></script>
+    <script src="/js/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+    <script src="/js/jquery.validation/1.14.0/messages_zh.min.js"></script>
+</head>
+<body>
+<div class="container"  id="app">
+    <form id="updateAccountForm">
+        <br/>
+        <tr v-for="(item,index) in result">
+            <div >
+                <label for="cus_number">公司编号：</label>
+                <input type="text" class="form-control"  id="cus_number" name="cus_number" value={{item.cusNumber}} placeholder="输入公司编号">
+                {{item.saName}}
+            </div>
+            <div class="form-group">
+                <label for="cus_compname">公司名称：</label>
+                <input type="text" class="form-control" id="cus_compname" name="cus_compname" value="${data.saBank}" placeholder="输入公司名">
+            </div>
+            <div class="form-group">
+                <label for="cus_money">应还欠款：</label>
+                <input type="text" class="form-control" id="cus_money" name="cus_money" value=data.saBankNumber placeholder="应收欠款">
+            </div>
+            <div class="form-group">
+                <label for="cus_tele">联系方式：</label>
+                <input type="text" class="form-control" id="cus_tele" name="cus_tele"  value="${data.saBeginBalance}" placeholder="期初余额">
+            </div>
+            <div class="form-group">
+                <label for="cus_name">联系人：</label>
+                <input type="text" class="form-control" id="cus_name" name="cus_name"  value="{{data.saBalance}}" placeholder="账户余额">
+            </div>
+            <div class="form-group">
+                <label for="cus_flag">状态：</label>
+                <input type="text" class="form-control" id="cus_flag" name="cus_flag"  value="${data.saState}" placeholder="状态">
+            </div>
+            <div class="form-group">
+                <label for="cus_connname">关联人员：</label>
+                <textarea class="form-control" id="cus_connname" name="cus_connname" ></textarea>
+            </div>
+            <div class="form-group">
+                <label for="cus_address">地址：</label>
+                <textarea class="form-control" id="cus_address" name="cus_address" ></textarea>
+            </div>
+            <div class="form-group">
+                <label for="cus_email">邮箱：</label>
+                <textarea class="form-control" id="cus_email" name="cus_email" ></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="cus_qq">qq：</label>
+                <textarea class="form-control" id="cus_qq" name="cus_qq" ></textarea>
+            </div>
+            <div class="form-group">
+                <label for="cus_remarks">备注：</label>
+                <textarea class="form-control" id="cus_remarks" name="cus_remarks" ></textarea>
+            </div>
+
+
+            <div class="form-group">
+                <button type="button" id="updateBtn" class="btn btn-success">修改</button>
+                <button type="button" id="cancelBtn" class="btn btn-default">取消</button>
+            </div>
+        </tr>
+    </form>
+</div>
+<script>
+    var app = new Vue({
+        el:'#app',
+        data:{
+            result:[]
+        }
+    });
+
+    var updataAccountList = function(curr) {
+        $.ajax({
+            type:'POST',
+            dataType:'json',
+            url:'/customermanagement/customer/updateCustomer',
+            data:{
+            },
+            success:function(msg){
+                app.result = msg.settlementAccountid;
+            }
+        });
+    }
+    var updateAccount = function () {
+        if (!check().form()) {
+            return;
+        }
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: "/customermanagement/customer/updateCustomer",
+            data: {
+                id:{${data.id}},
+                cus_number: $("#cus_number").val(),
+                cus_compname: $("#cus_compname").val(),
+                cus_money: $("#cus_money").val(),
+                cus_tele: $("#cus_tele").val(),
+                cus_name: $("#cus_name").val(),
+                cus_flag: $("#cus_flag").val(),
+
+                cus_connname: $("#cus_connname").val(),
+                cus_address: $("#cus_address").val(),
+                cus_email: $("#cus_email").val(),
+                cus_qq: $("#cus_qq").val(),
+                cus_remarks: $("#cus_remarks").val()
+            },
+            success: function () {
+                $("#cancelBtn").click();
+            }
+        });
+    }
+
+
+    $("#updateBtn").click(function () {
+        updateAccount();
+    });
+    $("#cancelBtn").click(function () {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.getAccountPageList ();
+        parent.layer.close(index);
+
+    });
+
+
+    function check() {
+        return $("#updateAccountForm").validate({
+            rules: {
+                cus_number: {
+                    required: true
+                },
+                cus_compname: {
+                    required: true
+                },
+                cus_money: {
+                    required: true
+                },
+                cus_tele: {
+                    required: true
+                },
+                cus_name: {
+                    required: true
+                },
+                cus_flag: {
+                    required: true
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

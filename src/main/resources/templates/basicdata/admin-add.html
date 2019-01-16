@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/css/jquery.css">
+    <link rel="stylesheet" href="/css/zTreeStyle.css" type="text/css">
+    <link rel="stylesheet" href="/css/Sortable.css" type="text/css">
+    <script type="text/javascript" async="" src="/js/vds.js"></script>
+    <script type="text/javascript" src="/js/all_before.js"></script>
+    <link rel="stylesheet" href="/css/layer.css" id="layuicss-skinlayercss">
+    <script type="text/javascript" src="/js/highcharts.js"></script>
+    <script type="text/javascript" src="/js/exporting.js"></script>
+    <script type="text/javascript" src="/js/WdatePicker.js"></script>
+    <link href="/css/WdatePicker.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/all_after.js"></script>
+    <script type="text/javascript" src="/js/flexigrid.js"></script>
+    <script type="text/javascript" src="/js/wbi_common.js"></script>
+    <script type="text/javascript" src="/js/wbill_common.js"></script>
+    <script type="text/javascript" src="/js/filter.js"></script>
+    <script type="text/javascript" src="/js/record.js"></script>
+
+</head>
+<body>
+<input type="hidden" id="pageid" value="addsysuser" spellcheck="false">
+<input type="hidden" id="hideBranchid" value="" spellcheck="false">
+<input type="hidden" id="hideCurrentBranchid" value="AC42B595-24B0-4824-84CA-8AABD3426A8D" spellcheck="false"><!-- 当前操作用户的branchid -->
+<input type="hidden" id="hideBranchname" value="" spellcheck="false">
+<input type="hidden" id="hideUserIsRoot" value="" spellcheck="false">
+<input type="hidden" id="hidbranchissys" value="" spellcheck="false">
+<input type="hidden" id="tabid" value="addUser" spellcheck="false">
+<input type="hidden" id="parent_tabid" value="" spellcheck="false">
+<input type="hidden" id="currentuserid" value="8200B239-AA59-4230-B288-44D4F021A500" spellcheck="false">
+<input type="hidden" id="isactiveEmail" value="0" spellcheck="false">
+<input type="hidden" id="isactivePhone" value="0" spellcheck="false">
+<input type="hidden" id="isdemo" value="1" spellcheck="false">
+<input type="hidden" id="productversion" value="1" spellcheck="false">
+<input type="hidden" id="hidisopenclientrankprice" value="0" spellcheck="false">
+<input type="hidden" id="hiduserpassword" value="c8zXxVPRA2PU+pYCk/pxtA==" spellcheck="false">
+
+<input type="hidden" id="relationCount" value="" spellcheck="false">
+<div class="main">
+    <!-- whiteBox -->
+    <form id="emp" data-validator-option="{theme:'simple_right'}">
+        <div class="whiteBox">
+            <div class="formTitle">基本信息</div>
+            <table width="100%" cellspacing="0" cellpadding="8" border="0">
+                <tbody><tr>
+                    <td width="80" align="right"><span class="fontRed">*</span>名称</td>
+                    <td>
+                        <input name="userloginname" id="emplusername" placeholder="仓库名称" maxlength="30" type="text" class="inputText wf250"  ></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td width="80" align="right"><span class="fontRed">*</span>编号</td>
+                    <td>
+                        <input name="newusername" id="emplrealnumber" maxlength="50" type="text" class="inputText wf250 fl" data-rule="编号:required;name;" placeholder="编号" data-rule-name="[/^[\u4E00-\u9FA5A-Za-z0-9_]+$/, '只能输入中文,字母数字下划线']" spellcheck="false">
+                    </td>
+                    <td><span class="font999"></span></td>
+                </tr>
+                <tr>
+                    <td width="80" align="right"><span class="fontRed">*</span>备注信息</td>
+                    <td><input name="userpassword" id="emplremark" type="password" value="" class="inputText wf250 " data-rule="备注信息:" placeholder="密码" spellcheck="true"></td>
+                    <td><span class="font999"></span></td>
+                </tr>
+                </tbody></table>
+            <div class="formTitle">发货信息</div>
+            <table width="100%" cellspacing="0" cellpadding="8" border="0"><tbody><tr>
+                <td width="80" align="right"><span class="fontRed">*</span>联系人</td>
+                <td>
+                <input name="userloginname" id="empluserna" placeholder="联系人" maxlength="30" type="text" class="inputText wf250"  >
+            </td>
+                <td>
+                    <input name="userloginname" id="emplTel" placeholder="联系电话" maxlength="30" type="text" class="inputText wf250"  >
+                </td>
+            </tr>
+            <tr>
+                <td width="80" align="right"><span class="fontRed">*</span>邮编</td>
+                <td>
+                    <input name="newusername" id="emplrealn" maxlength="50" type="text" class="inputText wf250 fl" data-rule="邮编" placeholder="邮编" data-rule-name="[/^[0-9_]+$/, '只能输入中文,字母数字下划线']" spellcheck="true">
+                </td>
+                <td><span class="font999"></span></td>
+            </tr>
+            <tr>
+                <td width="80" align="right"><span class="fontRed">*</span>仓库地址</td>
+                <td><input name="userpassword" id="emplpasswo" type="password" value="" class="inputText wf250 " data-rule="仓库地址: required;password;" placeholder="仓库地址" spellcheck="false"></td>
+                <td><span class="font999"></span></td>
+            </tr>
+            </tbody></table>
+        </div>
+    </form>
+</div>
+    <div class="bottomButton moveArea">
+        <a id="addWarehouse" class="button ">保存</a>
+        <a id="cancelBtn" class="button">取消</a>
+    </div>
+<script>
+    var addWarehouse = function(){
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/basicdata/warehouse-management/addWarehouse",
+            data: {
+                wmName: $("#emplusername").val(),
+                wmNumber:$("#emplrealnumber").val(),
+                wmRemark: $("#emplremark").val(),
+                wmPerson:$("#empluserna").val(),
+                wmPostcode:$("#emplrealn").val(),
+                wmAddress:$("#emplpasswo").val(),
+                wmTel:$("#emplTel").val(),
+                wmState:1,
+
+            },
+            success: function(msg){
+                $('#cancelBtn').click();
+            }
+        });
+    }
+
+    $('#addWarehouse').on('click', function(){
+        addWarehouse();
+
+    });
+
+    $('#cancelBtn').on('click', function(){
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.getUserPageList();
+        parent.layer.close(index);
+    });
+    </script>
+</body>
+
+</html>

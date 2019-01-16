@@ -19,7 +19,7 @@ import java.util.Map;
 public interface ISalesHistoryService extends IService<SalesHistory> {
 
 
-    /**
+    /*
      * 增加一条销售历史
      * @param salesHistory 增加的数据的实体类
      * @return 插入的条数
@@ -40,10 +40,11 @@ public interface ISalesHistoryService extends IService<SalesHistory> {
      */
     int updateSalesHistory(SalesHistory salesHistory);
 
+    SalesHistory selectById(int id);
     /**
      * 分页查询所有的信息
      * @param
      * @return
      */
-    Map queryLikeSalesHistory(int pageSize, int pageNum, SalesHistory salesHistory);
+    Map queryLikeSalesHistory(int pageNum, int pageSize, SalesHistory salesHistory);
 }

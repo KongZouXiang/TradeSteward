@@ -13,8 +13,8 @@ import java.util.List;
  * 进货退货历史 Mapper 接口
  * </p>
  *
- * @author 史江浩
  * @since 2019-01-09
+ * @author 史江浩
  */
 @Repository
 @Mapper
@@ -26,5 +26,5 @@ public interface PurchaseReturnHistoryMapper extends BaseMapper<PurchaseReturnHi
      * @param purchaseReturnHistory 实体类
      * @return 进货退货历史数据集合
      */
-    List<PurchaseReturnHistory> selectPurchaseReturnHistoryPage(Page page,PurchaseReturnHistory purchaseReturnHistory);
+    List<PurchaseReturnHistory> selectPurchaseReturnHistoryPage(Page page, PurchaseReturnHistory purchaseReturnHistory);
 }
