@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html  xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -31,7 +31,7 @@
 <div class="page-container" id="app">
 	<div class="text-c">
 		<input type="text" class="input-text" style="width:250px" placeholder="搜索编号、名称、联系人、电话..." id="aa" name="">
-		<button type="submit" class="btn btn-success" id="bb" name=""><i class="Hui-iconfont">&#xe665;</i> 搜仓库</button>
+		<button type="submit" class="btn btn-success" id="bb" name="" @click="findWare()"><i class="Hui-iconfont">&#xe665;</i> 搜仓库</button>
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
         <a href="javascript:;" onclick="admin_add('添加仓库','admin-add.html','800','500')" class="btn btn-primary radius" @click="addWare()">
@@ -39,9 +39,10 @@
             添加仓库
         </a>
     </span>
+
         <span class="r">共有数据：
             <strong>54</strong> 条</span> </div>
-	<table class="table table-border table-bordered table-bg">
+	<table class="table table-border table-bordered table-bg" >
 		<thead>
 			<tr>
 				<th scope="col" colspan="9" width="100%">仓库列表</th>
@@ -57,8 +58,8 @@
 				<th width="100">状态</th>
 			</tr>
 		</thead>
-		<tbody>
-			<tr class="text-c" v-for="(item,index) in result" >
+		<div >
+			<tr  class="text-c" v-for="(item,index) in result" >
 				<td></td>
 				<td>{{index+1}}</td>
 				<td>
@@ -79,32 +80,41 @@
 				<td>{{item.wm_name}}</td>
 				<td>{{item.age}}</td>
 			</tr>
-<div>
-	<tr style="display: none"  v-for="(item,index) in result" id="details">
-				<th>仓库名:<td>{{item.wmName}}</td></th>
-				<th>仓库编号:</th>
-				<th>{{item.wmNumber}}</th>
-				<th>状态:</th>
-					<th>{{item.wmTel}}</th>
-					<th v-if="item.wmState===1">
+        </div>
+		</tbody>
+	</table>
+<div style="text-align:center;">
+	<table class="table table-bg" style="display: none;text-align:center;" id="details">
+
+	<tr>
+        <th>仓库名:<td>{{results.wmName}}</td></th>
+        <th>仓库编号:<td>{{results.wmNumber}}</td></th>
+    </tr>
+        <tr>
+
+        <th>状态:</th>
+					<th v-if="results.wmState===1">
 						启用
 					</th>
 					<th v-else>
 						禁用
 					</th>
-				<th>备注:</th>
-					<th>{{item.wmRemark}}</th>
-				<td>联系人:</td>
-				    <th>{{item.wmPerson}}</th>
+            <td>联系人:</td>
+            <th>{{results.wmPerson}}</th>
+            <th>联系电话:{{results.wmTel}}</th>
+        </tr>
+        <tr>
 					<th>邮箱:</th>
-				<th>{{item.wmPostcode}}</th>
+				<th>{{results.wmPostcode}}</th>
 					<th>仓库地址:</th>
-				<th>{{item.wmAddress}}</th>
-			</tr>
+				<th>{{results.wmAddress}}</th>
+            <th>备注:</th>
+            <th>{{results.wmRemark}}</th>
+        </tr>
+	</table>
 </div>
 
-		</tbody>
-	</table>
+
 	<div id="pagenav" style="text-align:center;position: fixed;left: 0px;width: 100%;"></div>
 </div>
 <!--_footer 作为公共模版分离出去-->
@@ -129,7 +139,8 @@
 var app = new Vue({
     el:'#app',
     data:{
-        result:[]
+        result:[],
+		results:[]
     }
 });
 
@@ -139,12 +150,14 @@ var getUserPageList = function(curr) {
         dataType:'json',
         url:'/basicdata/warehouse-management/select',
         data:{
+			data:$("#aa").val(),
             pageNum: curr || 1,
-            pageSize:2,
+            pageSize:2
         },
         success:function(msg){
 
             app.result = msg.list;
+            console.log(app.result);
             laypage({
                 cont:'pagenav',
                 pages:msg.totalPage,
@@ -180,7 +193,6 @@ var  deletea = function (id) {
 			},
 			success:function() {
 				console.log("123456")
-				getUserPageList();
 				layer.msg('已经成功删除记录' + id,{icon:5});
 				layer.close();
 			}
@@ -191,21 +203,22 @@ var  deletea = function (id) {
 	});
 };
 /*模糊查询*/
-$("#findWare").click(function () {
-	$.ajax({
+var findWare = function () {
+	getUserPageList();
+	/*$.ajax({
 		type:'post',
 		dataType:'json',
 		url:'/basicdata/warehouse-management/vagueselect',
 		data:{
-			data:$("#SearchKeyWord").val()
+			data:$("#aa").val()
 		},
 		success:function (da) {
 			console.log(da);
 			console.log("da.list==="+da.list);
 			app.result=da.list;
 		}
-	})
-});
+	})*/
+};
 /*增加仓库*/
 var  addWare = function () {
             layer.open({
@@ -223,29 +236,40 @@ var  addWare = function () {
         };
 /*编辑仓库*/
     var EditWarHouse=function (id) {
-
-                layer.open({
+               layer.open({
                     type:2,
                     title:'编辑仓库',
                     fix:false,
                     maxmin:true,
                     shadeClose:true,
                     area:['1000px','500px'],
+                   /* content:'http://localhost:8080/basicdata/editWareHouse.html',*/
                     content:'/basicdata/warehouse-management/UpdateWareHouse?id='+id,
                     end:function(){
                         getUserPageList();
                     }
                 });
-
     }
     /*详细*/
-
 var detail=function (id) {
+    $.ajax({
+        type:'post',
+        dataType:'json',
+        url:'/basicdata/warehouse-management/selectByid',
+        data:{
+            id:id
+        },
+        success:function(msg) {
+            app.results = msg.data;
+            console.log(app.results)
+        },
+    });
+/*详细*/
 	var s=document.getElementById("details")
-	s.style.display="block";
-}
-
-
+    if(s.style.display=="none"){
+        s.style.display="block"
+    }else {s.style.display="none"};
+};
 </script>
 </body>
 </html>

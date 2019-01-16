@@ -3,10 +3,8 @@ package com.yunhe.basicdata.controller;
 import com.yunhe.basicdata.entity.WarehouseManagement;
 import com.yunhe.basicdata.service.impl.WarehouseManagementServiceImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,7 +56,6 @@ public class WarehouseManagementController {
         WarehouseManagement warehouseManagemenst = warehouseManagementService.selectByid(id);
         mv.addObject("whm", warehouseManagemenst);
         mv.setViewName("basicdata/editWareHouse");
-        //return new ModelAndView("basicdata/editWareHouse.html");
         return mv;
     }
 
@@ -67,13 +64,13 @@ public class WarehouseManagementController {
      *
      * @param pageSize            每页显示条数
      * @param pageNum             当前页
-     * @param warehouseManagement 模糊查询
+     * @param data 模糊查询
      * @return 查询后返回的数据
      */
     @RequestMapping("/select")
-    public Map select(int pageSize, int pageNum, WarehouseManagement warehouseManagement) {
+    public Map select(String data,int pageSize, int pageNum) {
         Map map = new HashMap();
-        map = warehouseManagementService.selectWareList(pageSize, pageNum);
+        map = warehouseManagementService.selectWareList(data,pageSize, pageNum);
         return map;
     }
 
@@ -100,10 +97,9 @@ public class WarehouseManagementController {
      * @return success
      */
     @RequestMapping("/update")
-    public ModelAndView uptate(WarehouseManagement warehouseManagement) {
+    public Integer uptate(WarehouseManagement warehouseManagement) {
         System.out.println("id"+warehouseManagement.getWmName());
-        warehouseManagementService.update(warehouseManagement);
-        return null;
+        return warehouseManagementService.update(warehouseManagement);
     }
 
     /**
@@ -119,6 +115,14 @@ public class WarehouseManagementController {
         Map map = new HashMap();
         map.put("data", warehouseManagement);
         return map;
+    }
+    @RequestMapping("/selectByi")
+    public ModelAndView selectByi(int id) {
+        ModelAndView mv=new ModelAndView();
+        System.out.println("id===" + id);
+        WarehouseManagement warehouseManagement = warehouseManagementService.selectByid(id);
+        mv.addObject("ss",warehouseManagement);
+        return mv;
     }
 
     /**
@@ -143,10 +147,9 @@ public class WarehouseManagementController {
      * @return 视图
      */
     @RequestMapping("/addWarehouse")
-    public ModelAndView addWarehouse(WarehouseManagement warehouseManagement) {
+    public Integer addWarehouse(WarehouseManagement warehouseManagement) {
         System.out.println("asd===" + warehouseManagement);
-        warehouseManagementService.addWarehouse(warehouseManagement);
-        return new ModelAndView("basicdata/admin-list.html");
+        return warehouseManagementService.addWarehouse(warehouseManagement);
     }
 
 }
