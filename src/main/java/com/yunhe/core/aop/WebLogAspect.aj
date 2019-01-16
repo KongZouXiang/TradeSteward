@@ -36,7 +36,6 @@ public class WebLogAspect {
 
         log.info("log");
         System.out.println("doBefore");
-
     }
     /**
      *
