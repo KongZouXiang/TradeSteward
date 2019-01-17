@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>增加客户</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/js/laypage/skin/laypage.css">
+    <script src="/js/jquery/jquery.min.js"></script>
+    <script src="/js/laypage/laypage.js" charset="utf-8"></script>
+    <script src="/js/layer/layer.js" charset="utf-8"></script>
+    <script src="/js/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+    <script src="/js/jquery.validation/1.14.0/messages_zh.min.js"></script>
+</head>
+<body>
+<div class="container" >
+    <form id="insertAccountForm">
+        <br/>
+        <tr >
+            <div >
+                <label for="cus_number">公司编号：</label>
+                <input type="text" class="form-control"  id="cus_number" name="cus_number" placeholder="输入公司编号">
+
+            </div>
+            <div class="form-group">
+                <label for="cus_compname">公司名称：</label>
+                <input type="text" class="form-control" id="cus_compname" name="cus_compname"  placeholder="输入公司名">
+            </div>
+            <div class="form-group">
+                <label for="cus_money">应收欠款：</label>
+                <input type="text" class="form-control" id="cus_money" name="cus_money"  placeholder="应收欠款">
+            </div>
+            <div class="form-group">
+                <label for="cus_tele">联系方式：</label>
+                <input type="text" class="form-control" id="cus_tele" name="cus_tele"   placeholder="联系方式">
+            </div>
+            <div class="form-group">
+                <label for="cus_name">联系人：</label>
+                <input type="text" class="form-control" id="cus_name" name="cus_name"  placeholder="联系人">
+            </div>
+            <div class="form-group">
+                <label for="cus_flag">状态：</label>
+                <input type="text" class="form-control" id="cus_flag" name="cus_flag"   placeholder="状态">
+            </div>
+            <div class="form-group">
+                <label for="cus_connname">关联人员：</label>
+                <input type="text" class="form-control" id="cus_connname" name="cus_connname" placeholder="关联人员">
+            </div>
+            <div class="form-group">
+                <label for="cus_address">地址：</label>
+                <input type="text"class="form-control" id="cus_address" name="cus_address" placeholder="公司地址">
+            </div>
+            <div class="form-group">
+                <label for="cus_email">邮箱：</label>
+                <input type="text" class="form-control" id="cus_email" name="cus_email"  placeholder="邮箱">
+            </div>
+
+            <div class="form-group">
+                <label for="cus_qq">qq：</label>
+                <input type="text"class="form-control" id="cus_qq" name="cus_qq" placeholder="QQ">
+            </div>
+            <div class="form-group">
+                <label for="cus_remarks">备注：</label>
+                <input type="text" class="form-control" id="cus_remarks" name="cus_remarks" placeholder="备注">
+            </div>
+
+
+            <div class="form-group">
+                <button type="button" id="updateBtn" class="btn btn-success">提交</button>
+                <button type="button" id="cancelBtn" class="btn btn-default">取消</button>
+            </div>
+        </tr>
+    </form>
+</div>
+<script>
+   /* var app = new Vue({
+        el:'#app',
+        data:{
+            result:[]
+        }
+    });
+*/
+
+    var addAccount = function () {
+        /*if (!check().form()) {
+            return;
+        }*/
+   $.ajax({
+       method: "post",
+       dataType: 'json',
+       url: "/customermanagement/customer/insertCustomer",
+       data: {
+           cusNumber: $("#cus_number").val(),
+           cusCompname: $("#cus_compname").val(),
+           cusMoney: $("#cus_money").val(),
+           cusTele: $("#cus_tele").val(),
+           cusName: $("#cus_name").val(),
+           cusFlag: $("#cus_flag").val(),
+           cusConnname: $("#cus_connname").val(),
+           cusAddress: $("#cus_address").val(),
+           cusEmail: $("#cus_email").val(),
+           cusQq: $("#cus_qq").val(),
+           cusRemarks: $("#cus_remarks").val()
+       },
+       success: function (msg) {
+           $("#cancelBtn").click();
+       }
+   })
+
+    };
+
+
+    $("#updateBtn").click(function () {
+        addAccount();
+    });
+    $("#cancelBtn").click(function () {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+
+    });
+
+
+    /*function check() {
+        return $("#insertAccountForm").validate({
+            rules: {
+                cusNumber: {
+                    required: true
+                },
+                cusCompname: {
+                    required: true
+                },
+                cusMoney: {
+                    required: true
+                },
+                cusTele: {
+                    required: true
+                },
+                cusName: {
+                    required: true
+                },
+                cusFlag: {
+                    required: true
+                },
+                cusConnname: {
+                    required: true
+                },
+                cusAddress: {
+                    required: true
+                },
+                cusEmail: {
+                    required: true
+                },
+            }
+        });
+    }*/
+</script>
+</body>
+</html>

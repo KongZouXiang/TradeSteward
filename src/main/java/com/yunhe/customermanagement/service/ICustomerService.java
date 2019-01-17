@@ -1,10 +1,14 @@
 package com.yunhe.customermanagement.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.yunhe.customermanagement.entity.Customer;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.ibatis.annotations.Param;
 
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +57,16 @@ public interface ICustomerService extends IService<Customer> {
 
     /**
      * <p>
+     * 删除（根据ID 批量删除）
+     * </p>
+     *
+     * @param idList 主键ID列表(不能为 null 以及 empty)
+     * @return 删除成功记录数
+     */
+    int deleteBatchIds(@Param(Constants.COLLECTION) Collection<? extends Serializable> idList);
+
+    /**
+     * <p>
      * 插入客户信息
      * </p>
      *
@@ -61,14 +75,7 @@ public interface ICustomerService extends IService<Customer> {
      */
     int insertCustomer(Customer customer);
 
-    /**
-     * <p>
-     * 查询全部信息并分页
-     * </p>
-     *
-     * @return 客户列表
-     */
-    Map sellectAll(int current, int size);
+
 
     /**
      * <p>
@@ -86,8 +93,6 @@ public interface ICustomerService extends IService<Customer> {
      * @param customer
      * @return 模糊查询分页list
      */
-    List<Customer> selectLikeCustomer(Customer customer);
-
     IPage<Customer> selectPage(int current, int size, Customer customer);
 }
 
