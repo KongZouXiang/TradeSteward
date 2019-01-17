@@ -1,11 +1,11 @@
-package com.yunhe.core;
+package com.yunhe.core.common.annotion;
 
 import java.lang.annotation.*;
 
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
-public @interface a {
+public @interface myanno {
     
     /**
      * 业务的名称,例如:"修改菜单"

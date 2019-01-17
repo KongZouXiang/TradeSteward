@@ -26,10 +26,12 @@ public class ExceptionHandle {
             model.addAttribute("code", globalException.getCode());
             model.addAttribute("msg", globalException.getMessage());
         } else if (e instanceof NoHandlerFoundException) {
+
             model.addAttribute("code", 404);
             model.addAttribute("msg","页面找不到啦");
         } else {
             logger.info("【系统异常】{}", e);
+            e.getClass().getName();
             model.addAttribute("code", ExceptionEnum.UNKNOW_ERROR.getCode());
             model.addAttribute("msg", ExceptionEnum.UNKNOW_ERROR.getMsg());
         }

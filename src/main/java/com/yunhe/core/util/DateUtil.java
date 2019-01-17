@@ -12,7 +12,9 @@ import java.util.Date;
  * @Modified on:16:14 ${DATA}
  * @修改描述: 默认
  */
+
 public class DateUtil {
+
     public static String curr() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return simpleDateFormat.format(new Date());
