@@ -61,10 +61,7 @@
             <span class="fontRed">*</span> 编号&nbsp;&nbsp;&nbsp;<input type="text" th:value="${commodityListid.clNumber}" name="bianhao" id="bianhao"><br><br>
             <span class="fontRed">*</span>名称&nbsp;&nbsp;&nbsp;<input type="text" name="mingcheng" id="mingcheng"  th:value="${commodityListid.clName}"><br><br>
         <input type="hidden" id="ids" th:value="${commodityListid.id}">
-            分类 &nbsp;&nbsp;&nbsp;<select name="fenlei" id="fenlei">
-            <option value="moren">默认分类</option>
-            <option value="xinjian "> 新建分类</option>
-           </select><br><br>
+            分类 &nbsp;&nbsp;&nbsp;<input type="text" name="fenlei" id="fenlei" th:value="${}">
         <span class="fontRed">*</span>单位&nbsp;&nbsp;&nbsp;<input type="text" name="danwei" id="sdanwei"  th:value="${commodityListid.usId}"><br><br>
          <!--   <tr id="singleUnitTr">
                 <td width="100" align="right" class="font14">
@@ -216,7 +213,7 @@
                     <td>最高库存量</td>
                 </tr>
                 <tr>
-                    <td>默认库</td>
+                    <td ></td>
                     <td><input type="text" id="czuidikc" name=""czuidikc></td>
                     <td><input type="text" id="czuigaok" name="czuigaok"></td>
                 </tr>

@@ -46,7 +46,7 @@
 		<span class="l">
 		<button id="addAccountBtn"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加账户</button>
 		</span>
-		<span class="r">共有数据：<strong></strong> 条</span>
+		<span class="r">共有数据：<strong id="strong"></strong> 条</span>
 	</div>
 	<div  id="app">
 	<table class="table table-border table-bordered table-bg">
@@ -73,8 +73,24 @@
 				<td>{{item.saName}}</td>
 				<td>{{item.saBank}}</td>
 				<td>{{item.saBalance}}</td>
-				<td>{{item.saState}}</td>
+				<th v-if="item.saState==1">
+					启用
+				</th>
+				<th v-else>
+					禁用
+				</th>
 			</tr>
+		</tbody>
+		<tbody>
+		<tr>
+			<td width="100"></td>
+			<td width="100"><span style="align-content: center">合计</span></td>
+			<td width="100"></td>
+			<!--<td width="100">{{(item.saBalance+item.saBalance)}}</td>-->
+			<td width="100"></td>
+			<td width="100"></td>
+			<!--框架：基本概念、运行流程、手写框架-->
+		</tr>
 		</tbody>
 	</table>
 </div>
@@ -119,7 +135,7 @@
 	/*查询分页*/
 	var getAccountPageList = function(curr) {
 		$.ajax({
-			type:'POST',
+			type:'Get',
 			dataType:'json',
 			url:'/basicdata/settlement-account/getrAccounlist',
 			data:{
@@ -127,6 +143,7 @@
 				size:2,
 			},
 			success:function(msg){
+				$("#strong").html(msg.total);
 				app.result = msg.accountList;
 				laypage({
 					cont:'pagenav',

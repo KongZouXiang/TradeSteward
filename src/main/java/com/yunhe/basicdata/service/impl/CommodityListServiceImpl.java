@@ -2,8 +2,10 @@ package com.yunhe.basicdata.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yunhe.basicdata.entity.Commclass;
 import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.dao.CommodityListMapper;
+import com.yunhe.basicdata.entity.WarehouseManagement;
 import com.yunhe.basicdata.service.ICommodityListService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -104,5 +106,25 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
     @Override
     public List<CommodityList> ExportExcel() {
         return commodityListMapper.selectExcel();
+    }
+
+    /**
+     * 查询仓库名
+     * @param id 商品id
+     * @return
+     */
+    @Override
+    public WarehouseManagement selectWmAndComm(int id) {
+        return commodityListMapper.selectwmandcomm(id);
+    }
+
+    /**
+     * 查询商品的分类
+     * @param id 商品的id
+     * @return
+     */
+    @Override
+    public Commclass selectclassAndComm(int id) {
+        return commodityListMapper.selectComclassAndCommdity(id);
     }
 }

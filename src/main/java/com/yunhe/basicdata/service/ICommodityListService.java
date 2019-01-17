@@ -1,7 +1,9 @@
 package com.yunhe.basicdata.service;
 
+import com.yunhe.basicdata.entity.Commclass;
 import com.yunhe.basicdata.entity.CommodityList;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yunhe.basicdata.entity.WarehouseManagement;
 import org.springframework.stereotype.Repository;
 
 
@@ -65,26 +67,23 @@ public interface ICommodityListService extends IService<CommodityList> {
      */
     List<CommodityList> selectCommstlist(String data);
 
-<<<<<<< .merge_file_a09532
-=======
-
-
-<<<<<<< .merge_file_a10552
->>>>>>> .merge_file_a04268
-=======
->>>>>>> .merge_file_a06844
     /**
-     *
+     *导出excel
      * @return
      */
-<<<<<<< .merge_file_a09532
     List<CommodityList> ExportExcel();
-=======
-    Map selectList();
 
+    /**
+     * 查询商品所在的仓库
+     * @param id
+     * @return
+     */
+    WarehouseManagement selectWmAndComm(int id);
 
-<<<<<<< .merge_file_a10552
->>>>>>> .merge_file_a04268
-=======
->>>>>>> .merge_file_a06844
+    /**
+     * 查询的是商品所在的分类
+     * @param id 商品的id
+     * @return
+     */
+    Commclass selectclassAndComm(int id);
 }

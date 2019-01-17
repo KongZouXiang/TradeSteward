@@ -29,7 +29,7 @@ public class SettlementAccountController {
      * @param settlementAccount 实体类信息
      * @return 所有账户的信息
      */
-    @RequestMapping(value = "/getrAccounlist", method = RequestMethod.POST)
+    @RequestMapping(value = "/getrAccounlist", method = RequestMethod.GET)
     @ResponseBody
     public Map selectAccountPage(int current, int size, SettlementAccount settlementAccount) {
         return settlementAccountService.selectAllAcountList(current, size, settlementAccount);
