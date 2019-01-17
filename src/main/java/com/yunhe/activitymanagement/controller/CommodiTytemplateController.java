@@ -1,14 +1,28 @@
 package com.yunhe.activitymanagement.controller;
 
 
+<<<<<<< .merge_file_a04660
 import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
 import com.yunhe.basicdata.service.ICommodityListService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+=======
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yunhe.basicdata.service.ICommodityListService;
+import com.yunhe.activitymanagement.entity.CommodiTytemplate;
+import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
+
+import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.servlet.ModelAndView;
+>>>>>>> .merge_file_a05784
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,44 +45,34 @@ public class CommodiTytemplateController {
     @Resource
     ICommodityListService commodityListService;
 
+
+
+    public int insertCt(CommodiTytemplate sa){
+        return commodiTytemplateService.insertCt(sa);
+    }
     /**
-     * <P>
-     *     分页
-     * </P>
-     * @param current 当前页
-     * @param size 每页条数
-     * @return  商品模板表：分页的结果集合
+     * 根据id删除模板信息
+     * @return
      */
-    @RequestMapping(value = "/selectAllPage",method = RequestMethod.POST)
-    public Map selectAllPage(int current, int size, CommodiTytemplate commodiTytemplate){
-        return commodiTytemplateService.selectAllPage(current,size,commodiTytemplate);
+    @RequestMapping("/delete")
+    public int delete(int id){
+        return commodiTytemplateService.deleteById(id);
     }
 
-
-
     /**
-     * <P>
-     *     增加数据
-     * </P>
-     * @param commodiTytemplate 增加的信息放在对象里
-     * @return  增加模板表：增加是否成功
+     * 批量删除
+     * @param request
+     * @param ids
+     * @return
      */
-    /*@RequestMapping("/insertCt")
-    public int insertCt(CommodiTytemplate commodiTytemplate){
-        return  commodiTytemplateService.insertCt(commodiTytemplate);
-    }*/
-
-    /**
-     * <P>
-     *     删除数据
-     * </P>
-     * @param commodiTytemplate 查询条件放在对象里
-     * @return  商品模板表：删除是否成功
-     */
-    @RequestMapping(value = "/deleteCt",method = RequestMethod.POST)
-    public int deleteCt(CommodiTytemplate commodiTytemplate) {
-        return commodiTytemplateService.deleteCt(commodiTytemplate);
+    @RequestMapping("/deleteAll")
+    public boolean deleteAll(HttpServletRequest request, @RequestBody List<Integer> ids)  {
+        for (Integer id : ids) {
+            commodiTytemplateService.deleteById(id);
+        }
+        return true;
     }
+
 
 
     /**
@@ -77,33 +81,58 @@ public class CommodiTytemplateController {
      * </P>
      * @return  商品模板表：
      */
-    @RequestMapping(value = "/updateCt",method = RequestMethod.POST)
-    public int updateCt(CommodiTytemplate commodiTytemplate) {
-        return commodiTytemplateService.updateCt(commodiTytemplate);
+
+    @RequestMapping("/update")
+    public ModelAndView updateCt(CommodiTytemplate commodiTytemplate){
+        int i = commodiTytemplateService.updateCt(commodiTytemplate);
+        return new ModelAndView("updateCt");
     }
 
 
+
+
+    @RequestMapping("/shangpinmoban")
+    public ModelAndView shangpinmoban () {
+        return new ModelAndView("activitymanagement/shangpinmoban");
+    }
 
     /**
      * <P>
-     *     查询数据
+     *     分页
      * </P>
-     * @return 商品模板表：查询所有模板的结果集
+     * @param current 当前页
+     * @param size 每页条数
+     * @return  商品模板表：分页的结果集合
      */
-    @RequestMapping(value = "/selectAllCt",method = RequestMethod.POST)
-    public List<CommodiTytemplate> selectAllCt() {
-        return commodiTytemplateService.selectAllCt();
+    @GetMapping("/quertLikeList")
+    public Map quertLikeList(int current, int size, CommodiTytemplate commodiTytemplate){
+     return commodiTytemplateService.queryLikeList(current,size,commodiTytemplate);
     }
 
 
 
 
-    /**
+
+
+
+
+
+/*
+
+    */
+/**
      * <P>
      *     查询商品列表数据
      * </P>
      * @param
+<<<<<<< .merge_file_a04660
      */
+=======
+     *//*
+
+
+    @RequestMapping(value = "/selectCl",method = RequestMethod.POST)
+>>>>>>> .merge_file_a05784
 
    /* @RequestMapping(value = "/selectCl",method = RequestMethod.POST)
 
@@ -112,8 +141,12 @@ public class CommodiTytemplateController {
         return commodityListService.selectAllccommList(1,3,commodityList);
     }*/
 
-
-
+<<<<<<< .merge_file_a04660
+=======
+        return commodityListService.selectAllcommList(1,3,commodityList);
+    }
+*/
+>>>>>>> .merge_file_a05784
 
 
 }

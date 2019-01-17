@@ -5,6 +5,7 @@ import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
 
+
 import java.util.List;
 
 /**
@@ -22,12 +23,43 @@ public interface CommodiTytemplateMapper extends BaseMapper<CommodiTytemplate> {
      * <P>
      *     商品模板表
      * </P>
-     * @param commodiTytemplate 商品模板里面的数据都放在一个对象里
      * @param page 分页的参数存在一个对象里
      * @return 商品模板表：分页的结果集合
      */
-    List<CommodiTytemplate> selectAllPage(Page page, CommodiTytemplate commodiTytemplate);
+    List<CommodiTytemplate> selectAllPage(Page page);
 
+
+    /**
+     * 插入新的模板
+     * @param commodiTytemplate
+     * @return 插入是否成功0/1
+     */
+
+
+    /**
+     * <p>
+     *    根据id 删除商品模板
+     * </p>
+     * @param serializable
+     * @return 删除是否成功0/1
+     */
+
+    /**
+     * <p>
+     *     更改商品模板
+     * </p>
+     * @param commodiTytemplate
+     * @return
+     */
+
+    /**
+     * <p>
+     * 查询商品模板
+     * </p>
+     *
+     * @return
+     */
+/*     List<CommodiTytemplate> selectAllCt();*/
 
 
 

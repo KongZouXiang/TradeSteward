@@ -65,9 +65,20 @@ public interface ICommodityListService extends IService<CommodityList> {
      */
     List<CommodityList> selectCommstlist(String data);
 
+<<<<<<< .merge_file_a09532
+=======
+
+
+>>>>>>> .merge_file_a04268
     /**
      *
      * @return
      */
+<<<<<<< .merge_file_a09532
     List<CommodityList> ExportExcel();
+=======
+    Map selectList();
+
+
+>>>>>>> .merge_file_a04268
 }
