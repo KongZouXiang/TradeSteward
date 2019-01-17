@@ -27,4 +27,9 @@ public interface ICharaMangerService extends IService<CharaManger> {
      * 插入新的角色
      */
     public int insertRole(CharaManger charaManger);
+    /**
+     *
+     * 检查角色的名称
+     */
+    public Boolean checkRole(CharaManger charaManger);
 }

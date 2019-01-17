@@ -1,6 +1,8 @@
 package com.yunhe.cargomanagement.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.pagehelper.Page;
 import com.yunhe.cargomanagement.entity.Warehouse;
 import com.yunhe.cargomanagement.service.IWarehouseService;
 import org.apache.poi.hssf.usermodel.*;
@@ -9,11 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,23 +41,59 @@ public class WarehouseController {
      *  查询所有库存信息并分页
      * </p>
      *
-     * @param current 当前页
-     * @param size 每页显示条数
-     * @param warehouse 实体类
-     * @return list集合
+     * @param pageNum 当前页
+     * @param pageSize 每页显示条数
+     * @return map集合
      */
     @RequestMapping("/getPage")
     @ResponseBody
-    public Map selectWareHousePage(int current, int size, Warehouse warehouse){
-
-        return warehouseService.selectWareHousePage(current,size,warehouse);
+    public Map selectWareHousePage(int pageNum, int pageSize){
+        Map map=new HashMap();
+        map=warehouseService.selectWareHousePage(pageNum,pageSize);
+        System.out.println("当前页:"+pageNum);
+        System.out.println("每页数据:"+pageSize);
+        return map;
     }
 
-    @RequestMapping("/selectWareHouse")
+    @RequestMapping("/getPages")
     @ResponseBody
-    public  Warehouse selectWareHousePage(Warehouse warehouse){
+    public ModelAndView getPage(){
 
-        return warehouse;
+        return new ModelAndView("cargomanagement/warehouse.html");
+    }
+
+    /**
+     * <p>
+     *  模糊查询
+     * </p>
+     *
+     * @param warehouse 实体对象
+     * @return list集合
+     */
+
+    @RequestMapping("/getWareHouseLike")
+    @ResponseBody
+    public List<Warehouse> selectWareHouseLike(Warehouse warehouse){
+
+        return warehouseService.selectWareHouseLike(warehouse);
+    }
+
+
+    /**
+     * <p>
+     *     分页加模糊查询
+     * </p>
+     *
+     * @param pageNum 当前页
+     * @param pageSize 每页数据条数
+     * @param warehouse 实体对象
+     * @return IPage
+     */
+    @RequestMapping("/selectPage")
+    @ResponseBody
+    public IPage<Warehouse> selectPage(int pageNum, int pageSize, Warehouse warehouse){
+
+        return warehouseService.selectPage(pageNum,pageSize,warehouse);
     }
 
     /**

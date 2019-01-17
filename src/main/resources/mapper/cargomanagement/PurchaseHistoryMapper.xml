@@ -46,7 +46,7 @@
             parameterType="com.yunhe.cargomanagement.entity.PurchaseHistory">
         select
         <include refid="purchase_history"/>
-        from purchase_history where ph_number like concat('%', #{purchaseHistory.phNumber}, '%') order by id desc
+        from purchase_history where ph_number like concat('%', #{purchaseHistory.phNumber}, '%') and ph_supname like concat('%', #{purchaseHistory.phSupname}, '%') order by id desc
     </select>
 
     <update id="updatePurchaseHistoryById" parameterType="com.yunhe.cargomanagement.entity.PurchaseHistory">

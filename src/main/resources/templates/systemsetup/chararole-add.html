@@ -2,88 +2,94 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>新增角色</title>
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
-    <link rel="stylesheet" href="/css/jquery.css">
-    <link rel="stylesheet" href="/css/zTreeStyle.css" type="text/css">
-    <link rel="stylesheet" href="/css/Sortable.css" type="text/css">
-    <script type="text/javascript" async="" src="/js/vds.js"></script>
-    <script type="text/javascript" src="/js/all_before.js"></script>
-    <link rel="stylesheet" href="/css/layer.css" id="layuicss-skinlayercss">
-    <script type="text/javascript" src="/js/highcharts.js"></script>
-    <script type="text/javascript" src="/js/exporting.js"></script>
-    <script type="text/javascript" src="/js/WdatePicker.js"></script>
-    <link href="/css/WdatePicker.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="/js/jquery.js"></script>
-    <script type="text/javascript" src="/js/all_after.js"></script>
-    <script type="text/javascript" src="/js/flexigrid.js"></script>
-    <script type="text/javascript" src="/js/wbi_common.js"></script>
-    <script type="text/javascript" src="/js/wbill_common.js"></script>
-    <script type="text/javascript" src="/js/filter.js"></script>
-    <script type="text/javascript" src="/js/record.js"></script>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
     <script type="text/javascript" src="/js/vue/vue.min.js"></script>
-    <script type="text/javascript" src="/js/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/layer/layer.js"></script>
-    <script type="text/javascript" src="/js/laypage/laypage.js"></script>
+    <script type="text/javascript" src="/layui/layui.js"></script>
+    <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
 </head>
 <body>
-<div  style="width: 500px; height: 280px;; text-align: center">
 
-    <!-- title -->
-    <form name="myForm" id="myForm" >
-        <div class="content" style="height:auto;width: auto; text-align: center ;margin-top: 20px">
-
-            <input type="hidden" id="moduleName" value="SysRole" spellcheck="false">
-            <table class="formTable" width="100%" cellspacing="0" cellpadding="8" border="0">
-                <tbody><tr>
-                    <td class="font14" width="70" valign="top"><span class="fontRed">*</span>角色名称</td>
-                    <td ><input name="old_rolename" id="old_rolename" type="hidden" spellcheck="false">
-                        <input name="rolename" id="rolename" onblur="javascript:this.value=this.value.replace(/^\s+|\s+$/g,'');" type="text" class="wf95 inputText " maxlength="10" data-rule="角色名称:required;" spellcheck="false"><br>
-                        <span class="msg-box" for="rolename">
-						</span></td>
-                </tr>
-                <tr>
-                    <td class="font14" width="70" valign="top"><span class="fontRed"></span>角色描述</td>
-                    <td ><textarea   name="roledesc"  maxlength="500" class="wf95" onblur="javascript:this.value=this.value.replace(/^\s+|\s+$/g,'');" style="resize: none" id="roledesc" cols="45" rows="5" spellcheck="false"></textarea></td>
-                </tr>
-                </tbody></table>
+<form class="layui-form" action="" style="margin-top: 30px">
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色名称</label>
+        <div class="layui-input-block" style="width: 200px;height: 40px">
+            <input type="text" id="chname" name="username" lay-verify="username" placeholder="角色名称" autocomplete="off" class="layui-input">
         </div>
-    </form>
-    <!-- content -->
-    <div >
-        <button id="saveBtn"  class="button ">保存</button>
-        <button  id="cancelBtn" class="button">取消</button>
     </div>
-    <!-- bottomButton -->
+    <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">角色描述</label>
+    <div class="layui-input-block"  style="width: 300px;height: 150px">
+        <textarea placeholder="角色描述" id="roledec" class="layui-textarea"></textarea>
+    </div>
 </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn"  lay-submit="" lay-filter="add">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
 <script>
-    var addchara = function(){
+    layui.use(['form','jquery'],function () {
+        var $ = layui.jquery;
+        var form = layui.form;
+        form.verify({
+           username:function (value) {
+               if (value.trim()==""){
+                   return '角色名称不能为空'
+               }
+                var checkrole = "";
+                $.ajax({
+                    url: "/systemsetup/chara-manger/checkchara",
+                    type: "GET",
+                    data: {
+                        chName: $("#chname").val()
+                    },
+                    async: false,
+                    success: function (result) {
+                        if (result == false) {
+                            checkrole = "该账号已经存在";
+                        }
+                    }
 
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            url: "/systemsetup/chara-manger/addrole",
-            data: {
-                chName: $("#rolename").val(),
-                chDetail:$("#roledesc").val(),
-
-            },
-            success: function(msg){
-                $('#cancelBtn').click();
+                })
+               return checkrole;
             }
-        });
-    }
+        })
+        form.on('submit(add)',function (data) {
 
-    $('#saveBtn').on('click', function(){
-        addchara();
+            $.ajax({
+                type:'get',
+                url:'/systemsetup/chara-manger/addrole',
+                data:{
+                    chName: $("#chname").val(),
+                    chDetail:$("#roledec").val(),
 
-    });
+                },
+                success:function (rest) {
+                    if (rest==1){
+                        parent.layer.msg('添加成功',{time:2000,icon:1});
+                    }else {
+                        parent.layer.msg("服务器繁忙请稍后再试",{time:2000,icon:2});
+                    }
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.getUserPageList();
+                    parent.layer.close(index);
+                }
 
-    $('#cancelBtn').on('click', function(){
-        var index = parent.layer.getFrameIndex(window.name);
-        parent.getUserPageList();
-        parent.layer.close(index);
-    });
+            })
+            return false;
+        })
+
+
+
+    })
 </script>
 </body>
 </html>

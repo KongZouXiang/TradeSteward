@@ -41,5 +41,8 @@
         from commodity_list
         where id = #{id}
     </delete>
-
+<!--导出excel文件-->
+    <select id="selectExcel" resultType="com.yunhe.basicdata.entity.CommodityList">
+        select * from commodity_list
+    </select>
 </mapper>

@@ -17,7 +17,6 @@
 <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
 <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
-
 	<link href="/1.0.9/iconfont.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="/js/vue/vue.min.js"></script>
 	<script type="text/javascript" src="/js/laypage/laypage.js"></script>
@@ -70,18 +69,6 @@
 				<td>{{item.wm_name}}</td>
 				<td>{{item.age}}</td>
 			</tr>
-			<!--<tr class="text-c" >
-				<td><input type="checkbox" value="2" name=""></td>
-				<td>2</td>
-				<td>zhangsan</td>
-				<td>13000000000</td>
-				<td>admin@mail.com</td>
-				<td>栏目编辑</td>
-				<td>2014-6-11 11:11:42</td>
-				<td class="td-status"><span class="label radius">已停用</span></td>
-				<td class="td-manage"><a style="text-decoration:none" onClick="admin_start(this,'10001')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe615;</i></a> <a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','admin-add.html','2','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="admin_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-			</tr>-->
-
 		</tbody>
 	</table>
 	<div id="pagenav" style="text-align:center;position: fixed;left: 0px;width: 100%;"></div>
@@ -185,6 +172,22 @@ $("#findWare").click(function () {
 		}
 	})
 })
+/*增加仓库*/
+var  addWare = function () {
+            layer.open({
+                type:2,
+                title:'添加仓库',
+                fix:false,
+                maxmin:true,
+                shadeClose:true,
+                area:['1000px','500px'],
+                content:'/basicdata/warehouse-management/addWare',
+                end:function(){
+                    getUserPageList();
+                }
+            });
+        };
+
 
 /*管理员-增加*/
 function admin_add(title,url,w,h){

@@ -46,7 +46,7 @@
 		<span class="l">
 		<button id="addAccountBtn"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加账户</button>
 		</span>
-		<span class="r">共有数据：<strong>54</strong> 条</span>
+		<span class="r">共有数据：<strong></strong> 条</span>
 	</div>
 	<div  id="app">
 	<table class="table table-border table-bordered table-bg">
@@ -64,11 +64,10 @@
 			</tr>
 		</thead>
 		<tbody>
-
 			<tr class="text-c" v-for="(item,index) in result">
 				<td>{{index+1}}</td>
 				<td class="td-manage">
-					<input type="button" value="点击显示" id="dainji" @click="xaingqingAccount(item.id)"> <i class="icon Hui-iconfont">&#xe627;</i>
+					<a title="详情" href="#" @click="detailEventAccount(item.id)" class="ml-5" style="text-decoration:none"> <i class="icon Hui-iconfont">&#xe627;</i></a>
 					<a title="编辑" href="#" @click="editEventAccount(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
 					<a title="删除" href="#" @click="deleteAccount(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 				<td>{{item.saName}}</td>
@@ -78,10 +77,29 @@
 			</tr>
 		</tbody>
 	</table>
-	</div>
 </div>
+<!--<div>
+	<table class="table table-bg" style="display:none;text-align: center" id="detailtab">
+		<tr>
+			<th>开户银行:<td>{{results.saBank}}</td></th>
+			<th>账户名称:<td>{{results.saName}}</td></th>
+		</tr>
+		<tr>
+			<th>状态:</th>
+			<th v-if="results.saState===1">
+				启用
+			</th>
+			<th v-else>
+				禁用
+			</th>
+			<th>联系人:</th>
+			<td>{{results.wmPerson}}</td>
+			<th>联系电话:{{results.wmTel}}</th>
+		</tr>
+	</table>
+</div>-->
 <div id="pagenav" style="text-align:center;position: fixed;left: 0px;bottom :50px;width: 100%;height: 50px"></div>
-<div id="xaingqingdiv" style="border: #00AA91 1px solid;width: 100px;height: 100px;display: none"></div>
+</div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
@@ -91,64 +109,6 @@
 <script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
-<!--<script type="text/javascript">
-/*
-	参数解释：
-	title	标题
-	url		请求的url
-	id		需要操作的数据id
-	w		弹出层宽度（缺省调默认值）
-	h		弹出层高度（缺省调默认值）
-*/
-/*管理员-增加*/
-function admin_add(title,url,w,h){
-	layer_show(title,url,w,h);
-}
-/*管理员-删除*/
-function admin_del(obj,id){
-	layer.confirm('确认要删除吗？',function(index){
-		$.ajax({
-			type: 'POST',
-			url: '',
-			dataType: 'json',
-			success: function(data){
-				$(obj).parents("tr").remove();
-				layer.msg('已删除!',{icon:1,time:1000});
-			},
-			error:function(data) {
-				console.log(data.msg);
-			},
-		});		
-	});
-}
-
-/*管理员-编辑*/
-function admin_edit(title,url,id,w,h){
-	layer_show(title,url,w,h);
-}
-/*管理员-停用*/
-function admin_stop(obj,id){
-	layer.confirm('确认要停用吗？',function(index){
-		//此处请求后台程序，下方是成功后的前台处理……
-		
-		$(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_start(this,id)" href="javascript:;" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">已禁用</span>');
-		$(obj).remove();
-		layer.msg('已停用!',{icon: 5,time:1000});
-	});
-}
-
-/*管理员-启用*/
-function admin_start(obj,id){
-	layer.confirm('确认要启用吗？',function(index){
-		//此处请求后台程序，下方是成功后的前台处理……
-		$(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_stop(this,id)" href="javascript:;" title="停用" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
-		$(obj).remove();
-		layer.msg('已启用!', {icon: 6,time:1000});
-	});
-}
-</script>-->
 <script>
 	var app = new Vue({
 		el:'#app',
@@ -199,7 +159,7 @@ function admin_start(obj,id){
 			}
 		});
 	})
-	/*增加用户*/
+	/*增加账户*/
 	$("#addAccountBtn").click(function () {
 		layer.open({
 			type:2,
@@ -214,8 +174,7 @@ function admin_start(obj,id){
 			}
 		});
 	});
-
-	//编辑用户事件
+	//编辑帐户事件
 	var editEventAccount = function(id) {
 		layer.open({
 			type : 2,
@@ -254,12 +213,23 @@ function admin_start(obj,id){
 			//否
 		});
 	}
-
-</script>
-<!--详情的script-->
-<script type="text/javascript">
-	$("#dainji").click(function () {
-	})
+	var detailEventAccount=function (id) {
+			layer.open({
+				type:2,
+				title:"账户详情",
+				fix:false,
+				shadeClose:true,
+				area:['800px','500px'],
+				content : '/basicdata/settlement-account/detailaccount?id='+id,
+			});
+		}
+/*	/!*详情div块*!/
+     	  var detail=document.getElementById("detailtab")
+			   if(detail.style.display=="none"){
+				   detail.style.display="block";
+			   }else {
+				   detail.style.display ="none";
+			   }*/
 </script>
 </body>
 </html>

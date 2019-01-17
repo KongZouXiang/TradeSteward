@@ -8,4 +8,8 @@
     <insert id="insertRole" parameterType="com.yunhe.systemsetup.entity.CharaManger">
         insert into chara_manger(ch_name,ch_detail) values (#{chName},#{chDetail})
     </insert>
+
+    <select id="checkChar" resultType="com.yunhe.systemsetup.entity.CharaManger">
+        select id,ch_name,ch_detail from chara_manger where ch_name=#{chName}
+    </select>
 </mapper>

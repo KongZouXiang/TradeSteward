@@ -53,7 +53,7 @@ public class PurchaseOrder implements Serializable {
      * 处理状态
      */
     @TableField(value = "po_state")
-    private Integer poState;
+    private String poState;
 
     /**
      * 审核人

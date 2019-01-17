@@ -1,12 +1,10 @@
 package com.yunhe.activitymanagement.controller;
 
 
-import com.yunhe.basicdata.entity.CommodityList;
-import com.yunhe.basicdata.service.ICommodityListService;
 import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
+import com.yunhe.basicdata.service.ICommodityListService;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +27,7 @@ public class CommodiTytemplateController {
 
     @Resource
     ICommodiTytemplateService commodiTytemplateService;
+
     @Resource
     ICommodityListService commodityListService;
 
@@ -105,14 +104,14 @@ public class CommodiTytemplateController {
      * </P>
      * @param
      */
-/*
-    @RequestMapping(value = "/selectCl",method = RequestMethod.POST)
 
-    public Map selectCl(int current,int size,CommodityList commodityList) {
+   /* @RequestMapping(value = "/selectCl",method = RequestMethod.POST)
 
-        return commodityListService.selectAllCommList(1,3,commodityList);
-    }
-*/
+    public Map selectCl(int current, int size, CommodityList commodityLis) {
+
+        return commodityListService.selectAllccommList(1,3,commodityList);
+    }*/
+
 
 
 

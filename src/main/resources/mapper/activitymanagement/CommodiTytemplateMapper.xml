@@ -3,8 +3,7 @@
 <mapper namespace="com.yunhe.activitymanagement.dao.CommodiTytemplateMapper">
 
     <sql id="ctCols">
-        id
-        ,
+        id,
         ct_template_number,
         ct_tytemplate_name,
         ct_templategoods,
@@ -13,16 +12,21 @@
 
     <!--查询的是商品模板里面的所有已存在的模板-->
     <select id="selectAllPage" resultType="com.yunhe.activitymanagement.entity.CommodiTytemplate">
+    select
+    <include refid="ctCols"/>
+    from trades_teward.commodi_tytemplate order by id desc
+</select>
+    <select id="selectAllCt" resultType="com.yunhe.activitymanagement.entity.CommodiTytemplate">
         select
         <include refid="ctCols"/>
         from trades_teward.commodi_tytemplate order by id desc
     </select>
-    <select id="selectCt" resultType="com.yunhe.basicdata.entity.CommodityList">
+   <!-- <select id="selectCt" resultType="com.yunhe.basicdata.entity.CommodityList">
         SELECT l.id as id,l.cl_name as clName,l.cl_number as clNumber,t.tc_number as tcNumber,l.cl_spec as clSpec
         FROM `commodi_tytemplate` c,
              `commodity_list` l,
              `template_commodity` t
         WHERE c.`id` = t.`ct_id`
           AND l.`id` = t.`cl_id`
-    </select>
+    </select>-->
 </mapper>

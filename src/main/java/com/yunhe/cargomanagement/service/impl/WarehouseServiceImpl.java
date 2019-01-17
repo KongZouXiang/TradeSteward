@@ -1,6 +1,9 @@
 package com.yunhe.cargomanagement.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageHelper;
 import com.yunhe.cargomanagement.entity.Warehouse;
 import com.yunhe.cargomanagement.dao.WarehouseMapper;
 import com.yunhe.cargomanagement.service.IWarehouseService;
@@ -54,16 +57,30 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, Warehouse
     }
 
     @Override
-    public Map selectWareHousePage(int current, int size, Warehouse warehouse) {
-        Page page=new Page(current,size);
-        List<Warehouse> warehouses=warehouseMapper.selectAll(page,warehouse);
-        Map<String, Object> map=new HashMap<>();
-        map.put("total",page.getTotal());
-        map.put("pages",page.getPages());
-        map.put("warehouses",warehouses);
-        System.out.println("总记录数："+page.getTotal());
-        System.out.println("总分页数："+page.getPages());
+    public Map selectWareHousePage(int pageNum, int pageSize) {
+
+        Map map=new HashMap();
+        Page<Warehouse> page=new Page<>(pageNum,pageSize);
+        List<Warehouse> list=warehouseMapper.selectAll(page);
+        map.put("list",list);
+        map.put("pageNum",pageNum);
+        map.put("pageSize",pageSize);
+        map.put("totalPage",page.getPages());
         return map;
     }
+
+    @Override
+    public List<Warehouse> selectWareHouseLike(Warehouse warehouse) {
+        List<Warehouse> list = warehouseMapper.selectList(new QueryWrapper<Warehouse>().like("wa_number", warehouse.getWaNumber()).or().like("wa_sp_name", warehouse.getWaSpName()));
+
+        return list;
+    }
+
+    @Override
+    public IPage<Warehouse> selectPage(int pageNum, int pageSize, Warehouse warehouse) {
+        IPage<Warehouse> warehouseIPage = warehouseMapper.selectPage(new Page<>(pageNum, pageSize), new QueryWrapper<Warehouse>().like("wa_number", warehouse.getWaNumber()).or().like("wa_sp_name", warehouse.getWaSpName()));
+        return warehouseIPage;
+    }
+
 
 }
