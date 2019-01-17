@@ -72,18 +72,15 @@
                 </thead>
                 <tbody>
                 <tr class="text-c" v-for="(item,index) in resulttwo">
+                    <td>{{index+1}}</td>
                     <td>{{item.commodityList.clName}}</td>
-                    <td>{{item.id}}</td>
-                    <td>{{index}}</td>
+                    <td>{{item.commodityList.clNumber}}</td>
                     <td>属性</td>
-                    <td><input type="text" class="input-text" value="1" placeholder="" id="poQuantityOfPurchase"
-                               name="poQuantityOfPurchase"></td>
-                    <td>单位</td>
-                    <td><input type="text" class="input-text" value="" placeholder="" id="danjia" name="danjia"></td>
-                    <td><input type="text" class="input-text" value="" placeholder="" id="jine" name="jine"></td>
-                    <td><input type="text" class="input-text"  placeholder="默认无" id="poRemarks"
-                               name="poRemarks">
-                    </td>
+                    <td>{{item.clNumber}}</td>
+                    <td>个</td>
+                    <td>折扣</td>
+                    <td>金额</td>
+                    <td>备注</td>
                 </tr>
                 </tbody>
                 <thead>

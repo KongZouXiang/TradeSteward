@@ -1,15 +1,20 @@
 package com.yunhe.cargomanagement.controller;
 
 
+import com.yunhe.cargomanagement.entity.OrderConnectComm;
 import com.yunhe.cargomanagement.entity.SalesHistory;
 import com.yunhe.cargomanagement.service.impl.SalesHistoryServiceImpl;
 
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.util.List;
@@ -31,6 +36,25 @@ public class SalesHistoryController {
     private SalesHistoryServiceImpl salesHistoryService;
 
     /**
+     * 从销售订单跳转到添加页面
+     * @return 页面
+     */
+    @RequestMapping("/saleAdd")
+    public ModelAndView ceshi1(){
+        return new ModelAndView("cargomanagement/salesHistory-add");
+    }
+
+    @RequestMapping("/nimabo")
+    @ResponseBody
+    public String sumbiiiit(HttpServletResponse response, String[] soClient, String[] clNumber){
+        for (int i=0;i<soClient.length;i++){
+            SalesHistory salesHistory = new SalesHistory();
+            salesHistory.setShClient(soClient[i]);
+            System.out.println(salesHistory.getShClient());
+        }
+        return "haha";
+    }
+    /**
      * 增加一条销售历史 _已测试成功
      *
      * @param salesHistory
@@ -40,15 +64,33 @@ public class SalesHistoryController {
     public int addSalesHistory(SalesHistory salesHistory) {
         return salesHistoryService.addSalesHistory(salesHistory);
     }
-
+    /**
+     * 修改页面跳转--根据id获取当前订单的所有信息
+     * @param id 销售订单的id
+     * @return int 是否成功
+     */
     @RequestMapping("/edit")
     public ModelAndView edit(int id, HttpSession httpSessionsion) {
         System.out.println(id);
         SalesHistory salesHistory = salesHistoryService.selectById(id);
         httpSessionsion.setAttribute("sales", salesHistory);
-        return new ModelAndView("/cargomanagement/ceshi2");
+        return new ModelAndView("/cargomanagement/salesHistory-detail");
     }
 
+
+    /**
+     * 批量删除
+     * @param request
+     * @param ids
+     * @return
+     */
+    @RequestMapping("/deleteAll")
+    public boolean deleteAll(HttpServletRequest request, @RequestBody List<Integer> ids)  {
+        for (Integer id : ids) {
+            salesHistoryService.deleteSalesHistory(id);
+        }
+        return true;
+    }
     /**
      * 根据id修改销售历史 _已测试成功
      *
@@ -73,7 +115,6 @@ public class SalesHistoryController {
     }
 
     /**
-     * 0
      *
      * @param pageNum      当前页
      * @param pageSize     每页条数
@@ -81,12 +122,8 @@ public class SalesHistoryController {
      * @return map
      */
     @RequestMapping("/quertLikeListSalesHistory")
-    public Map quertLikeListSalesHistory(int pageNum, int pageSize, SalesHistory salesHistory, Model m) {
-        System.out.println(pageNum);
-        System.out.println(pageSize);
+    public Map quertLikeListSalesHistory(int pageNum, int pageSize, SalesHistory salesHistory) {
         Map map = salesHistoryService.queryLikeSalesHistory(pageNum, pageSize, salesHistory);
-        List<SalesHistory> list = (List<SalesHistory>) map.get("list");
-        m.addAttribute("list", list);
         return map;
     }
 }

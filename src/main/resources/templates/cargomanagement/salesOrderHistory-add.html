@@ -32,7 +32,7 @@
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>客户</label>
                 <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select name="articlecolumn" class="select">
+				<select name="soClient" class="select">
 				    <option value="0">请选择</option>
 					<option value="index+1" v-for="(item,index) in result">{{item.cusName}}</option>
 				</select>
@@ -42,15 +42,15 @@
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>单据编号</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" class="input-text" value="ADD54554445" placeholder="" id="poNumber"
-                           name="poNumber">
+                    <input type="text" class="input-text" value="ADD54554445" placeholder="" id="soOrderNumber"
+                           name="soOrderNumber">
                 </div>
             </div>
 
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>经手人</label>
                 <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select name="articlecolumn" class="select">
+				<select name="soHander" class="select">
 					<option value="0">老板</option>
 					<option value="1">财务</option>
 					<option value="2">仓库</option>
@@ -60,11 +60,11 @@
                 </div>
             </div>
             <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2">评论开始日期：</label>
+                <label class="form-label col-xs-4 col-sm-2">业务日期：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <input type="text"
                            onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'commentdatemax\')||\'%y-%M-%d\'}' })"
-                           id="commentdatemin" name="commentdatemin" class="input-text Wdate">
+                           id="soDate" name="soDate" class="input-text Wdate">
                 </div>
             </div>
             <div class="row cl">
@@ -72,7 +72,7 @@
                 <div class="formControls col-xs-8 col-sm-9">
                     <input type="hidden"
                            onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'commentdatemin\')}' })"
-                           id="commentdatemax" name="commentdatemax" class="input-text Wdate">
+                           id="soDevlierDate" name="soDevlierDate" class="input-text Wdate">
                 </div>
             </div>
 
