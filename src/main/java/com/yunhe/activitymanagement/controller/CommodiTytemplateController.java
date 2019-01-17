@@ -1,6 +1,7 @@
 package com.yunhe.activitymanagement.controller;
 
 
+<<<<<<< .merge_file_a05844
 <<<<<<< .merge_file_a04660
 import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
@@ -13,11 +14,20 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.basicdata.service.ICommodityListService;
 import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
+=======
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yunhe.basicdata.service.ICommodityListService;
+import com.yunhe.activitymanagement.entity.CommodiTytemplate;
+import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
+>>>>>>> .merge_file_a02544
 
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
+<<<<<<< .merge_file_a05844
 >>>>>>> .merge_file_a05784
+=======
+>>>>>>> .merge_file_a02544
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -125,9 +135,12 @@ public class CommodiTytemplateController {
      *     查询商品列表数据
      * </P>
      * @param
+<<<<<<< .merge_file_a05844
 <<<<<<< .merge_file_a04660
      */
 =======
+=======
+>>>>>>> .merge_file_a02544
      *//*
 
 
@@ -136,11 +149,18 @@ public class CommodiTytemplateController {
 
    /* @RequestMapping(value = "/selectCl",method = RequestMethod.POST)
 
+<<<<<<< .merge_file_a05844
     public Map selectCl(int current, int size, CommodityList commodityLis) {
+=======
+        return commodityListService.selectAllcommList(1,3,commodityList);
+    }
+*/
+>>>>>>> .merge_file_a02544
 
         return commodityListService.selectAllccommList(1,3,commodityList);
     }*/
 
+<<<<<<< .merge_file_a05844
 <<<<<<< .merge_file_a04660
 =======
         return commodityListService.selectAllcommList(1,3,commodityList);
@@ -149,4 +169,6 @@ public class CommodiTytemplateController {
 >>>>>>> .merge_file_a05784
 
 
+=======
+>>>>>>> .merge_file_a02544
 }

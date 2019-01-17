@@ -69,7 +69,10 @@ public interface ICommodityListService extends IService<CommodityList> {
 =======
 
 
+<<<<<<< .merge_file_a10552
 >>>>>>> .merge_file_a04268
+=======
+>>>>>>> .merge_file_a06844
     /**
      *
      * @return
@@ -80,5 +83,8 @@ public interface ICommodityListService extends IService<CommodityList> {
     Map selectList();
 
 
+<<<<<<< .merge_file_a10552
 >>>>>>> .merge_file_a04268
+=======
+>>>>>>> .merge_file_a06844
 }
