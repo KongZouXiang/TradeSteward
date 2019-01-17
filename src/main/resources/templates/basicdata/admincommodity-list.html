@@ -36,10 +36,12 @@
                  <button  id="deleteall" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</button>
            <button id="addcommditybtn" onclick="addcommdity()" class="btn btn-primary radius"> <i class="Hui-iconfont">&#xe600;</i> 添加商品</button>
             <!--<a href="javascript:;"  class="btn btn-danger radius"><i class="Hui-iconfont">&#xe600;</i> 添加商品</a>-->
-        <a href="#" onclick="exportexcel()" class="btn btn-danger radius">
+        <a href="#" onclick="exportexcel()" class="btn btn-danger radius" style="background-color: #0e90d2">
         <i class="Hui-iconfont">&#xe600;</i> Excel导出</a>
     </span>
-        <span class="r">共有数据：<strong>54</strong> 条</span></div>
+        <span class="r">共有数据：<strong id="strong"></strong> 条</span></div>
+      <div><span>所属分类:</span><span style="color: #0e90d2"> 商品分类></span><span style="color: #9a6a00">默认分类</span></div>
+    <hr>
     <div id="app" style="overflow: scroll;height: 500px"  >
         <table class="table table-border table-bordered table-bg">
             <thead>
@@ -104,6 +106,7 @@
                     size:2,
                 },
                 success : function(msg) {
+                    $("#strong").html(msg.total);
                     app.result=msg.comlist;
                     laypage({
                         cont : 'pagenav', //容器。值支持id名、原生dom对象，jquery对象,
