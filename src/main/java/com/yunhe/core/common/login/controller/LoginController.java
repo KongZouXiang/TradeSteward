@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
  * @date 2019年1月9日
  */
 @Controller
-@RequestMapping("/inLogin")
+@RequestMapping
 public class LoginController {
 
     @Resource
@@ -30,10 +30,10 @@ public class LoginController {
         return "login";
     }
 
-   /* @GetMapping("toindex")
+    @GetMapping("toindex")
     public String index() {
         return "index";
-    }*/
+    }
     @PostMapping("/login")
     public String login(Employ employ, HttpSession session) {
         if (loginService.login(employ) != null) {
