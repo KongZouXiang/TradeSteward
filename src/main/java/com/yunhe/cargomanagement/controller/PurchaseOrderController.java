@@ -11,6 +11,7 @@ import com.yunhe.customermanagement.entity.Supplier;
 import com.yunhe.customermanagement.service.ISupplierService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -219,7 +220,7 @@ public class PurchaseOrderController {
      * @return  Excel导出到本地
      * @throws IOException
      */
-    @RequestMapping("/export")
+    @PostMapping("/puchaseOrderExcel")
     public String createExcel(HttpServletResponse response) throws IOException {
         //获取查询结果的数据,只要对其进行封装就行了
         List<PurchaseOrder> newlist = purchaseOrderService.selectPurchaseOrder();
@@ -322,36 +323,41 @@ public class PurchaseOrderController {
         cell9.setCellStyle(style);
         cell9.setCellValue("单据");
 
-        HSSFCell cell10=row2.createCell(11);
+        HSSFCell cell10=row2.createCell(10);
         cell10.setCellStyle(style);
         cell10.setCellValue("经手人");
 
-        HSSFCell cell11=row2.createCell(12);
+        HSSFCell cell11=row2.createCell(11);
         cell11.setCellStyle(style);
         cell11.setCellValue("制单人");
 
-        HSSFCell cell12=row2.createCell(13);
+        HSSFCell cell12=row2.createCell(12);
         cell12.setCellStyle(style);
         cell12.setCellValue("备注");
 
-        HSSFCell cell13=row2.createCell(10);
+        HSSFCell cell13=row2.createCell(13);
         cell13.setCellStyle(style);
         cell13.setCellValue("制单日期");
 
         //单元格宽度自适应
-        sheet.autoSizeColumn((short)3);
-        sheet.autoSizeColumn((short)4);
-        sheet.autoSizeColumn((short)5);
-        sheet.autoSizeColumn((short)6);
-        sheet.autoSizeColumn((short)7);
-        sheet.autoSizeColumn((short)8);
-        sheet.autoSizeColumn((short)9);
+
         //宽度自适应可自行选择自适应哪一行，这里写在前面的是适应第二行，写在后面的是适应第三行
         for (int i = 0; i < solist.size(); i++) {
             //单元格宽度自适应
             sheet.autoSizeColumn((short)0);
             sheet.autoSizeColumn((short)1);
             sheet.autoSizeColumn((short)2);
+            sheet.autoSizeColumn((short)3);
+            sheet.autoSizeColumn((short)4);
+            sheet.autoSizeColumn((short)5);
+            sheet.autoSizeColumn((short)6);
+            sheet.autoSizeColumn((short)7);
+            sheet.autoSizeColumn((short)8);
+            sheet.autoSizeColumn((short)9);
+            sheet.autoSizeColumn((short)10);
+            sheet.autoSizeColumn((short)11);
+            sheet.autoSizeColumn((short)12);
+            sheet.autoSizeColumn((short)13);
             //从sheet第三行开始填充数据
             HSSFRow rowx=sheet.createRow(i+2);
             Map<String,Object> map = solist.get(i);
@@ -386,15 +392,15 @@ public class PurchaseOrderController {
 
             HSSFCell cell07=rowx.createCell(7);
             cell07.setCellStyle(style);
-            cell07.setCellValue((String) map.get("poQuantityOfPurchase"));
+            cell07.setCellValue((Integer) map.get("poQuantityOfPurchase"));
 
             HSSFCell cell08=rowx.createCell(8);
             cell08.setCellStyle(style);
-            cell08.setCellValue((String) map.get("poYingMoney"));
+            cell08.setCellValue((double) map.get("poYingMoney"));
 
             HSSFCell cell09=rowx.createCell(9);
-            cell03.setCellStyle(style);
-            cell03.setCellValue((String) map.get("poBill"));
+            cell09.setCellStyle(style);
+            cell09.setCellValue((String) map.get("poBill"));
 
             HSSFCell cell010=rowx.createCell(10);
             cell010.setCellStyle(style);
@@ -421,7 +427,7 @@ public class PurchaseOrderController {
         response.setContentType("application/msexcel");
         wb.write(output);
         output.close();
-        return null;
+        return "成功！";
     }
 
 

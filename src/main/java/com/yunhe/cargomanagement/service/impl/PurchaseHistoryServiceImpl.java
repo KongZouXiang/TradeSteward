@@ -57,6 +57,11 @@ public class PurchaseHistoryServiceImpl extends ServiceImpl<PurchaseHistoryMappe
         return purchaseHistoryMapper.updatePurchaseHistoryById(purchaseHistory);
     }
 
+    @Override
+    public List<PurchaseHistory> selectpurchaseHistory() {
+        return purchaseHistoryMapper.selectList(null);
+    }
+
     public PurchaseHistoryMapper getPurchaseHistoryMapper() {
         return purchaseHistoryMapper;
     }

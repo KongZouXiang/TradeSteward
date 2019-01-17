@@ -46,8 +46,8 @@
         <a href="/cargomanagement/purchase-order/addPurchase" id="addpurOrder"
            class="btn btn-primary radius">
         <i class="Hui-iconfont">&#xe600;</i> 添加进货订单</a>
-        <a href="#"
-           class="btn btn-success radius" id="">
+        <a href="/cargomanagement/purchase-order/puchaseOrderExcel" id="Excel"
+           class="btn btn-success radius">
         <i class="Hui-iconfont">&#xe644;</i>Excel导出</a>
     </span>
 
@@ -92,7 +92,8 @@
                         <i class="Hui-iconfont">&#xe6e2;</i>
                     </a>
                     <a title="审核" href="javascript:;"
-                       @click="stateEvent(item.id,item.poDate,item.poNumber,item.poState,item.poAuditor,item.poSupName,item.poClName,item.poQuantityOfPurchase,item.poYingMoney,item.poBill,item.poExperiencedPerson,item.poSinglePerson,item.poRemarks,item.poDateOrder)" class="ml-5"
+                       @click="stateEvent(item.id,item.poDate,item.poNumber,item.poState,item.poAuditor,item.poSupName,item.poClName,item.poQuantityOfPurchase,item.poYingMoney,item.poBill,item.poExperiencedPerson,item.poSinglePerson,item.poRemarks,item.poDateOrder)"
+                       class="ml-5"
                        style="text-decoration:none">
                         <i class="Hui-iconfont">&#xe644;</i>
                     </a>
@@ -194,8 +195,28 @@
 
         });
     };
+    /*$("#Excel").on("click", function () {
+        layer.confirm('你确定要导出吗？', {
+            btn: ['是', '否']
+        }, function () {
+            $.ajax({
+                method: 'POST',
+                dataType: 'json',
+                url: '',
+                data: {},
+                success: function (msg) {
+                    getPurchasePageList();
+                    layer.msg(msg);
+                }
+            })
+        }, function () {
+
+        });
+    });*/
+
+
     /*审核*/
-    var stateEvent = function (id,poDate,poNumber,poState,poAuditor,poSupName,poClName,poQuantityOfPurchase,poYingMoney,poBill,poExperiencedPerson,poSinglePerson,poRemarks,poDateOrder) {
+    var stateEvent = function (id, poDate, poNumber, poState, poAuditor, poSupName, poClName, poQuantityOfPurchase, poYingMoney, poBill, poExperiencedPerson, poSinglePerson, poRemarks, poDateOrder) {
         if (poState == "未审核") {
             layer.confirm('您确定通过该订单的审核？', {
                 btn: ['是', '否']
@@ -206,19 +227,19 @@
                     url: '/cargomanagement/purchase-order/updateHistState',
                     data: {
                         id: id,
-                        poDate:poDate,
-                        poNumber:poNumber,
-                        poState:poState,
-                        poAuditor:poAuditor,
-                        poSupName:poSupName,
-                        poClName:poClName,
-                        poQuantityOfPurchase:poQuantityOfPurchase,
-                        poYingMoney:poYingMoney,
-                        poBill:poBill,
-                        poExperiencedPerson:poExperiencedPerson,
-                        poSinglePerson:poSinglePerson,
-                        poRemarks:poRemarks,
-                        poDateOrder:poDateOrder
+                        poDate: poDate,
+                        poNumber: poNumber,
+                        poState: poState,
+                        poAuditor: poAuditor,
+                        poSupName: poSupName,
+                        poClName: poClName,
+                        poQuantityOfPurchase: poQuantityOfPurchase,
+                        poYingMoney: poYingMoney,
+                        poBill: poBill,
+                        poExperiencedPerson: poExperiencedPerson,
+                        poSinglePerson: poSinglePerson,
+                        poRemarks: poRemarks,
+                        poDateOrder: poDateOrder
                     },
                     success: function (msg) {
                         getPurchasePageList();
@@ -228,7 +249,7 @@
             }, function () {
 
             });
-        }else {
+        } else {
             alert("此订单已审核！");
         }
 
