@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.*;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -42,11 +43,16 @@ public class CustomerController {
     @RequestMapping("/editCustomer")
     public String selectAllCustomer(Integer id, Model model) {
         Customer customer = customerService.getById(id);
-        model.addAttribute("customer",customer);
+        model.addAttribute("customer", customer);
         return "customermanagement/editCustomer";
     }
 
+    @RequestMapping("/addCustomer")
+    public String insertCustomer(Customer customer, Model model) {
 
+        model.addAttribute("customer", customer);
+        return "customermanagement/addCustomer";
+    }
 
 
     @RequestMapping("/cust")
@@ -54,7 +60,6 @@ public class CustomerController {
     public ModelAndView selectAllCustomer1() {
         return new ModelAndView("customermanagement/admin.html");
     }
-
 
 
     /**
@@ -65,12 +70,11 @@ public class CustomerController {
      * @param customer 客户
      * @return list页面
      */
-    @RequestMapping("/updateCustomer")
+    @PostMapping("/updateCustomer")
     @ResponseBody
-    public String updateCustomer(Customer customer) {
-        System.out.println("success");
-           customerService.updateCustomer(customer);
-        return "success";
+    public Integer updateCustomer(Customer customer) {
+
+        return customerService.updateCustomer(customer);
     }
 
     /**
@@ -81,11 +85,12 @@ public class CustomerController {
      * @param customer 新增用户
      * @return list页面
      */
-    @RequestMapping("/insertCustomer")
+    @PostMapping("/insertCustomer")
     @ResponseBody
-    public String insertCustomer(Customer customer) {
-        customerService.insertCustomer(customer);
-        return "list";
+    public Integer insertCustomer(Customer customer) {
+
+        return customerService.insertCustomer(customer);
+
     }
 
     /**
@@ -98,24 +103,27 @@ public class CustomerController {
      */
     @RequestMapping("/deleteCustomer")
     @ResponseBody
-    public String deleteCustomer(int id) {
-        customerService.deleteCustomer(id);
-        return "list";
+    public Integer deleteCustomer(int id) {
+        System.out.println("要删除的id:"+id);
+        return customerService.deleteCustomer(id);
+
     }
 
     /**
      * <p>
-     *    模糊查询
+     * 模糊查询
      * </p>
+     *
      * @param customer
      * @return
      */
     @RequestMapping("/selectPage")
     @ResponseBody
-    public IPage<Customer> selectPage(int current, int size, Customer customer){
+    public IPage<Customer> selectPage(int current, int size, Customer customer) {
         System.out.println(current);
         return customerService.selectPage(current, size, customer);
     }
+
     /**
      * <p>
      * 创建表头
