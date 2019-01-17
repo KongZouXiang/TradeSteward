@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
  * @author 孔邹祥
  * @date 2019年1月9日
  */
-//@Controller
+@Controller
 public class LoginController {
 
     @Resource
@@ -25,16 +25,15 @@ public class LoginController {
 
     @GetMapping("/")
     public String index() {
-        return "index";
+        return "login";
     }
 
-    @PostMapping("index")
+    @PostMapping("/login")
     public String login(Employ employ, HttpSession session) {
         if (loginService.login(employ) != null) {
             session.setAttribute("employ", employ);
             return "index";
         }
-
-        return "index";
+        return "login";
     }
 }

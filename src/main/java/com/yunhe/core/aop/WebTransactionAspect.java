@@ -7,5 +7,5 @@ package com.yunhe.core.aop;
  *@author 孔邹祥
  *@date 2019年1月10日
  */
-public aspect WebTransactionAspect {
-}
+/*public aspect WebTransactionAspect {
+}*/
