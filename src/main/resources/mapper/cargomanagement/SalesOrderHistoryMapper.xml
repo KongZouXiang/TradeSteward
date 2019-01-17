@@ -10,6 +10,7 @@
     <select id="selectSaleList" resultType="com.yunhe.cargomanagement.entity.SalesOrderHistory">
         select <include refid="Sql"/> from sales_order_history
         where so_client like concat('%', #{salesOrderHistory.soClient}, '%')
+        and so_order_num like concat('%',#{salesOrderHistory.soOrderNum},'%')
     </select>
     <!--***********************************查询所有的销售订单历史记录***********************************-->
     <select id="selectAll" resultType="com.yunhe.cargomanagement.entity.SalesOrderHistory">

@@ -1,11 +1,9 @@
 package com.yunhe.cargomanagement.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.cargomanagement.entity.SalesHistory;
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import java.util.List;
+
 import java.util.Map;
 
 /**
@@ -40,10 +38,11 @@ public interface ISalesHistoryService extends IService<SalesHistory> {
      */
     int updateSalesHistory(SalesHistory salesHistory);
 
+    SalesHistory selectById(int id);
     /**
      * 分页查询所有的信息
      * @param
      * @return
      */
-    Map queryLikeSalesHistory(int pageSize, int pageNum, SalesHistory salesHistory);
+    Map queryLikeSalesHistory(int pageNum, int pageSize, SalesHistory salesHistory);
 }

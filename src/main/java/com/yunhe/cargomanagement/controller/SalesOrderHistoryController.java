@@ -6,20 +6,23 @@ import com.yunhe.cargomanagement.entity.SalesOrderHistory;
 import com.yunhe.cargomanagement.service.impl.SalesOrderHistoryServiceImpl;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import springfox.documentation.spring.web.json.Json;
 
 import javax.annotation.Resource;
 import javax.jws.WebParam;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,11 +60,23 @@ public class SalesOrderHistoryController {
      * @return
      */
     @RequestMapping("/delete")
-    public ModelAndView delete(int id){
-        salesOrderHistoryService.deleteById(id);
-        return new ModelAndView("edit");
+    public int delete(int id){
+        return salesOrderHistoryService.deleteById(id);
     }
 
+    /**
+     * 批量删除
+     * @param request
+     * @param ids
+     * @return
+     */
+    @RequestMapping("/deleteAll")
+    public boolean deleteAll(HttpServletRequest request, @RequestBody List<Integer> ids)  {
+        for (Integer id : ids) {
+            salesOrderHistoryService.deleteById(id);
+        }
+        return true;
+    }
     /**
      * 修改页面跳转--根据id获取当前订单的所有信息
      * @param id 销售订单的id
@@ -69,10 +84,10 @@ public class SalesOrderHistoryController {
      */
     @RequestMapping("/edit")
     public ModelAndView edit(int id, HttpSession httpSessionsion){
-        System.out.println(id+"id");
+        System.out.println(id);
         SalesOrderHistory salesOrderHistory = salesOrderHistoryService.selectById(id);
         httpSessionsion.setAttribute("sales",salesOrderHistory);
-        return new ModelAndView("ceshi2");
+        return new ModelAndView("/cargomanagement/ceshi2");
     }
     /**
      * 修改销售订单信息
@@ -94,10 +109,12 @@ public class SalesOrderHistoryController {
         return new ModelAndView("/cargomanagement/salesOrderHistory");
     }
 
-    @RequestMapping("/index")
+  @RequestMapping("/index")
     public ModelAndView index1(){
         return new ModelAndView("/index");
     }
+
+
     /**
      * 分页模糊查询销售订单历史
      * @param pageNum
@@ -115,6 +132,7 @@ public class SalesOrderHistoryController {
         Page page=salesOrderHistoryService.queryLikeList(map);
         map.put("page", page.getRecords());
         map.put("totalPage",page.getPages());
+        map.put("total",page.getTotal());
         return map;
     }
 
@@ -124,17 +142,13 @@ public class SalesOrderHistoryController {
      * @return
      * @throws IOException
      */
-  /*  @RequestMapping("/export")
+    @RequestMapping("/export")
     public String createExcel(HttpServletResponse response) throws IOException {
-        //获取查询结果的数据,只要对其进行封装就行了
         List<SalesOrderHistory> newlist = salesOrderHistoryService.selectAll();
         System.out.println("数据行数："+newlist.size());
-        //System.out.println("集合的第一行数据："+newlist.get(0));
-        //数据封装，这里的map之所以敢这样add是因为这里的add顺序和sql中的select字段顺序是一样的，总共就查询那么多字段
         List<Map<String,Object>> solist = new ArrayList();
         for(SalesOrderHistory sales:newlist){
-            //每次循环都要重新new一个map，表示不同对象
-            //System.out.println("User的第一个字段"+obj.getUid());
+
             Map<String,Object> map = new HashMap();
             map.put("id", sales.getId());
             map.put("soDate",sales.getSoDate());
@@ -172,10 +186,10 @@ public class SalesOrderHistoryController {
 
         // 2.生成样式对象，这里的设置居中样式和版本有关，我用的poi用HSSFCellStyle.ALIGN_CENTER会报错，所以用下面的
         HSSFCellStyle style = wb.createCellStyle();
-        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//设置居中样式
-        style.setFont(font); // 调用字体样式对象
+        //style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//设置居中样式
+        style.setFont(font);
         style.setWrapText(true);
-        *//*style.setAlignment(HorizontalAlignment.CENTER);//设置居中样式*//*
+        //*style.setAlignment(HorizontalAlignment.CENTER);//设置居中样式*//
 
         // 3.单元格应用样式
         cell.setCellStyle(style);
@@ -360,5 +374,5 @@ public class SalesOrderHistoryController {
         wb.write(output);
         output.close();
         return null;
-    }*/
+    }
 }

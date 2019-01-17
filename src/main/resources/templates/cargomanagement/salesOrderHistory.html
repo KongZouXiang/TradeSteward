@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -19,11 +19,11 @@
     <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
     <script type="text/javascript" src="/lib/respond.min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
-    <title>管理员列表</title>
+    <title>销售订单历史</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 管理员管理 <span
-        class="c-gray en">&gt;</span> 管理员列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 云管货 <span
+        class="c-gray en">&gt;</span> 订单销售历史 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
                                                href="javascript:location.replace(location.href);" title="刷新"><i
         class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
@@ -33,30 +33,30 @@
         -
         <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax"
                class="input-text Wdate" style="width:120px;">-->
-        <input type="text" class="input-text" style="width:250px" placeholder="输入单号" id="poNumber" name="">
-        <input type="text" class="input-text" style="width:250px" placeholder="输入供应商" id="poSupName" name="">
+        <input type="text" class="input-text" style="width:250px" placeholder="输入单号" id="soNumber" name="">
+        <input type="text" class="input-text" style="width:250px" placeholder="客户名称" id="soClient" name="">
         <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜订单</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
-            <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
-        <a href="javascript:;" onclick="admin_add('添加管理员','admin-add.html','800','500')"
+            <a href="javascript:;" id="deletell"  class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+        <a href="javascript:;" onclick="addSales('添加','/cargomanagement/sales-order-history/ceshi1','800','500')"
             class="btn btn-primary radius">
-        <i class="Hui-iconfont">&#xe600;</i> 添加管理员</a>
-        <a href="javascript:;" onclick="admin_add('Excel导出','admin-add.html','800','500')"
+        <i class="Hui-iconfont">&#xe600;</i> 添加销售订单历史</a>
+        <a href="javascript:;" onclick="Excel_out()"
                class="btn btn-primary radius">
         <i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
     </span>
 
-        <span class="r">共有数据：<strong>54</strong> 条</span></div>
+        <span class="r">共有数据：<strong id="strong"></strong> 条</span></div>
     <div id="app" style="overflow: scroll;height: 500px"  >
         <table class="table table-border table-bordered table-bg">
             <thead>
             <tr>
-                <th scope="col" colspan="9">员工列表</th>
+                <th scope="col" colspan="9">订单列表</th>
             </tr>
             <tr class="text-c">
-                <th width="25"><input type="checkbox" name="" value=""></th>
+                <th width="25"><input type="checkbox" id="checkAll" value=""></th>
                 <th width="40">ID</th>
                 <th width="130">操作</th>
                 <th width="150">业务日期</th>
@@ -78,9 +78,12 @@
                 <th width="150">备注</th>
             </tr>
             </thead>
+
+
             <tbody>
             <tr class="text-c" v-for="(item,index) in result">
-                <td><input type="checkbox" value="" name=""></td>
+
+                <td><input type="checkbox" id="box_" :value="item.id"></td>
                 <td>{{index+1}}</td>
                 <td class="td-manage">
                     <a style="text-decoration:none" class="ml-5" @click="article_edit('编辑','/cargomanagement/sales-order-history/edit?id='+(item.id))" href="javascript:;" title="编辑">
@@ -89,7 +92,7 @@
                     <a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none">
                         <i class="Hui-iconfont">&#xe6e2;</i>
                     </a>
-                    <a title="详情" href="#" class="ml-5" style="text-decoration:none">
+                    <a title="详情" class="ml-5" style="text-decoration:none" @click="detailSale(item.id)">
                         <i class="icon Hui-iconfont">&#xe627;</i>
                     </a>
                 </td>
@@ -130,7 +133,46 @@
             result:[]
         }
     });
+    $(function () {
+        $("#checkAll").click(function () {
+            $("input[id^='box_']").attr("checked",this.checked);
+        })
+    $("input[id^='box_']").click(function(){//点击每一个子checkbox，都会触发这个事件
+        /**获取到下面所有checkbox*/
+        var boxs = $("input[id^='box_']");
 
+        $("#checkAll").attr("checked",boxs.filter(":checked").length == 4);
+    });
+    });
+
+    $("#deletell").click(function(){
+        /**获取下面选中的checkbox*/
+        var checkedbox = $("input[id^='box_']:checked");
+        if(checkedbox.length == 0){
+            alert("请选择要删除的部门！！！");
+        }else{
+            if(confirm("你确定要删除吗？？？")){
+                var ids = new Array();
+
+                checkedbox.each(function(){
+                    ids.push(this.value);
+                });
+                $.ajax({
+                    type:'post',
+                    dataType:'json',
+                    contentType: 'application/json',
+                    url:'/cargomanagement/sales-order-history/deleteAll',
+                    data:JSON.stringify(ids),
+                    success: function (msg){
+                        console.log(msg);
+                        if (msg){
+                            layer.msg('成功删除',{icon:5});
+                        }
+                    }
+                })
+            }
+        }
+    });
     var getPurchasePageList = function (curr) {
         $.ajax({
             type:'post',
@@ -139,13 +181,12 @@
             data:{
                 pageNum: curr || 1,
                 pageSize:4,
-                soClient:$("#poNumber").val(),
-                /* emPhone:$("#SearchKeyWord").val(),
-                 emRealname:$("#SearchKeyWord").val(),*/
-
+                soClient:$("#soClient").val(),
+                soOrderNum:$("#soNumber").val(),
             },
             success: function (msg) {
                 app.result = msg.page;
+                $("#strong").html(msg.total);
                 laypage({
                     cont: 'pagenav',//容器  值支持id名、原生dom对象，jquery对象,
                     pages: msg.totalPage,//总页数
@@ -175,7 +216,7 @@
             $.ajax({
                 type:'GET',
                 dataType:'json',
-                url: '/cargomanagement/purchase-order/deletePurchaseById',
+                url: '/cargomanagement/sales-order-history/delete',
                 data:{
                     id:id
                 },
@@ -188,7 +229,14 @@
 
         });
     };
-
+    function detailSale(id) {
+        var index = layer.open({
+            type: 2,
+            title: '详细',
+            content: '/cargomanagement/sales-order-history/edit?id='+id,
+        });
+        layer.full(index);
+    };
     /*编辑修改*/
     function article_edit(title,url){
         var index = layer.open({
@@ -197,6 +245,25 @@
             content: url
         });
         layer.full(index);
+    };
+    /*添加*/
+    var addSales =function (title,url,h,w) {
+        layer.open({
+            type:2,
+            title:title,
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['h','w'],
+            content:url,
+            end:function() {
+                getUserPageList();
+            }
+        });
+    }
+
+    var Excel_out =function () {
+        window.location.href="/cargomanagement/sales-order-history/export";
     }
 
 </script>
