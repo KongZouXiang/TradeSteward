@@ -158,19 +158,50 @@
             <div class="height15"></div>
         </div>
             </div>
-        <div class="formTitle" style="position: static !important;">
+        <!--<div class="formTitle" style="position: static !important;display: none">
             销售价格
             <span class="font999" style="font-size: 12px">（未开启按客户等级定价，可在<a href="">客户等级价</a>中开启）</span>
             <hr style="height:1px;background-color: #2E2D3C"/>
 					零售价(元)&nbsp;&nbsp;&nbsp;<input type="text" id="lingshoujia" name="lingshoujia"><br><br>
                      批发价(元)&nbsp;&nbsp;&nbsp;<input type="text" id="pifajia" name="pifajia"><br><br>
                     最低零售价(元)&nbsp;&nbsp;&nbsp;<input type="text" name="zuidilingshou" id="zuidilingshou">
-        </div>
-        <div class="formTitle" style="position: static !important;">
+                <hr style="width: auto">
             进货价格
             <hr style="height:1px;background-color: #2E2D3C"/>
             参考进货价(元)&nbsp;&nbsp;&nbsp;<input type="text" id="cankaojinhuo" name="cankaojinhuo"><br><br>
-        </div>
+        </div>-->
+                <div class="formTitle" style="position: static !important;display: block">
+                    价格管理
+                    <hr style="height:1px;background-color: #2E2D3C"/>
+                    <table  border="2" align="center">
+                        <thead>
+                        <tr>
+                            <th width="100" rowspan="2" style="text-align: center">价格类别</th>
+                            <th width="100"></th>
+                            <th width="600" style="text-align: center">价格/只</th>
+                        </tr>
+                        </thead>
+                        <tr>
+                            <td width="300" rowspan="3" style="text-align: center">销售</td>
+                            <td width="100" style="text-align: center">零售价</td>
+                            <td width="600" style="text-align: center"><input type="text" id="comlingshoujia" style="text-align: center"></td>
+
+                        </tr>
+                        <tr>
+                            <td width="100" style="text-align: center">最低零售价</td>
+                            <td width="600" style="text-align: center"><input type="text" id="comzuilingshoujia" style="text-align: center"></td>
+                        </tr>
+                        <tr>
+                            <td width="100" style="text-align: center">批发价</td>
+                            <td width="600" style="text-align: center"><input type="text" id="compifajia" style="text-align: center"></td>
+                        </tr>
+                        <tr>
+                            <td width="100" style="text-align: center">进货</td>
+                            <td width="100" style="text-align: center">参考进货价</td>
+                            <td width="600" style="text-align: center"><input type="text" id="cankaojinhuojia" style="text-align: center"></td>
+                        </tr>
+                    </table>
+                </div>
         <div class="formTitle" style="position: static !important;">
             库存预警
             <div class="fr font12" >
@@ -181,21 +212,21 @@
             </div>
             <hr style="height:1px;background-color: #2E2D3C"/>
         </div>
-     <div  id="kucunlaing" style="display: block" >
+    <!-- <div  id="kucunlaing" style="display: block" >
           最低库存量&nbsp;&nbsp;&nbsp;<input type="text" id="zuidikucun" name="zuidikucun"><br><br>
             最高库存量&nbsp;&nbsp;&nbsp;<input type="text" id="zuigaokucun" name="zuigaokucun">
-        </div>
-    <div id="cangku" style="display: none" >
-            <table border="1px black solid">
+        </div>-->
+    <div id="cangku" style="display: block" >
+            <table border="1px black solid" align="center">
                 <tr style="width: auto;height: auto">
-                    <td>仓库</td>
-                    <td>最低库存量</td>
-                    <td>最高库存量</td>
+                    <td width="300" style="text-align: center">仓库</td>
+                    <td width="300" style="text-align: center" >最低库存量</td>
+                    <td width="300" style="text-align: center">最高库存量</td>
                 </tr>
                 <tr>
-                    <td>默认库</td>
-                    <td><input type="text" id="czuidikc" name=""czuidikc></td>
-                    <td><input type="text" id="czuigaok" name="czuigaok"></td>
+                    <td width="300" style="text-align: center">默认库</td>
+                    <td style="text-align: center"><input type="text" id="comzuidikucun" name="czuidikc" style="text-align: center"> </td>
+                    <td style="text-align: center"><input type="text"  id="comzuigaokucun" name="czuigaok" style="text-align: center"></td>
                 </tr>
             </table>
         </div>
@@ -236,11 +267,11 @@
                 fenlei:$("#fenlei").val(),
                 danwei:$("#danwei").val(),
                 guige:$("#guige").val(),
-                cankaojinhuo:$("#cankaojinhuo").val(),
-                pifajia:$("#pifajia").val(),
-                lingshoujia:$("#lingshoujia").val(),
-                zuidilingshou:$("#zuidilingshou").val(),
-                czuidikc:$("#czuidikc").val(),
+                cankaojinhuo:$("#cankaojinhuojia").val(),
+                pifajia:$("#compifajia").val(),
+                lingshoujia:$("#comlingshoujia").val(),
+                zuidilingshou:$("#comzuilingshoujia").val(),
+                czuidikc:$("#comzuidikucun").val(),
                 czuigaok:$("#czuigaok").val(),
 
             },
