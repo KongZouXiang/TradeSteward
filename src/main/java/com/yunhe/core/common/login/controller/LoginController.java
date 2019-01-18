@@ -23,10 +23,14 @@ public class LoginController {
     ILoginService loginService;
 
     @GetMapping("/")
-    public String index() {
+    public String login() {
         return "login";
     }
 
+    @GetMapping("toindex")
+    public String index() {
+        return "index";
+    }
     @PostMapping("/login")
     public String login(Employ employ, HttpSession session) {
         if (loginService.login(employ) != null) {
@@ -34,7 +38,6 @@ public class LoginController {
 
             return "index";
         }
-//        throw new GlobalException(ExceptionEnum.SELF_ERROR);
-       return ""+3/0;
+      return "login";
     }
 }

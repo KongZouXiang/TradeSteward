@@ -3,6 +3,7 @@ package com.yunhe.activitymanagement.service;
 import com.yunhe.activitymanagement.entity.MerchandisePackage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -27,13 +28,20 @@ public interface IMerchandisePackageService extends IService<MerchandisePackage>
      * @param merchandisePackage 查询条件放在对象里
      * @return 商品模板表：分页的结果集
      */
-    Map selectmpPage(int current, int size, MerchandisePackage merchandisePackage);
+    Map queryLikeList(int current, int size, MerchandisePackage merchandisePackage);
+
+
+
+
 
     /**
      * <P>
-     *     查询数据
+     *     删除数据
      * </P>
-     * @return 商品模板表：查询的结果集
+     * @param
+     * @return  商品套餐表：删除是否成功
      */
-    List<MerchandisePackage> selectmp();
+    int deleteById(Serializable id);
+
+
 }

@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yunhe.basicdata.dao.WarehouseManagementMapper">
-
-    <select id="selectWareList" resultType="com.yunhe.basicdata.entity.WarehouseManagement">
-        select * from warehouse_management
+    <select id="selectWareList" resultType="com.yunhe.basicdata.entity.WarehouseManagement" parameterType="string">
+        SELECT id,wm_number,wm_name,wm_person,wm_tel,wm_address,wm_postcode,wm_state,wm_remark
+        FROM warehouse_management
+        WHERE wm_number
+        LIKE concat('%',#{data},'%') OR wm_name
+        LIKE concat('%',#{data},'%')OR wm_person
+        LIKE concat('%',#{data},'%') OR wm_tel
+        LIKE concat('%',#{data},'%') OR wm_address
+        LIKE concat('%',#{data},'%') OR wm_remark
+        LIKE concat('%',#{data},'%')
     </select>
-
 </mapper>

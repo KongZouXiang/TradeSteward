@@ -62,7 +62,7 @@
                 </tr>
                 <tr>
                     <td width="80" align="right"><span class="fontRed">*</span>备注信息</td>
-                    <td><input name="userpassword" id="emplremark" type="password" value="" class="inputText wf250 " data-rule="备注信息:" placeholder="密码" spellcheck="true"></td>
+                    <td><input name="userpassword" id="emplremark" type="text" value="" class="inputText wf250 " data-rule="备注信息:" placeholder="请输入备注信息..." spellcheck="true"></td>
                     <td><span class="font999"></span></td>
                 </tr>
                 </tbody></table>
@@ -77,15 +77,15 @@
                 </td>
             </tr>
             <tr>
-                <td width="80" align="right"><span class="fontRed">*</span>邮编</td>
+                <td width="80" align="right"><span class="fontRed">*</span>邮箱</td>
                 <td>
-                    <input name="newusername" id="emplrealn" maxlength="50" type="text" class="inputText wf250 fl" data-rule="邮编" placeholder="邮编" data-rule-name="[/^[0-9_]+$/, '只能输入中文,字母数字下划线']" spellcheck="true">
+                    <input name="newusername" id="emplrealn" maxlength="50" type="text" class="inputText wf250 fl" data-rule="邮箱" placeholder="请输入邮箱..." data-rule-name="^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$, '请输入正确邮箱格式...']" spellcheck="false">
                 </td>
                 <td><span class="font999"></span></td>
             </tr>
             <tr>
                 <td width="80" align="right"><span class="fontRed">*</span>仓库地址</td>
-                <td><input name="userpassword" id="emplpasswo" type="password" value="" class="inputText wf250 " data-rule="仓库地址: required;password;" placeholder="仓库地址" spellcheck="false"></td>
+                <td><input name="userpassword" id="emplpasswo" type="text" value="" class="inputText wf250 " data-rule="仓库地址:" placeholder="仓库地址" spellcheck="false"></td>
                 <td><span class="font999"></span></td>
             </tr>
             </tbody></table>
@@ -111,25 +111,20 @@
                 wmAddress:$("#emplpasswo").val(),
                 wmTel:$("#emplTel").val(),
                 wmState:1,
-
             },
             success: function(msg){
                 $('#cancelBtn').click();
             }
         });
     }
-
     $('#addWarehouse').on('click', function(){
         addWarehouse();
-
     });
 
     $('#cancelBtn').on('click', function(){
         var index = parent.layer.getFrameIndex(window.name);
-        parent.getUserPageList();
         parent.layer.close(index);
     });
     </script>
 </body>
-
 </html>

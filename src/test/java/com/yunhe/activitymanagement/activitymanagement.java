@@ -33,12 +33,12 @@ public class activitymanagement {
 
 
     /*查询商品模板数据*/
-    @Test
+   /* @Test
     public void test1() {
         List<CommodiTytemplate> ct = commodiTytemplateService.list();
         System.out.println(ct);
     }
-    /*增加商品模板数据*/
+    *//*增加商品模板数据*//*
     @Test
     public void test2(){
         CommodiTytemplate ct = new CommodiTytemplate();
@@ -49,7 +49,7 @@ public class activitymanagement {
         boolean i =commodiTytemplateService.save(ct);
         System.out.println(i);
     }
-    /*修改商品模板数据*/
+    *//*修改商品模板数据*//*
     @Test
     public void test3(){
         CommodiTytemplate ct = new CommodiTytemplate();
@@ -60,13 +60,13 @@ public class activitymanagement {
         boolean i =commodiTytemplateService.updateById(ct);
         System.out.println(i);
     }
-    /*删除商品模板数据*/
+    *//*删除商品模板数据*//*
     @Test
     public void test4(){
         CommodiTytemplate ct = new CommodiTytemplate();
         ct.setId(8);
         boolean i =commodiTytemplateService.removeById(ct);
         System.out.println(i);
-    }
+    }*/
 
 }

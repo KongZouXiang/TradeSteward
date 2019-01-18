@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html  xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -31,31 +31,42 @@
 <div class="page-container" id="app">
 	<div class="text-c">
 		<input type="text" class="input-text" style="width:250px" placeholder="搜索编号、名称、联系人、电话..." id="aa" name="">
-		<button type="submit" class="btn btn-success" id="bb" name=""><i class="Hui-iconfont">&#xe665;</i> 搜仓库</button>
+		<button type="submit" class="btn btn-success" id="bb" name="" @click="findWare()"><i class="Hui-iconfont">&#xe665;</i> 搜仓库</button>
 	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="admin_add('添加管理员','admin-add.html','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加仓库</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
-	<table class="table table-border table-bordered table-bg">
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+        <a href="javascript:;" onclick="admin_add('添加仓库','admin-add.html','800','500')" class="btn btn-primary radius" @click="addWare()">
+            <i class="Hui-iconfont">&#xe600;</i>
+            添加仓库
+        </a>
+    </span>
+
+        <span class="r">共有数据：
+            <strong>54</strong> 条</span> </div>
+	<table class="table table-border table-bordered table-bg" >
 		<thead>
 			<tr>
-				<th scope="col" colspan="9">仓库列表</th>
+				<th scope="col" colspan="9" width="100%">仓库列表</th>
 			</tr>
 			<tr class="text-c">
-				<th width="25"><input type="checkbox" name="" value=""></th>
+				<th width="25">
 				<th width="40">序号</th>
 				<th width="150">操作</th>
 				<th width="90">编号</th>
 				<th width="150">名称</th>
-				<th>联系人</th>
+				<th width="150">联系人</th>
 				<th width="130">联系电话</th>
 				<th width="100">状态</th>
 			</tr>
 		</thead>
-		<tbody>
-			<tr class="text-c" v-for="(item,index) in result">
-				<td><input type="checkbox" value="1" name=""></td>
+		<div >
+			<tr  class="text-c" v-for="(item,index) in result" >
+				<td></td>
 				<td>{{index+1}}</td>
-				<td>  <a href="#" @click="addWare()" class="Hui-iconfont Hui-iconfont-add2"></a>
-					<a href="#"  @click="deletea(item.id)" class="Hui-iconfont Hui-iconfont-del3"></a></td>
+				<td>
+					<a href="#" @click="detail(item.id)" class="Hui-iconfont Hui-iconfont-gengduo3" title="详细"></a>
+					<a href="#" @click="EditWarHouse(item.id)" class="Hui-iconfont Hui-iconfont-edit" title="编辑"></a>
+					<a href="#"  @click="deletea(item.id)" class="Hui-iconfont Hui-iconfont-del3" title="删除"></a>
+				</td>
 				<td>{{item.wmNumber}}</td>
 				<td>{{item.wmName}}</td>
 				<td>{{item.wmPerson}}</td>
@@ -69,8 +80,41 @@
 				<td>{{item.wm_name}}</td>
 				<td>{{item.age}}</td>
 			</tr>
+        </div>
 		</tbody>
 	</table>
+<div style="text-align:center;">
+	<table class="table table-bg" style="display: none;text-align:center;" id="details">
+
+	<tr>
+        <th>仓库名:<td>{{results.wmName}}</td></th>
+        <th>仓库编号:<td>{{results.wmNumber}}</td></th>
+    </tr>
+        <tr>
+
+        <th>状态:</th>
+					<th v-if="results.wmState===1">
+						启用
+					</th>
+					<th v-else>
+						禁用
+					</th>
+            <td>联系人:</td>
+            <th>{{results.wmPerson}}</th>
+            <th>联系电话:{{results.wmTel}}</th>
+        </tr>
+        <tr>
+					<th>邮箱:</th>
+				<th>{{results.wmPostcode}}</th>
+					<th>仓库地址:</th>
+				<th>{{results.wmAddress}}</th>
+            <th>备注:</th>
+            <th>{{results.wmRemark}}</th>
+        </tr>
+	</table>
+</div>
+
+
 	<div id="pagenav" style="text-align:center;position: fixed;left: 0px;width: 100%;"></div>
 </div>
 <!--_footer 作为公共模版分离出去-->
@@ -95,7 +139,8 @@
 var app = new Vue({
     el:'#app',
     data:{
-        result:[]
+        result:[],
+		results:[]
     }
 });
 
@@ -105,12 +150,14 @@ var getUserPageList = function(curr) {
         dataType:'json',
         url:'/basicdata/warehouse-management/select',
         data:{
+			data:$("#aa").val(),
             pageNum: curr || 1,
-            pageSize:2,
+            pageSize:2
         },
         success:function(msg){
-            console.log(msg)
+
             app.result = msg.list;
+            console.log(app.result);
             laypage({
                 cont:'pagenav',
                 pages:msg.totalPage,
@@ -146,7 +193,6 @@ var  deletea = function (id) {
 			},
 			success:function() {
 				console.log("123456")
-				getUserPageList();
 				layer.msg('已经成功删除记录' + id,{icon:5});
 				layer.close();
 			}
@@ -157,21 +203,22 @@ var  deletea = function (id) {
 	});
 };
 /*模糊查询*/
-$("#findWare").click(function () {
-	$.ajax({
+var findWare = function () {
+	getUserPageList();
+	/*$.ajax({
 		type:'post',
 		dataType:'json',
 		url:'/basicdata/warehouse-management/vagueselect',
 		data:{
-			data:$("#SearchKeyWord").val()
+			data:$("#aa").val()
 		},
 		success:function (da) {
 			console.log(da);
 			console.log("da.list==="+da.list);
 			app.result=da.list;
 		}
-	})
-})
+	})*/
+};
 /*增加仓库*/
 var  addWare = function () {
             layer.open({
@@ -187,60 +234,42 @@ var  addWare = function () {
                 }
             });
         };
-
-
-/*管理员-增加*/
-function admin_add(title,url,w,h){
-	layer_show(title,url,w,h);
-}
-/*管理员-删除*/
-function admin_del(obj,id){
-	layer.confirm('确认要删除吗？',function(index){
-		$.ajax({
-			type: 'POST',
-			url: '',
-			dataType: 'json',
-			success: function(data){
-				$(obj).parents("tr").remove();
-				layer.msg('已删除!',{icon:1,time:1000});
-			},
-			error:function(data) {
-				console.log(data.msg);
-			},
-		});		
-	});
-}
-
-/*管理员-编辑*/
-function admin_edit(title,url,id,w,h){
-	layer_show(title,url,w,h);
-}
-/*管理员-停用*/
-function admin_stop(obj,id){
-	layer.confirm('确认要停用吗？',function(index){
-		//此处请求后台程序，下方是成功后的前台处理……
-		
-		$(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_start(this,id)" href="javascript:;" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">已禁用</span>');
-		$(obj).remove();
-		layer.msg('已停用!',{icon: 5,time:1000});
-	});
-}
-
-/*管理员-启用*/
-function admin_start(obj,id){
-	layer.confirm('确认要启用吗？',function(index){
-		//此处请求后台程序，下方是成功后的前台处理……
-		
-		
-		$(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_stop(this,id)" href="javascript:;" title="停用" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
-		$(obj).remove();
-		layer.msg('已启用!', {icon: 6,time:1000});
-	});
-}
-
-
+/*编辑仓库*/
+    var EditWarHouse=function (id) {
+               layer.open({
+                    type:2,
+                    title:'编辑仓库',
+                    fix:false,
+                    maxmin:true,
+                    shadeClose:true,
+                    area:['1000px','500px'],
+                   /* content:'http://localhost:8080/basicdata/editWareHouse.html',*/
+                    content:'/basicdata/warehouse-management/UpdateWareHouse?id='+id,
+                    end:function(){
+                        getUserPageList();
+                    }
+                });
+    }
+    /*详细*/
+var detail=function (id) {
+    $.ajax({
+        type:'post',
+        dataType:'json',
+        url:'/basicdata/warehouse-management/selectByid',
+        data:{
+            id:id
+        },
+        success:function(msg) {
+            app.results = msg.data;
+            console.log(app.results)
+        },
+    });
+/*详细*/
+	var s=document.getElementById("details")
+    if(s.style.display=="none"){
+        s.style.display="block"
+    }else {s.style.display="none"};
+};
 </script>
 </body>
 </html>

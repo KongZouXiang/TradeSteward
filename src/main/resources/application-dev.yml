@@ -12,6 +12,7 @@ spring:
     password: root
     #连接地址
     url: jdbc:mysql://172.16.35.99:3306/trades_teward?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+#    url: jdbc:mysql://47.106.37.123:3306/trades_teward?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
     #连接类型
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
@@ -39,3 +40,10 @@ spring:
     mode: HTML5
     servlet:
       content-type: text/html
+
+  #出现错误时直接抛出异常
+  mvc:
+    throw-exception-if-no-handler-found: true
+  #关闭工程中的资源文件建立映射
+#  resources:
+#    add-mappings: false

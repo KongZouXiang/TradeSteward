@@ -56,6 +56,11 @@ public class PurchaseReturnHistoryServiceImpl extends ServiceImpl<PurchaseReturn
         return purchaseReturnHistoryMapper.deleteById(id);
     }
 
+    @Override
+    public List<PurchaseReturnHistory> selectPurchaseReturnHistory() {
+        return purchaseReturnHistoryMapper.selectList(null);
+    }
+
     public PurchaseReturnHistoryMapper getPurchaseReturnHistoryMapper() {
         return purchaseReturnHistoryMapper;
     }

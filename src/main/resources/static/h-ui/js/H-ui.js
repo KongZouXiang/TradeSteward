@@ -190,7 +190,7 @@ function stopDefault(e) {
 (function(factory) {
 	"use strict";
 	if (typeof define === 'function' && define.amd) {
-		// using AMD; register as anon module
+		// using AMD; login as anon module
 		define(['jquery'], factory);
 	} else {
 		// no AMD; invoke directly
@@ -5356,7 +5356,7 @@ jQuery(function($) {
 
 		if ($this.is('a')) e.preventDefault();
 		$target.one('show.bs.modal',function(showEvent) {
-			if (showEvent.isDefaultPrevented()) return // only register focus restorer if modal will actually get shown
+			if (showEvent.isDefaultPrevented()) return // only login focus restorer if modal will actually get shown
 			$target.one('hidden.bs.modal',function() {
 				$this.is(':visible') && $this.trigger('focus');
 			});

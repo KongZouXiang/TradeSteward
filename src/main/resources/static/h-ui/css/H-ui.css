@@ -138,7 +138,7 @@ CSS写作注意事项：
   5. 谨慎添加新的选择符规则，尤其不可滥用 id，尽可能继承和复用已有样式
   6. 选择符、属性、值均用小写（格式的颜色值除外），缩写的选择符名称须说明缩写前的全称，例如 .cl -> Clearfix
   7. 避免使用各种 CSS Hack，如需对 IE 进行特殊定义，请参阅下节“关于 CSS Hack 的说明”
-  8. 勿使用冗余低效的 CSS 写法，例如：ul li a span{... }
+  8. 勿使用冗余低效的 CSS 写法，例如：ul li myanno span{... }
   9. 慎用 !important
   10. 建议使用具有语义化的classname或id，请参阅下节“css 命名规范及对应的缩写”
   11.避免使用兼容性不好的使用滤镜
@@ -818,8 +818,8 @@ pre{white-space: pre-wrap}	/*预格式化的文本*/
 .va-t{vertical-align:top!important}.va-m{vertical-align:middle!important}.va-b{vertical-align:bottom!important}
 /*3.1.4 定位
 	Name:			style_position
-	Example:		class="pos-r|pos-a|pos-f"
-	Explain:		.pos-r 相对定位|.pos-a 绝对定位|.pos-f 固定
+	Example:		class="pos-r|pos-myanno|pos-f"
+	Explain:		.pos-r 相对定位|.pos-myanno 绝对定位|.pos-f 固定
 */
 .pos-r{position:relative}.pos-a{position:absolute}.pos-f{position:fixed}
 /*3.1.5 浮动
@@ -1058,7 +1058,7 @@ ul.inline > li,ol.inline > li{display:inline-block;*display:inline;padding-right
 }
 
 /*排行榜*/
-/*<ol class="list-view list-top"><li class="item"><em class="num">1</em><a href="#">排行榜列表</a><span class="date">12</span></li></ol>*/
+/*<ol class="list-view list-top"><li class="item"><em class="num">1</em><myanno href="#">排行榜列表</myanno><span class="date">12</span></li></ol>*/
 .list-top > .item{padding-left: 30px}
 .list-top > .item .num{ position:absolute; top:11px; display:block; width:20px; height:20px; color:#fff; background-color:#5a98de; text-align:center}
 
@@ -1827,7 +1827,7 @@ squid.swing.jselect()
 /*3.4.4 input-file 文件上传
 	Example:
 <span class="btn-upload">
-  <a style="z-index:2;" href="javascript:void();" class="btn btn-primary radius"><i class="iconfont">&#xf0020;</i> 浏览文件<input type="file" multiple name="file_0" class="input-file"></a>
+  <myanno style="z-index:2;" href="javascript:void();" class="btn btn-primary radius"><i class="iconfont">&#xf0020;</i> 浏览文件<input type="file" multiple name="file_0" class="input-file"></myanno>
 </span>
 	Explain：把文件选择域设为透明,通过绝对定位覆盖在长的好看的按钮上面。
 */
@@ -3054,29 +3054,29 @@ H-ui采用Font Awesome 3.2.1的整套图标，因为是图标字体，所以可�
 <header class="navbar-wrapper">
 	<nav class="nav navbar-nav nav-collapse" role="navigation" id="Hui-navbar">
 		<ul class="cl">
-			<li class="current"><a href="/">首页</a></li>
-			<li><a href="#">核心</a></li>
-			<li><a href="#">扩展</a></li>
-			<li class="dropDown dropDown_hover"><a href="#" class="dropDown_A">一级导航 <i class="Hui-iconfont">&#xe6d5;</i></a>
+			<li class="current"><myanno href="/">首页</myanno></li>
+			<li><myanno href="#">核心</myanno></li>
+			<li><myanno href="#">扩展</myanno></li>
+			<li class="dropDown dropDown_hover"><myanno href="#" class="dropDown_A">一级导航 <i class="Hui-iconfont">&#xe6d5;</i></myanno>
 				<ul class="dropDown-menu menu radius box-shadow">
-					<li><a href="#">二级导航</a></li>
-					<li><a href="#">二级导航<i class="arrow Hui-iconfont">&#xe6d7;</i></a>
+					<li><myanno href="#">二级导航</myanno></li>
+					<li><myanno href="#">二级导航<i class="arrow Hui-iconfont">&#xe6d7;</i></myanno>
 						<ul class="menu">
-							<li><a href="javascript:;">三级菜单<i class="arrow Hui-iconfont">&#xe6d7;</i></a>
+							<li><myanno href="javascript:;">三级菜单<i class="arrow Hui-iconfont">&#xe6d7;</i></myanno>
 								<ul class="menu">
-									<li><a href="javascript:;">四级菜单</a></li>
-									<li><a href="javascript:;">四级菜单</a></li>
-									<li><a href="javascript:;">四级菜单</a></li>
+									<li><myanno href="javascript:;">四级菜单</myanno></li>
+									<li><myanno href="javascript:;">四级菜单</myanno></li>
+									<li><myanno href="javascript:;">四级菜单</myanno></li>
 								</ul>
 							</li>
-							<li><a href="#">三级导航</a></li>
+							<li><myanno href="#">三级导航</myanno></li>
 						</ul>
 					</li>
-					<li><a href="#">二级导航</a></li>
-					<li class="disabled"><a href="javascript:;">二级菜单</a></li>
+					<li><myanno href="#">二级导航</myanno></li>
+					<li class="disabled"><myanno href="javascript:;">二级菜单</myanno></li>
 				</ul>
 			</li>
-			<li><a href="#">联系我们</a></li>
+			<li><myanno href="#">联系我们</myanno></li>
 		</ul>
 	</nav>
 </header>
@@ -3184,7 +3184,7 @@ H-ui采用Font Awesome 3.2.1的整套图标，因为是图标字体，所以可�
 	Example:
 <nav class="breadcrumb">
   <div class="container">
-    <i class="Hui-iconfont">&#xe67f;</i> <a href="/" class="c-primary">首页</a><span class="c-gray en">&gt;</span><a href="#">组件</a><span class="c-gray en">&gt;</span><span class="c-gray">当前页面</span>
+    <i class="Hui-iconfont">&#xe67f;</i> <myanno href="/" class="c-primary">首页</myanno><span class="c-gray en">&gt;</span><myanno href="#">组件</myanno><span class="c-gray en">&gt;</span><span class="c-gray">当前页面</span>
   </div>
 </nav>
 */
@@ -3208,7 +3208,7 @@ H-ui采用Font Awesome 3.2.1的整套图标，因为是图标字体，所以可�
 /*4.2.4 顶部导航
 	Name:			mod_topnav
 	Sample:
-	<div class="topnav"><div class="cl"><div class="l">您好，欢迎来到Hui！</div><div class="r"><span class="r_nav">[ <a rel="nofollow" href="javascript:login();">登录</a> ]</span><span class="pipe">|</span><span class="r_nav">[ <a href="javascript:register();" rel="nofollow">注册</a> ]</span><span class="pipe">|</span><span class="r_nav"><a title="收藏" href="javascript:addFavorite();">收藏本站</a></span><span class="pipe">|</span><span class="r_nav"><a href="javascript:void(0)" onclick="setHome(this);" title="设为首页">设为首页</a></span></div></div></div>
+	<div class="topnav"><div class="cl"><div class="l">您好，欢迎来到Hui！</div><div class="r"><span class="r_nav">[ <myanno rel="nofollow" href="javascript:login();">登录</myanno> ]</span><span class="pipe">|</span><span class="r_nav">[ <myanno href="javascript:login();" rel="nofollow">注册</myanno> ]</span><span class="pipe">|</span><span class="r_nav"><myanno title="收藏" href="javascript:addFavorite();">收藏本站</myanno></span><span class="pipe">|</span><span class="r_nav"><myanno href="javascript:void(0)" onclick="setHome(this);" title="设为首页">设为首页</myanno></span></div></div></div>
 
 */
 .topnav{height:30px;line-height:30px;background-color;#f7f7f7;border-bottom:1px solid #EBEBEB; font-size:12px}
@@ -3296,9 +3296,9 @@ H-ui采用Font Awesome 3.2.1的整套图标，因为是图标字体，所以可�
 /*兼容写法
 	Sample:
 	<div class="steps-ie cl">
-	  <a class="step-ie active" href="#">第一步<em class="arrow"></em></a>
-	  <a class="step-ie" href="#">第二步<em class="arrow"></em></a>
-	  <a class="step-ie" href="#">第三步<em class="arrow"></em></a>
+	  <myanno class="step-ie active" href="#">第一步<em class="arrow"></em></myanno>
+	  <myanno class="step-ie" href="#">第二步<em class="arrow"></em></myanno>
+	  <myanno class="step-ie" href="#">第三步<em class="arrow"></em></myanno>
 	</div>
 */
 .steps-ie,.step-ie,.step-ie .arrow{height:44px; line-height:44px}
@@ -3311,10 +3311,10 @@ H-ui采用Font Awesome 3.2.1的整套图标，因为是图标字体，所以可�
 /*4.2.6 竖向导向tab导航
 	Sample:
 	<div class="verticalTab">
-	  <a class="" href="#">导航一<em></em></a>
-	  <a class="active" href="#">导航二<em></em></a>
-	  <a href="#">导航三<em></em></a>
-	  <a href="#">导航四<em></em></a>
+	  <myanno class="" href="#">导航一<em></em></myanno>
+	  <myanno class="active" href="#">导航二<em></em></myanno>
+	  <myanno href="#">导航三<em></em></myanno>
+	  <myanno href="#">导航四<em></em></myanno>
 	</div>
 */
 .verticalTab{background:#fff url(../images/verticalTab/tab_bg.png) repeat-y 0 0; width:38px}
@@ -3347,10 +3347,10 @@ H-ui采用Font Awesome 3.2.1的整套图标，因为是图标字体，所以可�
 	Name:			mod_dropDown
 	Example:
 	<span class="dropDown">
-		<a class="dropDown_A" href="#">下拉菜单</a>
+		<myanno class="dropDown_A" href="#">下拉菜单</myanno>
 		<ul class="dropDown-menu menu radius box-shadow">
-			<li><a href="#">菜单一</a></li>
-			<li><a href="#">菜单二</a></li>
+			<li><myanno href="#">菜单一</myanno></li>
+			<li><myanno href="#">菜单二</myanno></li>
 		</ul>
 	</span>
 	Explain:		如需要在不同的地方显示不同的样式，请在<span class="dropDown"> 追加class，采用覆盖的方式重写默认样式。
@@ -3397,9 +3397,9 @@ H-ui采用Font Awesome 3.2.1的整套图标，因为是图标字体，所以可�
   <div class="slider">
     <div class="bd">
       <ul>
-        <li><a href="http://www.h-ui.net/" target="_blank"><img src="temp/banner1.jpg" ></a></li>
-        <li><a href="http://www.h-ui.net/zhaishang.shtml" target="_blank"><img src="temp/banner2.jpg" ></a></li>
-        <li><a href="http://h-ui.net/H-ui.admin.shtml" target="_blank"><img src="temp/banner4.jpg" ></a></li>
+        <li><myanno href="http://www.h-ui.net/" target="_blank"><img src="temp/banner1.jpg" ></myanno></li>
+        <li><myanno href="http://www.h-ui.net/zhaishang.shtml" target="_blank"><img src="temp/banner2.jpg" ></myanno></li>
+        <li><myanno href="http://h-ui.net/H-ui.admin.shtml" target="_blank"><img src="temp/banner4.jpg" ></myanno></li>
       </ul>
     </div>
     <ol class="hd cl dots">
@@ -3561,7 +3561,7 @@ a.label:hover, a.label:focus, a.badge:hover, a.badge:focus{color: #fff;text-deco
 		<div class="modal-content">
 			<div class="modal-header">
 				<h3 id="myModalLabel">对话框标题</h3>
-				<a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+				<myanno class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</myanno>
 			</div>
 			<div class="modal-body">
 				<p>对话框内容…</p>
@@ -3760,19 +3760,19 @@ a.label:hover, a.label:focus, a.badge:hover, a.badge:focus{color: #fff;text-deco
 	/*4.12.1 返回顶部
 		Name:			mod_totop
 		Level:			Global
-		Example:		<a href="javascript:void(0)" class="tools-right toTop" title=backToTopTxt alt=backToTopTxt></a>
+		Example:		<myanno href="javascript:void(0)" class="tools-right toTop" title=backToTopTxt alt=backToTopTxt></myanno>
 		Explain:		返回顶部
 	*/
 	.tools-right.toTop{bottom:60px;display:none}
 	/*4.12.2 意见反馈
 		Name:			mod_feedback
 		Level:			Global
-		Example:		<a href="javascript:;" class="tools-right feedback Hui-iconfont" title="意见反馈" onClick="feedback()">&#xe70c;</a>
+		Example:		<myanno href="javascript:;" class="tools-right feedback Hui-iconfont" title="意见反馈" onClick="feedback()">&#xe70c;</myanno>
 		Explain:		意见反馈
 	<div id="modal-feedback" class="modal hide fade">
 		<div class="modal-header">
 			 <h3>意见反馈</h3>
-			 <a class="Hui-iconfont close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">&#xe6a6;</a>
+			 <myanno class="Hui-iconfont close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">&#xe6a6;</myanno>
 		</div>
 		<div class="modal-body">
 			<div>
@@ -3903,8 +3903,8 @@ a.label:hover, a.label:focus, a.badge:hover, a.badge:focus{color: #fff;text-deco
 /*4.18.1 对联广告
 	Name:			mod_AD_dual
 	Sample:
-	<div class="dual dual_l"><div class="dual_con">对联的内容</div><a href="#" class="dual_close">X关闭</a></div>
-	<div class="dual dual_r"><div class="dual_con">对联的内容</div><a href="#" class="dual_close">X关闭</a></div>
+	<div class="dual dual_l"><div class="dual_con">对联的内容</div><myanno href="#" class="dual_close">X关闭</myanno></div>
+	<div class="dual dual_r"><div class="dual_con">对联的内容</div><myanno href="#" class="dual_close">X关闭</myanno></div>
 */
 .AD{text-align:center}
 .dual{top:260px;position:absolute; width:102px; overflow:hidden; display:none; z-index:100}
@@ -3965,7 +3965,7 @@ a.label:hover, a.label:focus, a.badge:hover, a.badge:focus{color: #fff;text-deco
 	
 	/*4.19.2 标签混排效果
 		Name:			mod_tags
-		Sample:			<div class="pd-10 tags"><a href="http://www.h-ui.net/">H-ui前端框架</a>……</div>
+		Sample:			<div class="pd-10 tags"><myanno href="http://www.h-ui.net/">H-ui前端框架</myanno>……</div>
 	
 	*/
 	.tags a{height:26px; line-height:26px;padding-right:6px}
@@ -4022,12 +4022,12 @@ a.label:hover, a.label:focus, a.badge:hover, a.badge:focus{color: #fff;text-deco
 	Sample:
 	<ul class="commentList">
 	  <li class="item clearfix">
-	    <a href="#"><i class="avatar avatar-L radius"><img alt="" src="static/h-ui/images/ucenter/avatar-default.jpg"></i></a>
+	    <myanno href="#"><i class="avatar avatar-L radius"><img alt="" src="static/h-ui/images/ucenter/avatar-default.jpg"></i></myanno>
 		<div class="comment-main">
 		  <header class="comment-header">
-		    <div class="comment-meta"><a class="comment-author" href="#">辉哥</a> 评论于 <time title="2014年8月31日 下午3:20" datetime="2014-08-31T03:54:20">2014-8-31 15:20</time></div>
+		    <div class="comment-meta"><myanno class="comment-author" href="#">辉哥</myanno> 评论于 <time title="2014年8月31日 下午3:20" datetime="2014-08-31T03:54:20">2014-8-31 15:20</time></div>
 	      </header>
-		  <div class="comment-body"><p><a href="#">@某人</a> 你是猴子派来的救兵吗？</p></div></div>
+		  <div class="comment-body"><p><myanno href="#">@某人</myanno> 你是猴子派来的救兵吗？</p></div></div>
 	  </li>
 	</ul>
 */
@@ -4058,14 +4058,14 @@ a.label:hover, a.label:focus, a.badge:hover, a.badge:focus{color: #fff;text-deco
 <footer class="footer mt-20">
   <div class="container">
     <nav class="footer-nav">
-      <a target="_blank" href="/aboutHui.html">关于H-ui</a>
+      <myanno target="_blank" href="/aboutHui.html">关于H-ui</myanno>
       <span class="pipe">|</span>
-      <a target="_blank" href="/copyright.html">软件著作权</a>
+      <myanno target="_blank" href="/copyright.html">软件著作权</myanno>
       <span class="pipe">|</span>
-      <a target="_blank" href="/juanzeng.html">感谢捐赠</a>
+      <myanno target="_blank" href="/juanzeng.html">感谢捐赠</myanno>
     </nav>
     <p>Copyright &copy;2013-2016 H-ui.net All Rights Reserved. <br>
-    <a rel="nofollow" target="_blank" href="http://www.miitbeian.gov.cn/">京ICP备10000000号</a><br>
+    <myanno rel="nofollow" target="_blank" href="http://www.miitbeian.gov.cn/">京ICP备10000000号</myanno><br>
     未经允许，禁止转载、抄袭、镜像</p>
   </div>
 </footer>
@@ -4343,7 +4343,7 @@ a.label:hover, a.label:focus, a.badge:hover, a.badge:focus{color: #fff;text-deco
 		<dl>
 			<dt class="dt">选择区域：</dt>
 			<dd class="dd">
-				<a href="#" title="北京市">北京市</a>  
+				<myanno href="#" title="北京市">北京市</myanno>
             </dd>
 		</dl>
 	</div>
