@@ -32,18 +32,18 @@
                class="input-text Wdate" style="width:120px;">
         <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax"
                class="input-text Wdate" style="width:120px;">-->
-        <input type="text" class="input-text" style="width:250px" placeholder="输入单号" id="poNumber" name="">
-        <input type="text" class="input-text" style="width:250px" placeholder="输入供应商" id="poSupName" name="">
+        <!--<input type="text" class="input-text" style="width:250px" placeholder="输入单号" id="poNumber" name="">-->
+        <input type="text" class="input-text" style="width:250px" placeholder="输入商品名称" id="poSupName" name="">
         <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜订单</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
             <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
-        <a href="javascript:;" onclick="admin_add('添加管理员','admin-add.html','800','500')"
+       <!-- <a href="javascript:;" onclick="admin_add('添加管理员','admin-add.html','800','500')"
            class="btn btn-primary radius">
-        <i class="Hui-iconfont">&#xe600;</i> 添加管理员</a>
-        <a href="javascript:;" onclick="admin_add('Excel导出','admin-add.html','800','500')"
-           class="btn btn-success radius">
+        <i class="Hui-iconfont">&#xe600;</i> 添加管理员</a>-->
+        <a href="javascript:;" onclick="downloadExcel()"
+           class="btn btn-success radius" id="excel">
         <i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
     </span>
 
@@ -123,10 +123,9 @@
             url: '/cargomanagement/warehouse/getPage',
             data: {
                 /*当前页*/
-                current: curr || 1,
+                pageNum: curr || 1,
                 /*每页大小*/
-                size: 1,
-
+                pageSize: 1,
 
             },
             success: function (msg) {
@@ -136,6 +135,7 @@
                     pages: msg.totalPage,//总页数
                     first: '首页',
                     last: '尾页',
+                    skin: '#00A0E9',
                     curr: curr || 1,//初始化页数
                     jump: function (obj, first) { //触发分页后的回调
                         if (!first) {     //点击跳页触发函数自身，并传递当前页：obj.curr
@@ -182,6 +182,11 @@
             content: url
         });
         layer.full(index);
+    }
+
+    /*导出Excel*/
+    function downloadExcel() {
+        window.location.href="/cargomanagement/warehouse/getExcel";
     }
 
 </script>

@@ -1,6 +1,7 @@
 package com.yunhe.cargomanagement.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageHelper;
 import com.yunhe.cargomanagement.entity.Warehouse;
 import com.yunhe.cargomanagement.dao.WarehouseMapper;
 import com.yunhe.cargomanagement.service.IWarehouseService;
@@ -54,15 +55,16 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, Warehouse
     }
 
     @Override
-    public Map selectWareHousePage(int current, int size) {
+    public Map selectWareHousePage(int pageNum, int pageSize) {
         Map map=new HashMap();
-        Page<Warehouse> page=new Page<>(current,size);
-        List<Warehouse> list=warehouseMapper.selectAll();
+        Page<Warehouse> page=new Page<>(pageNum,pageSize);
+        List<Warehouse> list=warehouseMapper.selectAll(page);
         map.put("list",list);
-        map.put("current",current);
-        map.put("size",size);
+        map.put("pageNum",pageNum);
+        map.put("pageSize",pageSize);
         map.put("totalPage",page.getPages());
         return map;
     }
+
 
 }
