@@ -1,153 +1,78 @@
-﻿<!DOCTYPE HTML>
-<html>
+﻿<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="renderer" content="webkit|ie-comp|ie-stand">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport"
-          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-    <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <link rel="Bookmark" href="/favicon.ico">
-    <link rel="Shortcut Icon" href="/favicon.ico"/>
-    <script type="text/javascript" src="/lib/html5shiv.js"></script>
-    <script type="text/javascript" src="/lib/respond.min.js"></script>
-    <script type="text/javascript" src="/js/vue/vue.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css"/>
-    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
-    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin"/>
-    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css"/>
-    <link rel="stylesheet" href="/lib/layui/css/layui.css" media="all">
-    <script type="text/javascript" src="/lib/respond.min.js"></script>
-    <script>DD_belatedPNG.fix('*');</script>
-    <title>管理员列表</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        td{
+            border: 1px solid rebeccapurple;
+            width: 150px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 管理员管理 <span
-        class="c-gray en">&gt;</span> 管理员列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
-                                               href="javascript:location.replace(location.href);" title="刷新"><i
-        class="Hui-iconfont">&#xe68f;</i></a></nav>
-<div class="page-container">
-    <div class="text-c">
-        <input type="text" class="input-text" style="width:250px" placeholder="输入单号" id="wreNumber" name="">
-        <input type="text" class="input-text" style="width:250px" placeholder="输入往来单位" id="wreCurrentUnit" name="">
-        <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜订单
-        </button>
-    </div>
-    <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <span class="l">
-            <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i
-                    class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
-        <a href="/cargomanagement/purchase-order/addPurchase" id="addpurOrder"
-           class="btn btn-primary radius">
-        <i class="Hui-iconfont">&#xe600;</i> 添加进货订单</a>
-        <a href="/cargomanagement/purchase-order/puchaseOrderExcel" id="Excel"
-           class="btn btn-success radius">
-        <i class="Hui-iconfont">&#xe644;</i>Excel导出</a>
-    </span>
-
-        <span class="r">共有数据：<strong>54</strong> 条</span></div>
-    <div id="app" style="height: 500px">
-        <table class="table table-border table-bordered table-bg">
-            <thead>
-            <tr>
-                <th scope="col" colspan="16">待入库单</th>
-            </tr>
-            <tr class="text-c">
-                <th width="25"><input type="checkbox" name="" value=""></th>
-                <th width="40">ID</th>
-                <th width="130">操作</th>
-                <th width="150">业务日期</th>
-                <th width="150">单据编号</th>
-                <th width="90">类型</th>
-                <th width="130">往来单位名称</th>
-                <th width="130">入库仓库</th>
-                <th width="150">入库商品</th>
-                <th width="100">待入库量</th>
-                <th width="150">制单日期</th>
-                <th width="90">经手人</th>
-                <th width="90">制单人</th>
-                <th width="100">状态</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="text-c" v-for="(item,index) in result">
-                <td><input type="checkbox" :value="index+1" name=""></td>
-                <td>{{index+1}}</td>
-                <td class="td-manage">
-                    <a title="详情" href="#" class="ml-5" style="text-decoration:none">
-                        <i class="icon Hui-iconfont" id="sta">&#xe627;</i>
-                    </a>
-                </td>
-                <td>{{item.wreDate}}</td>
-                <td>{{item.wreNumber}}</td>
-                <td>{{item.wreType}}</td>
-                <td>{{item.wreCurrentUnit}}</td>
-                <td>{{item.wreWarehostName}}</td>
-                <td>{{item.wreStorage}}</td>
-                <td>{{item.wreScheduledReceipt}}</td>
-                <td>{{item.wreDateOrder}}</td>
-                <td>{{item.wreSinglePerson}}</td>
-                <td>{{item.wreExperiencedPerson}}</td>
-                <td>{{item.wreState}}</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div id="pagenav" style="text-align: center"></div>
-</div>
-<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="/js/H-ui.min.js"></script>
-<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script>
-<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
-<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
-<script type="text/javascript">
-    var app = new Vue({
-        el: '#app',
-        data: {
-            result: []
-        }
-    });
-
-    var getWarehouseReceiptList = function (curr) {
-
-        $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            url: '/cargomanagement/warehouse-receipt/selectwarehouseReceiptPage',
-            data: {
-                /*当前页*/
-                pageNum: curr || 1,
-                /*每页大小*/
-                pageSize: 3,
-                wreNumber: $("#wreNumber").val(),
-                wreCurrentUnit: $("#wreCurrentUnit").val()
-                //向服务端传的参数，此处只是演示
-            },
-            success: function (msg) {
-                app.result = msg.list;
-                laypage({
-                    cont: 'pagenav',//容器  值支持id名、原生dom对象，jquery对象,
-                    pages: msg.pages,//总页数
-                    first: '首页',
-                    last: '尾页',
-                    curr: curr || 1,//初始化页数
-                    jump: function (obj, first) { //触发分页后的回调
-                        if (!first) {     //点击跳页触发函数自身，并传递当前页：obj.curr
-                            getWarehouseReceiptList(obj.curr);
-                        }
-                    }
-                });
-            }
-        });
-    };
-    getWarehouseReceiptList();
-    $("#findempl").on('click', function () {
-        getWarehouseReceiptList();
-    });
-
-</script>
+<table>
+    <thead>
+    <tr>
+        <td><input type="checkbox" id="check"> </td>
+        <td>编号</td>
+        <td>姓名</td>
+        <td>年龄</td>
+    </tr>
+    </thead>
+    <tbody id="tbody">
+    <tr>
+        <td><input type="checkbox" name="user"></td>
+        <td>1</td>
+        <td>张三</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" name="user"></td>
+        <td>2</td>
+        <td>李四</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" name="user"></td>
+        <td>3</td>
+        <td>王五</td>
+        <td>29</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" name="user"></td>
+        <td>4</td>
+        <td>赵六</td>
+        <td>29</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" name="user"></td>+
+        <td>5</td>
+        <td>田七</td>
+        <td>30</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" name="user"></td>
+        <td>6</td>
+        <td>汾九</td>
+        <td>20</td>
+    </tr>
+    </tbody>
+</table>
 </body>
+<script>
+    document.getElementById("check").onclick = function(){
+        var checked = document.getElementById("check").checked;
+        var checkson = document.getElementsByName("user");
+        if(checked){
+            for(var i = 0; i < checkson.length ;i++){
+                checkson[i].checked = true;
+            }
+        }else{
+            for(var i = 0; i < checkson.length ;i++){
+                checkson[i].checked = false;
+            }
+        }
+    }
+</script>
 </html>

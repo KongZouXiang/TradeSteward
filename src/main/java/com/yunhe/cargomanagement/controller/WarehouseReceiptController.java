@@ -22,17 +22,10 @@ public class WarehouseReceiptController {
     @Resource
     private IWarehouseReceiptService warehouseReceiptService;
 
-    @RequestMapping("/warehouse_receipt1")
+    @RequestMapping("/warehouse_receipt")
     public ModelAndView test1(){
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("/cargomanagement/warehouse_receipt1_list");
-        return mv;
-    }
-
-    @RequestMapping("/warehouse_receipt2")
-    public ModelAndView test2(){
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("/cargomanagement/warehouse_receipt2_list");
+        mv.setViewName("/cargomanagement/warehouse_receipt_list");
         return mv;
     }
 
@@ -48,4 +41,18 @@ public class WarehouseReceiptController {
         Map warehouseReceiptPage = warehouseReceiptService.selectwarehouseReceiptByState(pageNum,pageSize,warehouseReceipt);
         return warehouseReceiptPage;
     }
+
+    /**
+     * 分页查询入库单数据
+     * @param pageNum 当前页
+     * @param pageSize 每页条数
+     * @param warehouseReceipt 入库历史实体类
+     * @return 入库单以及参数数据
+     */
+    @RequestMapping("/selectwarehouseReceiptTwoPage")
+    public Map selectwarehouseReceiptTwoByState(int pageNum, int pageSize, WarehouseReceipt warehouseReceipt){
+        Map warehouseReceiptPage = warehouseReceiptService.selectwarehouseReceiptTwoByState(pageNum,pageSize,warehouseReceipt);
+        return warehouseReceiptPage;
+    }
+
 }
