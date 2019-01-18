@@ -65,5 +65,9 @@ public interface ICommodityListService extends IService<CommodityList> {
      */
     List<CommodityList> selectCommstlist(String data);
 
-
+    /**
+     *
+     * @return
+     */
+    List<CommodityList> ExportExcel();
 }

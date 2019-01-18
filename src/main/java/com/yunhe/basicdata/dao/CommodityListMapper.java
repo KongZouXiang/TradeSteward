@@ -50,13 +50,12 @@ public interface CommodityListMapper extends BaseMapper<CommodityList> {
      * @return 返回更改后的商品信息
      */
     int updateComm(CommodityList commodityList);
-
-
     /**
      * 删除商品的信息
-     *
      * @param commodityList 删除商品的实体类
      * @return 无返回
      */
     int deleteComm(CommodityList commodityList);
+    /*导出excel文件*/
+   List<CommodityList > selectExcel();
 }
