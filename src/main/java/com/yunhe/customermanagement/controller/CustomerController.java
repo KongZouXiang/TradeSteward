@@ -53,7 +53,7 @@ public class CustomerController {
 
 
 
-    @RequestMapping("/login")
+    @RequestMapping("/cust")
     @ResponseBody
     public ModelAndView selectAllCustomer1() {
         return new ModelAndView("customermanagement/admin.html");

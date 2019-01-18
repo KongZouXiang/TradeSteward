@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,35 +34,32 @@ public class SupplierController {
     @Resource
     ISupplierService supplierService;
 
-    /**
-     * <p>
-     *查询并分页
-     * </p>
-     *
-     * @param current  当前页数
-     * @param size     每页显示条数
-     * @param supplier 模糊查询内容
-     * @return total 总条数 pages 总页数 supplierList 客户表
-     */
-    @RequestMapping("/selectAllSupplier")
+
+    @RequestMapping("/supp")
     @ResponseBody
-    public Map selectAllSupplier(int current, int size, Supplier supplier) {
-        return supplierService.selectAllSupplier(current, size, supplier);
+    public ModelAndView selectAllCustomer1() {
+        return new ModelAndView("customermanagement/supplier.html");
     }
 
-
     /**
      * <p>
-     *     查询供应商信息
+     *     查询所有b并分页
      * </p>
-     * @param supplier 查询供应商
-     * @return 供应商对象
+     *
+     * @param
+     * @return 供应商
      */
     @RequestMapping("/selectSupplier")
     @ResponseBody
-    public Supplier selectAllSupplier(Supplier supplier) {
-        return supplier;
+    public Map selectAllSupplier(int current,int size) {
+        Map map = new HashMap();
+        map =  supplierService.selectAll(current, size);
+        System.out.println(current);
+        System.out.println(size);
+        return map;
     }
+
+
 
 
     /**
@@ -179,7 +178,7 @@ public class SupplierController {
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("供应商统计表");
         createTitle(workbook,sheet);
-        List<Supplier> entities = (List<Supplier>) supplierService.selectAll();
+        List<Supplier> entities = (List<Supplier>) supplierService.selectAllExcel();
 
         //设置日期格式
         HSSFCellStyle style = workbook.createCellStyle();
@@ -210,7 +209,7 @@ public class SupplierController {
 
         OutputStream output = response.getOutputStream();
         response.reset();
-        response.setHeader("Content-disposition","attachment; filename=customer.xls");
+        response.setHeader("Content-disposition","attachment; filename=供应商.xls");
         response.setContentType("application/msexcel");
         workbook.write(output);
         output.close();
