@@ -17,5 +17,8 @@
     <select id="selectAll" resultType="com.yunhe.customermanagement.entity.Supplier">
         SELECT * FROM trades_teward.supplier
     </select>
+    <select id="selectAllExcel" resultType="com.yunhe.customermanagement.entity.Supplier">
+        SELECT * FROM trades_teward.supplier
+    </select>
 
 </mapper>

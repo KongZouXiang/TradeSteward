@@ -1,9 +1,10 @@
 package com.yunhe.cargomanagement;
 
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yunhe.cargomanagement.dao.PurchaseReturnHistoryMapper;
-import com.yunhe.cargomanagement.entity.PurchaseReturnHistory;
+import com.yunhe.basicdata.entity.CommodityList;
+import com.yunhe.cargomanagement.dao.SalesOrderHistoryMapper;
+import com.yunhe.cargomanagement.entity.OrderConnectComm;
+import com.yunhe.cargomanagement.entity.SalesOrderHistory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,24 +16,20 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class cargomanagement {
-    @Resource
-    private PurchaseReturnHistoryMapper purchaseReturnHistoryMapper;
 
+/*    @Resource
+    private SalesOrderHistoryMapper salesOrderHistoryMapper;
     @Test
-    public void ceshi(){
-        PurchaseReturnHistory purchaseReturnHistory = new PurchaseReturnHistory();
-        purchaseReturnHistory.setPrhNumber("");
-        purchaseReturnHistory.setPrhSupname("");
-        Page page = new Page();
-        page.setCurrent(1);
-        page.setSize(1);
-        List<PurchaseReturnHistory> purchaseReturnHistories = purchaseReturnHistoryMapper.selectPurchaseReturnHistoryPage(page, purchaseReturnHistory);
-        for (PurchaseReturnHistory returnHistory : purchaseReturnHistories) {
-            System.out.println(returnHistory);
+    public void text(){
+        List<SalesOrderHistory> list = salesOrderHistoryMapper.selectAbc(1);
+        for (SalesOrderHistory salesOrderHistory : list) {
+            List<OrderConnectComm> orderConnectComms = salesOrderHistory.getOrderConnectComms();
+            for (OrderConnectComm comm : orderConnectComms) {
+                CommodityList commodityList = comm.getCommodityList();
+                System.out.println(commodityList);
+            }
         }
-    }
-
-
+    }*/
 
 
 }

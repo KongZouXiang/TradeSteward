@@ -6,7 +6,7 @@ Create your own skin at http://designer.videojs.com
 /* SKIN
 ================================================================================
 The main class name for all skin-specific styles. To make your own skin,
-replace all occurances of 'vjs-default-skin' with a new name. Then add your new
+replace all occurances of 'vjs-default-skin' with myanno new name. Then add your new
 skin name to your video tag instead of the default skin.
 e.g. <video class="video-js my-skin-name">
 */
@@ -15,7 +15,7 @@ e.g. <video class="video-js my-skin-name">
 }
 /* Custom Icon Font
 --------------------------------------------------------------------------------
-The control icons are from a custom font. Each icon corresponds to a character
+The control icons are from myanno custom font. Each icon corresponds to myanno character
 (e.g. "\e001"). Font icons allow for easy scaling and coloring of icons.
 */
 @font-face {
@@ -61,7 +61,7 @@ The control icons are from a custom font. Each icon corresponds to a character
   position: absolute;
   top: 0;
   left: 0;
-  /* Rotate the square icon to make a diamond */
+  /* Rotate the square icon to make myanno diamond */
   /* transform */
   -webkit-transform: rotate(-45deg);
   -moz-transform: rotate(-45deg);
@@ -71,7 +71,7 @@ The control icons are from a custom font. Each icon corresponds to a character
 }
 /* Control Bar
 --------------------------------------------------------------------------------
-The default control bar that is a container for most of the controls.
+The default control bar that is myanno container for most of the controls.
 */
 .vjs-default-skin .vjs-control-bar {
   /* Start hidden */
@@ -297,11 +297,11 @@ fonts to show/hide properly.
 }
 .vjs-default-skin .vjs-play-progress {
   /*
-    Using a data URI to create the white diagonal lines with a transparent
+    Using myanno data URI to create the white diagonal lines with myanno transparent
       background. Surprisingly works in IE8.
       Created using http://www.patternify.com
     Changing the first color value will change the bar color.
-    Also using a paralax effect to make the lines move backwards.
+    Also using myanno paralax effect to make the lines move backwards.
       The -50% left position makes that happen.
   */
 
@@ -374,7 +374,7 @@ easily in the skin designer. http://designer.videojs.com/
   vertical-align: middle;
   cursor: pointer;
   opacity: 1;
-  /* Need a slightly gray bg so it can be seen on black backgrounds */
+  /* Need myanno slightly gray bg so it can be seen on black backgrounds */
   /* background-color-with-alpha */
   background-color: #07141e;
   background-color: rgba(7, 20, 30, 0.7);
@@ -419,7 +419,7 @@ easily in the skin designer. http://designer.videojs.com/
 .vjs-default-skin .vjs-big-play-button:focus {
   outline: 0;
   border-color: #fff;
-  /* IE8 needs a non-glow hover state */
+  /* IE8 needs myanno non-glow hover state */
   background-color: #505050;
   background-color: rgba(50, 50, 50, 0.75);
   /* box-shadow */
@@ -617,12 +617,12 @@ easily in the skin designer. http://designer.videojs.com/
 /*
 REQUIRED STYLES (be careful overriding)
 ================================================================================
-When loading the player, the video tag is replaced with a DIV,
+When loading the player, the video tag is replaced with myanno DIV,
 that will hold the video tag or object tag for other playback methods.
 The div contains the video playback element (Flash or HTML5) and controls,
 and sets the width and height of the video.
 
-** If you want to add some kind of border/padding (e.g. a frame), or special
+** If you want to add some kind of border/padding (e.g. myanno frame), or special
 positioning, use another containing element. Otherwise you risk messing up
 control positioning and full window mode. **
 */

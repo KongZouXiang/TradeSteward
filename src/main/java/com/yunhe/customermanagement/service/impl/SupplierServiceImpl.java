@@ -32,17 +32,7 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier> i
         return supplierMapper.updateById(supplier);
     }
 
-    @Override
-    public Map selectAllSupplier(int current, int size, Supplier supplier) {
-        Page page = new Page(current, size);
-        List<Supplier> supplierList =supplierMapper.selectAllSupplier(page, supplier);
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("total", page.getTotal());
-        map.put("pages", page.getPages());
-        map.put("List", supplierList);
-        return map;
 
-    }
 
     @Override
     public int deleteSupplier(int id) {
@@ -55,8 +45,22 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier> i
     }
 
     @Override
-    public List<Supplier> selectAll() {
-        return supplierMapper.selectAll();
+    public List<Supplier> selectAllExcel() {
+        return supplierMapper.selectAllExcel();
+    }
+
+    @Override
+    public Map selectAll(int current, int size) {
+        Map map = new HashMap();
+        Page<Supplier> page = new Page(current,size);
+        List<Supplier> list = supplierMapper.selectAll(page);
+
+        map.put("list",list);
+        map.put("current",current);
+        map.put("size",size);
+        map.put("totalPage", page.getPages());
+
+        return map;
     }
 
     @Override

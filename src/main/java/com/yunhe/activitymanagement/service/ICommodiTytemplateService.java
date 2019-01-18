@@ -1,10 +1,13 @@
 package com.yunhe.activitymanagement.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yunhe.activitymanagement.entity.TemplateDetails;
 import com.yunhe.basicdata.entity.CommodityList;
+import com.yunhe.cargomanagement.entity.SalesOrderHistory;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -19,25 +22,23 @@ import java.util.Map;
 public interface ICommodiTytemplateService extends IService<CommodiTytemplate> {
 
 
+
+ Map queryLikeList(int current,int size,CommodiTytemplate commodiTytemplate);
     /**
      * <P>
-     *     商品模板表
-     * </P>
-     * @param current 当前页
-     * @param size 每页条数
-     * @param commodiTytemplate 查询条件放在对象里
-     * @return 商品模板表：分页的结果集
-     */
-    Map selectAllPage(int current, int size, CommodiTytemplate commodiTytemplate);
-
-
-    /**
-     * <P>
-     *     查询数据
+     *     查询所有商品模板数据
      * </P>
      * @return 商品模板表：查询的结果集
+/*     *//*
+    List<CommodiTytemplate> selectAllCt();*/
+
+
+    /**
+     * 根据id查询对应的销售
+     * @param id
+     * @return
      */
-    List<CommodiTytemplate> selectAllCt();
+    CommodiTytemplate selectById(int id);
 
     /**
      * <P>
@@ -45,7 +46,7 @@ public interface ICommodiTytemplateService extends IService<CommodiTytemplate> {
      * </P>
      * @return 商品模板表：查询的结果集
      */
-    List<CommodityList> selectCt(Integer ctId);
+   /* List<CommodityList> selectCt(Integer ctId);*/
 
 
 
@@ -56,15 +57,15 @@ public interface ICommodiTytemplateService extends IService<CommodiTytemplate> {
      * @param commodiTytemplate 查询条件放在对象里
      * @return  商品模板表：增加是否成功
      */
-
+    int insertCt(CommodiTytemplate commodiTytemplate);
 
 
     /**
      * <P>
-     *     增加数据
+     *      更改数据
      * </P>
-     * @param commodiTytemplate 查询条件放在对象里
-     * @return  商品模板表：增加是否成功
+     * @param commodiTytemplate 条件放在对象里
+     * @return  商品模板表：更改是否成功
      */
     int updateCt(CommodiTytemplate commodiTytemplate);
 
@@ -73,8 +74,9 @@ public interface ICommodiTytemplateService extends IService<CommodiTytemplate> {
      * <P>
      *     删除数据
      * </P>
-     * @param commodiTytemplate 查询条件放在对象里
-     * @return  商品套餐表：删除是否成功
+     * @param
+     * @return  商品模板表：删除是否成功
      */
-    int deleteCt(CommodiTytemplate commodiTytemplate);
+    int deleteById(Serializable id);
+
 }

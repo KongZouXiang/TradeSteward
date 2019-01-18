@@ -1,5 +1,6 @@
 package com.yunhe.billmanagement.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yunhe.billmanagement.dao.FundClientDebtMapper;
@@ -44,5 +45,10 @@ public class FundClientDebtServiceImpl extends ServiceImpl<FundClientDebtMapper,
     @Override
     public int insertFcd(FundClientDebt fundClientDebt) {
         return fundClientDebtMapper.insert(fundClientDebt);
+    }
+
+    @Override
+    public List<FundClientDebt> selectFcd() {
+        return fundClientDebtMapper.selectList(new QueryWrapper<>());
     }
 }

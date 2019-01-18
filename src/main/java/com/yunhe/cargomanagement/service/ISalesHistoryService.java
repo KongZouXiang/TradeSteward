@@ -1,11 +1,9 @@
 package com.yunhe.cargomanagement.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.cargomanagement.entity.SalesHistory;
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import java.util.List;
+
 import java.util.Map;
 
 /**
@@ -19,7 +17,7 @@ import java.util.Map;
 public interface ISalesHistoryService extends IService<SalesHistory> {
 
 
-    /**
+    /*
      * 增加一条销售历史
      * @param salesHistory 增加的数据的实体类
      * @return 插入的条数

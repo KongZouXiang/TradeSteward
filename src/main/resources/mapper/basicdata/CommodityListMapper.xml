@@ -11,11 +11,11 @@
     <!--增加商品信息-->
     <insert id="insertComm" parameterType="CommodityList">
         insert into commodity_list (cl_number, cl_name, cc_id, cl_spec, us_id, cl_scan, cl_tag_prise, cl_who_price,
-                                    cl_pur_price)
+                                    cl_pur_price,cl_minstock,cl_maxstock,cl_minlingprice)
         values (#{clNumber}, #{clName}, #{ccId}, #{clSpec}, #{usId}, #{clScan}, #{clTagPrise}, #{clWhoPrice},
-                #{clPurPrice});
+                #{clPurPrice},#{clMinStock},#{clMAxStock},#{clMinLingPrice});
     </insert>
-    <!--查询用户的详细信息-->
+    <!--查询商品的详细信息-->
     <select id="selectCommById" parameterType="CommodityList" resultType="com.yunhe.basicdata.entity.CommodityList">
         select *
         from commodity_list
@@ -41,5 +41,16 @@
         from commodity_list
         where id = #{id}
     </delete>
-
+<!--导出excel文件-->
+    <select id="selectExcel" resultType="com.yunhe.basicdata.entity.CommodityList">
+        select * from commodity_list
+    </select>
+    <!--查询仓库地址-->
+    <select id="selectwmandcomm" resultType="com.yunhe.basicdata.entity.WarehouseManagement">
+        SELECT  wm.wm_name FROM warehouse_management wm,commodity_list cl WHERE wm.id=cl.wm_id AND cl.id=#{id}
+    </select>
+    <!--查询分类信息-->
+    <select id="selectComclassAndCommdity" resultType="com.yunhe.basicdata.entity.Commclass">
+        SELECT com.cc_default FROM commclass com,commodity_list cl WHERE com.id=cl.cc_id AND cl.id=#{id}
+    </select>
 </mapper>

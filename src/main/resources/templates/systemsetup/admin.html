@@ -1,214 +1,109 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <html>
-<head><!-- base href="http://web.zhsmjxc.com/UCenter-webapp/" -->
-
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>员工管理</title>
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
-    <link rel="stylesheet" href="/css/jquery.css">
-    <link rel="stylesheet" href="/css/zTreeStyle.css" type="text/css">
-    <link rel="stylesheet" href="/css/Sortable.css" type="text/css">
-    <link rel="stylesheet" href="/js/laypage/skin/laypage.css">
-    <script type="text/javascript" async="" src="/js/vds.js"></script>
-    <script type="text/javascript" src="/js/all_before.js"></script>
-    <link rel="stylesheet" href="/css/layer.css" id="layuicss-skinlayercss">
-    <script type="text/javascript" src="/js/highcharts.js"></script>
-    <script type="text/javascript" src="/js/exporting.js"></script>
-    <script type="text/javascript" src="/js/WdatePicker.js"></script>
-    <link href="/css/WdatePicker.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="/js/jquery.js"></script>
-    <script type="text/javascript" src="/js/all_after.js"></script>
-    <script type="text/javascript" src="/js/flexigrid.js"></script>
-    <script type="text/javascript" src="/js/wbi_common.js"></script>
-    <script type="text/javascript" src="/js/wbill_common.js"></script>
-    <script type="text/javascript" src="/js/filter.js"></script>
-    <script type="text/javascript" src="/js/record.js"></script>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="Bookmark" href="/favicon.ico" >
+    <link rel="Shortcut Icon" href="/favicon.ico" />
+    <script type="text/javascript" src="/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
     <script type="text/javascript" src="/js/vue/vue.min.js"></script>
-    <script type="text/javascript" src="/js/layer/layer.js"></script>
-    <script type="text/javascript" src="/js/laypage/laypage.js"></script>
-
-    <!--GrowingIO 全局引入  -->
-    <script type="text/javascript">
-        var _vds = _vds || [];
-        window._vds = _vds;
-
-        function addGrowingCS(csindex,csKey,valueKey){
-            var csValue = getValueFromRoot(valueKey);
-            if(csValue){
-                _vds.push(['setCS'+csindex, csKey, csValue]);
-            }
-        }
-
-        (function(){
-            _vds.push(['setAccountId', '96cf4aed2bf68eba']);
-
-            try{
-                addGrowingCS(1,'ContactId','contactid');
-                addGrowingCS(2,'UserId','userid');
-                addGrowingCS(3,'ProductCersion','productversion');
-                addGrowingCS(4,'IsPay','ispay');
-                addGrowingCS(5,'TradeCode','tradecode');
-            }catch(e){}
-
-            (function() {
-                var vds = document.createElement('script');
-                vds.type='text/javascript';
-                vds.async = true;
-                vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
-                var s = document.getElementsByTagName('script')[0];
-                s.parentNode.insertBefore(vds, s);
-            })();
-        })();
-    </script>
-
-
+    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <title>管理员列表</title>
 </head>
-<body style="background-image: none; cursor: default;">
-<input type="hidden" id="moduleName" value="SysUser" spellcheck="false">
-<input type="hidden" id="tabid" value="SysUser-List" spellcheck="false">
-<input type="hidden" id="issys" value="1" spellcheck="false">
-<input type="hidden" id="isroot" value="1" spellcheck="false">
-<input type="hidden" id="isdemo" value="1" spellcheck="false">
-<input type="hidden" id="hidproductversion" value="1" spellcheck="false">
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 管理员管理 <span
+        class="c-gray en">&gt;</span> 管理员列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+                                               href="javascript:location.replace(location.href);" title="刷新"><i
+        class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div class="text-c">
+        <input type="text" class="input-text" style="width:250px" placeholder="搜索用户名、员工姓名、手机号" id="poSupName" name="">
+        <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜订单</button>
+    </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <a href="javascript:;" id="deleteall"  class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+        <a href="javascript:;" id="addUserBtn" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>新增员工</a>
+        <a href="javascript:;" id="doFile" class="btn btn-success radius">
+        <i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
+    </span>
 
-<input type="hidden" id="isShengchan" value="true" spellcheck="false">
-<input type="hidden" id="usercount" value="4" spellcheck="false">
-<input type="hidden" id="tel" value="400-886-1800" spellcheck="false">
-
-<div class="main" id="listSysUser">
-    <div class="whiteBox actionArea">
-        <table width="100%" cellspacing="0" cellpadding="0" border="0">
-            <tbody><tr>
-                <td>
-                    <a  id="addUserBtn" class="button blueButton withIcon">
-                        <span class="text">新增员工</span>
-                    </a>
-                    <span style="display: none;" id="ProbationPeriodTip"></span>
-                </td>
-                <td align="right"><button id="findempl" class="button fr" >搜索</button>
-                    <div class="search fr mr5">
-                        <input name="" type="text" id="SearchKeyWord" class="inputText" title="搜索用户名、员工姓名、手机号" size="35" placeholder="搜索用户名、员工姓名、手机号" maxlength="30" spellcheck="false">
-                    </div>
-
-                    <div class="search fr mr5 lh30" id="div_branch" style="display: none;">
-                        <span class="fl mr5">门店</span>
-                        <span class="fl"><select id="branchid" onchange="parentCancelReload()"></select></span>
-                    </div>
-
-                </td>
+        <span class="r">共有数据：<strong id="strong"></strong> 条</span></div>
+    <div id="app" style="overflow: scroll;height: 500px"  >
+        <table class="table table-border table-bordered table-bg">
+            <thead>
+            <tr>
+                <th scope="col" colspan="9">员工列表</th>
             </tr>
-            </tbody></table>
+            <tr class="text-c">
+                <th width="25"><input type="checkbox" id="check" name="" value=""></th>
+                <th width="40">序号</th>
+                <th width="130">操作</th>
+                <th width="150">用户名</th>
+                <th width="150">员工姓名</th>
+                <th width="90">角色</th>
+                <th width="90">性别</th>
+                <th width="130">手机号</th>
+                <th width="150">邮箱</th>
+                <th width="100">状态</th>
+                <th width="100">地址</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-c" v-for="(item,index) in result">
+                <td><input type="checkbox" :value=item.id  name="aid"></td>
+                <td>{{index+1}}</td>
+                <td class="td-manage">
+                    <a style="text-decoration:none" class="ml-5" @click="updateemp(item.id)"  title="编辑">
+                        <i class="Hui-iconfont">&#xe6df;</i>
+                    </a>
+                    <a id="del" title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none">
+                        <i class="Hui-iconfont">&#xe6e2;</i>
+                    </a>
+                    <a title="详情" href="#" class="ml-5" style="text-decoration:none">
+                        <i class="icon Hui-iconfont">&#xe627;</i>
+                    </a>
+                </td>
+                <td>{{item.emUsername}}</td>
+                <td>{{item.emRealname}}</td>
+                <td>{{item.emRole}}</td>
+                <td>{{item.emSex}}</td>
+                <td>{{item.emPhone}}</td>
+                <td>{{item.emEmail}}</td>
+                <td>{{item.emStatus}}</td>
+                <td>{{item.emAddress}}</td>
+
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <div class="whiteBox">
-        <div id="FlexiGridRootSysUser-page" class="flexigrid" style="overflow: hidden;">
-            <div style="width:100%;overflow:hidden; display: flex; position:relative; border: solid 1px #d7d7d7; box-sizing: border-box;">
-                <div class="t_left" style="position: absolute; z-index: 999;"></div>
-                <div class="t_r">
-                <div class="hDiv" style="background-color: rgb(255, 255, 255); position: relative; width: 1772px;">
-                    <table class="tableStyle borderLTNone" style="position: relative; left: 0px;" width="1772" cellspacing="0" cellpadding="5">
-                <tbody>
-                <tr id="theader">
-                    <th id="th0" number="0" personwidth="45" info="false" display="序号" name="no" sortable="false" abbr="no" class="normal" checkbox="false" button="false" width="45" align="center">
-                        <span class="bg" style="width:45px">序号</span>
-                        <div id="dragLineDiv0" index="0" class="dragLine" style="left: 54px; top: 0px;"></div></th>
-                    <th id="th1" number="1" personwidth="150" info="false" display="操作" name="Action" sortable="false" abbr="Action" class="normal" checkbox="false" button="true" width="150" align="center">
-                        <span class="bg" style="width:150px">操作</span>
-                        <div id="dragLineDiv1" index="1" class="dragLine" style="left: 159px; top: 0px;"></div></th>
-                    <th id="th2" number="2" personwidth="150" info="false" display="用户名" name="userloginname" sortable="true" abbr="userloginname" class="normal sortable" sort="" checkbox="false" button="false" width="150" align="left">
-                        <span class="bg" style="width:150px">用户名</span>
-                        <div id="dragLineDiv2" index="2" class="dragLine" style="left: 159px; top: 0px;"></div></th>
-                    <th id="th3" number="3" personwidth="150" info="false" display="员工姓名" name="username" sortable="true" abbr="username" class="sortable down" sort="desc" checkbox="false" button="false" width="150" align="left">
-                        <span class="bg" style="width:150px">员工姓名</span>
-                        <div id="dragLineDiv3" index="3" class="dragLine" style="left: 159px; top: 0px;"></div></th>
-                    <th id="th4" number="4" personwidth="150" info="false" display="角色" name="rolename" sortable="false" abbr="rolename" class="normal" checkbox="false" button="false" width="150" align="left">
-                        <span class="bg" style="width:150px">角色</span>
-                        <div id="dragLineDiv4" index="4" class="dragLine" style="left: 159px; top: 0px;"></div></th>
-                    <th id="th5" number="5" personwidth="40" info="false" display="性别" name="usersex" sortable="false" abbr="usersex" class="normal" checkbox="false" button="false" width="40" align="center">
-                        <span class="bg" style="width:40px">性别</span>
-                        <div id="dragLineDiv5" index="5" class="dragLine" style="left: 49px; top: 0px;"></div></th>
-                    <th id="th6" number="6" personwidth="100" info="false" display="手机号" name="userphone" sortable="false" abbr="userphone" class="normal" checkbox="false" button="false" width="100" align="left">
-                        <span class="bg" style="width:100px">手机号</span>
-                        <div id="dragLineDiv6" index="6" class="dragLine" style="left: 109px; top: 0px;"></div></th>
-                    <th id="th7" number="7" personwidth="100" info="false" display="邮箱" name="useremail" sortable="false" abbr="useremail" class="normal" checkbox="false" button="false" width="100" align="left">
-                        <span class="bg" style="width:100px">邮箱</span>
-                        <div id="dragLineDiv7" index="7" class="dragLine" style="left: 109px; top: 0px;"></div></th>
-                    <th id="th8" number="8" personwidth="100" info="false" display="状态" name="userstatus" sortable="false" abbr="userstatus" class="normal" checkbox="false" button="false" width="100" align="center">
-                        <span class="bg" style="width:100px">状态</span>
-                        <div id="dragLineDiv8" index="8" class="dragLine" style="left: 109px; top: 0px;"></div></th>
-                    <th id="th9" number="9" personwidth="100" info="false" display="地址" name="address" sortable="false" abbr="address" class="normal" checkbox="false" button="false" width="100" align="left"><span class="bg" style="width:100px">地址</span>
-                    <div id="dragLineDiv9" index="9" class="dragLine" style="left: 109px; top: 0px;"></div></th>
-                    <th style="display: table-cell;" id="th10" number="10" personwidth="554" info="false" display="FillEmptyColumn" name="FillEmptyColumn" sortable="false" abbr="FillEmptyColumn" class="normal" checkbox="false" button="false" align="center">
-                        </th>
-                </tr>
-                </tbody>
-                    </table>
-                </div>
-                    <div id="app" style= "background-color: rgb(255, 255, 255); overflow-x: auto; width: 1772px; height: 626px;" class="bDiv" >
-                        <table id="resultList" style="border-top: 0px none;" class="tableStyle borderLTNone" width="1772" cellspacing="0" cellpadding="5">
-                            <tbody>
-                            <tr id="row0" normalrow="true" style="" v-for="(item,index) in result">
-                                <td thid="th0" style="width: 45px; height: 26px;" thname="no" align="center">
-                                <div class="tableText" style="width: 45px;">{{index+1}}</div>
-                                </td>
-                                <td thid="th1" style="width: 150px; height: 26px;" thname="Action" align="center">
-                                <div class="tableText" style="width: 150px;">
-                                    <div class="tableButtonArea">
-                                        <a id="0" class="operate details" title="详细" onclickevent="detailRecord(0);">
-                                        </a>
-                                    </div>
-                                </div>
-                                </td>
-                                <td thid="th2" style="width: 150px; height: 26px;" thname="userloginname" align="left">
-                                    {{item.emUsername}}
-                                </td>
-                                <td thid="th3" style="width: 150px; height: 26px;" thname="username" align="left">
-                                    <div class="tableText" style="width: 150px;">{{item.emRealname}}</div>
-                                </td>
-                                <td thid="th4" style="width: 150px; height: 26px;" thname="rolename" align="left">
-                                    <div class="tableText" style="width: 150px;">{{item.emRole}}</div>
-                                </td>
-                                <td thid="th5" style="width: 40px; height: 26px;" thname="usersex" align="center">
-                                    <div class="tableText" style="width: 40px;">{{item.emSex}}</div>
-                                </td>
-                                <td thid="th6" style="width: 100px; height: 26px;" thname="userphone" align="left">
-                                    <div class="tableText" style="width: 100px;">{{item.emPhone}}</div>
-                                </td>
-                                <td thid="th7" style="width: 100px; height: 26px;" thname="useremail" align="left">
-                                    <div class="tableText" style="width: 100px;">&nbsp;</div>
-                                </td>
-                                <td thid="th8" style="width: 100px; height: 26px;" thname="userstatus" align="center">
-                                    <div class="tableText" style="width: 100px;">正常</div>
-                                </td>
-                                <td thid="th9" style="width: 100px; height: 26px;" thname="address" align="left">
-                                    <div class="tableText" style="width: 100px;">&nbsp;</div>
-                                </td>
-                                <td thid="th10" style="height: 26px;" thname="FillEmptyColumn" personwidth="554" align="center">
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-            </div>
-            <div id="pagenav" style="text-align: center"></div>
-        </div>
-
-    </div>
+    <div id="pagenav" style="text-align: center"></div>
 </div>
-
-
-
-    <!-- title -->
-
-
-</div>
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
     var app = new Vue({
         el:'#app',
         data:{
             result:[]
         }
+
     });
 
     var getUserPageList = function(curr) {
@@ -218,13 +113,14 @@
             url:'/systemsetup/employ/selectpage',
             data:{
                 pageNum: curr || 1,
-                pageSize:1,
-                emUsername:$("#SearchKeyWord").val(),
-                emPhone:$("#SearchKeyWord").val(),
-                emRealname:$("#SearchKeyWord").val(),
+                pageSize:10,
+                emUsername:$("#poSupName").val(),
+                emPhone:$("#poSupName").val(),
+                emRealname:$("#poSupName").val(),
 
             },
             success:function(msg){
+                $("#strong").html(msg.total);
                 app.result = msg.list;
                 laypage({
                     cont:'pagenav',
@@ -242,9 +138,7 @@
             }
         });
     }
-
     getUserPageList();
-
     /*查询用户*/
     $("#findempl").click(function () {
         getUserPageList();
@@ -254,18 +148,99 @@
     $("#addUserBtn").click(function () {
         layer.open({
             type:2,
-            title:'添加用户',
+            title:'新增员工',
             fix:false,
             maxmin:true,
             shadeClose:true,
-            area:['1500px','900px'],
+            area:['1200px','800px'],
             content:'/systemsetup/employ/addempl',
             end:function() {
                 getUserPageList();
             }
         });
     });
+    /*
+    删除员工
+     */
+    var delEvent = function (id) {
+        layer.confirm('你确定要删除吗？',{
+            btn:['是','否']
+        },function () {
+            $.ajax({
+                type:'GET',
+                url: '/systemsetup/employ/deleteempl',
+                data:{
+                    id:id
+                },
+                success:function (msg) {
+                    layer.msg('成功删除',{icon:1});
+                    getUserPageList();
+                }
+            })
+        },function () {
+
+        });
+    };
+    /**
+     *
+     * 批量删除
+     */
+    $("#deleteall").click(function () {
+        var arr = new Array();
+        $("input:checkbox[name='aid']:checked").each(function (i) {
+            arr[i]=$(this).val();
+        });
+        if (arr[0]==null){
+            layer.msg("请选择勾选要删除的行列！",{time:2000,icon:2})
+        }else {
+            layer.confirm('你确定要删除吗？',{
+                btn:['是','否']
+            }, function () {
+                for (var c = 0; c < arr.length; c++) {
+                    alert(1)
+                    $.ajax({
+                        type: 'GET',
+                        url: '/systemsetup/employ/deleteempl',
+                        data: {
+                            id: arr[c],
+                        },
+                        success: function (msg) {
+                            layer.msg('成功删除', {icon: 1});
+                            getUserPageList();
+                        }
+                    })
+                    $("input:checkbox[name='aid']:checked").attr("checked",false);
+                }
+            })
+
+            }
+
+
+
+    })
+    /*Excel导出*/
+    $("#doFile").click(function () {
+        window.location.href="/systemsetup/employ/export";
+    })
+    /*修改员工*/
+   var updateemp =function (id) {
+       alert('nihao')
+       layer.open({
+           type:2,
+           title:'修改员工',
+           fix:false,
+           maxmin:true,
+           shadeClose:true,
+           area:['1200px','800px'],
+           content:'/systemsetup/employ/updateempl?id='+id,
+           end:function() {
+               getUserPageList();
+           }
+       });
+   }
+
+
+
 </script>
 </body>
-
 </html>

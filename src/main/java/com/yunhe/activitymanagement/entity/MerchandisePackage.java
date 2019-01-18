@@ -46,14 +46,14 @@ public class MerchandisePackage implements Serializable {
     /**
      * 套餐商品
      */
-    @TableField(value = "mp_package_goods")
-    private String mpPackageGoods;
+    @TableField(value = "mp_package_commodity")
+    private String mpPackageCommodity;
 
     /**
      * 备注
      */
     @TableField(value = "mp_remarks")
-    private String mpremarks;
+    private String mpRemarks;
 
 
 }

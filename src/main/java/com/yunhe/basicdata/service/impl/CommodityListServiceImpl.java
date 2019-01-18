@@ -2,8 +2,10 @@ package com.yunhe.basicdata.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yunhe.basicdata.entity.Commclass;
 import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.dao.CommodityListMapper;
+import com.yunhe.basicdata.entity.WarehouseManagement;
 import com.yunhe.basicdata.service.ICommodityListService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -43,11 +45,8 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
         map.put("comlist", comlist);
         return map;
     }
-
-
     /**
      * 增加商品的信息
-     *
      * @param commodityList 增加商品的实体类
      * @return 返回增加后的商品信息
      */
@@ -58,7 +57,6 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
 
     /**
      * 查询用户的详细信息
-     *
      * @param id 查询用户的id
      * @return 根据id查询的信息
      */
@@ -101,12 +99,32 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
         return commodityLists;
     }
 
+    /**
+     * 导出excel
+     * @return
+     */
     @Override
-    public Map selectList() {
-        List<CommodityList> list = commodityListMapper.selectList(new QueryWrapper<>());
-        Map<String, Object> map = new HashMap<>();
-        map.put("list",list);
-        return map;
+    public List<CommodityList> ExportExcel() {
+        return commodityListMapper.selectExcel();
     }
 
+    /**
+     * 查询仓库名
+     * @param id 商品id
+     * @return
+     */
+    @Override
+    public WarehouseManagement selectWmAndComm(int id) {
+        return commodityListMapper.selectwmandcomm(id);
+    }
+
+    /**
+     * 查询商品的分类
+     * @param id 商品的id
+     * @return
+     */
+    @Override
+    public Commclass selectclassAndComm(int id) {
+        return commodityListMapper.selectComclassAndCommdity(id);
+    }
 }

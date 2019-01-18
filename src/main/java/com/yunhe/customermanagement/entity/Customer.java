@@ -49,7 +49,7 @@ public class Customer implements Serializable {
     /**
      * 联系方式
      */
-    @TableField(value ="cus_number")
+    @TableField(value ="cus_tele")
     private String cusTele;
 
     /**

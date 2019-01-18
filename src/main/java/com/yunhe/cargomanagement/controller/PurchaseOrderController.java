@@ -7,13 +7,11 @@ import com.yunhe.cargomanagement.entity.PurchaseOrder;
 import com.yunhe.cargomanagement.service.IPurchaseHistoryService;
 import com.yunhe.cargomanagement.service.IPurchaseOrderService;
 import com.yunhe.core.util.DateUtil;
-import com.yunhe.customermanagement.entity.Supplier;
 import com.yunhe.customermanagement.service.ISupplierService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,6 +36,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/cargomanagement/purchase-order")
 public class PurchaseOrderController {
+
     @Resource
     private IPurchaseOrderService purchaseOrderService;
 
@@ -104,10 +103,10 @@ public class PurchaseOrderController {
      * 查询商品
      * @return 商品列表
      */
-    @RequestMapping("/getCommodadd")
+   /* @RequestMapping("/getCommodadd")
     public Map getCommodadd(){
         return commodityListService.selectList();
-    }
+    }*/
     /**
      * 进货订单历史分页
      * @param pageNum 前台传当前页

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品详情</title>
+ <link rel="stylesheet" href="https://cdn.zhsmjxc.com/CDN/Static-webapp/jsmin/style.css?version=5.7.0.201901051730" type="text/css">
+ <link rel="stylesheet" href="https://cdn.zhsmjxc.com/CDN/Static-webapp/jsmin/javascript/validator/jquery.validator.css" />
+ <script type="text/javascript" src="https://cdn.zhsmjxc.com/CDN/UCenter-webapp/js/product/product.js?version=5.7.0.201901051730"></script>
+    <script src="https://cdn.zhsmjxc.com/CDN/UCenter-webapp/js/product/number.js?version=5.7.0.201901051730"></script>
+    <script type="text/javascript" src="http://www.sz886.com/js/jquery-1.9.1.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/jquery/jquery.min.js"></script>
+</head>
+<body>
+<div class="container" id="app">
+    <form id="addCommdityForm">
+    <br/>
+       <div style="width: auto;height: auto">
+             <table>
+                 <tr>
+                     <td>
+                     <a href="#"  class="ml-5" style="text-decoration:none">  <button type="button"  id="editBtn" class="btn btn-success">编辑</button></a>
+                         <a title="编辑" href="javascript:;" @click="editEventcommdity(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                     </td>
+                     <td >
+                          <a  href="#" onclick="commoditylist()" class="btn btn-danger radius" style="text-decoration:none"> <i class="Hui-iconfont">&#xe600;</i>商品列表</a>
+                     </td>
+                 </tr>
+             </table>
+         </div>
+        <hr style="height:1px;background-color: #2E2D3C"/>
+           <b>基本信息</b>
+            <hr style="height:1px;background-color: #2E2D3C"/>
+           <span style="font-weight: bold;font-size: 24px"><b><input type="text" th:value="${detailcommodity.clName}"></b></span><br><br>
+        条&nbsp;&nbsp;&nbsp;&nbsp;形码 <input type="text" name="tiaoxingma" id="tiaoxingma" th:value="${detailcommodity.clScan}" placeholder="选填，扫描或录入条形码"><br><br>
+        编&nbsp;&nbsp;&nbsp;&nbsp;号&nbsp;&nbsp;&nbsp;<input type="text" th:value="${detailcommodity.clNumber}" name="bianhao" id="bianhao"><br><br>
+        单&nbsp;&nbsp;&nbsp;&nbsp;位&nbsp;&nbsp;&nbsp;<input type="text" id="danwei" name="guige" th:value="${detailcommodity.clSpec}"><br><br>
+        分&nbsp;&nbsp;&nbsp;&nbsp;类 &nbsp;&nbsp;&nbsp;<input type="text" th:value="${commclass.ccDefault}"><br><br>
+        规&nbsp;&nbsp;&nbsp;&nbsp;格&nbsp;&nbsp;&nbsp;<input type="text" id="guige" name="guige" th:value="${detailcommodity.clSpec}"><br><br>
+        <input type="hidden" id="idsa" th:value="${detailcommodity.id}">
+        <div class="formTitle" style="position: static !important;">
+            价格管理
+            <hr style="height:1px;background-color: #2E2D3C"/>
+            <table  border="2" align="center">
+                <thead>
+                  <tr>
+                      <th width="100" rowspan="2" style="text-align: center">价格类别</th>
+                      <th width="100"></th>
+                      <th width="600" style="text-align: center">价格/只</th>
+                  </tr>
+                </thead>
+                <tr>
+                    <td width="300" rowspan="3" style="text-align: center">销售</td>
+                    <td width="100" style="text-align: center">零售价</td>
+                    <td width="600" style="text-align: center"><input type="text" th:value="${detailcommodity.clTagPrise}" style="text-align: center"></td>
+
+                </tr>
+                <tr>
+                    <td width="100" style="text-align: center">最低零售价</td>
+                    <td width="600" style="text-align: center"><input type="text" th:value="${detailcommodity.clMinLingPrice}" style="text-align: center"></td>
+                </tr>
+                <tr>
+                    <td width="100" style="text-align: center">批发价</td>
+                    <td width="600" style="text-align: center"><input type="text" th:value="${detailcommodity.clWhoPrice}" style="text-align: center"></td>
+                </tr>
+                <tr>
+                    <td width="100" style="text-align: center">进货</td>
+                    <td width="100" style="text-align: center">参考进货价</td>
+                    <td width="600" style="text-align: center"><input type="text" th:value="${detailcommodity.clPurPrice}" style="text-align: center"></td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div class="formTitle" style="position: static !important;">
+            库存预警
+            <hr style="height:1px;background-color: #2E2D3C"/>
+               <table border="1" align="center">
+                   <thead>
+                   <th width="400" style="text-align: center">仓库</th>
+                   <th width="400" style="text-align: center">最低库存量</th>
+                   <th width="400" style="text-align: center">最高库存量</th>
+                   </thead>
+                   <tr>
+                       <td width="400" style="text-align: center"><input type="text" th:value="${warehouseid.wmName}"></td>
+                       <td width="400" style="text-align: center"><input type="text" style="text-align: center" th:value="${detailcommodity.clMinStock}"></td>
+                       <td width="400" style="text-align: center"><input type="text"  style="text-align: center" th:value="${detailcommodity.clMAxStock}"></td>
+                   </tr>
+               </table>
+        </div>
+    <div id="cangku" style="display: none" >
+            <table border="1px black solid">
+                <tr style="width: auto;height: auto">
+                    <td>仓库</td>
+                    <td>最低库存量</td>
+                    <td>最高库存量</td>
+                </tr>
+                <tr>
+                    <td>默认库</td>
+                    <td><input type="text" id="czuidikc" name=""czuidikc></td>
+                    <td><input type="text" id="czuigaok" name="czuigaok"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="formTitle">其他</div>
+        <table width="100%" border="0" cellspacing="0" cellpadding="8">
+            <tr>
+                <td width="100" align="right" class="font14">商品状态&nbsp;&nbsp;&nbsp;</td>
+                <td>
+                    <input id="productstate1" name="productstate" type="radio" value="1" checked>
+                    启用&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input id="productstate2" name="productstate" type="radio" value="0"> 停用
+                </td>
+            </tr>
+            <tr>
+                <td align="right" class="font14" valign="top">备注&nbsp;&nbsp;&nbsp;</td>
+                <td>
+                    <textarea id="productremark" name="productremark" rows="" style="height: 40px;" class="inputText wf95" maxlength="500"></textarea>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+    var commoditylist=function () {
+        window.location.href="/basicdata/commodity-list/getcommdityfenye";
+    };
+    $("#editBtn").click(function () {
+        $.ajax({
+            type:'Get',
+            dataType:'json',
+            data:{
+                id:$("#idsa").val(),
+            },
+        });
+        window.location.href='/basicdata/commodity-list/selectcommditybyid';
+    })
+</script>
+</body>
+</html>
