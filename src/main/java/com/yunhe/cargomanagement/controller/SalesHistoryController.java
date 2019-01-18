@@ -67,11 +67,11 @@ public class SalesHistoryController {
         return salesHistoryService.deleteSalesHistory(id);
     }
 
+
     @RequestMapping("/tiao")
     public ModelAndView tiaozhuan() {
         return new ModelAndView("/cargomanagement/salesHistory");
     }
-
     /**
      * 0
      *

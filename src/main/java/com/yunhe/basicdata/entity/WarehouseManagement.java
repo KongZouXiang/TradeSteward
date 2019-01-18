@@ -54,7 +54,7 @@ public class WarehouseManagement implements Serializable {
     private String wmAddress;
 
     /**
-     * 邮编
+     * 邮箱
      */
     private Integer wmPostcode;
 

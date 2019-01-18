@@ -95,5 +95,20 @@ public class CommodityList implements Serializable {
      */
     @TableField("cl_number")
     private String clNumber;
+    /**
+     * 最低库存量
+     */
+    @TableField("cl_minstock")
+    private int clMinStock;
+    /**
+     * 最高库存量
+     */
+    @TableField("cl_maxstock")
+    private int clMAxStock;
+    /**
+     * 最低零售价
+     */
+    @TableField("cl_minlingprice")
+     private String clMinLingPrice;
 
 }

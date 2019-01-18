@@ -1,9 +1,11 @@
 package com.yunhe.cargomanagement.service;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.yunhe.cargomanagement.entity.PurchaseHistory;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,4 +49,9 @@ public interface IPurchaseHistoryService extends IService<PurchaseHistory> {
      */
     int updatePurchaseHistoryById(PurchaseHistory purchaseHistory);
 
+    /**
+     * 查询所有进货历史
+     * @return 所有进货历史数据
+     */
+    List<PurchaseHistory> selectpurchaseHistory();
 }

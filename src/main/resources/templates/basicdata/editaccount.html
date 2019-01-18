@@ -10,8 +10,8 @@
     <script src="/js/jquery/jquery.min.js"></script>
     <script src="/js/laypage/laypage.js" charset="utf-8"></script>
     <script src="/js/layer/layer.js" charset="utf-8"></script>
-    <script src="/js/jquery.validation/1.14.0/jquery.validate.min.js"></script>
-    <script src="/js/jquery.validation/1.14.0/messages_zh.min.js"></script>
+    <script src="/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+    <script src="/jquery.validation/1.14.0/messages_zh.min.js"></script>
 </head>
 <body>
     <form id="updateAccountForm">
@@ -50,9 +50,9 @@
 
 <script>
     var updateAccount = function () {
-        if (!check().form()) {
+     /*   if (!check().form()) {
             return;
-        }
+        }*/
         $.ajax({
             type: 'GET',
             dataType: 'json',
@@ -66,7 +66,7 @@
                 zhangbalance: $("#zhangbalance").val(),
                 zhangstate: $("#zhangstate").val()
             },
-            success: function () {
+            success: function (msg) {
                 $("#cancelBtn").click();
             }
         });
@@ -82,7 +82,7 @@
         parent.layer.close(index);
 
     });
-    function check() {
+    /*function check() {
         return $("#updateAccountForm").validate({
             rules: {
                 zhanghu: {
@@ -105,7 +105,7 @@
                 }
             }
         });
-    }
+    }*/
 </script>
 </body>
 </html>

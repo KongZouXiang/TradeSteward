@@ -3,36 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>新增商品</title>
-  <link rel="stylesheet" href="https://cdn.zhsmjxc.com/CDN/Static-webapp/jsmin/style.css?version=5.7.0.201901051730" type="text/css">
- <link rel="stylesheet" href="https://cdn.zhsmjxc.com/CDN/Static-webapp/jsmin/javascript/validator/jquery.validator.css" />
+  <!--<link rel="stylesheet" href="https://cdn.zhsmjxc.com/CDN/Static-webapp/jsmin/style.css?version=5.7.0.201901051730" type="text/css">-->
+<!-- <link rel="stylesheet" href="https://cdn.zhsmjxc.com/CDN/Static-webapp/jsmin/javascript/validator/jquery.validator.css" />
  <script type="text/javascript" src="https://cdn.zhsmjxc.com/CDN/UCenter-webapp/js/product/product.js?version=5.7.0.201901051730"></script>
     <script src="https://cdn.zhsmjxc.com/CDN/UCenter-webapp/js/product/number.js?version=5.7.0.201901051730"></script>
-    <script type="text/javascript" src="http://www.sz886.com/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="http://www.sz886.com/js/jquery-1.9.1.min.js"></script>-->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/js/laypage/skin/laypage.css">
+    <script src="/Vue/vue.min.js"></script>
     <script src="/js/jquery/jquery.min.js"></script>
-  <!-- <script src="/jquery/validation.1.14.0/jquery.validate.js/jquery.validate.min.js"></script>
-    <script src="/jquery/validation.1.14.0/messages_zh.js/messages_zh.min.js"></script>-->
-    <script type="text/javascript">
-        //返回单个单位
-     function returnSingleUnit() {
-            // 不启用
-        $("#isenablemultiunit").val(0);
-            // 不启用多单位checkbox增加选中状态
-            $("#doNotEnableMultiUnit").attr("checked", "checked");
-            // 单个单位所在的tr显示
-            $("#singleUnitTr").show();
-            // 多单位所在的div隐藏
-            $("#multiUnitDiv").hide();
-            // 多单位价格所在div隐藏
-            $("#multiUnitPriceDiv").hide();
-            // 单个单位价格所在div显示
-            $("#unitPriceDiv").show();
-            // 多单位条形码div隐藏
-            $("#multiUnitBarcodeDiv").hide();
-            // 单个单位条形码div显示
-            $("#unitBarcodeDiv").show();
-        }
-    </script>
+    <script src="/js/laypage/laypage.js" charset="utf-8"></script>
+    <script src="/js/layer/layer.js" charset="utf-8"></script>
+<!--<script src="/js/jquery.validation/1.14.0/jquery.validate.min.js"></script>-->
+    <!--   <script src="/js/jquery.validation/1.14.0/messages_zh.min.js"></script>-->
 </head>
 <body>
 <div class="container" id="app">
@@ -41,14 +24,14 @@
        <div style="width: auto;height: auto">
              <table>
                  <tr>
-                     <td>
+                   <!--  <td>
                          <button type="button" id="saveBtn1" class="btn btn-success">提交</button>
                      </td>
                      <td>
                          <button type="button" id="cancelBtn1" class="btn btn-default">取消</button>
-                     </td>
+                     </td>-->
                      <td >
-                       <span style="margin-right: 50px"><a  href="commoditylist.html">商品列表</a></span>
+                       <span style="text-align: center"><a  href="#" onclick="CommodityList()" class="btn btn-danger radius" style="text-decoration:none;background-color: #1e97f7">商品列表</a></span>
                      </td>
                  </tr>
              </table>
@@ -66,7 +49,7 @@
             <tr id="singleUnitTr">
                 <td width="100" align="right" class="font14">
                     <span class="fontRed">*</span>单位
-                    <select name="danwei" onfocus="selectFocus(this)">
+                    <select name="danwei" id="danwei" onfocus="selectFocus(this)">
                         <option value="" onclick="selectClick(this)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
                         <option value="" onclick="selectClick(this)">包</option>
                         <option value="" onclick="selectClick(this)">杯</option>
@@ -86,18 +69,18 @@
                     </select>
                 <td>
                   <!--  <input class="free" id="enableMultiUnit" name="" type="checkbox" value="" onclick="enableMultiUnit(this)">&nbsp;&nbsp;-->
-                    <input id="enableMultiUnit" name="" type="checkbox" value="多单位支持" onclick="enableMultiUnit(this)" >
+                   <!-- <input id="enableMultiUnit" name="" type="checkbox" value="多单位支持" onclick="enableMultiUnit(this)" >-->
                     <!--<label class="free" for="enableMultiUnit">多单位支持</label>&nbsp;&nbsp;&nbsp;&nbsp;-->
                 </td>
             </tr><br><br>
              规格&nbsp;&nbsp;&nbsp;<input type="text" id="guige" name="guige" placeholder="选填，如'红色长款'"><br><br>
-        <tr class="free">
+       <tr class="free">
             <td id="multPropertiesTd">
                 <input id="enableMultProperties" name="" type="checkbox" value="" onclick="enableMultProperties(this)">
                 <label for="enableMultProperties">多属性支持</label>
             </td>
         </tr>
-        <div id="multiUnitDiv" style="display: none">
+        <!--<div id="multiUnitDiv" style="display: none">
             <div class="formTitle" style="position: static !important;">
                 多单位
                 <span class="font999" style="font-size: 12px">（多单位时需要把最小度量单位作为基本单位）</span>
@@ -140,9 +123,9 @@
                     </td>
                 </tr>
             </table>
-        </div>
-            <div class="height10"></div>
-            <div id="multPropertiesDiv" style="display: none">
+        </div>-->
+            <div class="height10">
+          <div id="multPropertiesDiv" style="display: none">
                 <div class="formTitle free">
                     属性
                     <a class="fr font12" href="">属性设置</a>
@@ -235,21 +218,13 @@
         </table>
         <div class="form-group">
             <button type="button" id="SaveBtn" class="btn btn-success">提交</button>
-            <button type="button" id="CancelBtn" class="btn btn-default">取消</button>
+            <button type="button" id="quxiaobtn" class="btn btn-default">取消</button>
         </div>
+            </div>
     </form>
 </div>
 <script>
-/*    var app=new Vue({
-        el:'#app',
-        data:{
-            result:[]
-        }
-    });*/
     var addCommity=function () {
-     /* if(!check().form()){
-            return ;
-        }*/
         $.ajax({
             type:"POST",
             dataType:"json",
@@ -264,58 +239,26 @@
                 cankaojinhuo:$("#cankaojinhuo").val(),
                 pifajia:$("#pifajia").val(),
                 lingshoujia:$("#lingshoujia").val(),
+                zuidilingshou:$("#zuidilingshou").val(),
+                czuidikc:$("#czuidikc").val(),
+                czuigaok:$("#czuigaok").val(),
+
             },
-            success:function (msg) {
-                $("#CancelBtn").click();
+            success:function () {
+                $("#quxiaobtn").click();
             }
         });
-    };
-   $('#SaveBtn').on('click',function () {
+    }
+   $("#SaveBtn").click(function () {
         addCommity();
     });
-  $('#CancelBtn').on('click',function () {
+  $("#quxiaobtn").click(function () {
         var index=parent.layer.getFrameIndex(window.name);
-        parent.getCommdityPageList();
+        /*parent.getCommdityPageList();*/
         parent.layer.close(index);
     });
-    /*function check() {
-        return $("#addCommdityForm").validate({
-            rules:{
-               tiaoxingma: {
-                    required: true
-                },
-                bianhao: {
-                    required: true
-                },
-                mingcheng: {
-                    required: true
-                },
-                fenlei: {
-                    required: true
-                },
-                jibendanwei: {
-                    required: true
-                },
-                guige: {
-                    required: true
-                },
-                cankaojinhuo: {
-                    required: true
-                },
-                pifajia: {
-                    required: true
-                },
-                lingshoujia: {
-                    required: true
-                },
-            },
-        });
 
-    }
-*/
-</script>
 
-<script  type="text/javascript">
     /**
      * 实现select的滚动条的script
      * @param that
@@ -362,6 +305,9 @@
             }
         });
     });
+    var CommodityList=function () {
+        window.location.href="/basicdata/commodity-list/getcommdityfenye";
+    }
 </script>
 
 </body>

@@ -3,12 +3,12 @@ package com.yunhe.activitymanagement.controller;
 
 import com.yunhe.activitymanagement.entity.MerchandisePackage;
 import com.yunhe.activitymanagement.service.IMerchandisePackageService;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -29,29 +29,48 @@ public class MerchandisePackageController {
     @Resource
     private IMerchandisePackageService merchandisePackageService;
 
+
+    @RequestMapping("/shangpintaocan")
+    public ModelAndView shangpintaocan () {
+        return new ModelAndView("activitymanagement/shangpintaocan");
+    }
+
+
     /**
      * <P>
      *     分页
      * </P>
      * @param current 当前页
-     * @param size 每页条数
+     * @param size 每页条数套餐
      * @return  商品套餐表：分页的结果集合
      */
-    @RequestMapping(value = "/selectmpPage",method = RequestMethod.POST)
-    public Map selectmpPage(int current, int size, MerchandisePackage merchandisePackage){
-        return merchandisePackageService.selectmpPage(current,size,merchandisePackage);
+    @RequestMapping(value = "/quertLikeList")
+    public Map quertLikeList(int current, int size, MerchandisePackage merchandisePackage){
+        return merchandisePackageService.queryLikeList(current,size,merchandisePackage);
     }
 
 
+    /**
+     * 根据id删除套餐信息
+     * @return
+     */
+    @RequestMapping("/delete")
+    public int delete(int id){
+        return merchandisePackageService.deleteById(id);
+    }
 
     /**
-     * <P>
-     *     查询数据
-     * </P>
-     * @return 商品套餐表：查询的结果集
+     * 批量删除
+     * @param request
+     * @param ids
+     * @return
      */
-    public List<MerchandisePackage> selectmp() {
-        return merchandisePackageService.selectmp();
+    @RequestMapping("/deleteAll")
+    public boolean deleteAll(HttpServletRequest request, @RequestBody List<Integer> ids)  {
+        for (Integer id : ids) {
+            merchandisePackageService.deleteById(id);
+        }
+        return true;
     }
 
 }

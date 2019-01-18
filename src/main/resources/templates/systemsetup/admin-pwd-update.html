@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+    <script type="text/javascript" src="/layui/layui.js"></script>
+    <title>修改密码</title>
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">原密码</label>
+        <div class="layui-input-block" style="width: 200px;height: 50px">
+            <input type="text" id="aid" hidden="hidden" th:value="${session.employ.id}">
+            <input type="text" id="yuanpwd" hidden="hidden" th:value="${session.employ.emPassword}">
+            <input type="password" name="title" lay-verify="yuanpwd" autocomplete="off" placeholder="请输入原密码" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">新密码</label>
+        <div class="layui-input-block" style="width: 200px;height: 50px">
+            <input type="password" id="pwd"name="title" lay-verify="newpwd" autocomplete="off" placeholder="请输入新密码" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">确定新密码</label>
+        <div class="layui-input-block" style="width: 200px;height: 50px">
+            <input type="password" name="title" lay-verify="repwd" autocomplete="off" placeholder="请再次输入新密码" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn"  lay-submit="" lay-filter="add">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script>
+   layui.use(['form','jquery'],function () {
+        var $ = layui.jquery;
+        var form = layui.form;
+        form.render();
+        form.verify({
+            yuanpwd:function (value) {
+                if (value.trim()==""){
+                    return '请输入原密码'
+                }
+                var yuanpwd =$("#yuanpwd").val();
+                if (value!=yuanpwd){
+                    return '原密码输入错误'
+                }
+            },
+            newpwd: [
+                /^[\S]{6,12}$/,
+                '密码必须6到12位，且不能出现空格'
+            ],
+            repwd: function (value) {
+                //获取密码
+                var pwd = $("#pwd").val();
+                if (value != pwd) {
+                    return '两次密码不一致';
+                }
+
+            }
+        });
+  
+        form.on('submit(add)',function (data) {
+
+            $.ajax({
+                type:'get',
+                url:'/systemsetup/employ/pwd',
+                data:{
+                    id:$("#aid").val(),
+                    emPassword:$("#pwd").val(),
+                },
+                success:function (rest) {
+                    if (rest==1){
+                        parent.layer.msg('修改密码成功',{time:2000,icon:1});
+                    }else {
+                        parent.layer.msg("服务器繁忙请稍后再试",{time:2000,icon:2});
+                    }
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index);
+                }
+
+            })
+            return false;
+        })
+    })
+</script>
+</body>
+</html>

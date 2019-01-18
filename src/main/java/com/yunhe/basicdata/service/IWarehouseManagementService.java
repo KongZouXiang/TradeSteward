@@ -25,7 +25,7 @@ public interface IWarehouseManagementService extends IService<WarehouseManagemen
      * @param pageNum 当前页
      * @return 仓库列表
      */
-    Map selectWareList(int pageSize, int pageNum);
+    Map selectWareList(String data,int pageSize, int pageNum);
 
     /**
      * <>
@@ -41,7 +41,7 @@ public interface IWarehouseManagementService extends IService<WarehouseManagemen
      *
      * @param warehouseManagement 仓库的实体类
      */
-    void update(WarehouseManagement warehouseManagement);
+    Integer update(WarehouseManagement warehouseManagement);
 
     /**
      * 根据id查找仓库
@@ -65,5 +65,5 @@ public interface IWarehouseManagementService extends IService<WarehouseManagemen
      * 增加仓库
      * @param warehouseManagement 要增加仓库的实体类
      */
-    void addWarehouse(WarehouseManagement warehouseManagement);
+    Integer addWarehouse(WarehouseManagement warehouseManagement);
 }
