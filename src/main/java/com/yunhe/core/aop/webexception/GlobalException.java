@@ -16,6 +16,7 @@ public class GlobalException extends RuntimeException {
     private Integer code;
 
     /**
+     * 自定义错误信息
      * 继承exception，加入错误状态值
      * @param exceptionEnum
      */
@@ -24,14 +25,16 @@ public class GlobalException extends RuntimeException {
         this.code = exceptionEnum.getCode();
     }
 
+
+
     /**
      * 自定义错误信息
      * @param message
      * @param code
      */
-    public GlobalException(String message, Integer code) {
+   /* public GlobalException(String message, Integer code) {
         super(message);
         this.code = code;
-    }
+    }*/
 
 }

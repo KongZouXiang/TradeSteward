@@ -32,8 +32,10 @@ public class LoginController {
     public String login(Employ employ, HttpSession session) {
         if (loginService.login(employ) != null) {
             session.setAttribute("employ", employ);
+
             return "index";
         }
-        return "login";
+//        throw new GlobalException(ExceptionEnum.SELF_ERROR);
+       return ""+3/0;
     }
 }
