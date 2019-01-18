@@ -31,7 +31,11 @@
             <hr class="hr20" >
         </form>
     </div>
-
+    <script>
+        if([[${loginMsg}]] != null || [[${loginMsg}]] !=""){
+            alert([[loginMsg]])
+        }
+    </script>
   <!--  <script>
         $(function  () {
             layui.use('form', function(){
