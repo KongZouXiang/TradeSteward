@@ -105,12 +105,12 @@ public class CommodiTytemplateController {
      * @param
      */
 
-    @RequestMapping(value = "/selectCl",method = RequestMethod.POST)
+   /* @RequestMapping(value = "/selectCl",method = RequestMethod.POST)
 
-    public Map selectCl(int current,int size,CommodityList commodityList) {
+    public Map selectCl(int current, int size, CommodityList commodityLis) {
 
-        return commodityListService.selectAllCommList(1,3,commodityList);
-    }
+        return commodityListService.selectAllccommList(1,3,commodityList);
+    }*/
 
 
 
