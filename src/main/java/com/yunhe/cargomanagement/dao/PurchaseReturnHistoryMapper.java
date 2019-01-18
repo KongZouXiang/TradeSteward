@@ -26,5 +26,5 @@ public interface PurchaseReturnHistoryMapper extends BaseMapper<PurchaseReturnHi
      * @param purchaseReturnHistory 实体类
      * @return 进货退货历史数据集合
      */
-    List<PurchaseReturnHistory> selectPurchaseReturnHistoryPage(Page page,PurchaseReturnHistory purchaseReturnHistory);
+    List<PurchaseReturnHistory> selectPurchaseReturnHistoryPage(Page page, PurchaseReturnHistory purchaseReturnHistory);
 }

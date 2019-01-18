@@ -114,8 +114,8 @@ public class PurchaseReturnHistory implements Serializable {
     /**
      * 其他费用
      */
-    @TableField(value = "ph_other_expenses")
-    private Double phOtherExpenses;
+    @TableField(value = "prh_other_expenses")
+    private Double prhOtherExpenses;
 
     /**
      * 出库状态

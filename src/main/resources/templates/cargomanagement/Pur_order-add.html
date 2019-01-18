@@ -33,9 +33,9 @@
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>供应商</label>
                 <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select name="articlecolumn" class="select" v-for="(item,index) in result">
+				<select name="articlecolumn" class="select">
 					<option value="0"></option>
-					<option value="1">{{item.supCompname}}</option>
+					<option value="index+1" v-for="(item,index) in result">{{item.supCompname}}</option>
 				</select>
 				</span>
                 </div>
@@ -61,19 +61,15 @@
                 </div>
             </div>
             <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2">评论开始日期：</label>
+                <label class="form-label col-xs-4 col-sm-2">业务日期：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text"
-                           onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'commentdatemax\')||\'%y-%M-%d\'}' })"
-                           id="commentdatemin" name="commentdatemin" class="input-text Wdate">
+                    <input type="text" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'commentdatemax\')||\'%y-%M-%d\'}' })" id="commentdatemin" name="commentdatemin" class="input-text Wdate">
                 </div>
             </div>
             <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"></label>
+                <label class="form-label col-xs-4 col-sm-2">评论结束日期：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="hidden"
-                           onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'commentdatemin\')}' })"
-                           id="commentdatemax" name="commentdatemax" class="input-text Wdate">
+                    <input type="hidden" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'commentdatemin\')}' })" id="commentdatemax" name="commentdatemax" class="input-text Wdate">
                 </div>
             </div>
 
@@ -94,22 +90,23 @@
                     <th width="200">备注</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr class="text-c" v-for="(item,index) in result">
-                    <td>1</td>
+                <tbody id="addTr">
+                <tr class="text-c">
+                    <td><a title='删除' href='javascript:;' class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6e2;</i></a></td>
                     <td>
-                        <select name="articlecolumn" class="select" v-for="(item,index) in resulttwo">
+
+                        <select name="clName" class="select" id="clName">
                             <option value="0">请选择</option>
-                            <option value="1">{{item.clName}}</option>
+                            <option  v-for="(item,index) in resulttwo" :value="index+1">{{item.clName}}</option>
                         </select>
                     </td>
-                    <td>商品标号</td>
-                    <td>属性</td>
+                    <td id="clNumber" name="clNumber">商品标号</td>
+                    <td></td>
                     <td><input type="text" class="input-text" value="1" placeholder="" id="poQuantityOfPurchase"
                                name="poQuantityOfPurchase"></td>
-                    <td>单位</td>
-                    <td><input type="text" class="input-text" value="" placeholder="" id="danjia" name="danjia"></td>
-                    <td><input type="text" class="input-text" value="" placeholder="" id="jine" name="jine"></td>
+                    <td id="usId"></td>
+                    <td><input type="text" class="input-text" value="" placeholder="" id="clWhoPrice" name="clWhoPrice"></td>
+                    <td><input type="text" class="input-text" value="" placeholder="" id="poYingMoney" name="poYingMoney"></td>
                     <td><input type="text" class="input-text" value="默认无备注" placeholder="" id="poRemarks"
                                name="poRemarks">
                     </td>
@@ -194,7 +191,15 @@
     getCommodityList();
 
 
+    $("#addTr").on("change",function () {
+
+        var clName=$("#clName").val();
+        if (clName=="请选择"){
+        }else {
+            $("#addTr").append("<tr class='text-c'><td><a title='删除' href='javascript:;' class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6e2;</i></a></td><td><select name='clName' class='select' id='clName'><option value='0'>请选择</option><option  v-for='(item,index) in resulttwo' :value='index+1'>{{item.clName}}</option></select></td><td id='clNumber' name='clNumber'>商品标号</td><td></td><td><input type='text' class='input-text' value='1' placeholder='' id='poQuantityOfPurchase'name='poQuantityOfPurchase'></td><td id='usId'></td><td><input type='text' class='input-text' value='' placeholder='' id='clWhoPrice' name='clWhoPrice'></td><td><input type='text' class='input-text' value='' placeholder='' id='poYingMoney' name='poYingMoney'></td><td><input type='text' class='input-text' value='默认无备注' placeholder='' id='poRemarks'name='poRemarks'></td></tr>\n")
+            getCommodityList();
+        }
+    });
 </script>
-<!--/请在上方写此页面业务相关的脚本-->
 </body>
 </html>

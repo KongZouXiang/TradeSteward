@@ -2,8 +2,11 @@ package com.yunhe.cargomanagement.controller;
 
 
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
+import com.yunhe.cargomanagement.entity.PurchaseHistory;
 import com.yunhe.cargomanagement.entity.PurchaseOrder;
+import com.yunhe.cargomanagement.service.IPurchaseHistoryService;
 import com.yunhe.cargomanagement.service.IPurchaseOrderService;
+import com.yunhe.core.util.DateUtil;
 import com.yunhe.customermanagement.entity.Supplier;
 import com.yunhe.customermanagement.service.ISupplierService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +33,11 @@ public class PurchaseOrderController {
     @Resource
     private IPurchaseOrderService purchaseOrderService;
 
+    /**
+     * 进货历史 业务层
+     */
+    @Resource
+    private IPurchaseHistoryService purchaseHistoryService;
     /**
      * 供应商列表
      */
@@ -162,6 +170,38 @@ public class PurchaseOrderController {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("cargomanagement/article-add");
         return mv;
+    }
+
+    /**
+     * 审核进货订单 并增加进货历史
+     * @param purchaseOrder 进货订单
+     * @return int
+     */
+    @RequestMapping("/updateHistState")
+    public int updateHistState(PurchaseOrder purchaseOrder){
+        System.out.println("/*/*/*/*/*/*"+purchaseOrder.getId());
+        purchaseOrder.setPoState("已审核");
+        purchaseOrderService.updateHistStateByid(purchaseOrder);
+        System.out.println("aaaaaaaaaaaaaaaaaaa");
+        PurchaseHistory purchaseHistory = new PurchaseHistory();
+        purchaseHistory.setPhDate(purchaseOrder.getPoDate());
+        purchaseHistory.setPhNumber("Y"+purchaseOrder.getPoNumber());
+        purchaseHistory.setPhSupname(purchaseOrder.getPoSupName());
+        purchaseHistory.setPhClname(purchaseOrder.getPoClName());
+        purchaseHistory.setPhQuantity(purchaseOrder.getPoQuantityOfPurchase());
+        purchaseHistory.setPhAmountPayable(purchaseOrder.getPoYingMoney());
+        purchaseHistory.setPhAmountPaid(purchaseOrder.getPoYingMoney());
+        purchaseHistory.setPhWarehouse("默认仓库");
+        purchaseHistory.setPhBill(purchaseOrder.getPoBill());
+        purchaseHistory.setPhJindate(DateUtil.curr());
+        purchaseHistory.setPhManeyHu("现金");
+        purchaseHistory.setPhExperiencedPerson(purchaseOrder.getPoExperiencedPerson());
+        purchaseHistory.setPhSinglePerson("老板");
+        purchaseHistory.setPhOtherExpenses("");
+        purchaseHistory.setPhWarehousingStatus("未入库");
+        purchaseHistory.setPhRemarks(purchaseOrder.getPoRemarks());
+        purchaseHistoryService.insertPurchaseHistory(purchaseHistory);
+        return 1;
     }
 
 
