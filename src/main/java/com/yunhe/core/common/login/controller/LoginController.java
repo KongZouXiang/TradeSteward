@@ -2,7 +2,6 @@ package com.yunhe.core.common.login.controller;
 
 import com.yunhe.core.common.login.service.ILoginService;
 import com.yunhe.systemsetup.entity.Employ;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpSession;
  * @author 孔邹祥
  * @date 2019年1月9日
  */
-@Controller
+//@Controller
 public class LoginController {
 
     @Resource
