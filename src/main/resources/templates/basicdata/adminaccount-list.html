@@ -46,7 +46,7 @@
 		<span class="l">
 		<button id="addAccountBtn"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加账户</button>
 		</span>
-		<span class="r">共有数据：<strong>54</strong> 条</span>
+		<span class="r">共有数据：<strong></strong> 条</span>
 	</div>
 	<div  id="app">
 	<table class="table table-border table-bordered table-bg">
@@ -64,11 +64,10 @@
 			</tr>
 		</thead>
 		<tbody>
-
 			<tr class="text-c" v-for="(item,index) in result">
 				<td>{{index+1}}</td>
 				<td class="td-manage">
-					<a title="详情" href="#" @click="xiangEventAccount(item.id)" class="ml-5" style="text-decoration:none"> <i class="icon Hui-iconfont">&#xe627;</i></a>
+					<a title="详情" href="#" @click="detailEventAccount(item.id)" class="ml-5" style="text-decoration:none"> <i class="icon Hui-iconfont">&#xe627;</i></a>
 					<a title="编辑" href="#" @click="editEventAccount(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
 					<a title="删除" href="#" @click="deleteAccount(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 				<td>{{item.saName}}</td>
@@ -78,10 +77,29 @@
 			</tr>
 		</tbody>
 	</table>
-	</div>
 </div>
+<!--<div>
+	<table class="table table-bg" style="display:none;text-align: center" id="detailtab">
+		<tr>
+			<th>开户银行:<td>{{results.saBank}}</td></th>
+			<th>账户名称:<td>{{results.saName}}</td></th>
+		</tr>
+		<tr>
+			<th>状态:</th>
+			<th v-if="results.saState===1">
+				启用
+			</th>
+			<th v-else>
+				禁用
+			</th>
+			<th>联系人:</th>
+			<td>{{results.wmPerson}}</td>
+			<th>联系电话:{{results.wmTel}}</th>
+		</tr>
+	</table>
+</div>-->
 <div id="pagenav" style="text-align:center;position: fixed;left: 0px;bottom :50px;width: 100%;height: 50px"></div>
-<div id="xaingqingdiv" style="border: #00AA91 1px solid;width: 100px;height: 100px;display: none"></div>
+</div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
@@ -141,7 +159,7 @@
 			}
 		});
 	})
-	/*增加用户*/
+	/*增加账户*/
 	$("#addAccountBtn").click(function () {
 		layer.open({
 			type:2,
@@ -156,8 +174,7 @@
 			}
 		});
 	});
-
-	//编辑用户事件
+	//编辑帐户事件
 	var editEventAccount = function(id) {
 		layer.open({
 			type : 2,
@@ -196,18 +213,23 @@
 			//否
 		});
 	}
-	/*详情*/
-     var xiangEventAccount=function (id) {
-		 layer.open({
-			 type:2,
-			 title:"账户详情",
-			 fix:false,
-			 shadeClose:true,
-			 area:['800px','500px'],
-			 content : '/basicdata/settlement-account/detailaccount?id='+id,
-		 });
-	 }
+	var detailEventAccount=function (id) {
+			layer.open({
+				type:2,
+				title:"账户详情",
+				fix:false,
+				shadeClose:true,
+				area:['800px','500px'],
+				content : '/basicdata/settlement-account/detailaccount?id='+id,
+			});
+		}
+/*	/!*详情div块*!/
+     	  var detail=document.getElementById("detailtab")
+			   if(detail.style.display=="none"){
+				   detail.style.display="block";
+			   }else {
+				   detail.style.display ="none";
+			   }*/
 </script>
-
 </body>
 </html>

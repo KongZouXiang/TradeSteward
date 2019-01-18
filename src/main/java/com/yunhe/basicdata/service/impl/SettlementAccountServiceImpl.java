@@ -38,11 +38,13 @@ public class SettlementAccountServiceImpl extends ServiceImpl<SettlementAccountM
     public Map selectAllAcountList(int current, int size, SettlementAccount settlementAccount) {
         Page page = new Page(current, size);
         List<SettlementAccount> accountList = settlementAccountMapper.selectAllAccountList(page);
+
         Map map = new HashMap();
         map.put("total", page.getTotal());
         map.put("pages", page.getPages());
         map.put("accountList", accountList);
         map.put("settlementAccount", settlementAccount);
+
         return map;
     }
 

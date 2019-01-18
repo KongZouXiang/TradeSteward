@@ -190,7 +190,7 @@
                     url:'/basicdata/commodity-list/deletall',
                     data:JSON.stringify(ids),
                     success: function (msg){
-                        console.log(msg);
+                        getCommdityPageList();
                         if (msg){
                             layer.msg('成功删除',{icon:5});
                         }
