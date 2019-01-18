@@ -32,6 +32,16 @@ public class CharaMangerServiceImpl extends ServiceImpl<CharaMangerMapper, Chara
         return charaMangerMapper.insertRole(charaManger);
     }
 
+    @Override
+    public Boolean checkRole(CharaManger charaManger) {
+        List<CharaManger> list=charaMangerMapper.checkChar(charaManger);
+        Boolean b =false;
+        if (list.size()==0){
+            b=true;
+        }
+        return b;
+    }
+
     public CharaMangerMapper getCharaMangerMapper() {
         return charaMangerMapper;
     }
