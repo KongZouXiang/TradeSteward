@@ -19,45 +19,31 @@
     <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css"/>
     <link rel="stylesheet" href="/lib/layui/css/layui.css" media="all">
     <script type="text/javascript" src="/lib/respond.min.js"></script>
-    <script type="text/javascript" src="/lib/layui/layui.all.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
-    <title>进货历史</title>
-    <style>
-        #lab-file {
-            font-size: 12px;
-            padding: 5px 10px;
-            background: #0C0C0C;
-            color: #FFF;
-            border: none;
-            border-radius: 5px;
-        }
-        #photo {
-            display: none;
-        }
-    </style>
+    <title>管理员列表</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 进货历史管理 <span
-        class="c-gray en">&gt;</span> 进货历史 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
-                                              href="javascript:location.replace(location.href);" title="刷新"><i
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 管理员管理 <span
+        class="c-gray en">&gt;</span> 管理员列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+                                               href="javascript:location.replace(location.href);" title="刷新"><i
         class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-    <div class="text-c">
-        <input type="text" class="input-text" style="width:250px" placeholder="输入单号" id="phNumber" name="">
-        <input type="text" class="input-text" style="width:250px" placeholder="输入供应商" id="phSupname" name="">
+    <div class="text-c"> <!--日期范围：
+        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin"
+               class="input-text Wdate" style="width:120px;">
+        -
+        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax"
+               class="input-text Wdate" style="width:120px;">-->
+        <input type="text" class="input-text" style="width:250px" placeholder="输入单号" id="poNumber" name="">
+        <input type="text" class="input-text" style="width:250px" placeholder="输入供应商" id="poSupName" name="">
         <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜订单
         </button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
-            <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i
-                    class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
-        <a href="/cargomanagement/purchase-history/addPurchase" id="addpurOrder"
-           class="btn btn-primary radius">
-        <i class="Hui-iconfont">&#xe600;</i> 添加进货历史</a>
-        <a href="/cargomanagement/purchase-history/puchaseHistoryExcel"
+        <a href="/cargomanagement/purchase-order/puchaseOrderExcel" id="Excel"
            class="btn btn-success radius">
-        <i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
+        <i class="Hui-iconfont">&#xe644;</i>Excel导出</a>
     </span>
 
         <span class="r">共有数据：<strong>54</strong> 条</span></div>
@@ -65,69 +51,45 @@
         <table class="table table-border table-bordered table-bg">
             <thead>
             <tr>
-                <th scope="col" colspan="19">进货历史</th>
+                <th scope="col" colspan="16">员工列表</th>
             </tr>
             <tr class="text-c">
                 <th width="25"><input type="checkbox" name="" value=""></th>
                 <th width="40">ID</th>
-                <th width="110">操作</th>
-                <th width="130">业务日期</th>
-                <th width="130">单据编号</th>
-                <th width="110">供应商名称</th>
-                <th width="130">进货商品</th>
-                <th width="80">进货数量</th>
-                <th width="80">应付金额</th>
-                <th width="80">已付金额</th>
-                <th width="90">入库仓库</th>
-                <th width="70">纸质单据</th>
-                <th width="130">制单日期</th>
-                <th width="80">结算账户</th>
+                <th width="130">操作</th>
+                <th width="150">业务日期</th>
+                <th width="150">单据编号</th>
+                <th width="130">往来单位名称</th>
+                <th width="130">入库仓库</th>
+                <th width="150">入库商品</th>
+                <th width="100">待入库量</th>
+                <th width="150">制单日期</th>
+                <th width="150">关联业务</th>
                 <th width="90">经手人</th>
                 <th width="90">制单人</th>
-                <th width="80">其他费用</th>
-                <th width="90">入库状态</th>
-                <th width="130">备注</th>
+                <th width="100">状态</th>
             </tr>
             </thead>
             <tbody>
             <tr class="text-c" v-for="(item,index) in result">
-                <td><input type="checkbox" value="" name=""></td>
+                <td><input type="checkbox" :value="index+1" name=""></td>
                 <td>{{index+1}}</td>
                 <td class="td-manage">
-                    <a style="text-decoration:none" class="ml-5"
-                       @Click="article_edit('进货订单编辑','/cargomanagement/purchase-order/selectById?id='+(item.id),'1000')"
-                       href="javascript:;" title="编辑">
-                        <i class="Hui-iconfont">&#xe6df;</i>
-                    </a>
-                    <a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5"
-                       style="text-decoration:none">
-                        <i class="Hui-iconfont">&#xe6e2;</i>
-                    </a>
-                    <a title="入库" href="javascript:;"
-                       @click="stateEvent(item.id)" class="ml-5"
-                       style="text-decoration:none">
-                        <i class="Hui-iconfont">&#xe644;</i>
-                    </a>
                     <a title="详情" href="#" class="ml-5" style="text-decoration:none">
-                        <i class="icon Hui-iconfont">&#xe627;</i>
+                        <i class="icon Hui-iconfont" id="sta">&#xe627;</i>
                     </a>
                 </td>
-                <td>{{item.phDate}}</td>
-                <td>{{item.phNumber}}</td>
-                <td>{{item.phSupname}}</td>
-                <td>{{item.phClname}}</td>
-                <td>{{item.phQuantity}}</td>
-                <td>{{item.phAmountPayable}}</td>
-                <td>{{item.phAmountPaid}}</td>
-                <td>{{item.phWarehouse}}</td>
-                <td><a href="#" id="img"></a></td>
-                <td>{{item.phJindate}}</td>
-                <td>{{item.phManeyHu}}</td>
-                <td>{{item.phExperiencedPerson}}</td>
-                <td>{{item.phSinglePerson}}</td>
-                <td>{{item.phOtherExpenses}}</td>
-                <td>{{item.phWarehousingStatus}}</td>
-                <td>{{item.phRemarks}}</td>
+                <td>{{item.poDate}}</td>
+                <td>{{item.poNumber}}</td>
+                <td>{{item.wreCurrentUnit}}</td>
+                <td>{{item.wreWarehostName}}</td>
+                <td>{{item.wreStorage}}</td>
+                <td>{{item.wreScheduledReceipt}}</td>
+                <td>{{item.wreDateOrder}}</td>
+                <td>{{item.wreType}}</td>
+                <td>{{item.wreSinglePerson}}</td>
+                <td>{{item.wreExperiencedPerson}}</td>
+                <td>{{item.wreState}}</td>
             </tr>
             </tbody>
         </table>
@@ -136,7 +98,7 @@
 </div>
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/js/H-ui.min.js"></script>
 <script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
@@ -149,18 +111,19 @@
         }
     });
 
-    var getPurchaseHostPageList = function (curr) {
+    var getPurchasePageList = function (curr) {
+
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: '/cargomanagement/purchase-history/getPurchaseHistoryPage',
+            url: '/cargomanagement/purchase-order/getPage',
             data: {
                 /*当前页*/
                 pageNum: curr || 1,
                 /*每页大小*/
                 pageSize: 3,
-                phNumber: $("#phNumber").val(),
-                phSupname: $("#phSupname").val()
+                poNumber: $("#poNumber").val(),
+                poSupName: $("#poSupName").val()
                 //向服务端传的参数，此处只是演示
             },
             success: function (msg) {
@@ -173,16 +136,17 @@
                     curr: curr || 1,//初始化页数
                     jump: function (obj, first) { //触发分页后的回调
                         if (!first) {     //点击跳页触发函数自身，并传递当前页：obj.curr
-                            getPurchaseHostPageList(obj.curr);
+                            getPurchasePageList(obj.curr);
                         }
                     }
                 });
             }
         });
+
     };
-    getPurchaseHostPageList();
+    getPurchasePageList();
     $("#findempl").on('click', function () {
-        getPurchaseHostPageList();
+        getPurchasePageList();
     });
 
 
@@ -194,12 +158,12 @@
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
-                url: '/cargomanagement/purchase-history/deletePurchaseHistoryById',
+                url: '/cargomanagement/purchase-order/deletePurchaseById',
                 data: {
                     id: id
                 },
                 success: function (msg) {
-                    getPurchaseHostPageList();
+                    getPurchasePageList();
                     layer.msg('成功删除' + id, {icon: 5});
                 }
             })
@@ -207,9 +171,28 @@
 
         });
     };
+    /*$("#Excel").on("click", function () {
+        layer.confirm('你确定要导出吗？', {
+            btn: ['是', '否']
+        }, function () {
+            $.ajax({
+                method: 'POST',
+                dataType: 'json',
+                url: '',
+                data: {},
+                success: function (msg) {
+                    getPurchasePageList();
+                    layer.msg(msg);
+                }
+            })
+        }, function () {
 
-    /*入库*/
-    var stateEvent = function (id) {
+        });
+    });*/
+
+
+    /*审核*/
+    var stateEvent = function (id, poDate, poNumber, poState, poAuditor, poSupName, poClName, poQuantityOfPurchase, poYingMoney, poBill, poExperiencedPerson, poSinglePerson, poRemarks, poDateOrder) {
         if (poState == "未审核") {
             layer.confirm('您确定通过该订单的审核？', {
                 btn: ['是', '否']
@@ -249,7 +232,6 @@
 
     };
 
-
     /*编辑修改*/
     function article_edit(title, url, id, w, h) {
         var index = layer.open({
@@ -259,7 +241,6 @@
         });
         layer.full(index);
     }
-
 </script>
 </body>
 </html>

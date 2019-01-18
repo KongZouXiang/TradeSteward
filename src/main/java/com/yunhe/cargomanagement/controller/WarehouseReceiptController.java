@@ -4,6 +4,7 @@ import com.yunhe.cargomanagement.entity.WarehouseReceipt;
 import com.yunhe.cargomanagement.service.IWarehouseReceiptService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.Map;
@@ -20,6 +21,20 @@ public class WarehouseReceiptController {
 
     @Resource
     private IWarehouseReceiptService warehouseReceiptService;
+
+    @RequestMapping("/warehouse_receipt1")
+    public ModelAndView test1(){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/cargomanagement/warehouse_receipt1_list");
+        return mv;
+    }
+
+    @RequestMapping("/warehouse_receipt2")
+    public ModelAndView test2(){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/cargomanagement/warehouse_receipt2_list");
+        return mv;
+    }
 
     /**
      * 分页查询待入库单数据
