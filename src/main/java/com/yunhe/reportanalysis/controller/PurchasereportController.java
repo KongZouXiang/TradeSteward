@@ -45,7 +45,7 @@ public class PurchasereportController {
     @PostMapping("/getallbypurch")
     @ResponseBody
     public Map selectbyallcomm(int size, int current, CommodityList commodityList){
-        return commodityListService.selectAllCommList(current,size,commodityList);
+        return commodityListService.selectAllcommList(current,size,commodityList);
     }
 
     /*@PostMapping("/getallbySupp")
