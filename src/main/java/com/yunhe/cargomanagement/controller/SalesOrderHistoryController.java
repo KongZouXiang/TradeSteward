@@ -2,8 +2,12 @@ package com.yunhe.cargomanagement.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yunhe.basicdata.entity.CommodityList;
+import com.yunhe.cargomanagement.entity.OrderConnectComm;
 import com.yunhe.cargomanagement.entity.SalesOrderHistory;
 import com.yunhe.cargomanagement.service.impl.SalesOrderHistoryServiceImpl;
+import com.yunhe.customermanagement.entity.Customer;
+import com.yunhe.customermanagement.service.ICustomerService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
@@ -43,15 +47,35 @@ public class SalesOrderHistoryController {
     @Resource
     private SalesOrderHistoryServiceImpl salesOrderHistoryService;
 
+    @Resource
+    ICustomerService customerService;
+
     /**
      * 新增页面的跳转
      * @return web页面
      */
     @RequestMapping("/ceshi1")
     public ModelAndView ceshi1(){
-        return new ModelAndView("cargomanagement/ceshi1");
+        return new ModelAndView("cargomanagement/salesOrderHistory-add");
     }
 
+/*    *//**
+     * 根据id看详情
+     * @param id
+     * @return
+     *//*
+    @RequestMapping("/detailSale")
+    public SalesOrderHistory detailSale(int id){
+        return salesOrderHistoryService.selectById(id);
+    }*/
+    /**
+     * 查询所有客户
+     * @return
+     */
+    @RequestMapping("/asdfdgh")
+    public List<Customer> listCustomer(){
+        return customerService.sellectAllExcel();
+    }
     public int insertSale(SalesOrderHistory sa){
         return salesOrderHistoryService.insertSale(sa);
     }
@@ -87,7 +111,7 @@ public class SalesOrderHistoryController {
         System.out.println(id);
         SalesOrderHistory salesOrderHistory = salesOrderHistoryService.selectById(id);
         httpSessionsion.setAttribute("sales",salesOrderHistory);
-        return new ModelAndView("/cargomanagement/ceshi2");
+        return new ModelAndView("/cargomanagement/salesOrderHistory-detail");
     }
     /**
      * 修改销售订单信息
@@ -133,7 +157,16 @@ public class SalesOrderHistoryController {
         map.put("total",page.getTotal());
         return map;
     }
-
+    @RequestMapping("/detailList")
+    public List<OrderConnectComm> detailList(){
+/*        ArrayList<CommodityList> commodityLists = new ArrayList<>();
+        List<OrderConnectComm> orderConnectComms = salesOrderHistoryService.detailList(1);
+        for (OrderConnectComm orderConnectComm : orderConnectComms) {
+            CommodityList commodityList = orderConnectComm.getCommodityList();
+            commodityLists.add(commodityList);
+        }*/
+        return salesOrderHistoryService.detailList(1);
+    }
     /**
      * excel导出
      * @param response

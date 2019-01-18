@@ -28,54 +28,31 @@
 
     <article class="page-container">
         <h1 style="text-align: center">商品销售订单</h1>
+        <div> <table class="table table-border table-bordered table-bg">
+            <thead>
+            <tr>
+                <th scope="col" colspan="9">新增进货商品列表</th>
+            </tr>
+            <tr class="text-c">
+                <th width="40">客户</th>
+                <th width="170">处理状态</th>
+                <th width="170">单据编号</th>
+                <th width="170">经手人</th>
+                <th width="100">业务日期</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-c" >
+                <td th:text="${session.sales.soClient}"></td>
+                <td th:text="${session.sales.soStatus}"></td>
+                <td th:text="${session.sales.soOrderNum}"></td>
+                <td th:text="${session.sales.soHander}"></td>
+                <td th:text="${session.sales.soDate}"></td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
         <form class="form form-horizontal" id="form-article-add">
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>客户</label>
-                <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select name="articlecolumn" class="select">
-				    <option value="0">请选择</option>
-					<option value="index+1" v-for="(item,index) in result">{{item.cusName}}</option>
-				</select>
-				</span>
-                </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>单据编号</label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" class="input-text" value="ADD54554445" placeholder="" id="poNumber"
-                           name="poNumber">
-                </div>
-            </div>
-
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>经手人</label>
-                <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select name="articlecolumn" class="select">
-					<option value="0">老板</option>
-					<option value="1">财务</option>
-					<option value="2">仓库</option>
-					<option value="3">销售</option>
-				</select>
-				</span>
-                </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2">评论开始日期：</label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text"
-                           onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'commentdatemax\')||\'%y-%M-%d\'}' })"
-                           id="commentdatemin" name="commentdatemin" class="input-text Wdate">
-                </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"></label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <input type="hidden"
-                           onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'commentdatemin\')}' })"
-                           id="commentdatemax" name="commentdatemax" class="input-text Wdate">
-                </div>
-            </div>
-
             <table class="table table-border table-bordered table-bg">
                 <thead>
                 <tr>
@@ -84,33 +61,27 @@
                 <tr class="text-c">
                     <th width="40">序号</th>
                     <th width="170">商品名称/规格</th>
-                    <th width="170">商品标号</th>
+                    <th width="170">商品编号</th>
                     <th width="170">属性</th>
                     <th width="100">数量</th>
                     <th width="100">单位</th>
-                    <th width="150">单价</th>
+                    <th width="150">折扣</th>
                     <th width="150">金额</th>
                     <th width="200">备注</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="text-c" v-for="(item,index) in result">
-                    <td>1</td>
-                    <td>
-
-                        <select name="articlecolumn" class="select" >
-                            <option value="0">请选择</option>
-                            <option  v-for="(item,index) in resulttwo" :value="index+1">{{item.clName}}</option>
-                        </select>
-                    </td>
-                    <td>商品标号</td>
+                <tr class="text-c" v-for="(item,index) in resulttwo">
+                    <td>{{item.commodityList.clName}}</td>
+                    <td>{{item.id}}</td>
+                    <td>{{index}}</td>
                     <td>属性</td>
                     <td><input type="text" class="input-text" value="1" placeholder="" id="poQuantityOfPurchase"
                                name="poQuantityOfPurchase"></td>
                     <td>单位</td>
                     <td><input type="text" class="input-text" value="" placeholder="" id="danjia" name="danjia"></td>
                     <td><input type="text" class="input-text" value="" placeholder="" id="jine" name="jine"></td>
-                    <td><input type="text" class="input-text" value="默认无备注" placeholder="" id="poRemarks"
+                    <td><input type="text" class="input-text"  placeholder="默认无" id="poRemarks"
                                name="poRemarks">
                     </td>
                 </tr>
@@ -167,27 +138,27 @@
         }
     });
     //查询
-    var getsupplierList = function (curr) {
+/*    var getsupplierList = function (curr) {
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: '/cargomanagement/sales-order-history/asdfdgh',
+            url: '/cargomanagement/sales-order-history/detailSale',
             data: {},
             success: function (msg) {
                 app.result = msg;
             }
         });
     };
-    getsupplierList();
+    getsupplierList();*/
 
     var getCommodityList = function (curr) {
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: '/cargomanagement/purchase-order/getCommodadd',
+            url: '/cargomanagement/sales-order-history/detailList',
             data: {},
             success: function (msg) {
-                app.resulttwo = msg.list;
+                app.resulttwo = msg;
             }
         });
     };
