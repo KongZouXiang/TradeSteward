@@ -1,5 +1,7 @@
 package com.yunhe.customermanagement.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.customermanagement.entity.Customer;
 import com.yunhe.customermanagement.dao.CustomerMapper;
@@ -38,7 +40,6 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
 
     @Override
     public int updateCustomer(Customer customer) {
-
         return customerMapper.updateById(customer);
     }
 
@@ -65,22 +66,40 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     }
 
     @Override
-    public Map sellectAll(int current,int size) {
+    public Map sellectAll(int current, int size) {
 
         Map map = new HashMap();
         Page<Customer> page = new Page(current, size);
         List<Customer> list = customerMapper.sellectAll(page);
 
-        map.put("list",list);
-        map.put("current",current);
-        map.put("size",size);
+        map.put("list", list);
+        map.put("current", current);
+        map.put("size", size);
         map.put("totalPage", page.getPages());
-        return  map;
+        return map;
     }
 
     @Override
     public List sellectAllExcel() {
         return customerMapper.sellectAllExcel();
+    }
+
+    @Override
+    public List<Customer> selectLikeCustomer(Customer customer) {
+
+        return customerMapper.selectList(new QueryWrapper<Customer>().like("cus_compname", customer.getCusCompname())
+                .or().like("cus_tele", customer.getCusTele()));
+
+
+    }
+
+    @Override
+    public IPage<Customer> selectPage(int current, int size, Customer customer) {
+
+        return customerMapper.selectPage(new Page<>(current, size),
+                new QueryWrapper<Customer>().like("cus_compname", customer.getCusCompname())
+                        .or().like("cus_tele", customer.getCusTele()));
+
     }
 
 

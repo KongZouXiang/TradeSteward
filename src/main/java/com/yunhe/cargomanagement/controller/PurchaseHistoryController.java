@@ -28,10 +28,10 @@ public class PurchaseHistoryController {
 
 
 
-    @RequestMapping("/Test1")
+    @RequestMapping("/purchasehistoryList")
     public ModelAndView getGoToPurchaseHistory(){
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("purchaseHistory");
+        mv.setViewName("cargomanagement/purhistory-list");
         return mv;
     }
 
@@ -55,6 +55,7 @@ public class PurchaseHistoryController {
      */
     @RequestMapping("/getPurchaseHistoryPage")
     public Map getPurchaseHistoryByPhNumber(int pageNum, int pageSize, PurchaseHistory purchaseHistory){
+        System.out.println(purchaseHistory.getPhNumber()+"*******"+purchaseHistory.getPhSupname());
         Map purchaseHistpage = purchaseHistoryService.getPurchaseHistoryByPhNumber(pageNum,pageSize,purchaseHistory);
         return purchaseHistpage;
     }

@@ -27,26 +27,18 @@
                                                href="javascript:location.replace(location.href);" title="刷新"><i
         class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-    <div class="text-c"> <!--日期范围：
-        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin"
-               class="input-text Wdate" style="width:120px;">
-        -
-        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax"
-               class="input-text Wdate" style="width:120px;">-->
+    <div class="text-c">
         <input type="text" class="input-text" style="width:250px;margin-left: 1000px" placeholder="输入编号、名称、规格、属性" id="poKeyword" name="poKeyword">
         <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
-            <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
-        <a href="javascript:;" onclick="admin_add('添加商品','admin-add.html','800','500')"
-            class="btn btn-primary radius">
-        <i class="Hui-iconfont">&#xe600;</i> 添加商品</a>
-        <a href="javascript:;" onclick="admin_add('Excel导出','admin-add.html','800','500')"
-               class="btn btn-success radius">
-        <i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
+                 <button  id="deleteall" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</button>
+           <button id="addcommditybtn" onclick="addcommdity()" class="btn btn-primary radius"> <i class="Hui-iconfont">&#xe600;</i> 添加商品</button>
+            <!--<a href="javascript:;"  class="btn btn-danger radius"><i class="Hui-iconfont">&#xe600;</i> 添加商品</a>-->
+        <a href="#" onclick="exportexcel()" class="btn btn-danger radius">
+        <i class="Hui-iconfont">&#xe600;</i> Excel导出</a>
     </span>
-
         <span class="r">共有数据：<strong>54</strong> 条</span></div>
     <div id="app" style="overflow: scroll;height: 500px"  >
         <table class="table table-border table-bordered table-bg">
@@ -55,7 +47,7 @@
                 <th scope="col" colspan="9">商品列表</th>
             </tr>
             <tr class="text-c">
-                <th width="25"><input type="checkbox" name="" value=""></th>
+                <th width="25"><input type="checkbox" name="" value="" id="checkAll"></th>
                 <th width="40">序号</th>
                 <th width="130">操作</th>
                 <th width="150">编号</th>
@@ -68,18 +60,12 @@
             </thead>
             <tbody>
             <tr class="text-c" v-for="(item,index) in result">
-                <td><input type="checkbox" value="" name=""></td>
+                <td><input type="checkbox"   id="box_" :value="item.id"></td>
                 <td>{{index+1}}</td>
                 <td class="td-manage">
-                    <a style="text-decoration:none" class="ml-5" @Click="article_edit('资讯编辑','/cargomanagement/purchase-order/selectById?id='+(item.id),'1000')" href="javascript:;" title="编辑">
-                        <i class="Hui-iconfont">&#xe6df;</i>
-                    </a>
-                    <a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none">
-                        <i class="Hui-iconfont">&#xe6e2;</i>
-                    </a>
-                    <a title="详情" href="#" class="ml-5" style="text-decoration:none">
-                        <i class="icon Hui-iconfont">&#xe627;</i>
-                    </a>
+                    <a title="详情" href="javascript:;" @click="xiangEventcommdity(item.id)" class="ml-5" style="text-decoration:none"> <i class="icon Hui-iconfont">&#xe627;</i></a>
+                    <a title="编辑" href="javascript:;" @click="editEventcommdity(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                    <a title="删除" href="javascript:;" @click="deleteEventcommdity(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
                 </td>
                 <td>{{item.clNumber}}</td>
                 <td>{{item.clName}}</td>
@@ -135,6 +121,7 @@
             });
         }
     getCommdityPageList();
+   /*模糊查询*/
     $("#findempl").click(function () {
         $.ajax({
             type:'POST',
@@ -148,6 +135,95 @@
             }
         });
     })
+    /*增加商品*/
+    var  addcommdity=function () {
+        window.location.href="/basicdata/commodity-list/addcommlist";
+    }
+    //编辑商品事件
+    var editEventcommdity=function (id) {
+        $.ajax({
+            type:"post",
+            dataType:"json",
+        })
+        window.location.href='/basicdata/commodity-list/selectcommditybyid?id='+id;
+    };
+    /*商品详情*/
+  var xiangEventcommdity =function (id) {
+      $.ajax({
+          type:'post',
+          datatype:'json',
+      })
+      window.location.href='/basicdata/commodity-list/detailcommodity?id='+id;
+   }
+    /**
+     * 导出excel
+     */
+   var exportexcel=function () {
+    window.location.href="/basicdata/commodity-list/getExcel";
+   }
+   // 批量删除
+    $(function () {
+        $("#checkAll").click(function () {
+            $("input[id^='box_']").attr("checked",this.checked);
+        })
+        $("input[id^='box_']").click(function(){//点击每一个子checkbox，都会触发这个事件
+            /**获取到下面所有checkbox*/
+            var boxs = $("input[id^='box_']");
+            $("#checkAll").attr("checked",boxs.filter(":checked").length == 2);
+        });
+    });
+    $("#deleteall").click(function(){
+        /**获取下面选中的checkbox*/
+        var checkedbox = $("input[id^='box_']:checked");
+        if(checkedbox.length == 0){
+            alert("请选择要删除的商品！！！");
+        }else{
+            if(confirm("你确定要删除吗？？？")){
+                var ids = new Array();
+                checkedbox.each(function(){
+                    ids.push(this.value);
+                });
+                $.ajax({
+                    type:'POST',
+                    dataType:'json',
+                    contentType: 'application/json',
+                    url:'/basicdata/commodity-list/deletall',
+                    data:JSON.stringify(ids),
+                    success: function (msg){
+                        getCommdityPageList();
+                        if (msg){
+                            layer.msg('成功删除',{icon:5});
+                        }
+                    }
+                })
+            }
+        }
+    })
+    getCommdityPageList();
+    /*单个删除*/
+    var deleteEventcommdity = function(id) {
+        //询问框
+        layer.confirm('您确定要删除么？', {
+            btn : [ '是', '否' ]
+            //按钮
+        }, function() {
+            //是
+            $.ajax({
+                type : "POST",
+                dataType : "json",
+                url : "/basicdata/commodity-list/deleteComm",
+                data : {
+                    id:id
+                },
+                success : function(msg) {
+                    getCommdityPageList();
+                    layer.msg('已经成功删除记录' + id,{icon:5});
+                }
+            });
+        }, function() {
+            //否
+        });
+    }
 </script>
 </body>
 </html>

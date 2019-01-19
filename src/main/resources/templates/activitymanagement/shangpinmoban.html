@@ -33,17 +33,19 @@
         -
         <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax"
                class="input-text Wdate" style="width:120px;">-->
-        <input type="text" class="input-text" style="width:250px;" placeholder="模板编号" id="ct_TemplateNumber" name="">
-        <input type="text" class="input-text" style="width:250px;" placeholder="模板名称" id="ct_TemplateName" name="">
+        <input type="text" class="input-text" style="width:250px;" placeholder="模板名称或模板编号" id="ct_Templatelike" name="">
         <button type="submit" class="btn btn-success" style="" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
             <a href="javascript:;" id="deleteAl"  class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
-        <a href="javascript:;" onclick="addSales('添加','','800','500')"
-           class="btn btn-primary radius">
+       <!-- <a href="javascript:;" onclick="addSales('添加','','800','500')"
+           class="btn btn-primary radius">-->
+            <a href="/activitymanagement/commodi-tytemplate/xinzeng" class="btn btn-primary radius">
         <i class="Hui-iconfont">&#xe600;</i> 添加商品模板</a>
-
+         <a href="javascript:;" onclick="Excel_out()"
+          class="btn btn-primary radius">
+        <i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
     </span>
 
         <span class="r">共有数据：<strong id="strong"></strong> 条</span></div>
@@ -150,16 +152,16 @@
         $.ajax({
             type:'Get',
             dataType:'json',
-            url:'/activitymanagement/commodi-tytemplate/quertLikeList',
+            url:'/activitymanagement/commodi-tytemplate/selectLikePage',
             data:{
                 current: curr || 1,
                 size:2,
-                ctTemplateNumber:$("#ct_TemplateNumber").val(),
-                ctTemplateName:$("#ct_TemplateName").val(),
+                ctTemplateNumber:$("#ct_Templatelike").val(),
+                ctTytemplateName:$("#ct_Templatelike").val()
             },
             success: function (msg) {
-                console.log(msg)
-                app.result = msg.commodilist;
+                console.log(msg);
+                app.result = msg.records;
                 $("#strong").html(msg.total);
                 laypage({
                     cont: 'pagenav',//容器  值支持id名、原生dom对象，jquery对象,
@@ -236,6 +238,9 @@
         });
     }
 
+    var Excel_out =function () {
+        window.location.href="/activitymanagement/commodi-tytemplate/export1";
+    }
 
 
 </script>
