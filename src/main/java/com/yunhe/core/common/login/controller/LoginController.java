@@ -28,10 +28,10 @@ public class LoginController {
         return "login";
     }
 
-    @GetMapping("index")
+   /* @GetMapping("toindex")
     public String index() {
         return "index";
-    }
+    }*/
     @PostMapping("/login")
     public String login(Employ employ, HttpSession session) {
         if (loginService.login(employ) != null) {
@@ -39,6 +39,6 @@ public class LoginController {
 
             return "index";
         }
-      return "index";
+      return "login";
     }
 }
