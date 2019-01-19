@@ -20,21 +20,21 @@
 	<script type="text/javascript" src="/js/vue/vue.min.js"></script>
 	<script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js"></script>
 	<script>DD_belatedPNG.fix('*');</script>
-	<title>新增进货订单</title>
+	<title>新增付款</title>
 	<meta name="keywords" content="">
 	<meta name="description" content="">
 </head>
 <body>
 <div id="app">
 	<article class="page-container" style="border: 0px solid #bbbbbb;height: 350px;margin: 10px">
-		<div style="float: left;width: 20%;margin-bottom: -10px">客户<input type="text"></div>
-		<div><h2 style="text-align: center;width: 60%;float: left;">收款单</h2></div>
+		<div style="float: left;width: 20%;margin-bottom: -10px">供应商<input type="text"></div>
+		<div><h2 style="text-align: center;width: 60%;float: left;">付款单</h2></div>
 		<div style="float: right;width: 20%">单据编号：<input value="SKD20190114003" type="text"></div>
 		<!--<input spellcheck="false" id="setid" value="" type="hidden">-->
 		<!-- whiteBox -->
 		<div style="border-top: 3px solid #b2b2b2;height: 30px;margin-top: 80px;padding-top: 35px">
 			<div style="float: left;"></div>经手人<select id=""><option>老板</option><option>财务</option></select>
-			<div style="float: right">收款日期<input type="date"></div>
+			<div style="float: right">付款日期<input type="date"></div>
 		</div>
 		<form class="form form-horizontal" id="form-article-add">
 			<table class="table table-border table-bordered table-bg">
@@ -42,8 +42,8 @@
 				<tr class="text-c">
 					<th width="40">序号</th>
 					<th width="150">结算账户</th>
-					<th width="150">应收金额(元)</th>
-					<th width="150">本次收款(元)</th>
+					<th width="150">应付金额(元)</th>
+					<th width="150">本次付款(元)</th>
 					<th width="150">优惠金额(元)</th>
 					<th width="150">合计(元)</th>
 					<th>备注</th>
@@ -54,7 +54,7 @@
 					<td>1</td>
 					<td>
 						<select name="articlecolumn" class="select" >
-							<option value="0">请选择</option>
+							<option value="">现金</option>
 							<option  v-for="(item,index) in resulttwo" :value="index+1">现金</option>
 							<option  v-for="(item,index) in resulttwo" :value="index+1">建设银行</option>
 						</select>

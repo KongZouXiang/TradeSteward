@@ -14,42 +14,40 @@
 	<script type="text/javascript" src="/js/vue/vue.min.js"></script>
 	<link rel="stylesheet" href="/js/laypage/skin/laypage.css">
 	<script type="text/javascript" src="/js/laypage/laypage.js"></script>
+	<link rel="stylesheet" href="/lib/layui/css/layui.css"  media="all">
 	<title>添加收支项目</title>
 </head>
 <body>
 <div class="page-container">
-	<form method="post" class="form form-horizontal" id="updateFcForm" data-validator-option="{theme:'simple_right'}">
+	<form class="layui-form" action="" data-validator-option="{theme:'simple_right'}">
 		<input type="hidden" id="id" th:value="${session.financeClassify.id}">
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">
-				<span class="c-red">*</span>账目类型：</label>
-			<div class="formControls col-xs-6 col-sm-6">
-				<input type="text" class="input-text" th:value="${session.financeClassify.fcType}" id="fcType" name="product-category-name">
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span class="c-red">*</span>账目类型</label>
+			<div class="layui-input-block">
+				<input type="text" id="fcType" name="fcType" lay-verify="fcType" autocomplete="off" th:value="${session.financeClassify.fcType}" class="layui-input">
 			</div>
 		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">
-				<span class="c-red">*</span>
-				收支类别：</label>
-			<div class="formControls col-xs-6 col-sm-6">
-				<select id="fcSort" th:value="${session.financeClassify.fcSort}">
-					<option value="收入">收入</option>
-					<option value="支出">支出</option>
+		<div class="layui-form-item">
+			<label class="layui-form-label">收支类别</label>
+			<div class="layui-input-block">
+				<input id="fcvalue" type="hidden" th:value="${session.financeClassify.fcSort}">
+				<select name="fcSort" id="fcSort" >
+					<option id="shou" value="收入"  class="sort">收入</option>
+					<option id="zhi" value="支出"  class="sort">支出</option>
 				</select>
 			</div>
 		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">
-				<span class="c-red"></span>
-				备注：</label>
-			<div class="formControls col-xs-6 col-sm-6">
-				<textarea id="fcRemark" cols="5" rows="3" class="textarea"  placeholder="说点什么..."></textarea>
+		<div class="layui-form-item layui-form-text">
+			<label class="layui-form-label">备注</label>
+			<div class="layui-input-block">
+				<input id="textValue" type="hidden" th:value="${session.financeClassify.fcRemark}">
+				<textarea placeholder="说点什么..." id="fcRemark" class="layui-textarea"></textarea>
 			</div>
 		</div>
-		<div class="row cl" style="text-align: center;position:fixed;bottom:25px;left:20px;right:0">
-			<div class="col-9 col-offset-2">
-				<button type="button" id="saveBtn"class="btn btn-primary radius">提交</button>
-				<button type="button" id="cancelBtn" class="btn radius">取消</button>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" id="saveBtn" lay-submit="" lay-filter="demo1">提交</button>
+				<button type="reset" id="cancelBtn" class="layui-btn layui-btn-primary">重置</button>
 			</div>
 		</div>
 	</form>
@@ -64,65 +62,86 @@
 <script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+<script src="/lib/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript">
-    var updateFc = function(){
-        /*if(!check().form()){
-            return;
-        }*/
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            url: "/billManagement/finance-classify/updateFc",
-            data: {
-                "id":$("#id").val(),
-                "fcType": $("#fcType").val(),
-                "fcSort": $("#fcSort").val(),
-                "fcRemark":$("#fcRemark").val(),
-            },
-            success: function(msg){
-                $('#cancelBtn').click();
-            }
-        });
-    }
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
 
-    $('#saveBtn').on('click', function(){
-        updateFc();
+        //自定义验证规则
+        form.verify({
+            fcType: function(value){
+                if(value.length < 2){
+                    return '账目类型至少得2个字符啊';
+                }
+                var check="";
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: "/billManagement/finance-classify/checkFcExit",
+                    async:false,//ajax改成同步提交
+                    data: {
+                        "fcType": value,
+                    },
+
+                    success:function (msg) {
+                        alert("是否存在？"+msg);
+                        if (msg == true){
+                            check= "该账目类型名已存在！";
+                        }
+                    }
+                });
+                return check;
+            }
+
+        });
+        var Sort = function(){
+            var sortValue = $("#fcvalue").val();
+            /*console.log(sortValue);*/
+            var oppion = new Array();
+            oppion = $(".sort");
+           /*console.log($("#zhi").val()==sortValue);
+			console.log(oppion[1]);*/
+            $("#zhi").val()==sortValue;
+        };
+
+        Sort();
+
+        var textarea = function(){
+			var textVal = $("#textValue").val();
+            /*console.log(textVal);*/
+			$("#fcRemark").html(textVal);
+		};
+
+        textarea();
+
+        form.render();
+
+        //监听提交
+        form.on('submit(demo1)', function(){
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "/billManagement/finance-classify/updateFc",
+                data: {
+                    "id":$("#id").val(),
+                    "fcType": $("#fcType").val(),
+                    "fcSort": $("#fcSort").val(),
+                    "fcRemark":$("#fcRemark").val(),
+                },
+                success: function(msg){
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.getFcPageList();
+                    parent.layer.close(index);
+                }
+            });
+            return false;
+        });
     });
 
-    $('#cancelBtn').on('click', function(){
-        var index = parent.layer.getFrameIndex(window.name);
-        parent.getFcPageList();
-        parent.layer.close(index);
-    });
 
-    //校验字段是否正确
-    function check(){
-        /*返回一个validate对象，这个对象有一个form方法，返回的是是否通过验证*/
-        return $("#updateFcForm").validate({
-            rules:{
-                fcType:{
-                    required:true
-                },
-                fcSort:{
-                    required:true
-                },
-                fcRemark:{
-                    required:true
-                }
-            },
-            messages:{
-                fcType:{
-                    required:""
-                },
-                fcSort:{
-                    required:""
-                },
-                fcRemark:{
-                    required:""
-                }
-            }
-        });
-    }
 </script>
 </body>
 </html>

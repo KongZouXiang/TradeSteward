@@ -1,12 +1,14 @@
 package com.yunhe.billmanagement.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yunhe.billmanagement.entity.FinanceClassify;
+import com.yunhe.billmanagement.entity.FinanceOrder;
 import com.yunhe.billmanagement.service.IFinanceClassifyService;
+import com.yunhe.billmanagement.service.IFinanceOrderService;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -34,6 +36,9 @@ public class FinanceClassifyController {
     @Resource
     IFinanceClassifyService financeClassifyService;
 
+    @Resource
+    IFinanceOrderService financeOrderService;
+
     /**
      * <P>
      *    进入首页
@@ -53,9 +58,7 @@ public class FinanceClassifyController {
      * @return 进入bill-FinanceClassify.html
      */
     @RequestMapping("/toFc")
-    public ModelAndView toFc(HttpSession session){
-        List<FinanceClassify> li = financeClassifyService.selectFc();
-        session.setAttribute("total",li.size());
+    public ModelAndView toFc(){
         System.out.println("toFc进入controller");
         return new ModelAndView("billmanagement/bill-FinanceClassify");
     }
@@ -80,7 +83,21 @@ public class FinanceClassifyController {
      */
     @RequestMapping(value = "/selectFc",method = RequestMethod.POST)
     public List<FinanceClassify> selectFc() {
+        System.out.println(financeClassifyService.selectFc());
         return financeClassifyService.selectFc();
+    }
+
+    /**
+     * <P>
+     *     通过条件查询数据
+     * </P>
+     * @param financeClassify 查询条件放在对象里
+     * @return 收支分类管理表：查询的结果集
+     */
+    @RequestMapping(value = "/selectFcBySort",method = RequestMethod.POST)
+    public List<FinanceClassify> selectFcBySort(FinanceClassify financeClassify) {
+        System.out.println(financeClassifyService.selectFcBySort(financeClassify));
+        return financeClassifyService.selectFcBySort(financeClassify);
     }
 
     /**
@@ -94,6 +111,7 @@ public class FinanceClassifyController {
         System.out.println("toadd进入controller");
         return new ModelAndView("billmanagement/bill-FC-add");
     }
+
     /**
      * <P>
      *     增加数据
@@ -106,6 +124,18 @@ public class FinanceClassifyController {
         return financeClassifyService.insertFc(financeClassify);
     }
 
+    /**
+     * <P>
+     *     增加数据之前检查账目名是否已存在
+     * </P>
+     * @param financeClassify 查询条件
+     * @return
+     */
+    @RequestMapping(value = "/checkFcExit",method = RequestMethod.GET)
+    public boolean checkFcExit(FinanceClassify financeClassify){
+        System.out.println("检查是否存在："+financeClassifyService.checkFcExit(financeClassify));
+        return financeClassifyService.checkFcExit(financeClassify);
+    }
     /**
      * <P>
      *    进入修改页面
@@ -139,15 +169,22 @@ public class FinanceClassifyController {
      * <P>
      *     删除数据
      * </P>
-     * @param financeClassify 删除的参数放到一个对象
+     * @param id 通过id删除
      * @return  收支分类管理表：删除是否成功true or false
      */
     @RequestMapping(value = "/deleteFc",method = RequestMethod.GET)
-    public int deleteFc(FinanceClassify financeClassify) {
-        return financeClassifyService.deleteFc(financeClassify);
+    public int deleteFc(int id) {
+        int i =1;//1代表不能删,0代表可以删
+        List<FinanceOrder> list = financeOrderService.list(new QueryWrapper<FinanceOrder>().eq("fc_id", id));
+        System.out.println("这个分类是否在用："+list);
+        if(list.size()>0){
+            i=1;
+        }else {
+            i=0;
+            financeClassifyService.deleteFc(id);
+        }
+        return i;
     }
-
-    //导出Excel
 
     /**
      * <P>
@@ -195,7 +232,7 @@ public class FinanceClassifyController {
         // 调用字体样式对象
         style.setFont(font);
         style.setWrapText(true);
-        /*style.setAlignment(HorizontalAlignment.CENTER);//设置居中样式*/
+        style.setAlignment(HorizontalAlignment.CENTER);//设置居中样式
 
         // 3.单元格应用样式
         cell.setCellStyle(style);
@@ -207,6 +244,7 @@ public class FinanceClassifyController {
 
         //在sheet里创建第二行
         HSSFRow row2=sheet.createRow(1);
+
         //创建单元格并设置单元格内容及样式
         HSSFCell cell0=row2.createCell(0);
         cell0.setCellStyle(style);
@@ -264,10 +302,10 @@ public class FinanceClassifyController {
         response.reset();
         //文件名这里可以改
         response.setHeader("Content-disposition", "attachment; filename=finance_classify.xls");
-        response.setContentType("application/msexcel");
+        response.setContentType("application/excel");
         wb.write(output);
         output.close();
-        return null;
+        return "SUCCESS";
     }
 
 }

@@ -10,4 +10,6 @@
         select <include refid="fcCols"/> from finance_classify where fc_type like concat('%',#{financeClassify.fcType},'%') order by id desc
     </select>
 
+
+
 </mapper>

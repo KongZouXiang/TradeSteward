@@ -28,5 +28,13 @@ public interface FinanceClassifyMapper extends BaseMapper<FinanceClassify> {
      */
     List<FinanceClassify> selectFcPage(Page page, FinanceClassify financeClassify);
 
+    /**
+     * <P>
+     *     增加数据之前检查账目名是否已存在
+     * </P>
+     * @param financeClassify 查询条件
+     * @return
+     */
+    int checkFcExit(FinanceClassify financeClassify);
 
 }

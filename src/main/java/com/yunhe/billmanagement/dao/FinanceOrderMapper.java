@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.billmanagement.entity.FinanceClassify;
 import com.yunhe.billmanagement.entity.FinanceOrder;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -46,4 +47,22 @@ public interface FinanceOrderMapper extends BaseMapper<FinanceOrder> {
      * @return 修改是否成功
      */
     int gaiFo(Map<String, Object> map);
+
+    /**
+     * <p>
+     * 日常收支表
+     * </p>
+     * @return 查询收入总金额
+     */
+    @Select("select SUM(fo_money) as moneyshou from finance_order where fo_flag='收入'")
+    Map<String,Object> selectMoneyMapByShou();
+
+    /**
+     * <p>
+     * 日常收支表
+     * </p>
+     * @return 查询支出总金额
+     */
+    @Select("select SUM(fo_money) as moneyzhi from finance_order where fo_flag='支出'")
+    Map<String,Object> selectMoneyMapByZhi();
 }

@@ -14,24 +14,42 @@
 <script type="text/javascript" src="/js/vue/vue.min.js"></script>
 <link rel="stylesheet" href="/js/laypage/skin/laypage.css">
 <script type="text/javascript" src="/js/laypage/laypage.js"></script>
-<link rel="stylesheet" href="/lib/layui/css/layui.css"  media="all">
-	<title>添加收支项目</title>
+	<link rel="stylesheet" href="/lib/layui/css/layui.css"  media="all">
+	<title>新增一笔收支</title>
 </head>
 <body>
 <div class="page-container">
 	<form class="layui-form" action="">
+		<input type="hidden" id="foSort" name="foSort" lay-verify="foSort" autocomplete="off" value="收入" class="layui-input">
 		<div class="layui-form-item">
 			<label class="layui-form-label"><span class="c-red">*</span>账目类型</label>
 			<div class="layui-input-block">
-				<input type="text" id="fcType" name="fcType" lay-verify="fcType" autocomplete="off" placeholder="请输入账目类型" class="layui-input">
+				<select id="fcId" name="fcId"></select>
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">收支类别</label>
+			<label class="layui-form-label"><span class="c-red">*</span>金额</label>
 			<div class="layui-input-block">
-				<select name="fcSort" id="fcSort" lay-filter="aihao">
-					<option value="收入">收入</option>
-					<option value="支出" selected="">支出</option>
+				<input type="text" id="foMoney" name="foMoney" lay-verify="foMoney" autocomplete="off" value="" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span class="c-red">*</span>收入账户</label>
+			<div class="layui-input-block">
+				<select id="foAccount" name="foAccount">
+					<option>现金</option>
+					<option>建设银行</option>
+				</select>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span class="c-red">*</span>经手人</label>
+			<div class="layui-input-block">
+				<select id="foPerson" name="foPerson">
+					<option>老板</option>
+					<option>财务</option>
+					<option>仓管或采购</option>
+					<option>销售</option>
 				</select>
 			</div>
 		</div>
@@ -39,6 +57,12 @@
 			<label class="layui-form-label">备注</label>
 			<div class="layui-input-block">
 				<textarea placeholder="说点什么..." cols="5" rows="3" id="fcRemark" class="layui-textarea"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item layui-form-text">
+			<label class="layui-form-label">图片附件</label>
+			<div class="layui-input-block">
+				<input type="file" class="input-text" id="foImage" name="product-category-name">
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -62,6 +86,7 @@
 <script src="/lib/layui/layui.js" charset="utf-8"></script>
 <script>
     layui.use(['form', 'layedit', 'laydate'], function(){
+        var $ =layui.jquery;
         var form = layui.form
             ,layer = layui.layer
             ,layedit = layui.layedit
@@ -69,50 +94,66 @@
 
         //自定义验证规则
         form.verify({
-            fcType: function(value){
-                if(value.length < 2){
-                    return '账目类型至少得2个字符啊';
-                }
-                var check="";
-                $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    url: "/billManagement/finance-classify/checkFcExit",
-                    async:false,//ajax改成同步提交
-                    data: {
-                        "fcType": value,
-                    },
-
-                    success:function (msg) {
-                        /*alert("是否存在？"+msg);*/
-						if (msg == true){
-						   check= "该账目类型名已存在！";
-						}
+            foMoney:function(value){
+				var check='';
+                if(value.length < 1){
+                   check= '金额不能为空啊';
+                };
+                if(value.length>=1) {
+                    var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+                    var money = $('#foMoney').val();
+                    if (!reg.test(money)){
+                        check = '金额格式不对！'
                     }
-				});
+                }
 				return check;
+
             }
         });
 
+     var select = function(){
+         $.ajax({
+             type: "POST",
+             url:"/billManagement/finance-classify/selectFcBySort",
+			 data:{
+                 fcSort:$("#foSort").val()
+			 },
+             dataType:"json",
+			 async:false,
+             success:function(result){
+                 /*alert(result);*/
+                 $.each(result,function(index,item){
+                     $("#fcId").append("<option value='"+item.id+"'>"+item.fcType+"</option>");
+                 });
+             }
+         })
+	 }
+	 select();
+     form.render();
         //监听提交
         form.on('submit(demo1)', function(){
             $.ajax({
                 type: "GET",
                 dataType: "json",
-                url: "/billManagement/finance-classify/insertFc",
+                url: "/billManagement/finance-order/insertFo",
                 data: {
-                    "fcType": $("#fcType").val(),
-                    "fcSort": $("#fcSort").val(),
-                    "fcRemark":$("#fcRemark").val(),
+                    foFlag:"收入",
+                    foNumList: $("#foNumList").val(),
+                    fcId:$("#fcId").val(),
+                    foMoney: $("#foMoney").val(),
+                    foAccount: $("#foAccount").val(),
+                    foPerson:$("#foPerson").val(),
+                    foRemark: $("#fcRemark").val(),
+                    foImage:$("#foImage").val()
                 },
                 success: function(msg){
                     var index = parent.layer.getFrameIndex(window.name);
-                    parent.getFcPageList();
+                    parent.getFoPageListShou();
                     parent.layer.close(index);
                 }
             });
             return false;
-		});
+        });
     });
 </script>
 </body>

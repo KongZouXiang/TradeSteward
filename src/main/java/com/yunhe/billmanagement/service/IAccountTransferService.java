@@ -2,7 +2,6 @@ package com.yunhe.billmanagement.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yunhe.billmanagement.entity.AccountTransfer;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -47,12 +46,12 @@ public interface IAccountTransferService extends IService<AccountTransfer> {
 
     /**
      * <P>
-     *     修改数据
+     *     数据详情
      * </P>
-     * @param accountTransfer 查询条件放在对象里
+     * @param id 通过id查询
      * @return  账户转账表：修改是否成功
      */
-     int updateAt(AccountTransfer accountTransfer);
+    AccountTransfer detailById(int id);
 
     /**
      * <P>
@@ -62,4 +61,12 @@ public interface IAccountTransferService extends IService<AccountTransfer> {
      * @return  账户转账表：删除是否成功
      */
      int deleteAt(AccountTransfer accountTransfer);
+
+    /**
+     * <p>
+     *     账户转账表
+     * </p>
+     * @return 查询总金额和总手续费
+     */
+    Map<String,Object> selectAtCountMap();
 }

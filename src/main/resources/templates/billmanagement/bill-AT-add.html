@@ -1,0 +1,195 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
+<![endif]-->
+<script type="text/javascript" src="/js/vue/vue.min.js"></script>
+<link rel="stylesheet" href="/js/laypage/skin/laypage.css">
+<script type="text/javascript" src="/js/laypage/laypage.js"></script>
+	<link rel="stylesheet" href="/lib/layui/css/layui.css"  media="all">
+	<title>新增转账</title>
+</head>
+<body>
+<div class="page-container">
+	<form class="layui-form" action="">
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label"><span class="c-red">*</span>转出账户</label>
+				<div class="layui-input-inline">
+					<select name="atOutAccount" id="atOutAccount">
+						<option value="现金">现金</option>
+						<option value="建设银行" selected="">建设银行</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label"><span class="c-red">*</span>转出日期</label>
+				<div class="layui-input-inline">
+					<input type="date" id="atOutTime" name="atOutTime" lay-verify="atOutTime" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label"><span class="c-red">*</span>转入账户</label>
+				<div class="layui-input-inline">
+					<select name="atIntoAccount" id="atIntoAccount">
+						<option value="现金">现金</option>
+						<option value="建设银行" selected="">建设银行</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label"><span class="c-red">*</span>转入日期</label>
+				<div class="layui-input-inline">
+					<input type="date" id="atIntoTime" name="atIntoTime" lay-verify="atIntoTime" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span class="c-red">*</span>金额(元)</label>
+			<div class="layui-input-block">
+				<input type="text" id="atMoney" name="atMoney" lay-verify="atMoney" autocomplete="off" value="" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">手续费(元)</label>
+				<div class="layui-input-inline">
+					<input type="text" name="atCharge" id="atCharge" lay-verify="atCharge" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-inline">
+				<div class="layui-input-inline">
+					<input type="radio" name="atChargePerson" value="转出账户支付" title="己方支付">
+					<input type="radio" name="atChargePerson" value="转入账户支付" title="对方支付" checked="">
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span class="c-red">*</span>经手人</label>
+			<div class="layui-input-block">
+				<select name="atPerson" id="atPerson">
+					<option>老板</option>
+					<option>财务</option>
+					<option>仓管或采购</option>
+					<option>销售</option>
+				</select>
+			</div>
+		</div>
+		<div class="layui-form-item layui-form-text">
+			<label class="layui-form-label">备注</label>
+			<div class="layui-input-block">
+				<textarea placeholder="说点什么..." cols="5" rows="3" id="fcRemark" class="layui-textarea"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" id="saveBtn" lay-submit="" lay-filter="demo1">提交</button>
+				<button type="reset" id="cancelBtn" class="layui-btn layui-btn-primary">重置</button>
+			</div>
+		</div>
+	</form>
+</div>
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+<script src="/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var $ =layui.jquery;
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+        //自定义验证规则
+        form.verify({
+            atMoney:function(value){
+                var check='';
+                if(value.length < 1){
+                    check= '金额不能为空啊';
+                };
+                if(value.length>=1) {
+                    var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+                    var money = $('#atMoney').val();
+                    if (!reg.test(money)){
+                        check = '金额格式不对！'
+                    }
+                }
+                return check;
+
+            },
+            atCharge:function (value) {
+                var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+                var charge = $('#atCharge').val();
+                if(charge.length>1){
+                    if (!reg.test(charge)){
+                        return '金额格式不对！'
+                    }
+				}
+            },
+            atOutTime:function(value){
+                if(value.length < 1){
+                    return '到账日期日期不能为空啊';
+                }
+			},
+            atIntoTime:function(value){
+                var check='';
+                if(value.length < 1){
+                    check= '到账日期日期不能为空啊';
+                };
+                var out = $("#atOutTime").val();
+				var into = $("#atIntoTime").val();
+                var d1 = new Date(out.replace(/\-/g, "\/"));
+                var d2=new Date(into.replace(/\-/g, "\/"));
+                if(out!=""&&into!=""&&d1 >d2){
+                    check = '到账日期不能比转出日期还早啊！';
+                }
+                return check;
+			}
+        });
+
+        //监听提交
+        form.on('submit(demo1)', function(){
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "/billManagement/account-transfer/insertAt",
+                data: {
+                    atOutAccount:$("#atOutAccount").val(),
+                    atOutTime: $("#atOutTime").val(),
+                    atIntoAccount:$("#atIntoAccount").val(),
+                    atIntoTime: $("#atIntoTime").val(),
+                    atMoney: $("#atMoney").val(),
+                    atCharge:$("#atCharge").val(),
+                    atChargePerson: $("input[name='atChargePerson']:checked").val(),
+                    atPerson:$("#atPerson").val(),
+                    atRemark:$("#atRemark").val()
+                },
+                success: function(msg){
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.getAtPageList();
+                    parent.layer.close(index);
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

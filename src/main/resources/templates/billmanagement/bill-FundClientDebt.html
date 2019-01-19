@@ -43,8 +43,8 @@
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-20" data-validator-option="{theme:'simple_right'}">
 		<span class="l"><a href="javascript:;" id="daoFcd" class="btn btn-success radius"><i class="Hui-iconfont">&#xe644;</i> Excel导出</a></span>
-		&nbsp;&nbsp;<a href="/billManagement/fund-client-debt/toAdd" id="addFcdBtn" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增账目</a>
-		<span class="r">共有数据：<strong th:text="${session.total}"></strong> 条</span>
+		&nbsp;&nbsp;<a href="/billManagement/fund-client-debt/toAdd" id="addFcdBtn" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增欠款</a>
+		<span class="r">共有数据：<strong id="strong"></strong> 条</span>
 	</div>
 
 	<div class="whiteBox" style="overflow: hidden;height: 50px">
@@ -109,9 +109,9 @@
 			<th scope="col" colspan="9">客户应收欠款列表</th>
 		</tr>
 		<tr class="text-c">
-			<th width="25"><input type="checkbox" name="" value=""></th>
-			<th width="100">操作</th>
+			<!--<th width="25"><input type="checkbox" name="" value=""></th>-->
 			<th width="40">ID</th>
+			<th width="100">操作</th>
 			<th width="150">客户编号</th>
 			<th width="150">客户名称</th>
 			<th width="150">联系人</th>
@@ -126,10 +126,12 @@
 		</thead>
 		<tbody>
 		<tr class="text-c" v-for="(item,index) in result">
-			<td><input type="checkbox" value="1" name=""></td>
-			<td class="td-manage"><a title="详情" href="javascript:;" @click="editEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
-				<a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+			<!--<td><input type="checkbox" value="1" name=""></td>-->
 			<td>{{index+1}}</td>
+			<td class="td-manage">
+				<a title="详情" href="javascript:;" @click="editEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
+				<!--<a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>-->
+			</td>
 			<td>{{item.fcdNumList}}</td>
 			<td>{{item.fcdName}}</td>
 			<td>{{item.fcdLinkman}}</td>
@@ -143,7 +145,7 @@
 		</tr>
 		</tbody>
 	</table>
-	<div id="pagenav" style="text-align: center;position:fixed;bottom:100px;left:0;right:0"></div>
+	<div id="pagenav" style="text-align: center;position:fixed;margin-top:150px;left:0;right:0"></div>
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
@@ -162,7 +164,6 @@
             result:[]
         }
     });
-
     var getFcdPageList = function(curr) {
         $.ajax({
             type:'get',
@@ -177,6 +178,7 @@
                 fcdTelephone:$("#fcdTelephone").val()
             },
             success:function(msg){
+                $("#strong").html(msg.total);
                 app.result = msg.list;
                 laypage({
                     cont:'pagenav',
@@ -187,21 +189,18 @@
                     curr: curr || 1,
                     jump: function (obj, first) {
                         if (!first) {
-                            getFoPageList(obj.curr);
+                            getFcdPageList(obj.curr);
                         }
                     }
                 });
             }
         });
     };
-
     getFcdPageList();
-
     /*搜索*/
     $("#findFcd").click(function () {
         getFcdPageList();
     });
-
     /*/!*新增收支*!/
     $("#addFcdBtn").click(function () {
         layer.open({
@@ -217,8 +216,7 @@
             }
         });
     });*/
-
-    /*收支详情*/
+    /*/!*收支详情*!/
     var editEvent = function (id) {
         //alert(id);
         layer.open({
@@ -233,10 +231,9 @@
                 getFoPageList();
             }
         });
-    }
-
+    }*/
     /*Excel导出*/
-    $("#daoFo").click(function () {
+    $("#daoFcd").click(function () {
         window.location.href="/billManagement/fund-client-debt/export";
     })
 </script>

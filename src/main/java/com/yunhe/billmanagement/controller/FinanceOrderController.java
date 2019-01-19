@@ -1,12 +1,12 @@
 package com.yunhe.billmanagement.controller;
 
-import com.yunhe.billmanagement.dao.FinanceOrderMapper;
 import com.yunhe.billmanagement.entity.FinanceOrder;
 import com.yunhe.billmanagement.service.IFinanceOrderService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,15 +40,20 @@ public class FinanceOrderController {
      * <P>
      *    进入日常收支页面
      * </P>
-     * @return 进入FinanceOrder.html
+     * @return 进入bill-FinanceOrder.html
      */
     @GetMapping("/toFo")
     public ModelAndView toFo(HttpSession session){
         System.out.println("toFo进入controller");
-        List<FinanceOrder> li = financeOrderService.selectFo();
-        session.setAttribute("total",li.size());
+        Map<String,Object> countListshou = financeOrderService.selectMoneyMapByShou();
+        Map<String,Object> countListzhi = financeOrderService.selectMoneyMapByZhi();
+        System.out.println("收入总金额："+countListshou);
+        System.out.println("支出总金额："+countListzhi);
+        session.setAttribute("countListshou",countListshou);
+        session.setAttribute("countListzhi",countListzhi);
         return new ModelAndView("billmanagement/bill-FinanceOrder");
     }
+
     /**
      * <P>
      *     日常收支表
@@ -61,6 +66,7 @@ public class FinanceOrderController {
     @GetMapping(value = "/selectFoPage")
     public Map selectFoPage(int current, int size,FinanceOrder financeOrder){
         System.out.println("进入分页的controller");
+        /*System.out.println("大小："+financeOrderService.selectFoPage(current,size,financeOrder).size());*/
         return financeOrderService.selectFoPage(current,size,financeOrder);
     }
 
@@ -74,16 +80,29 @@ public class FinanceOrderController {
     public List<FinanceOrder> selectFo() {
         return financeOrderService.selectFo();
     }
+
     /**
      * <P>
-     *    进入增加页面
+     *    进入收入增加页面
      * </P>
      * @return 进入FC_add.html
      */
-    @RequestMapping("/toAdd")
-    public ModelAndView toAdd(){
-        System.out.println("toadd进入controller");
-        return new ModelAndView("billmanagement/bill-FO-add");
+    @RequestMapping("/toAddShou")
+    public ModelAndView toAddShou(){
+        System.out.println("toAddShou进入controller");
+        return new ModelAndView("billmanagement/bill-FO-addShou");
+    }
+
+    /**
+     * <P>
+     *    进入支出增加页面
+     * </P>
+     * @return 进入bill-FO-addZhi.html
+     */
+    @RequestMapping("/toAddZhi")
+    public ModelAndView toAddZhi(){
+        System.out.println("toAddZhi进入controller");
+        return new ModelAndView("billmanagement/bill-FO-addZhi");
     }
     /**
      * <P>
@@ -138,14 +157,29 @@ public class FinanceOrderController {
      * <P>
      *     删除数据
      * </P>
-     * @param financeOrder 将删除的信息存入对象
+     * @param id 通过id删除数据
      * @return  日常收支表：删除是否成功
      */
     @GetMapping(value = "/deleteFo")
-    public int deleteFo(FinanceOrder financeOrder) {
-        return financeOrderService.deleteFo(financeOrder);
+    public int deleteFo(int id) {
+        return financeOrderService.deleteFo(id);
     }
 
+    /**
+     * <P>
+     *     批量删除数据
+     * </P>
+     * @param ids 批量删除的id存在集合中
+     * @return  删除是否成功true or false
+     */
+    @RequestMapping("/deleteAll")
+    public boolean deleteAll(@RequestBody List<Integer> ids)  {
+        System.out.println("要批量删除的ids："+ids);
+        for (Integer id : ids) {
+            financeOrderService.deleteFo(id);
+        }
+        return true;
+    }
     /**
      * <P>
      *      Excel导出
@@ -155,9 +189,9 @@ public class FinanceOrderController {
      * @throws IOException
      */
     @RequestMapping("/export")
-    public String createExcel(HttpServletResponse response) throws IOException {
+    public String createExcel(HttpServletResponse response,String foFlag) throws IOException {
         //获取查询结果的数据,只要对其进行封装就行了
-        List<FinanceOrder> newlist = financeOrderService.selectFo();
+        List<FinanceOrder> newlist = financeOrderService.selectFoByFlag(foFlag);
         System.out.println("数据行数："+newlist.size());
         //数据封装，这里的map之所以敢这样add是因为这里的add顺序和hql中的select字段顺序是一样的，总共就查询那么多字段
         List<Map<String,Object>> solist = new ArrayList();
@@ -194,7 +228,7 @@ public class FinanceOrderController {
         // 2.生成样式对象，这里的设置居中样式和版本有关，我用的poi用HSSFCellStyle.ALIGN_CENTER会报错，所以用下面的
         HSSFCellStyle style = wb.createCellStyle();
         //设置居中样式
-        /*style.setAlignment(HSSFCellStyle.ALIGN_CENTER);*/
+       /* style.setAlignment(HSSFCellStyle.ALIGN_CENTER);*/
         // 调用字体样式对象
         style.setFont(font);
         style.setWrapText(true);
@@ -316,6 +350,6 @@ public class FinanceOrderController {
         response.setContentType("application/msexcel");
         wb.write(output);
         output.close();
-        return null;
+        return "SUCCESS";
     }
 }

@@ -32,13 +32,16 @@ public class FinanceOrderServiceImpl extends ServiceImpl<FinanceOrderMapper, Fin
 
     @Override
     public Map selectFoPage(int current,int size,  FinanceOrder financeOrder) {
-        System.out.println("模糊查询的内容："+financeOrder);
+        System.out.println("模糊查询的内容："+financeOrder.getFoFlag()+":"+financeOrder.getFoNumList());
         Page page = new Page(current,size);
         System.out.println("每页条数："+size);
         System.out.println("当前页数："+current);
         Map map = new HashMap();
         List<FinanceOrder> list = financeOrderMapper.selectFoPage(page,financeOrder);
-        System.out.println("模糊查询查出来的数据："+list);
+        System.out.println("遍历出来的长度："+list.size());
+        /*for (FinanceOrder order : list) {
+            System.out.println(order.getFoNumList()+":"+order.getFinanceClassify().getFcType());
+        }*/
         map.put("total",page.getTotal());
         map.put("pages",page.getPages());
         map.put("list",list);
@@ -49,7 +52,12 @@ public class FinanceOrderServiceImpl extends ServiceImpl<FinanceOrderMapper, Fin
 
     @Override
     public List<FinanceOrder> selectFo() {
-        return financeOrderMapper.selectList(new QueryWrapper<>());
+        return financeOrderMapper.selectList(null);
+    }
+
+    @Override
+    public List<FinanceOrder> selectFoByFlag(String foFlag) {
+        return financeOrderMapper.selectList(new QueryWrapper<FinanceOrder>().eq("fo_flag",foFlag));
     }
 
     @Override
@@ -68,8 +76,8 @@ public class FinanceOrderServiceImpl extends ServiceImpl<FinanceOrderMapper, Fin
     }
 
     @Override
-    public int deleteFo(FinanceOrder financeOrder) {
-        return financeOrderMapper.deleteById(financeOrder);
+    public int deleteFo(int id) {
+        return financeOrderMapper.deleteById(id);
     }
 
     /*自动显示编码的SQL语句*/
@@ -82,6 +90,16 @@ public class FinanceOrderServiceImpl extends ServiceImpl<FinanceOrderMapper, Fin
     public int gaiFo(Map<String, Object> map) {
         System.out.println("进入修改的service");
         return financeOrderMapper.gaiFo(map);
+    }
+
+    @Override
+    public Map<String, Object> selectMoneyMapByShou() {
+        return financeOrderMapper.selectMoneyMapByShou();
+    }
+
+    @Override
+    public Map<String, Object> selectMoneyMapByZhi() {
+        return financeOrderMapper.selectMoneyMapByZhi();
     }
 
     public FinanceOrderMapper getFinanceOrderMapper() {

@@ -1,6 +1,7 @@
 package com.yunhe.billmanagement.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yunhe.billmanagement.dao.FundClientDebtMapper;
@@ -28,6 +29,12 @@ public class FundClientDebtServiceImpl extends ServiceImpl<FundClientDebtMapper,
     private FundClientDebtMapper fundClientDebtMapper;
 
     @Override
+    public IPage selectFcdPage(int current, int size) {
+        Page page = new Page(current,size);
+        return fundClientDebtMapper.selectPage(page, null);
+    }
+
+    @Override
     public Map selectFcdPage(int current, int size,FundClientDebt fundClientDebt) {
         System.out.println("每页条数："+size);
         System.out.println("当前页数："+current);
@@ -49,6 +56,6 @@ public class FundClientDebtServiceImpl extends ServiceImpl<FundClientDebtMapper,
 
     @Override
     public List<FundClientDebt> selectFcd() {
-        return fundClientDebtMapper.selectList(new QueryWrapper<>());
+        return fundClientDebtMapper.selectList(null);
     }
 }

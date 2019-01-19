@@ -1,5 +1,7 @@
 package com.yunhe.billmanagement.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yunhe.billmanagement.entity.FundClientDebt;
 
@@ -16,14 +18,22 @@ import java.util.Map;
  */
 public interface IFundClientDebtService extends IService<FundClientDebt> {
 
+
     /**
      * 客户应收欠款表
      * @param current 当前页
      * @param size 每页条数
      * @return 客户应收欠款表:分页的结果集
      */
-    Map selectFcdPage(int current, int size,FundClientDebt fundClientDebt);
+    IPage selectFcdPage(int current, int size);
 
+    /**
+     * 客户应收欠款表
+     * @param current 当前页
+     * @param size 每页条数
+     * @return 客户应收欠款表:分页的结果集
+     */
+    Map selectFcdPage(int current, int size, FundClientDebt fundClientDebt);
 
     /**
      * <P>

@@ -6,9 +6,15 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yunhe.billmanagement.dao.FinanceClassifyMapper;
 import com.yunhe.billmanagement.entity.FinanceClassify;
 import com.yunhe.billmanagement.service.IFinanceClassifyService;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,8 +55,25 @@ public class FinanceClassifyServiceImpl extends ServiceImpl<FinanceClassifyMappe
     }
 
     @Override
+    public List<FinanceClassify> selectFcBySort(FinanceClassify financeClassify) {
+        return financeClassifyMapper.selectList(new QueryWrapper<FinanceClassify>().eq("fc_sort",financeClassify.getFcSort()));
+    }
+
+    @Override
     public int insertFc(FinanceClassify financeClassify) {
         return financeClassifyMapper.insert(financeClassify);
+    }
+
+    @Override
+    public boolean checkFcExit(FinanceClassify financeClassify) {
+        List<FinanceClassify> list = financeClassifyMapper.selectList(new QueryWrapper<FinanceClassify>().eq("fc_type",financeClassify.getFcType()));
+        boolean b = false;
+        if (list.size()==0){
+            b=false;
+        }else {
+            b=true;
+        }
+        return b;
     }
 
     @Override
@@ -64,16 +87,8 @@ public class FinanceClassifyServiceImpl extends ServiceImpl<FinanceClassifyMappe
     }
 
     @Override
-    public int deleteFc(FinanceClassify financeClassify) {
-        return financeClassifyMapper.deleteById(financeClassify);
+    public int deleteFc(int id) {
+        return financeClassifyMapper.deleteById(id);
     }
 
-
-    public FinanceClassifyMapper getFinanceClassifyMapper() {
-        return financeClassifyMapper;
-    }
-
-    public void setFinanceClassifyMapper(FinanceClassifyMapper financeClassifyMapper) {
-        this.financeClassifyMapper = financeClassifyMapper;
-    }
 }
