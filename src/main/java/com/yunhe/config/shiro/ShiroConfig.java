@@ -1,5 +1,6 @@
 package com.yunhe.config.shiro;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -49,7 +50,7 @@ public class ShiroConfig {
         filterMap.put("/add", "perms[user:add]");
 
 //        Shiro拦截的页面
-      /*  filterMap.put("/*", "authc");*/
+        /*  filterMap.put("/*", "authc");*/
 
 //        修改调整的登录页面
         shiroFilterFactoryBean.setLoginUrl("toLogin");
@@ -80,4 +81,14 @@ public class ShiroConfig {
         return new UserRealm();
     }
 
+    /**
+     * <p>
+     * 用于thymeleaf模板使用shiro标签
+     * </p>
+     */
+
+    @Bean
+    public ShiroDialect shiroDialect() {
+        return new ShiroDialect();
+    }
 }
