@@ -1,7 +1,5 @@
 package com.yunhe.core.common.login.controller;
 
-import com.yunhe.core.aop.webexception.ExceptionEnum;
-import com.yunhe.core.aop.webexception.GlobalException;
 import com.yunhe.core.common.login.service.ILoginService;
 import com.yunhe.systemsetup.entity.Employ;
 import org.springframework.stereotype.Controller;
@@ -26,10 +24,14 @@ public class LoginController {
     ILoginService loginService;
 
     @GetMapping("/")
-    public String index() {
+    public String login() {
         return "login";
     }
 
+    @GetMapping("index")
+    public String index() {
+        return "index";
+    }
     @PostMapping("/login")
     public String login(Employ employ, HttpSession session) {
         if (loginService.login(employ) != null) {
@@ -37,7 +39,6 @@ public class LoginController {
 
             return "index";
         }
-       throw new GlobalException(ExceptionEnum.SELF_ERROR);
-//       return ""+3/0;
+      return "index";
     }
 }
