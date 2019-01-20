@@ -1,5 +1,7 @@
 package com.yunhe.activitymanagement.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.yunhe.activitymanagement.entity.MerchandisePackage;
@@ -30,18 +32,22 @@ public class MerchandisePackageServiceImpl extends ServiceImpl<MerchandisePackag
   private MerchandisePackageMapper merchandisePackageMapper;
 
     @Override
-    public Map queryLikeList(int current, int size, MerchandisePackage merchandisePackage) {
-        Page page=new Page(current,size);
-        List<MerchandisePackage> merchanlist =merchandisePackageMapper.selectmpPage(page);
-        Map map = new HashMap();
-        map.put("total", page.getTotal());
-        map.put("pages", page.getPages());
-        map.put("merchandisePackage",merchandisePackage);
-        map.put("merchanlist", merchanlist);
-        return map;
+    public IPage selectLikePage(int current, int size, MerchandisePackage merchandisePackage) {
+
+        return merchandisePackageMapper.selectPage(
+                new Page<MerchandisePackage>(current, size),
+                new QueryWrapper<MerchandisePackage>()
+                        .like("mp_package_number", merchandisePackage.getMpPackageNumber())
+                        .or()
+                        .like("mp_package_name", merchandisePackage.getMpPackageName()));
     }
 
 
+
+    @Override
+    public List<MerchandisePackage> selectAll() {
+        return merchandisePackageMapper.selectAll();
+    }
     /**
      * 删除
      * */
