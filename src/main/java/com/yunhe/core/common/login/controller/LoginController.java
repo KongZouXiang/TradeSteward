@@ -70,7 +70,9 @@ public class LoginController {
         } catch (IncorrectCredentialsException e) {
 //            e.printStackTrace()
             model.addAttribute("loginMsg", "密码错误!");
-            return "tologin";
+
+            return "index";
+//            throw new GlobalException(ExceptionEnum.SUCCESS);
         }
 
     }
