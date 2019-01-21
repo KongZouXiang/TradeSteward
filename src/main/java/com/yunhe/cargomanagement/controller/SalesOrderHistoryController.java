@@ -3,6 +3,7 @@ package com.yunhe.cargomanagement.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.basicdata.entity.CommodityList;
+import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
 import com.yunhe.cargomanagement.entity.OrderConnectComm;
 import com.yunhe.cargomanagement.entity.SalesOrderHistory;
 import com.yunhe.cargomanagement.service.impl.SalesOrderHistoryServiceImpl;
@@ -48,8 +49,10 @@ public class SalesOrderHistoryController {
     private SalesOrderHistoryServiceImpl salesOrderHistoryService;
 
     @Resource
-    ICustomerService customerService;
+    private ICustomerService customerService;
 
+    @Resource
+    private CommodityListServiceImpl commodityListService;
     /**
      * 新增页面的跳转
      * @return web页面
@@ -88,6 +91,10 @@ public class SalesOrderHistoryController {
         return salesOrderHistoryService.deleteById(id);
     }
 
+/*    @RequestMapping("/getCommodadd")
+    public Map getCommodadd(){
+        return commodityListService.selectList();
+    }*/
     /**
      * 批量删除
      * @param request

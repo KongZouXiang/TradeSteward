@@ -1,6 +1,8 @@
 package com.yunhe.cargomanagement.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.pagehelper.Page;
 import com.yunhe.cargomanagement.entity.Warehouse;
 import com.yunhe.cargomanagement.service.IWarehouseService;
 import org.apache.poi.hssf.usermodel.*;
@@ -39,18 +41,17 @@ public class WarehouseController {
      *  查询所有库存信息并分页
      * </p>
      *
-     * @param current 当前页
-     * @param size 每页显示条数
+     * @param pageNum 当前页
+     * @param pageSize 每页显示条数
      * @return map集合
      */
     @RequestMapping("/getPage")
     @ResponseBody
-    public Map selectWareHousePage(int current, int size){
+    public Map selectWareHousePage(int pageNum, int pageSize){
         Map map=new HashMap();
-        map=warehouseService.selectWareHousePage(current,size);
-        System.out.println("当前页"+current);
-        System.out.println("每页数据条数"+size);
-
+        map=warehouseService.selectWareHousePage(pageNum,pageSize);
+        System.out.println("当前页:"+pageNum);
+        System.out.println("每页数据:"+pageSize);
         return map;
     }
 
@@ -61,11 +62,38 @@ public class WarehouseController {
         return new ModelAndView("cargomanagement/warehouse.html");
     }
 
-    @RequestMapping("/selectWareHouse")
-    @ResponseBody
-    public  Warehouse selectWareHousePage(Warehouse warehouse){
+    /**
+     * <p>
+     *  模糊查询
+     * </p>
+     *
+     * @param warehouse 实体对象
+     * @return list集合
+     */
 
-        return warehouse;
+    @RequestMapping("/getWareHouseLike")
+    @ResponseBody
+    public List<Warehouse> selectWareHouseLike(Warehouse warehouse){
+
+        return warehouseService.selectWareHouseLike(warehouse);
+    }
+
+
+    /**
+     * <p>
+     *     分页加模糊查询
+     * </p>
+     *
+     * @param pageNum 当前页
+     * @param pageSize 每页数据条数
+     * @param warehouse 实体对象
+     * @return IPage
+     */
+    @RequestMapping("/selectPage")
+    @ResponseBody
+    public IPage<Warehouse> selectPage(int pageNum, int pageSize, Warehouse warehouse){
+
+        return warehouseService.selectPage(pageNum,pageSize,warehouse);
     }
 
     /**

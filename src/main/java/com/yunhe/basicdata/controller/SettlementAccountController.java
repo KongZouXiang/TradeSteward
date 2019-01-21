@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 /**
  * <p>
  * 结算帐户 前端控制器
@@ -56,7 +55,7 @@ public class SettlementAccountController {
      * @return 无返回
      */
     @RequestMapping(value = "/insertaccount", method = RequestMethod.POST)
-    public String insertAccountinfo(@RequestParam("zhanghu") String zhanghu, @RequestParam("sabank") String sabank,
+    public int insertAccountinfo(@RequestParam("zhanghu") String zhanghu, @RequestParam("sabank") String sabank,
                                     @RequestParam("sabanknumber") String sabanknumber ,@RequestParam("beginbalance") String beginbalance ,
                                     @RequestParam("zhangbalance") double zhangbalance,@RequestParam("zhangstate")int zhangstate) {
         SettlementAccount settlementAccount = new SettlementAccount();
@@ -67,8 +66,7 @@ public class SettlementAccountController {
         settlementAccount.setSaBeginBalance(beginbalance);
         settlementAccount.setSaBalance(zhangbalance);
         settlementAccount.setSaState(zhangstate);
-        settlementAccountService.insertAccount(settlementAccount);
-        return null;
+        return   settlementAccountService.insertAccount(settlementAccount);
     }
     /**
      * 查询账户的详细信息
@@ -76,11 +74,26 @@ public class SettlementAccountController {
      * @return 根据id返回的信息
      */
     @GetMapping("/selectAccountByid")
-    @ResponseBody
-    public ModelAndView selectAccountById(@RequestParam("id") Integer id, Model model) {
+    public ModelAndView selectAccountById(@RequestParam("id") Integer id) {
+        ModelAndView mv=new ModelAndView();
         SettlementAccount settlementAccountid = settlementAccountService.selectAccountById(id);
-        model.addAttribute("settlementAccountid",settlementAccountid);
-        return new ModelAndView("basicdata/editaccount");
+        mv.addObject("sellaccount",settlementAccountid);
+        mv.setViewName("basicdata/editaccount");
+        return mv;
+    }
+
+    /**
+     * 账户详情
+     * @param id 传过来的id
+     * @return
+     */
+    @GetMapping("/detailaccount")
+    public ModelAndView deatilaccount(@RequestParam("id") Integer id){
+        ModelAndView mv=new ModelAndView();
+      SettlementAccount detailaccount=  settlementAccountService.selectAccountById(id);
+      mv.addObject("detailaccount",detailaccount);
+      mv.setViewName("basicdata/detailaccount");
+     return mv;
     }
     /**
      * 修改账户的信息
@@ -93,9 +106,9 @@ public class SettlementAccountController {
      * @param id             账户id
      * @return 修改后的账户信息
      */
-    @RequestMapping(value = "/updateAccount", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateAccount", method = RequestMethod.GET)
     @ResponseBody
-    public ModelAndView updateAccountInfo(@RequestParam("zhanghu") String zhanghu, @RequestParam("sabank") String sabank,
+    public int  updateAccountInfo(@RequestParam("zhanghu") String zhanghu, @RequestParam("sabank") String sabank,
                                           @RequestParam("sabanknumber") String sabanknumber, @RequestParam("beginbalance") String beginbalance,
                                           @RequestParam("zhangbalance") double zhangbalance, @RequestParam("zhangstate") int  zhangstate,
                                           @RequestParam("id") int id) {
@@ -107,8 +120,7 @@ public class SettlementAccountController {
         settlementAccount.setSaBankNumber(sabanknumber);
         settlementAccount.setSaBeginBalance(beginbalance);
         settlementAccount.setSaState(zhangstate);
-        settlementAccountService.updateAccount(settlementAccount);
-        return new ModelAndView("adminaccount1");
+        return  settlementAccountService.updateAccount(settlementAccount);
     }
     /**
      * 删除账户的信息
@@ -117,12 +129,11 @@ public class SettlementAccountController {
      */
     @PostMapping(value = "/deleteAccount")
     @ResponseBody
-    public String deleteAccount(@RequestParam("id") int id) {
+    public int deleteAccount(@RequestParam("id") int id) {
         SettlementAccount settlementAccount = new SettlementAccount();
         System.out.println(id);
         settlementAccount.setId(id);
-        settlementAccountService.deleteAccount(settlementAccount);
-        return null;
+        return  settlementAccountService.deleteAccount(settlementAccount);
     }
     @RequestMapping("/addacounthtml")
     public ModelAndView AddAcount(){
@@ -131,5 +142,10 @@ public class SettlementAccountController {
     @RequestMapping("/jumpaccount")
     public ModelAndView admingaccount(){
         return new ModelAndView("basicdata/adminaccount-list");
+    }
+   @RequestMapping("/jump")
+   @ResponseBody
+    public ModelAndView junp(Model model){
+        return new ModelAndView("basicdata/edit");
     }
 }

@@ -7,18 +7,21 @@
     </sql>
 
     <!--分页-->
-    <select id="selectAll" resultType="com.yunhe.cargomanagement.entity.Warehouse" parameterType="com.yunhe.cargomanagement.entity.Warehouse">
+    <select id="selectAll" resultType="com.yunhe.cargomanagement.entity.Warehouse">
         select * from warehouse
     </select>
 
-    <!--
-        &lt;!&ndash;分页&ndash;&gt;
-        <select id="selectWareHousePage" resultType="WareHouse" parameterType="map">
+    <!--<select id="count" resultType="int" parameterType="map">
+        select count(*) from warehouse where wa_sp_name like concat('%',#{Warehouse.waSpName},'%')
+    </select>-->
+
+
+    <!--<select id="selectWareHousePage" resultType="map" parameterType="map">
             select
             <include refid="warehousecol"/>
-            from warehouse where wa_sp_name like concat('%',#{warehouse.waSpName},'%')
-        </select>
-    -->
+            from warehouse where wa_sp_name like concat('%',#{Warehouse.waSpName},'%') order by id desc
+    </select>
+-->
 
 
     <!--模糊查询-->

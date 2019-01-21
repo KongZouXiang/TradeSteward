@@ -65,11 +65,9 @@ public interface ICommodityListService extends IService<CommodityList> {
      */
     List<CommodityList> selectCommstlist(String data);
 
-
     /**
-     * @author 史江浩
-     * @since 2019-01-14
-     * @return 查询商品
+     *
+     * @return
      */
-    Map selectList();
+    List<CommodityList> ExportExcel();
 }

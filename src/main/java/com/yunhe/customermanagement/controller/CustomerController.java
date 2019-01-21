@@ -1,16 +1,20 @@
 package com.yunhe.customermanagement.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yunhe.customermanagement.entity.Customer;
 import com.yunhe.customermanagement.service.ICustomerService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -28,89 +32,67 @@ import java.util.*;
  * @author 蔡慧鹏
  * @since 2019-01-02
  */
-@RestController
+@Controller
 @RequestMapping("/customermanagement/customer")
 public class CustomerController {
 
     @Resource
     ICustomerService customerService;
 
-    /**
-     * <p>
-     *  查询并分页
-     * </p>
-     *
-     * @param current  当前页数
-     * @param size     每页显示条数
-     * @param customer 模糊查询内容
-     * @return total 总条数 pages 总页数 customerList 客户表
-     */
-    @RequestMapping("/selectAllCustomer")
-    @ResponseBody
-    public Map selectAllCustomer(int current, int size, Customer customer) {
-        return customerService.selectAllCustomer(current, size, customer);
+    @RequestMapping("/editCustomer")
+    public String selectAllCustomer(Integer id, Model model) {
+        Customer customer = customerService.getById(id);
+        model.addAttribute("customer",customer);
+        return "customermanagement/editCustomer";
     }
 
 
 
-    @RequestMapping("/login")
+
+    @RequestMapping("/cust")
     @ResponseBody
     public ModelAndView selectAllCustomer1() {
         return new ModelAndView("customermanagement/admin.html");
     }
 
+
+
     /**
      * <p>
-     *     查询所有
+     * 修改客户信息
      * </p>
      *
-     * @param
-     * @return 客户
-     */
-    @RequestMapping("/selectCustomer")
-    @ResponseBody
-    public Map selectAllCustomer(int current,int size) {
-        Map map = new HashMap();
-      map =  customerService.sellectAll(current, size);
-        System.out.println(current);
-        System.out.println(size);
-        return map;
-    }
-
-
-    /**
-     *<p>
-     *     修改客户信息
-     *</p>
      * @param customer 客户
      * @return list页面
      */
     @RequestMapping("/updateCustomer")
     @ResponseBody
     public String updateCustomer(Customer customer) {
-        customerService.updateCustomer(customer);
-
-        return "list";
+        System.out.println("success");
+           customerService.updateCustomer(customer);
+        return "success";
     }
 
     /**
-     *<p>
-     *     新增用户
-     *</p>
-     * @param  customer 新增用户
+     * <p>
+     * 新增用户
+     * </p>
+     *
+     * @param customer 新增用户
      * @return list页面
      */
     @RequestMapping("/insertCustomer")
     @ResponseBody
-    public String insertCustomer(Customer customer){
+    public String insertCustomer(Customer customer) {
         customerService.insertCustomer(customer);
         return "list";
     }
 
     /**
-     *<p>
-     *     根据id删除客户
-     *</p>
+     * <p>
+     * 根据id删除客户
+     * </p>
+     *
      * @param id 根据id删除用户
      * @return list页面
      */
@@ -123,18 +105,32 @@ public class CustomerController {
 
     /**
      * <p>
-     *     创建表头
+     *    模糊查询
      * </p>
+     * @param customer
+     * @return
+     */
+    @RequestMapping("/selectPage")
+    @ResponseBody
+    public IPage<Customer> selectPage(int current, int size, Customer customer){
+        System.out.println(current);
+        return customerService.selectPage(current, size, customer);
+    }
+    /**
+     * <p>
+     * 创建表头
+     * </p>
+     *
      * @param workbook
      * @param sheet
      */
-    private void createTitle(HSSFWorkbook workbook, HSSFSheet sheet){
+    private void createTitle(HSSFWorkbook workbook, HSSFSheet sheet) {
         HSSFRow row = sheet.createRow(0);
         //设置列宽，setColumnWidth的第二个参数要乘以256，这个参数的单位是1/256个字符宽度
-    sheet.setColumnWidth(2,12*256);
-    sheet.setColumnWidth(3,17*256);
+        sheet.setColumnWidth(2, 12 * 256);
+        sheet.setColumnWidth(3, 17 * 256);
 
-    //设置居中加粗
+        //设置居中加粗
         HSSFCellStyle style = workbook.createCellStyle();
         HSSFFont font = workbook.createFont();
         font.setBold(true);
@@ -192,12 +188,12 @@ public class CustomerController {
 
     }
 
-    @SuppressWarnings({"unchecked","rawtypes"})
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @RequestMapping("getExcel")
-    public String getExcel(HttpServletResponse response) throws IOException{
+    public String getExcel(HttpServletResponse response) throws IOException {
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("客户统计表");
-        createTitle(workbook,sheet);
+        createTitle(workbook, sheet);
         List<Customer> entities = (List<Customer>) customerService.sellectAllExcel();
 
         //设置日期格式
@@ -207,7 +203,7 @@ public class CustomerController {
         //新增数据航，并且设置单元格数据
         int rowNum = 1;
 
-        for (Customer customer:entities) {
+        for (Customer customer : entities) {
             HSSFRow row = sheet.createRow(rowNum);
 
             row.createCell(0).setCellValue(customer.getId());
@@ -229,13 +225,13 @@ public class CustomerController {
 
         OutputStream output = response.getOutputStream();
         response.reset();
-        response.setHeader("Content-disposition","attachment; filename=customer.xls");
+        response.setHeader("Content-disposition", "attachment; filename=customer.xls");
         response.setContentType("application/msexcel");
         workbook.write(output);
         output.close();
         return null;
-     }
-   }
+    }
+}
 
 
 

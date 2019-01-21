@@ -11,7 +11,7 @@ spring:
     #连接密码
     password: root
     #连接地址
-    url: jdbc:mysql://188.131.174.115:3306/trades_teward?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://172.16.35.99:localhost/trades_teward?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
     #连接类型
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
@@ -33,5 +33,15 @@ spring:
   thymeleaf:
     #不设置静态页面缓存
     cache: false
+    prefix: classpath:/templates/
+    suffix: .html
     encoding: UTF-8
     mode: HTML5
+    servlet:
+      content-type: text/html
+  #出现错误时, 直接抛出异常(便于异常统一处理，否则捕获不到404)
+  mvc:
+   throw-exception-if-no-handler-found: true
+#    #不要为我们工程中的资源文件建立映射
+#  resources:
+#    add-mappings: false
