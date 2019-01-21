@@ -1,0 +1,78 @@
+﻿<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        td{
+            border: 1px solid rebeccapurple;
+            width: 150px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <td><input type="checkbox" id="check"> </td>
+        <td>编号</td>
+        <td>姓名</td>
+        <td>年龄</td>
+    </tr>
+    </thead>
+    <tbody id="tbody">
+    <tr>
+        <td><input type="checkbox" name="user"></td>
+        <td>1</td>
+        <td>张三</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" name="user"></td>
+        <td>2</td>
+        <td>李四</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" name="user"></td>
+        <td>3</td>
+        <td>王五</td>
+        <td>29</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" name="user"></td>
+        <td>4</td>
+        <td>赵六</td>
+        <td>29</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" name="user"></td>+
+        <td>5</td>
+        <td>田七</td>
+        <td>30</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" name="user"></td>
+        <td>6</td>
+        <td>汾九</td>
+        <td>20</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+<script>
+    document.getElementById("check").onclick = function(){
+        var checked = document.getElementById("check").checked;
+        var checkson = document.getElementsByName("user");
+        if(checked){
+            for(var i = 0; i < checkson.length ;i++){
+                checkson[i].checked = true;
+            }
+        }else{
+            for(var i = 0; i < checkson.length ;i++){
+                checkson[i].checked = false;
+            }
+        }
+    }
+</script>
+</html>

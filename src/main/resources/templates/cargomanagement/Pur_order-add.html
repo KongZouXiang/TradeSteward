@@ -95,9 +95,10 @@
                 </tr>
                 </thead>
                 <tbody id="addTr">
-                <tr class="text-c">
+                <tr class="text-c" id="addx0">
                     <td><a title='删除' href='javascript:;' class='ml-5' style='text-decoration:none'><i
-                            class='Hui-iconfont'>&#xe6e2;</i></a></td>
+                            class='Hui-iconfont'>&#xe6e2;</i></a>
+                    </td>
                     <td>
                         <select name="clName" class="select" id="clName">
                             <option value="0">请选择</option>
@@ -109,34 +110,45 @@
                     <td><input type="text" class="input-text" value="1" placeholder="" id="poQuantityOfPurchase"
                                name="poQuantityOfPurchase"></td>
                     <td id="usId"></td>
-                    <td><input type="text" class="input-text" value="" placeholder="" id="clWhoPrice" name="clWhoPrice">
+                    <td id="poYingMoney">
                     </td>
-                    <td><input type="text" class="input-text" value="" placeholder="" id="poYingMoney"
-                               name="poYingMoney"></td>
+                    <td><input type="text" class="input-text" value="" placeholder="" id="poYingMoney1"
+                               name="poYingMoney1"></td>
                     <td><input type="text" class="input-text" value="默认无备注" placeholder="" id="poRemarks"
                                name="poRemarks">
                     </td>
                 </tr>
                 </tbody>
+            </table>
+            <table class="table table-border table-bordered table-bg">
+                <thead>
+                <tr>
+                    <a href="#" id="addxx"
+                       class="btn btn-block radius">
+                        <i class="Hui-iconfont">&#xe600;</i>添加商品表格</a>
+                </tr>
+                </thead>
+            </table>
+            <h1 style="text-align: center">总计</h1>
+            <table class="table table-border table-bordered table-bg">
                 <thead>
                 <tr class="text-c">
-                    <th width="40">
+                    <th>
                         合计
                     </th>
-                    <th width="130"></th>
-                    <th width="150"></th>
-                    <th width="150"></th>
-                    <th width="90">数量</th>
-                    <th width="90"></th>
-                    <th width="130"></th>
-                    <th width="150">金额</th>
-                    <th width="100"></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td width="300"><span style="text-align: right"><h3>总计金额：</h3><span style="color: red"><span
-                            style="color: #8e8e99">¥</span> 0.00</span></span></td>
+                    <td>数量</td>
+                    <td><span>10</span>个</td>
+                </tr>
+                <tr>
+                    <td width="1500"><span style="text-align: center"><span style="font-size: 30px">总计金额：</span>
+                    <span style="color: red;text-align: right;font-size: 20px" id="spen1"><span>0.00元</span></span></span>
+                    </td>
+                    <td><input class="btn btn-primary size-XL radius" type="button" value="特大按钮"></td>
                 </tr>
                 </tbody>
             </table>
@@ -166,7 +178,8 @@
         el: '#app',
         data: {
             result: [],
-            resulttwo: []
+            resulttwo: [],
+            resultThree: []
         }
     });
     //查询
@@ -197,19 +210,44 @@
     getCommodityList();
 
 
-    $("#addTr").on("change", function () {
+    var m = 0;
+    $("#addxx").on("click", function () {
 
+        console.log($("#addTr"));
         var clName = $("#clName").val();
         if (clName == "请选择") {
         } else {
-            var html = "<tr class='text-c'><td><a title='删除' href='javascript:;' class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6e2;</i></a></td><td><select name='clName' class='select' id='clName'><option value='0'>请选择</option>";
+            m++;
+            var html = "<tr id='addx" + m + "' class='text-c'><td><a title='删除' href='javascript:;' class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6e2;</i></a></td><td><select name='clName' class='select' id='clName'><option value='0'>请选择</option>";
             for (var i = 1; i < app.resulttwo.length; i++) {
                 html = html + "<option value='" + app.resulttwo[i].isOnline + "'>" + app.resulttwo[i].clName + "</option>";
             }
             html = html + "</select></td><td id='clNumber' name='clNumber'>商品标号</td><td></td><td><input type='text' class='input-text' value='1' placeholder='' id='poQuantityOfPurchase'name='poQuantityOfPurchase'></td><td id='usId'></td><td><input type='text' class='input-text' value='' placeholder='' id='clWhoPrice' name='clWhoPrice'></td><td><input type='text' class='input-text' value='' placeholder='' id='poYingMoney' name='poYingMoney'></td><td><input type='text' class='input-text' value='默认无备注' placeholder='' id='poRemarks'name='poRemarks'></td></tr>\n";
-            document.getElementById("addTr").insertAdjacentHTML('afterend', html);
+            m--;
+            document.getElementById("addx" + m).insertAdjacentHTML('afterend', html);
+            m++;
         }
     });
+
+    /*$("#clName").on("change", function () {
+        var clName = $("#clName").val();
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/cargomanagement/purchase-order/selectListByClName',
+            data: {
+                clName:clName
+            },
+            success: function (msg) {
+                app.resultThree = msg.list;
+            }
+        });
+        if (clName == "请选择") {
+        } else {
+            var html = "<span>"+app.resultThree.clPurPrice+"</span>";
+            $("#spen1").html(html);
+        }
+    })*/
 </script>
 </body>
 </html>

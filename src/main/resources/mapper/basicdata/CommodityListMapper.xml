@@ -53,4 +53,8 @@
     <select id="selectComclassAndCommdity" resultType="com.yunhe.basicdata.entity.Commclass">
         SELECT com.cc_default FROM commclass com,commodity_list cl WHERE com.id=cl.cc_id AND cl.id=#{id}
     </select>
+
+    <select id="selectComclassList1" resultType="com.yunhe.basicdata.entity.CommodityList">
+        SELECT  id,cl_name,cl_unit,cl_scan,cl_spec,cl_pur_price,cl_who_price,cl_tag_prise,cc_id,wm_id,pr_id,cl_number,cl_minstock,cl_maxstock,cl_minlingprice  FROM commodity_list
+    </select>
 </mapper>

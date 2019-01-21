@@ -38,7 +38,7 @@ public class CommodityList implements Serializable {
     private String clName;
 
     /**
-     * 基本单位(外键)
+     * 基本单位
      */
     @TableField("cl_unit")
     private String clUnit;

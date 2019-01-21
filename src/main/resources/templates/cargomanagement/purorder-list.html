@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE HTML>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -18,6 +18,9 @@
     <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin"/>
     <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css"/>
     <link rel="stylesheet" href="/lib/layui/css/layui.css" media="all">
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <script type="text/javascript" src="/lib/layui/layui.all.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
     <script type="text/javascript" src="/lib/respond.min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
     <title>管理员列表</title>
@@ -41,7 +44,7 @@
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
-            <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i
+            <a href="javascript:;" id="datadel" class="btn btn-danger radius"><i
                     class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
         <a href="/cargomanagement/purchase-order/addPurchase" id="addpurOrder"
            class="btn btn-primary radius">
@@ -51,15 +54,15 @@
         <i class="Hui-iconfont">&#xe644;</i>Excel导出</a>
     </span>
 
-        <span class="r">共有数据：<strong>54</strong> 条</span></div>
+        <span class="r">共有数据：<strong id="tiao" th:text="${session.total}"></strong> 条</span></div>
     <div id="app" style="height: 500px">
         <table class="table table-border table-bordered table-bg">
             <thead>
             <tr>
-                <th scope="col" colspan="16">员工列表</th>
+                <th scope="col" colspan="16">进货订单</th>
             </tr>
             <tr class="text-c">
-                <th width="25"><input type="checkbox" name="" value=""></th>
+                <th width="25"><input type="checkbox" id="boxall" name="" value=""></th>
                 <th width="40">ID</th>
                 <th width="130">操作</th>
                 <th width="150">业务日期</th>
@@ -79,7 +82,7 @@
             </thead>
             <tbody>
             <tr class="text-c" v-for="(item,index) in result">
-                <td><input type="checkbox" :value="index+1" name=""></td>
+                <td><input type="checkbox" :value="item.id" id="box"></td>
                 <td>{{index+1}}</td>
                 <td class="td-manage">
                     <a style="text-decoration:none" class="ml-5"
@@ -122,12 +125,14 @@
 </div>
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
 <script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
+
+
     var app = new Vue({
         el: '#app',
         data: {
@@ -151,12 +156,14 @@
                 //向服务端传的参数，此处只是演示
             },
             success: function (msg) {
+                $("#tiao").html(msg.total);
                 app.result = msg.list;
                 laypage({
                     cont: 'pagenav',//容器  值支持id名、原生dom对象，jquery对象,
                     pages: msg.pages,//总页数
                     first: '首页',
                     last: '尾页',
+                    skin: '#00A0E9',
                     curr: curr || 1,//初始化页数
                     jump: function (obj, first) { //触发分页后的回调
                         if (!first) {     //点击跳页触发函数自身，并传递当前页：obj.curr
@@ -195,6 +202,45 @@
 
         });
     };
+
+    /*批量删除*/
+    $("#datadel").click(function(){
+        var arr = new Array();
+        $("input:checkbox[id='box']:checked").each(function (i) {
+            arr[i]=$(this).val();
+        });
+        if (arr[0]==null){
+            layer.msg("请选择要删除的订单！",{time:2000,icon:2})
+        }else{
+            layer.confirm('你确定要删除它们吗？',{
+                btn:['是','否']
+            },function () {
+                for (var i =0;i<arr.length;i++ ){
+                    $.ajax({
+                        type:'GET',
+                        dataType:'json',
+                        url: '/cargomanagement/purchase-order/deletePurchaseById',
+                        data: {
+                            id: arr[i],
+                        },
+                        success: function (msg) {
+                            console.log(msg);
+                            if (msg) {
+                                getPurchasePageList();
+                                layer.msg('成功删除',{icon:1});
+                            }
+                        }
+                    });
+                }
+            },function () {
+                layer.msg('删除失败！',{time:2000,icon:2});
+            });
+            $("input:checkbox[id='box']:checked").attr("checked",false);
+        };
+    });
+
+
+
     /*$("#Excel").on("click", function () {
         layer.confirm('你确定要导出吗？', {
             btn: ['是', '否']

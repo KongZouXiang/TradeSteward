@@ -1,0 +1,353 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="Bookmark" href="/favicon.ico">
+    <link rel="Shortcut Icon" href="/favicon.ico"/>
+    <script type="text/javascript" src="/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <script type="text/javascript" src="/js/vue/vue.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css"/>
+    <link rel="stylesheet" href="/lib/layui/css/layui.css" media="all">
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <script type="text/javascript" src="/lib/layui/layui.all.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <title>入库历史</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 入库历史 <span
+        class="c-gray en">&gt;</span> 管理员列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+                                               href="javascript:location.replace(location.href);" title="刷新"><i
+        class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div class="btn-group">
+        <span class="btn btn-primary radius" style="border-color: #dddddd" id="dairk">日常收入</span>
+        <span class="btn btn-default radius" id="quanburk">日常支出</span>
+    </div>
+    <div style="display: block" id="dairu">
+        <div class="text-c">
+            <input type="text" class="input-text" style="width:250px" placeholder="输入单号" id="wreNumber" name="">
+            <input type="text" class="input-text" style="width:250px" placeholder="输入往来单位" id="wreCurrentUnit" name="">
+            <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜订单
+            </button>
+        </div>
+        <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+        <a href="/cargomanagement/purchase-order/puchaseOrderExcel" id="Excel"
+           class="btn btn-success radius">
+        <i class="Hui-iconfont">&#xe644;</i>Excel导出</a>
+    </span>
+
+            <span class="r">共有数据：<strong></strong> 条</span></div>
+        <div id="app" style="height: 500px">
+            <table class="table table-border table-bordered table-bg">
+                <thead>
+                <tr>
+                    <th scope="col" colspan="16">待入库单</th>
+                </tr>
+                <tr class="text-c">
+                    <th width="40">ID</th>
+                    <th width="130">操作</th>
+                    <th width="150">业务日期</th>
+                    <th width="150">单据编号</th>
+                    <th width="95">类型</th>
+                    <th width="130">往来单位名称</th>
+                    <th width="130">入库仓库</th>
+                    <th width="150">入库商品</th>
+                    <th width="100">待入库量</th>
+                    <th width="150">制单日期</th>
+                    <th width="100">经手人</th>
+                    <th width="100">制单人</th>
+                    <th width="100">状态</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="text-c" v-for="(item,index) in result">
+                    <td>{{index+1}}</td>
+                    <td class="td-manage">
+                        <a title="详情" href="#" class="ml-5" style="text-decoration:none">
+                            <i class="icon Hui-iconfont" id="sta">&#xe627;</i>
+                        </a>
+                        <a title="入库" href="#" class="ml-5" style="text-decoration:none">
+                            <i class="icon Hui-iconfont" id="111">&#xe627;</i>
+                        </a>
+                    </td>
+                    <td>{{item.wreDate}}</td>
+                    <td>{{item.wreNumber}}</td>
+                    <td>{{item.wreType}}</td>
+                    <td>{{item.wreCurrentUnit}}</td>
+                    <td>{{item.wreWarehostName}}</td>
+                    <td>{{item.wreStorage}}</td>
+                    <td>{{item.wreScheduledReceipt}}</td>
+                    <td>{{item.wreDateOrder}}</td>
+                    <td>{{item.wreSinglePerson}}</td>
+                    <td>{{item.wreExperiencedPerson}}</td>
+                    <td>{{item.wreState}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="pagenav" style="text-align: center"></div>
+    </div>
+
+    <div style="display: none" id="quanbu">
+        <div class="text-c">
+            <input type="text" class="input-text" style="width:250px" placeholder="输入单号" id="wreNumber1" name="">
+            <input type="text" class="input-text" style="width:250px" placeholder="输入供应商" id="wreCurrentUnit1" name="">
+            <button type="submit" class="btn btn-success" id="findempl1" name=""><i class="Hui-iconfont">&#xe665;</i>搜订单
+            </button>
+        </div>
+        <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+            <a href="javascript:;" id="datadel" class="btn btn-danger radius"><i
+                    class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
+        <a href="/cargomanagement/purchase-order/puchaseOrderExcel" id="Excel1"
+           class="btn btn-success radius">
+        <i class="Hui-iconfont">&#xe644;</i>Excel导出</a>
+    </span>
+
+            <span class="r">共有数据：<strong>54</strong> 条</span></div>
+        <div id="app1" style="height: 500px">
+            <table class="table table-border table-bordered table-bg">
+                <thead>
+                <tr>
+                    <th scope="col" colspan="16">入库单</th>
+                </tr>
+                <tr class="text-c">
+                    <th width="25"><input type="checkbox" id="check" name="" value=""></th>
+                    <th width="40">ID</th>
+                    <th width="130">操作</th>
+                    <th width="150">业务日期</th>
+                    <th width="150">单据编号</th>
+                    <th width="130">往来单位名称</th>
+                    <th width="130">入库仓库</th>
+                    <th width="150">入库商品</th>
+                    <th width="100">待入库量</th>
+                    <th width="150">制单日期</th>
+                    <th width="150">关联业务</th>
+                    <th width="90">经手人</th>
+                    <th width="90">制单人</th>
+                    <th width="100">状态</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="text-c" v-for="(item,index) in result1">
+                    <td><input type="checkbox" id="box" :value="item.id" name=""></td>
+                    <td>{{index+1}}</td>
+                    <td class="td-manage">
+                        <a title="详情" href="#" class="ml-5" style="text-decoration:none">
+                            <i class="icon Hui-iconfont" id="sta1">&#xe627;</i>
+                        </a>
+                    </td>
+                    <td>{{item.wreDate}}</td>
+                    <td>{{item.wreNumber}}</td>
+                    <td>{{item.wreCurrentUnit}}</td>
+                    <td>{{item.wreWarehostName}}</td>
+                    <td>{{item.wreStorage}}</td>
+                    <td>{{item.wreScheduledReceipt}}</td>
+                    <td>{{item.wreDateOrder}}</td>
+                    <td>{{item.wreType}}</td>
+                    <td>{{item.wreSinglePerson}}</td>
+                    <td>{{item.wreExperiencedPerson}}</td>
+                    <td>{{item.wreState}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="pagenav1" style="text-align: center"></div>
+    </div>
+</div>
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+    $("#dairk").on('click', function () {
+        var s = document.getElementById("dairu");
+        var z = document.getElementById("quanbu");
+        $("#dairk").css('background-color', '#5a98dc');
+        $("#quanburk").css('background-color', 'white');
+        if (s.style.display = "none") {
+            s.style.display = "block";
+            z.style.display = "none";
+            getWarehouseReceiptList();
+        }
+    });
+
+    $("#quanburk").on('click', function () {
+        var z = document.getElementById("quanbu");
+        var s = document.getElementById("dairu");
+        $("#quanburk").css('background-color', '#5a98dc');
+        $("#dairk").css('background-color', 'white');
+        $("#dairk").css('color', '#0C0C0C');
+        if (z.style.display = "none") {
+            z.style.display = "block";
+            s.style.display = "none";
+            getWarehouseReceiptTwoList();
+        }
+    });
+</script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            result: []
+        }
+    });
+
+    var getWarehouseReceiptList = function (curr) {
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/cargomanagement/warehouse-receipt/selectwarehouseReceiptPage',
+            data: {
+                /*当前页*/
+                pageNum: curr || 1,
+                /*每页大小*/
+                pageSize: 3,
+                wreNumber: $("#wreNumber").val(),
+                wreCurrentUnit: $("#wreCurrentUnit").val()
+                //向服务端传的参数，此处只是演示
+            },
+            success: function (msg) {
+                app.result = msg.list;
+                laypage({
+                    cont: 'pagenav',//容器  值支持id名、原生dom对象，jquery对象,
+                    pages: msg.pages,//总页数
+                    first: '首页',
+                    last: '尾页',
+                    curr: curr || 1,//初始化页数
+                    jump: function (obj, first) { //触发分页后的回调
+                        if (!first) {     //点击跳页触发函数自身，并传递当前页：obj.curr
+                            getWarehouseReceiptList(obj.curr);
+                        }
+                    }
+                });
+            }
+        });
+    };
+    getWarehouseReceiptList();
+    $("#findempl").on('click', function () {
+        getWarehouseReceiptList();
+    });
+
+    var app1 = new Vue({
+        el: '#app1',
+        data: {
+            result1: []
+        }
+    });
+
+    var getWarehouseReceiptTwoList = function (curr) {
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/cargomanagement/warehouse-receipt/selectwarehouseReceiptTwoPage',
+            data: {
+                /*当前页*/
+                pageNum: curr || 1,
+                /*每页大小*/
+                pageSize: 3,
+                wreNumber: $("#wreNumber1").val(),
+                wreCurrentUnit: $("#wreCurrentUnit1").val()
+                //向服务端传的参数，此处只是演示
+            },
+            success: function (msg) {
+                app1.result1 = msg.list;
+                laypage({
+                    cont: 'pagenav1',//容器  值支持id名、原生dom对象，jquery对象,
+                    pages: msg.pages,//总页数
+                    first: '首页',
+                    last: '尾页',
+                    curr: curr || 1,//初始化页数
+                    jump: function (obj, first) { //触发分页后的回调
+                        if (!first) {     //点击跳页触发函数自身，并传递当前页：obj.curr
+                            getWarehouseReceiptTwoList(obj.curr);
+                        }
+                    }
+                });
+            }
+        });
+
+    };
+    getWarehouseReceiptTwoList();
+    $("#findempl1").on('click', function () {
+        getWarehouseReceiptTwoList();
+    });
+
+
+    /*删除账目*/
+    var delEvent1 = function (id) {
+        layer.confirm('你确定要删除吗？', {
+            btn: ['是', '否']
+        }, function () {
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '/cargomanagement/purchase-order/deletePurchaseById',
+                data: {
+                    id: id
+                },
+                success: function (msg) {
+                    getPurchasePageList();
+                    layer.msg('成功删除' + id, {icon: 5});
+                }
+            })
+        }, function () {
+
+        });
+    };
+
+    /*批量删除*/
+    $("#datadel").click(function(){
+        var arr = new Array();
+        $("input:checkbox[id='box']:checked").each(function (i) {
+            arr[i]=$(this).val();
+        });
+        if (arr[0]==null){
+            layer.msg("请选择要删除的入库单！",{time:2000,icon:2})
+        }else{
+            layer.confirm('你确定要删除它们吗？',{
+                btn:['是','否']
+            },function () {
+                for (var i =0;i<arr.length;i++ ){
+                    $.ajax({
+                        type:'GET',
+                        dataType:'json',
+                        url: '/cargomanagement/warehouse-receipt/deletewarehouseReceiptTwoById',
+                        data: {
+                            id: arr[i],
+                        },
+                        success: function (msg) {
+                            console.log(msg);
+                            if (msg) {
+                                getWarehouseReceiptTwoList();
+                                layer.msg('成功删除',{icon:1});
+                            }
+                        }
+                    });
+                }
+            },function () {
+                layer.msg('删除失败！',{time:2000,icon:2});
+            });
+            $("input:checkbox[id='box']:checked").attr("checked",false);
+        };
+    });
+
+</script>
+</body>
+</html>
