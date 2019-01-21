@@ -92,7 +92,7 @@ public interface ICommodityListService extends IService<CommodityList> {
      * @since 2019-01-14
      * @return 查询商品
      */
-    Map selectList();
+    Map selectComclassList1();
 
     /**
      * @author 史江浩

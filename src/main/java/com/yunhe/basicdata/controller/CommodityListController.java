@@ -58,7 +58,7 @@ public class CommodityListController {
         System.out.println(tiaoxingma);
         commodityList.setClScan(tiaoxingma);
         commodityList.setClName(mingcheng);
-        commodityList.setUsId(2);
+        //commodityList.setUsId(2);
         commodityList.setClSpec(guige);
         commodityList.setClPurPrice(cankaojinhuo);
         commodityList.setClWhoPrice(pifajia);
@@ -102,7 +102,7 @@ public class CommodityListController {
         commodityList.setId(id);
         commodityList.setClScan(tiaoxingma);
         commodityList.setClName(mingcheng);
-        commodityList.setUsId(2);
+        //commodityList.setUsId(2);
         commodityList.setClSpec(guige);
         commodityList.setClPurPrice(cankaojinhuo);
         commodityList.setClWhoPrice(pifajia);

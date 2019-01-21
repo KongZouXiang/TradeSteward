@@ -107,7 +107,7 @@ public class PurchaseOrderController {
      */
     @RequestMapping("/getCommodadd")
     public Map getCommodadd(){
-        return commodityListService.selectList();
+        return commodityListService.selectComclassList1();
     }
     /**
      * 进货订单历史分页

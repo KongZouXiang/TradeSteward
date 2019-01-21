@@ -129,8 +129,8 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
     }
 
     @Override
-    public Map selectList() {
-        List<CommodityList> list = commodityListMapper.selectList(new QueryWrapper<>());
+    public Map selectComclassList1() {
+        List<CommodityList> list = commodityListMapper.selectComclassList1();
         Map<String, Object> map = new HashMap<>();
         map.put("list",list);
         return map;
