@@ -68,10 +68,10 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
 
     @Override
     public IPage<Customer> selectPage(int current, int size, Customer customer) {
-
+        System.out.println(customer);
         return customerMapper.selectPage(new Page<>(current, size),
                 new QueryWrapper<Customer>().like("cus_compname", customer.getCusCompname())
-                        .or().like("cus_tele", customer.getCusTele()));
+                        .or().like("cus_tele", customer.getCusCompname()).or().like("cus_number",customer.getCusCompname()));
 
     }
 

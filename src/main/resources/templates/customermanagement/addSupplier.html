@@ -74,9 +74,7 @@
  */
 
     var addAccount = function () {
-        /*if (!check().form()) {
-            return;
-        }*/
+
         $.ajax({
             method: "post",
             dataType: 'json',
@@ -111,39 +109,7 @@
     });
 
 
-    /*function check() {
-        return $("#insertAccountForm").validate({
-            rules: {
-                cusNumber: {
-                    required: true
-                },
-                cusCompname: {
-                    required: true
-                },
-                cusMoney: {
-                    required: true
-                },
-                cusTele: {
-                    required: true
-                },
-                cusName: {
-                    required: true
-                },
-                cusFlag: {
-                    required: true
-                },
-                cusConnname: {
-                    required: true
-                },
-                cusAddress: {
-                    required: true
-                },
-                cusEmail: {
-                    required: true
-                },
-            }
-        });
-    }*/
+
 </script>
 </body>
 </html>
