@@ -40,8 +40,8 @@ public class CommodityList implements Serializable {
     /**
      * 基本单位(外键)
      */
-    @TableField("us_id")
-    private Integer usId;
+    @TableField("cl_unit")
+    private String clUnit;
 
     /**
      * 条形码
