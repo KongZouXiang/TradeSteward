@@ -2,13 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yunhe.activitymanagement.dao.MerchandisePackageMapper">
 
-
     <sql id="mpCols">
         id,mp_package_number,mp_package_name,mp_package_commodity,mp_remarks
     </sql>
 
     <!--查询的是商品套餐里面的所有已存在的模板-->
-    <select id="selectmpPage" resultType="com.yunhe.activitymanagement.entity.MerchandisePackage">
+    <select id="selectAll" resultType="com.yunhe.activitymanagement.entity.MerchandisePackage">
         select <include refid="mpCols"/> from trades_teward.merchandise_package
     </select>
 </mapper>

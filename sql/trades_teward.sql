@@ -32,15 +32,17 @@ CREATE TABLE `account_transfer` (
   `at_person` varchar(50) DEFAULT NULL COMMENT '备注',
   `at_remark` varchar(50) DEFAULT NULL COMMENT '经手人',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='账户转账表(ymy)';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='账户转账表(ymy)';
 
 /*Data for the table `account_transfer` */
 
 insert  into `account_transfer`(`id`,`at_out_account`,`at_out_time`,`at_into_account`,`at_into_time`,`at_money`,`at_charge`,`at_charge_person`,`at_person`,`at_remark`) values 
-(1,'建设银行','2019-01-05','现金','2019-01-05',5400,2.5,'转出账户支付','财务',NULL),
-(2,'建设银行','2019-01-05','现金','2019-01-05',689090,7,'转出账户支付','仓管或采购',NULL),
-(3,'现金','2019-01-05','建设银行','2019-01-05',3264,1,'转出账户支付','老板',NULL),
-(4,'现金','2019-01-05','建设银行','2019-01-05',2353,3,'转出账户支付','老板',NULL);
+(1,'建设银行','2019-01-05','现金','2019-01-05',5400,2.5,'转出账户支付','财务','1111'),
+(2,'建设银行','2019-01-05','现金','2019-01-05',689090,7,'转出账户支付','仓管或采购','2222'),
+(3,'现金','2019-01-05','建设银行','2019-01-05',3264,1,'转出账户支付','老板','3333'),
+(4,'现金','2019-01-05','建设银行','2019-01-05',2353,3,'转出账户支付','老板','4444'),
+(5,'建设银行','2019-01-16','现金','2019-01-16',1234,1,'转出账户支付','老板','试试'),
+(6,'现金','2019-01-16','建设银行','2019-01-16',222,0.5,'转入账户支付','老板','再来一次');
 
 /*Table structure for table `chara_manger` */
 
@@ -51,7 +53,7 @@ CREATE TABLE `chara_manger` (
   `ch_name` varchar(255) DEFAULT NULL COMMENT '角色名称',
   `ch_detail` varchar(255) DEFAULT NULL COMMENT '角色描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='角色管理';
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='角色管理';
 
 /*Data for the table `chara_manger` */
 
@@ -64,9 +66,7 @@ insert  into `chara_manger`(`id`,`ch_name`,`ch_detail`) values
 (6,'调拨组','多仓库时可以进行商品的调拨。'),
 (7,'采购组','负责进货单填写。'),
 (8,'库管组','库管组可以进行库存盘点、商品调拨、组装拆卸操作。'),
-(9,'入库组','入库管理。'),
-(10,'出库组','出库管理。'),
-(11,'天启组','世界之大，唯我独尊');
+(22,'天启组','唯我独尊');
 
 /*Table structure for table `commclass` */
 
@@ -97,7 +97,7 @@ CREATE TABLE `commodi_tytemplate` (
   `ct_templategoods` varchar(255) DEFAULT NULL COMMENT '模板商品',
   `ct_remarks` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='商品模板';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='商品模板';
 
 /*Data for the table `commodi_tytemplate` */
 
@@ -109,7 +109,12 @@ insert  into `commodi_tytemplate`(`id`,`ct_template_number`,`ct_tytemplate_name`
 (5,'555555','哼哼','蔬菜',NULL),
 (6,'666666','呜呜','礼品',NULL),
 (9,'123456','添加上去','水果','不错哦'),
-(10,'123456','添加上去','食品酒水面试','不错哦');
+(10,'123456','添加上去','食品酒水面试','不错哦'),
+(11,'156454','不错','肉','真香'),
+(12,'246565','利好','鸡蛋咖啡','质量好'),
+(13,'427581','i呼','酸乳','好喝'),
+(14,'254544','阿萨德供热','披萨','香'),
+(15,'547848','丰功硕德饭','面条大米','优质');
 
 /*Table structure for table `commodity_list` */
 
@@ -128,18 +133,26 @@ CREATE TABLE `commodity_list` (
   `wm_id` int(8) DEFAULT NULL COMMENT '仓库（外键）',
   `cl_number` varchar(100) DEFAULT NULL COMMENT '编号',
   `pr_id` int(255) DEFAULT NULL COMMENT '属性表的id',
+  `cl_minstock` int(100) DEFAULT NULL COMMENT '最低库存量',
+  `cl_maxstock` int(100) DEFAULT NULL COMMENT '最高库存量',
+  `cl_minlingprice` varchar(255) DEFAULT NULL COMMENT '最低零售价',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='商品列表';
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='商品列表';
 
 /*Data for the table `commodity_list` */
 
-insert  into `commodity_list`(`id`,`cl_name`,`us_id`,`cl_scan`,`cl_spec`,`cl_pur_price`,`cl_who_price`,`cl_tag_prise`,`cc_id`,`wm_id`,`cl_number`,`pr_id`) values 
-(1,'食品',NULL,'条形',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(2,'酒水',NULL,'因',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(3,'面试',NULL,'啊顺丰到付',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(4,'阿萨德',NULL,'暗室逢灯',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(5,'饮料',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(6,'饮料',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `commodity_list`(`id`,`cl_name`,`us_id`,`cl_scan`,`cl_spec`,`cl_pur_price`,`cl_who_price`,`cl_tag_prise`,`cc_id`,`wm_id`,`cl_number`,`pr_id`,`cl_minstock`,`cl_maxstock`,`cl_minlingprice`) values 
+(4,'阿萨德',2,'暗室逢灯123','18','14','325','124',1,24,'124',3,2,6,'1234'),
+(5,'饮料',2,'安抚','19','14','124','124',1,25,'1编辑',3,2,6,'124'),
+(35,'124',2,'1243','124','124','124','124',1,NULL,'124',NULL,124,124,'124'),
+(36,'124',124,'12','124','1254','125','1',2,25,'1243214',3,1,123,'123'),
+(37,'123',1243,'124','124','124','124','124',1,26,'124',2,124,1243,'214'),
+(38,'1',1,'1','1','1','1','1',2,25,'1124',2,21,12,'124'),
+(39,'124',2,'1234','124','124','124','1243',1,NULL,'124',NULL,124,124,'124'),
+(40,'124',2,'123','124','24','4','124',1,NULL,'124',NULL,124,124,'24'),
+(41,'1245',2,'1342','124','124','4','24',1,NULL,'12345',NULL,124,4,'24'),
+(42,'1245',2,'1342','124','124','4','24',1,NULL,'12345',NULL,124,4,'24'),
+(43,'1245',2,'1342','124','124','4','24',1,NULL,'12345',NULL,124,4,'24');
 
 /*Table structure for table `customer` */
 
@@ -159,13 +172,9 @@ CREATE TABLE `customer` (
   `cus_qq` int(10) DEFAULT NULL COMMENT 'qq',
   `cus_remarks` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='客户管理';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='客户管理';
 
 /*Data for the table `customer` */
-
-insert  into `customer`(`id`,`cus_number`,`cus_compname`,`cus_money`,`cus_tele`,`cus_name`,`cus_flag`,`cus_connname`,`cus_address`,`cus_email`,`cus_qq`,`cus_remarks`) values 
-(1,'18595468090','南瞻公司',NULL,'18595468090','李wu',1,NULL,'河南周口',NULL,NULL,NULL),
-(2,'KH20190103000','盈云公司',NULL,'18595468090','张三',1,NULL,'河南郑州',NULL,NULL,NULL);
 
 /*Table structure for table `customer_level` */
 
@@ -202,15 +211,18 @@ CREATE TABLE `employ` (
   `em_sel_user` varchar(255) DEFAULT NULL COMMENT '查看他人客户',
   `em_address` varchar(255) DEFAULT NULL COMMENT '地址',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='员工管理';
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COMMENT='员工管理';
 
 /*Data for the table `employ` */
 
 insert  into `employ`(`id`,`em_username`,`em_password`,`em_realname`,`em_role`,`em_sex`,`em_phone`,`em_email`,`em_status`,`em_repo`,`em_shiro`,`em_sel_invoice`,`em_del_invoice`,`em_sel_user`,`em_address`) values 
 (1,'张三','','张伞','营业员','男','131035465123','836738564@qq.com',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(2,'张三','','张伞',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(3,'1','1','张三','营业员','男','131035465123','836738564@qq.com',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(4,'heyuji','123456','dasdas','940926','男','1234564132132@qq.com','12345613265@qq.com',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(3,'1','123456','张三','营业员','男','131035465123','836738564@qq.com',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(31,'dsadas','654321','sadsadsad','管理员','女','13103877752','836738564@qq.com','正常',NULL,NULL,NULL,NULL,NULL,NULL),
+(38,'dsadas','123456','sadsadsad','销售员,仓管员','男','13103877752','836738564@qq.com','正常',NULL,NULL,NULL,NULL,NULL,NULL),
+(41,'heyuji','123456','钩子','仓管员,采购员','男','13103877752','836738564@qq.com','正常',NULL,NULL,NULL,NULL,NULL,NULL),
+(42,'heyuji1','123456','张三那','管理员,销售员','女','13103877752','836738564@qq.com','禁用',NULL,NULL,NULL,NULL,NULL,NULL),
+(43,'dsadasasd','123456','dasdassad','管理员,采购员','男','13103877752','836738564@qq.com','正常',NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `finance_classify` */
 
@@ -222,23 +234,20 @@ CREATE TABLE `finance_classify` (
   `fc_sort` varchar(50) DEFAULT NULL COMMENT '收支类别',
   `fc_remark` varchar(50) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='收支分类管理表(ymy)';
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8 COMMENT='收支分类管理表(ymy)';
 
 /*Data for the table `finance_classify` */
 
 insert  into `finance_classify`(`id`,`fc_type`,`fc_sort`,`fc_remark`) values 
-(1,'其他支出','支出',''),
-(2,'燃气费\r\n','支出',NULL),
-(3,'员工工资','支出',NULL),
-(4,'其他收入','收入',NULL),
-(5,'通讯费','支出',NULL),
-(6,'电费','支出',NULL),
-(7,'水费','支出',NULL),
-(8,'修理费','支出',NULL),
-(12,'其他支出','1','12e'),
-(13,'其他支出','收入','df'),
-(14,'邮费','支出','寄快递啊'),
-(16,'2','收入','');
+(1,'其他支出','支出','其他支出'),
+(2,'燃气费\r\n','支出','燃气费\r\n'),
+(3,'员工工资','支出','员工工资'),
+(4,'其他收入','收入','其他收入'),
+(5,'通讯费','支出','通讯费'),
+(6,'电费','支出','电费'),
+(7,'水费','支出','水费'),
+(8,'修理费','支出','修理费'),
+(30,'邮费','支出','邮费');
 
 /*Table structure for table `finance_order` */
 
@@ -258,19 +267,26 @@ CREATE TABLE `finance_order` (
   PRIMARY KEY (`id`),
   KEY `FK_order_classify` (`fc_id`),
   CONSTRAINT `FK_order_classify` FOREIGN KEY (`fc_id`) REFERENCES `finance_classify` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='收支订单管理表(ymy)';
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='收支订单管理表(ymy)';
 
 /*Data for the table `finance_order` */
 
 insert  into `finance_order`(`id`,`fo_num_list`,`fo_time`,`fo_money`,`fo_account`,`fo_person`,`fo_remark`,`fo_image`,`fo_flag`,`fc_id`) values 
-(1,'SZ20190104003','2019-01-04',33,'现金','老板',NULL,NULL,'1',4),
-(2,'SZ20190104002','2019-01-04',1245,'建设银行','老板',NULL,NULL,'1',4),
-(3,'SZ20190104001','2019-01-04',500,'现金','老板',NULL,NULL,'1',4),
-(4,'SZ20190104000','2019-01-04',132,'现金','老板',NULL,NULL,'1',4),
-(5,'SZ20190104004','2019-01-04',110,'现金','老板',NULL,NULL,'0',6),
-(6,'SZ20190104005','2019-01-04',65,'现金','老板',NULL,NULL,'0',7),
-(7,'SZ20190104006','2019-01-04',600,'建设银行','老板',NULL,NULL,'0',5),
-(8,'SZ20190104007','2019-01-04',150,'现金','老板',NULL,NULL,'0',2);
+(1,'SZ20190104003','2019-01-04',33,'现金','老板','收入',NULL,'收入',4),
+(2,'SZ20190104002','2019-01-04',1245,'建设银行','老板','收入',NULL,'收入',4),
+(3,'SZ20190104001','2019-01-04',500,'现金','老板','收入',NULL,'收入',4),
+(4,'SZ20190104000','2019-01-04',132,'现金','老板','收入',NULL,'收入',4),
+(5,'SZ20190104004','2019-01-04',110,'现金','老板','支出',NULL,'支出',6),
+(6,'SZ20190104005','2019-01-04',65,'现金','老板','支出',NULL,'支出',7),
+(7,'SZ20190104006','2019-01-04',600,'建设银行','老板','支出',NULL,'支出',5),
+(10,'SZ201901160010','2019-01-16',25346,'现金','老板','sdfgf','','支出',3),
+(11,'SZ201901160011','2019-01-16',658,'现金','财务','hghgdgh','C:\\fakepath\\ProfilePhoto.jpg','支出',2),
+(14,'SZ201901170014','2019-01-17',423,'现金','销售','通讯费','','支出',3),
+(20,'SZ201901170020','2019-01-17',4353,'现金','老板','支出','','支出',1),
+(21,'SZ201901180021','2019-01-18',56,'建设银行','老板','电费啊','','支出',2),
+(26,'SZ201901180026','2019-01-18',34664,'现金','老板','支出','','支出',1),
+(27,'SZ201901180027','2019-01-18',345,'现金','老板','收入','','收入',4),
+(28,'SZ201901180028','2019-01-18',222,'现金','老板','试一次','C:\\fakepath\\ProfilePhoto.jpg','收入',4);
 
 /*Table structure for table `fund_client_debt` */
 
@@ -306,19 +322,27 @@ DROP TABLE IF EXISTS `fund_provider_debt`;
 
 CREATE TABLE `fund_provider_debt` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `fpd_num_list` varchar(50) NOT NULL COMMENT '供应商编号',
-  `fpd_name` varchar(50) NOT NULL COMMENT '供应商名称',
-  `fpd_linkman` varchar(50) NOT NULL COMMENT '联系人',
-  `fpd_begin_debt` double NOT NULL COMMENT '期初欠款',
-  `fpd_add_debt` double NOT NULL COMMENT '增加应付欠款',
-  `fpd_pay_debt` double NOT NULL COMMENT '支付欠款',
-  `fpd_discount` double NOT NULL COMMENT '优惠欠款',
-  `fpd_offset_deb` double NOT NULL COMMENT '核销欠款',
-  `fpd_receivable` double NOT NULL COMMENT '应付欠款',
+  `fpd_num_list` varchar(50) DEFAULT NULL COMMENT '供应商编号',
+  `fpd_name` varchar(50) DEFAULT NULL COMMENT '供应商名称',
+  `fpd_linkman` varchar(50) DEFAULT NULL COMMENT '联系人',
+  `fpd_telephone` varchar(50) DEFAULT NULL COMMENT '联系电话',
+  `fpd_begin_debt` double DEFAULT NULL COMMENT '期初欠款',
+  `fpd_add_debt` double DEFAULT NULL COMMENT '增加应付欠款',
+  `fpd_pay_debt` double DEFAULT NULL COMMENT '支付欠款',
+  `fpd_discount` double DEFAULT NULL COMMENT '优惠欠款',
+  `fpd_offset_deb` double DEFAULT NULL COMMENT '核销欠款',
+  `fpd_receivable` double DEFAULT NULL COMMENT '应付欠款',
+  `fpd_person` varchar(50) DEFAULT NULL COMMENT '经手人',
+  `fpd_time` varchar(50) DEFAULT NULL COMMENT '付款时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='供应商应付欠款表(ymy)';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='供应商应付欠款表(ymy)';
 
 /*Data for the table `fund_provider_debt` */
+
+insert  into `fund_provider_debt`(`id`,`fpd_num_list`,`fpd_name`,`fpd_linkman`,`fpd_telephone`,`fpd_begin_debt`,`fpd_add_debt`,`fpd_pay_debt`,`fpd_discount`,`fpd_offset_deb`,`fpd_receivable`,`fpd_person`,`fpd_time`) values 
+(1,'	\r\nGYS20170724006','慧慧便利店','李老板','15738358823',NULL,234,NULL,NULL,NULL,234556,'老板','2019.01.15'),
+(2,'GYS20170724003','恰恰','王老板','13133602876',NULL,435,NULL,NULL,NULL,354465,'财务','2019.01.15'),
+(3,'GYS20170724007','三只松鼠','胡女士','18338261765',NULL,4656,NULL,NULL,NULL,124324,'老板','2019.01.15');
 
 /*Table structure for table `guider` */
 
@@ -343,11 +367,27 @@ CREATE TABLE `merchandise_package` (
   `mp_package_number` varchar(25) DEFAULT NULL COMMENT '套餐编号',
   `mp_package_name` varchar(25) DEFAULT NULL COMMENT '套餐名称',
   `mp_package_commodity` varchar(225) DEFAULT NULL COMMENT '套餐商品',
-  `remarks` varchar(225) DEFAULT NULL COMMENT '备注',
+  `mp_remarks` varchar(225) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品套餐';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='商品套餐';
 
 /*Data for the table `merchandise_package` */
+
+insert  into `merchandise_package`(`id`,`mp_package_number`,`mp_package_name`,`mp_package_commodity`,`mp_remarks`) values 
+(1,'000000','套餐1','苹果栗子',NULL),
+(2,'111111','套餐2','衣服帽子',NULL),
+(3,'222222','套餐3','鱼肉',NULL),
+(4,'333333','套餐4','电脑',NULL),
+(5,'444444','套餐5','手机',NULL),
+(6,'555555','套餐6','行李箱',NULL),
+(7,'666666','套餐7','土豆',NULL),
+(8,'777777','套餐8','肌肉',NULL),
+(9,'888888','套餐9','书包',NULL),
+(10,'999999','套餐10','日记本',NULL),
+(11,'121212','套餐11','电饭煲',NULL),
+(12,'131313','套餐12','牛奶',NULL),
+(13,'141414','套餐13','面包',NULL),
+(14,'151515','套餐14','饮料',NULL);
 
 /*Table structure for table `num_rule` */
 
@@ -379,13 +419,18 @@ DROP TABLE IF EXISTS `order_connect_comm`;
 
 CREATE TABLE `order_connect_comm` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_num` varchar(50) DEFAULT NULL COMMENT '关联订单号',
-  `sell_order_num` varchar(50) DEFAULT NULL COMMENT '销售订单号',
+  `order_num` int(11) DEFAULT NULL COMMENT '关联订单号',
+  `sell_order_num` int(11) DEFAULT NULL COMMENT '销售订单号',
   `cl_id` int(11) DEFAULT NULL COMMENT '关联商品id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='单号与商品的关联表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='单号与商品的关联表';
 
 /*Data for the table `order_connect_comm` */
+
+insert  into `order_connect_comm`(`id`,`order_num`,`sell_order_num`,`cl_id`) values 
+(1,1,NULL,1),
+(2,1,NULL,2),
+(3,1,NULL,4);
 
 /*Table structure for table `package_commodity` */
 
@@ -424,7 +469,7 @@ CREATE TABLE `purchase_history` (
   `id` int(8) NOT NULL AUTO_INCREMENT,
   `ph_date` varchar(50) DEFAULT NULL COMMENT '业务日期',
   `ph_number` varchar(50) DEFAULT NULL COMMENT '单据编号',
-  `ph_supname` varchar(50) DEFAULT NULL COMMENT '供应商名称',
+  `ph_supname` varchar(51) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '供应商名称',
   `ph_clname` varchar(8) DEFAULT NULL COMMENT '进货商品',
   `ph_quantity` int(8) DEFAULT NULL COMMENT '进货数量',
   `ph_amount_payable` double(10,2) DEFAULT NULL COMMENT '应付金额',
@@ -439,12 +484,13 @@ CREATE TABLE `purchase_history` (
   `ph_warehousing_status` varchar(50) DEFAULT NULL COMMENT '入库状态',
   `ph_remarks` varchar(50) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='进货历史';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='进货历史';
 
 /*Data for the table `purchase_history` */
 
 insert  into `purchase_history`(`id`,`ph_date`,`ph_number`,`ph_supname`,`ph_clname`,`ph_quantity`,`ph_amount_payable`,`ph_amount_paid`,`ph_warehouse`,`ph_bill`,`ph_jindate`,`ph_maney_hu`,`ph_experienced_person`,`ph_single_person`,`ph_other_expenses`,`ph_warehousing_status`,`ph_remarks`) values 
-(1,NULL,'123456789',NULL,NULL,NULL,0.00,0.00,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(3,'1','123213','123123','1',1,1.00,1.00,'1','1','1','1','1','1','1','1','1'),
+(5,'2019-01-04','YJDD201901151530','供应商1','超级多',10,49.99,49.99,'默认仓库','1.jpg','2019-01-15 17:04:21','现金','老板1','老板','1','未入库','这是一个备注');
 
 /*Table structure for table `purchase_order` */
 
@@ -452,9 +498,9 @@ DROP TABLE IF EXISTS `purchase_order`;
 
 CREATE TABLE `purchase_order` (
   `id` int(8) NOT NULL AUTO_INCREMENT,
-  `po_date` varchar(25) DEFAULT NULL COMMENT '业务日期',
+  `po_date` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '业务日期',
   `po_number` varchar(255) DEFAULT NULL COMMENT '单据编号',
-  `po_state` int(8) DEFAULT NULL COMMENT '处理状态',
+  `po_state` varchar(50) DEFAULT NULL COMMENT '处理状态',
   `po_auditor` varchar(25) DEFAULT NULL COMMENT '审核人',
   `po_sup_name` varchar(255) DEFAULT NULL COMMENT '供应商名称',
   `po_cl_name` varchar(255) DEFAULT NULL COMMENT '商品名称',
@@ -471,14 +517,60 @@ CREATE TABLE `purchase_order` (
 /*Data for the table `purchase_order` */
 
 insert  into `purchase_order`(`id`,`po_date`,`po_number`,`po_state`,`po_auditor`,`po_sup_name`,`po_cl_name`,`po_quantity_of_purchase`,`po_ying_money`,`po_bill`,`po_experienced_person`,`po_single_person`,`po_remarks`,`po_date_order`) values 
-(1,'2019-01-03','JDD20190103000',1,NULL,'默认供应商','大白兔奶糖',1,5.90,'1.jpg','老板','老板','这是一个未审核的订单','2019-01-03'),
-(2,'2019-01-03','JDD20190103001',1,'','默认供应商','小白兔',1,NULL,'2.jpg','老板','老板','测试',NULL),
-(3,'2019-01-04','46454564654564',1,'老板1','供应商1','超级多',10,49.99,'1.jpg','老板1','老板1','这是一个备注','2019-04-01'),
-(4,'2019-01-04','46454564654564',1,'老板1','供应商1','超级多',10,49.99,'1.jpg','老板1','老板1','这是一个备注','2019-04-01'),
-(5,'20191111','5564114654651',1,'','默认','大白兔奶糖',10,4.19,'5.jpg','老板','老板','这是个？','2019-01-04'),
-(6,'2019-01-08','dfsd15155156',0,'老板1','供应商1','大白兔，小白兔',5,43.99,'1.jpg','老板','老板','这是个备注','2019-01-08'),
-(7,'2019-01-08','dfsd1111111111',0,'老板1','供应商1','大白兔，小白兔',5,43.99,'1.jpg','老板','老板','这是个备注','2019-01-08'),
-(8,'2019-01-10','5441545451',0,'老板','供应商1','小白兔',10,13.99,'1.jpg','laoban','laoban','fsdfsdf','2019-01-10');
+(3,'2019-01-04','JDD201901151524','未审核','老板1','供应商1','超级多',10,49.99,'1.jpg','老板1','老板1','这是一个备注','2019-04-01'),
+(4,'2019-01-04','JDD201901151530','已审核','老板1','供应商1','超级多',10,49.99,'1.jpg','老板1','老板1','这是一个备注','2019-04-01');
+
+/*Table structure for table `purchase_report_com` */
+
+DROP TABLE IF EXISTS `purchase_report_com`;
+
+CREATE TABLE `purchase_report_com` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pr_com_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL COMMENT '商品编号',
+  `pr_com_name` varchar(25) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL COMMENT '商品名称',
+  `pr_com_spec` varchar(25) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL COMMENT '规格',
+  `pr_com_unit` varchar(25) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL COMMENT '单位',
+  `pr_quantity` int(100) DEFAULT NULL COMMENT '进货量',
+  `pr_amount` int(100) DEFAULT NULL COMMENT '进货额',
+  `pr_docu_quantity` int(100) DEFAULT NULL COMMENT '进货开单量',
+  `pr_docu_amount` int(100) DEFAULT NULL COMMENT '进货开单金额',
+  `pr_return_quantity` int(100) DEFAULT NULL COMMENT '退货量',
+  `pr_return_amount` int(100) DEFAULT NULL COMMENT '退货额',
+  `pr_war_num` varchar(255) DEFAULT NULL COMMENT '仓库编号',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `purchase_report_com` */
+
+/*Table structure for table `purchase_report_docu` */
+
+DROP TABLE IF EXISTS `purchase_report_docu`;
+
+CREATE TABLE `purchase_report_docu` (
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `pr_docu_date` varchar(50) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL COMMENT '日期',
+  `pr_docu_quantity` int(8) DEFAULT NULL COMMENT '进货笔数',
+  `pr_docu_amount` double(10,2) DEFAULT NULL COMMENT '进货额',
+  `pr_docu_war` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL COMMENT '仓库编号',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
+
+/*Data for the table `purchase_report_docu` */
+
+/*Table structure for table `purchase_report_supp` */
+
+DROP TABLE IF EXISTS `purchase_report_supp`;
+
+CREATE TABLE `purchase_report_supp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pr_supp_num` varchar(50) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `pr_supp_name` varchar(50) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `pr_supp_quantity` int(8) DEFAULT NULL,
+  `pr_supp_amount` double(10,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
+
+/*Data for the table `purchase_report_supp` */
 
 /*Table structure for table `purchase_return_history` */
 
@@ -499,13 +591,16 @@ CREATE TABLE `purchase_return_history` (
   `prh_maney_hu` varchar(50) DEFAULT NULL COMMENT '结算账户',
   `prh_experienced_person` varchar(50) DEFAULT NULL COMMENT '经手人',
   `prh_single_person` varchar(50) DEFAULT NULL COMMENT '制单人',
-  `ph_other_expenses` double(10,2) DEFAULT NULL COMMENT '其他费用',
+  `prh_other_expenses` double(10,2) DEFAULT NULL COMMENT '其他费用',
   `prh_outgoing_state` varchar(50) DEFAULT NULL COMMENT '出库状态',
   `prh_remarks` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='进货退货历史';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='进货退货历史';
 
 /*Data for the table `purchase_return_history` */
+
+insert  into `purchase_return_history`(`id`,`prh_date`,`prh_number`,`prh_pur_order`,`prh_supname`,`prh_returnsup`,`prh_total_amount`,`prh_refund_amount`,`prh_outgoing_warehouse`,`prh_bill`,`prh_jindate`,`prh_maney_hu`,`prh_experienced_person`,`prh_single_person`,`prh_other_expenses`,`prh_outgoing_state`,`prh_remarks`) values 
+(4,'213123','123123',NULL,'123123213',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `running_accounts` */
 
@@ -523,9 +618,18 @@ CREATE TABLE `running_accounts` (
   `ra_outcome` double DEFAULT NULL COMMENT '支出',
   `ra_current_balance` double DEFAULT NULL COMMENT '当前余额',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资金流水表(ymy)';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='资金流水表(ymy)';
 
 /*Data for the table `running_accounts` */
+
+insert  into `running_accounts`(`id`,`ra_num_list`,`ra_time`,`ra_company_name`,`ra_project_name`,`ra_account`,`ra_person`,`ra_income`,`ra_outcome`,`ra_current_balance`) values 
+(1,'XSD20170725004','2017-07-27','盈云公司','销售收入','现金','财务',708,NULL,-3595.5),
+(2,'XSD20170725009','2017-07-25','邓娟娟','销售收入','现金','老板',766,NULL,-4303.5),
+(3,'XSD20170725003','2017-07-25','刘琳衡山','销售收入','现金','老板',478,NULL,-5069.5),
+(4,'XSD20170725001','2017-07-25','张云雷','销售收入','现金','老板',328,NULL,-5547.5),
+(5,'XSD20170725000','2017-07-25','方鑫','销售收入','现金','销售',315,NULL,-5875.5),
+(6,'XSD20170725002','2017-07-24','智慧商贸','销售收入','现金','老板',385,NULL,-6190.5),
+(7,'JHD20170725004','2017-07-21','广发商行','进货支出','现金','老板',NULL,5403.5,-6575.5);
 
 /*Table structure for table `sales_history` */
 
@@ -533,8 +637,8 @@ DROP TABLE IF EXISTS `sales_history`;
 
 CREATE TABLE `sales_history` (
   `id` int(8) NOT NULL AUTO_INCREMENT,
-  `sh_date` varchar(50) DEFAULT NULL COMMENT '单据编号',
-  `sh_number` varchar(50) DEFAULT NULL COMMENT '业务日期',
+  `sh_date` varchar(50) DEFAULT NULL COMMENT '业务日期',
+  `sh_number` varchar(50) DEFAULT NULL COMMENT '单据编号',
   `sh_connect` varchar(50) DEFAULT NULL COMMENT '关联订单号',
   `sh_client` varchar(50) DEFAULT NULL COMMENT '客户名称',
   `sh_sell_goods` varchar(50) DEFAULT NULL COMMENT '销售商品',
@@ -556,13 +660,16 @@ CREATE TABLE `sales_history` (
   `sh_status` varchar(50) DEFAULT NULL COMMENT '出库状态',
   `sh_remark` varchar(50) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='销售历史';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='销售历史';
 
 /*Data for the table `sales_history` */
 
 insert  into `sales_history`(`id`,`sh_date`,`sh_number`,`sh_connect`,`sh_client`,`sh_sell_goods`,`sh_sell_count`,`sh_discount`,`sh_mins`,`sh_profit`,`sh_money`,`sh_true_money`,`sh_house`,`sh_bills`,`sh_create_date`,`sh_give_date`,`sh_other`,`sh_end_comm`,`sh_hander`,`sh_maker`,`sh_type`,`sh_status`,`sh_remark`) values 
 (1,'2019-1-9','aaa',NULL,'杨1',NULL,0.00,0.00,0.00,0.00,0.00,'0','0','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(2,NULL,'abc',NULL,'yang1',NULL,0.00,0.00,0.00,0.00,0.00,'0','本地仓库','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(2,NULL,'abc',NULL,'yang1',NULL,0.00,0.00,0.00,0.00,0.00,'0','本地仓库','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(4,'2019-1-9','aaa',NULL,'杨1',NULL,0.00,0.00,0.00,0.00,0.00,'0','0','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(5,'2019-1-9','aaa',NULL,'杨1',NULL,0.00,0.00,0.00,0.00,0.00,'0','0','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(6,'2019-1-9','aaa',NULL,'杨1',NULL,0.00,0.00,0.00,0.00,0.00,'0','0','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `sales_order_history` */
 
@@ -596,11 +703,9 @@ insert  into `sales_order_history`(`id`,`so_date`,`so_order_num`,`so_status`,`so
 (1,'2017-07-25','XDD20170725001','未审核','老板','智慧商贸','红米note3、诺基亚800',2,0.00,11394.00,500.00,NULL,'2017-07-25',6,'2017-7-26','老板','老板',NULL),
 (2,'2017-07-25','XDD20170725002','未审核','老板','智慧商贸','红米note3、诺基亚800',2,0.00,11394.00,500.00,NULL,'2017-07-25',6,'2017-7-26','老板','老板',NULL),
 (3,'2017-07-25','XDD20170725003','未审核','老板','智慧商贸','红米note3、诺基亚800',2,0.00,11394.00,500.00,NULL,'2017-07-25',6,'2017-7-26','老板','老板',NULL),
-(4,'2017-07-25','XDD20170725004','未审核','老板','智慧商贸','红米note3、诺基亚800',2,0.00,11394.00,500.00,NULL,'2017-07-25',6,'2017-7-26','老板','老板',NULL),
 (5,'2017-07-25','XDD20170725005','未审核','老板','智慧商贸','红米note3、诺基亚800',2,0.00,11394.00,500.00,NULL,'2017-07-25',6,'2017-7-26','老板','老板',NULL),
 (6,'2017-07-25','XDD20170725006','未审核','老板','智慧商贸','红米note3、诺基亚800',2,0.00,11394.00,500.00,NULL,'2017-07-25',6,'2017-7-26','老板','老板',NULL),
 (7,'2017-07-25','XDD20170725007','未审核','老板','智慧商贸','红米note3、诺基亚800',2,0.00,11394.00,500.00,NULL,'2017-07-25',6,'2017-7-26','老板','老板',NULL),
-(8,'2017-07-25','XDD20170725008','未审核','老板','智慧商贸','红米note3、诺基亚800',2,0.00,11394.00,500.00,NULL,'2017-07-25',6,'2017-7-26','老板','老板',NULL),
 (9,'2017-07-25','XDD20170725009','未审核','老板','智慧商贸','红米note3、诺基亚800',2,0.00,11394.00,500.00,NULL,'2017-07-25',6,'2017-7-26','老板','老板',NULL),
 (10,'2017-07-25','XDD20170725010','未审核','老板','智慧商贸','红米note3、诺基亚800',2,0.00,11394.00,500.00,NULL,'2017-07-25',6,'2017-7-26','老板','老板',NULL),
 (11,'2017-07-25','XDD20170725011','未审核','老板','智慧商贸','红米note3、诺基亚800',2,0.00,11394.00,500.00,NULL,'2017-07-25',6,'2017-7-26','老板','老板',NULL),
@@ -649,12 +754,12 @@ CREATE TABLE `settlement_account` (
   `sa_banknumber` varchar(255) DEFAULT NULL COMMENT '银行账号',
   `sa_beginbalance` varchar(255) DEFAULT NULL COMMENT '期初余额',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='结算帐户';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='结算帐户';
 
 /*Data for the table `settlement_account` */
 
 insert  into `settlement_account`(`id`,`sa_name`,`sa_bank`,`sa_balance`,`sa_state`,`sa_banknumber`,`sa_beginbalance`) values 
-(3,'浮点数','郑州银行',34.00,0,'13213','4234'),
+(3,'时候1·23','郑州银行',34.00,0,'13213','4234'),
 (4,'发送到','郑州银行',12.00,1,'5465476','7657');
 
 /*Table structure for table `succ_out_warehouse` */
@@ -699,12 +804,13 @@ CREATE TABLE `supplier` (
   `sup_email` varchar(25) DEFAULT NULL COMMENT '邮箱',
   `sup_remarks` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='供应商管理';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='供应商管理';
 
 /*Data for the table `supplier` */
 
 insert  into `supplier`(`id`,`sup_compname`,`sup_number`,`sup_money`,`sup_tele`,`sup_flag`,`sup_linkman`,`sup_conn`,`sup_email`,`sup_remarks`) values 
-(1,'晨光文具','GYS20170725009',0,'135478290000',1,'蔡老板',NULL,NULL,'没得备注');
+(1,'晨光文具','GYS20170725009',100,'135478290000',1,'蔡老板','boss','155256@qq.com','没得备注'),
+(2,'三星科技','GYS20170725008',5000,'12345678945',1,'李董','小王','12341569@163.com','无');
 
 /*Table structure for table `template_commodity` */
 
@@ -819,20 +925,21 @@ CREATE TABLE `warehouse_management` (
   `wm_person` varchar(25) DEFAULT NULL COMMENT '联系人',
   `wm_tel` varchar(255) DEFAULT NULL COMMENT '联系电话',
   `wm_address` varchar(255) DEFAULT NULL COMMENT '仓库地址',
-  `wm_postcode` int(8) unsigned DEFAULT NULL COMMENT '邮编',
+  `wm_postcode` varchar(255) DEFAULT NULL COMMENT '邮箱',
   `wm_state` int(8) DEFAULT NULL COMMENT '状态',
   `wm_remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='仓库管理';
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COMMENT='仓库管理';
 
 /*Data for the table `warehouse_management` */
 
 insert  into `warehouse_management`(`id`,`wm_number`,`wm_name`,`wm_person`,`wm_tel`,`wm_address`,`wm_postcode`,`wm_state`,`wm_remark`) values 
-(11,'请问','水电费','风光','水电费','羊肉汤',NULL,NULL,NULL),
-(16,'奥术大师','多福多寿','水电费','水电费','水电费 ',NULL,NULL,NULL),
-(17,'水电费','稍等  mm 帮您查下哈/:080 ','水电费','水电费',NULL,NULL,NULL,NULL),
-(18,'水电费','发过火','迪哥','电饭锅','黑寡妇',NULL,NULL,NULL),
-(19,' 再次感到抱歉~请麻烦您垫付运费把有问题的YY寄回，垫付运费您可在寄出后申请退款/售后，如果没有申请入口我们将退到您账户绑定的支付宝当中哦~【请您发出后务必将花费的运费金额告诉客服哦】  ','电饭锅',NULL,NULL,NULL,NULL,NULL,NULL);
+(24,'001','郑州仓','张三','1321321','zhengzhou','451450',1,''),
+(25,'002','开封仓','李四','1321322','开封','451451',1,''),
+(26,'003','洛阳','王五','1321323','洛阳','145453',1,''),
+(27,'004','南阳','刘四','13213214','nanyang','451454',1,'wu'),
+(28,'005','安阳','王五','13213215','anyang','2145@qq.com',1,'安阳'),
+(29,'005','新郑仓','李新政','1321321','新郑枣庄','245425@qq.com',1,'新郑大仓');
 
 /*Table structure for table `warehouse_receipt` */
 
@@ -840,35 +947,25 @@ DROP TABLE IF EXISTS `warehouse_receipt`;
 
 CREATE TABLE `warehouse_receipt` (
   `id` int(8) NOT NULL AUTO_INCREMENT,
+  `wre_date` varchar(50) DEFAULT NULL COMMENT '业务日期',
+  `wre_number` varchar(255) DEFAULT NULL COMMENT '单据编号',
+  `wre_type` varchar(50) DEFAULT NULL COMMENT '类型',
+  `wre_current_unit` varchar(50) DEFAULT NULL COMMENT '往来单位名称',
+  `wre_warehost_name` varchar(50) DEFAULT NULL COMMENT '入库仓库',
+  `wre_storage` varchar(255) DEFAULT NULL COMMENT '入库商品',
+  `wre_scheduled_receipt` int(8) DEFAULT NULL COMMENT '入库量',
+  `wre_date_order` varchar(50) DEFAULT NULL COMMENT '制单日期',
+  `wre_single_person` varchar(50) DEFAULT NULL COMMENT '制单人',
+  `wre_experienced_person` varchar(50) DEFAULT NULL COMMENT '经手人',
+  `wre_state` varchar(50) DEFAULT NULL COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `warehouse_receipt` */
 
-/*Table structure for table `warehouse_undetermined` */
-
-DROP TABLE IF EXISTS `warehouse_undetermined`;
-
-CREATE TABLE `warehouse_undetermined` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,
-  `wu_date` varchar(50) DEFAULT NULL COMMENT '业务日期',
-  `wu_number` varchar(255) DEFAULT NULL COMMENT '单据编号',
-  `wu_type` varchar(255) DEFAULT NULL COMMENT '类型',
-  `wu_current_unit` varchar(50) DEFAULT NULL COMMENT '往来单位',
-  `wu_warehouse` varchar(50) DEFAULT NULL COMMENT '入库仓库',
-  `wu_goods_in_storage` varchar(255) DEFAULT NULL COMMENT '入库商品',
-  `wu_quantity_required` int(8) DEFAULT NULL COMMENT '待入库量',
-  `wu_jindate` varchar(50) DEFAULT NULL COMMENT '制单日期',
-  `wu_single_person` varchar(50) DEFAULT NULL COMMENT '制单人',
-  `wu_experienced_person` varchar(50) DEFAULT NULL COMMENT '经手人',
-  `wu_warehousing_status` varchar(50) DEFAULT NULL COMMENT '状态',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
-/*Data for the table `warehouse_undetermined` */
-
-insert  into `warehouse_undetermined`(`id`,`wu_date`,`wu_number`,`wu_type`,`wu_current_unit`,`wu_warehouse`,`wu_goods_in_storage`,`wu_quantity_required`,`wu_jindate`,`wu_single_person`,`wu_experienced_person`,`wu_warehousing_status`) values 
-(1,'2019-01-09','ADD201901091','进货','小史文具','默认仓库','百日红',1,'2019-01-09','老板','老板','待入库');
+insert  into `warehouse_receipt`(`id`,`wre_date`,`wre_number`,`wre_type`,`wre_current_unit`,`wre_warehost_name`,`wre_storage`,`wre_scheduled_receipt`,`wre_date_order`,`wre_single_person`,`wre_experienced_person`,`wre_state`) values 
+(1,'2019-01-15','YJDD201901151530','进货','360超市','默认仓库','大白兔奶糖',100,'2019-01-15','老板','老板','未入库'),
+(2,'2019-01-17','YJDD201901171617','进货','360超市','默认仓库','大白兔',100,'2019-01-15','老板','老板','全部入库');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

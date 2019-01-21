@@ -1,12 +1,15 @@
 package com.yunhe.activitymanagement.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.yunhe.activitymanagement.dao.CommodiTytemplateMapper;
 import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import com.yunhe.cargomanagement.entity.SalesOrderHistory;
 import org.springframework.stereotype.Service;
 
 
@@ -31,58 +34,65 @@ public class CommodiTytemplateServiceImpl extends ServiceImpl<CommodiTytemplateM
     @Resource
     private CommodiTytemplateMapper commodiTytemplateMapper;
 
+    @Override
+    public IPage selectLikePage(int current, int size, CommodiTytemplate commodiTytemplate) {
+
+        return commodiTytemplateMapper.selectPage(
+                new Page<CommodiTytemplate>(current, size),
+                new QueryWrapper<CommodiTytemplate>()
+                        .like("ct_template_number", commodiTytemplate.getCtTemplateNumber())
+                        .or()
+                        .like("ct_tytemplate_name", commodiTytemplate.getCtTytemplateName()));
+    }
+
+
+
+
+
+
 
     @Override
-    public Map queryLikeList(int current, int size, CommodiTytemplate commodiTytemplate) {
-        Page page=new Page(current,size);
-        List<CommodiTytemplate> commodilist = commodiTytemplateMapper.selectAllPage(page);
-        Map map = new HashMap();
-        map.put("total", page.getTotal());
-        map.put("pages", page.getPages());
-        map.put("commodiTytemplate",commodiTytemplate);
-        map.put("commodilist", commodilist);
-        return map;
+    public List<CommodiTytemplate> selectAll() {
+        return commodiTytemplateMapper.selectAll();
+    }
+    /**
+     * 增加商品模板
+     */
+
+    @Override
+    public int insertCt(CommodiTytemplate commodiTytemplate) {
+        return commodiTytemplateMapper.insert(commodiTytemplate);
     }
 
     /**
-     * 增加商品模板
-     * */
-
-      @Override
-      public int insertCt(CommodiTytemplate commodiTytemplate) {
-          return commodiTytemplateMapper.insert(commodiTytemplate);
-      }
-    /**
      * 删除
-     * */
+     */
     @Override
     public int deleteById(Serializable id) {
         return commodiTytemplateMapper.deleteById(id);
     }
 
-/**
- * 修改
-* */
+
+    /**
+     * 修改
+     */
     @Override
     public int updateCt(CommodiTytemplate commodiTytemplate) {
         return commodiTytemplateMapper.updateById(commodiTytemplate);
     }
 
 
-
     /**
-     * <P>
-     *     查询数据
+     * <p>
+     * 查询数据
      * </P>
+     *
      * @return 商品模板表：查询所有模板的结果集
      */
 /*    @Override
     public List<CommodiTytemplate> selectAllCt() {
         return commodiTytemplateMapper.selectAllCt();
     }*/
-
-
-
     @Override
     public CommodiTytemplate selectById(int id) {
         CommodiTytemplate moban = commodiTytemplateMapper.selectById(id);

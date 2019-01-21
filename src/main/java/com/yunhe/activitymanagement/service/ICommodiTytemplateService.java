@@ -1,13 +1,15 @@
 package com.yunhe.activitymanagement.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yunhe.activitymanagement.entity.TemplateDetails;
 import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.cargomanagement.entity.SalesOrderHistory;
 
+
 import java.io.Serializable;
+
 import java.util.List;
 import java.util.Map;
 
@@ -22,15 +24,32 @@ import java.util.Map;
 public interface ICommodiTytemplateService extends IService<CommodiTytemplate> {
 
 
-
- Map queryLikeList(int current,int size,CommodiTytemplate commodiTytemplate);
     /**
+     *  模糊查询，分页
+     * @param current
+     * @param size
+     * @param commodiTytemplate
+     * @return
+     */
+    IPage selectLikePage(int current, int size, CommodiTytemplate commodiTytemplate);
+     /**
      * <P>
      *     查询所有商品模板数据
      * </P>
      * @return 商品模板表：查询的结果集
-/*     *//*
-    List<CommodiTytemplate> selectAllCt();*/
+/*     */
+
+     List<CommodiTytemplate> selectAll();
+
+
+    /**
+     * 查询所有商品
+     * @param current
+     * @param size
+     * @param commodityList
+     * @return
+     */
+
 
 
     /**
@@ -78,5 +97,6 @@ public interface ICommodiTytemplateService extends IService<CommodiTytemplate> {
      * @return  商品模板表：删除是否成功
      */
     int deleteById(Serializable id);
+
 
 }

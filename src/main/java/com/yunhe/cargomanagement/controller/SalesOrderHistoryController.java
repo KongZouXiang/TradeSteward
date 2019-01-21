@@ -59,7 +59,7 @@ public class SalesOrderHistoryController {
         return new ModelAndView("cargomanagement/salesOrderHistory-add");
     }
 
-/*    *//**
+     /**
      * 根据id看详情
      * @param id
      * @return
