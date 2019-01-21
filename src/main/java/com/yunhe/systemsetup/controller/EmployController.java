@@ -2,8 +2,13 @@ package com.yunhe.systemsetup.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.qcloudsms.SmsSingleSender;
+import com.github.qcloudsms.SmsSingleSenderResult;
+import com.github.qcloudsms.httpclient.HTTPException;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.json.JSONException;
+import org.junit.Test;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -131,6 +136,13 @@ public class EmployController {
         System.out.println("修改员工信息进入controller");
         int a =employService.updateMessage(employ);
         return a;
+    }
+    /**
+     * 验证码发送
+     */
+    @RequestMapping(value = "/smsSend")
+    public void smsSend(String phone){
+        employService.createSmsCod(phone);
     }
 
 

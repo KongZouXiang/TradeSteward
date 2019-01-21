@@ -45,3 +45,13 @@ spring:
 #    #不要为我们工程中的资源文件建立映射
 #  resources:
 #    add-mappings: false
+
+  #配置redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    pool:
+      max-wait: -1
+      max-active: 8
+      max-idle: 8
+    timeout: 0
