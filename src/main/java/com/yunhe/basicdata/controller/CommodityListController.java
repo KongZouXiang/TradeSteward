@@ -303,4 +303,8 @@ public class CommodityListController {
     public ModelAndView selectfenye() {
         return new ModelAndView("basicdata/admincommodity-list");
     }
+    @RequestMapping("/liindex")
+    public ModelAndView jumpindex(){
+        return new ModelAndView("/index");
+    }
 }

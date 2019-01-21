@@ -68,12 +68,10 @@ public class WebLogAspect {
         logger.info("HTTP_Method", request.getMethod());
         logger.info("<--**********************日志结束**************************-->");
     }
-
     /**
      * <P>
      * 打印方法返回的结果值
      * </p>
-     *
      * @param object
      */
     @AfterReturning(returning = "object", pointcut = "webLog()")

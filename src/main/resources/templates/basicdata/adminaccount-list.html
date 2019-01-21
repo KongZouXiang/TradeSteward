@@ -73,12 +73,14 @@
 				<td>{{item.saName}}</td>
 				<td>{{item.saBank}}</td>
 				<td>{{item.saBalance}}</td>
+				<a href="#" @click="editState(item.id)">
 				<th v-if="item.saState==1">
 					启用
 				</th>
 				<th v-else>
 					禁用
 				</th>
+				</a>
 			</tr>
 		</tbody>
 		<tbody>
@@ -220,9 +222,6 @@
 				content : '/basicdata/settlement-account/detailaccount?id='+id,
 			});
 		}
-
-
-
 </script>
 </body>
 </html>
