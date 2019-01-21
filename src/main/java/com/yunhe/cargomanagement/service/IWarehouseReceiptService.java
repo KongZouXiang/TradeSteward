@@ -32,4 +32,13 @@ public interface IWarehouseReceiptService extends IService<WarehouseReceipt> {
      * @return 入库单分页的数据
      */
     Map selectwarehouseReceiptTwoByState(int pageNum, int pageSize,WarehouseReceipt warehouseReceipt);
+
+    /**
+     * 根据ID删除入库单
+     * @param warehouseReceipt 入库实体类
+     * @return int
+     */
+    /*int deletewarehouseReceiptTwoById(WarehouseReceipt warehouseReceipt);*/
+    int deletewarehouseReceiptTwoById(Map warehouseReceipt);
+
 }

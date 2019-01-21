@@ -1,6 +1,7 @@
 package com.yunhe.cargomanagement.controller;
 
 
+import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
 import com.yunhe.cargomanagement.entity.PurchaseHistory;
 import com.yunhe.cargomanagement.entity.PurchaseOrder;
@@ -104,10 +105,10 @@ public class PurchaseOrderController {
      * 查询商品
      * @return 商品列表
      */
-   /* @RequestMapping("/getCommodadd")
+    @RequestMapping("/getCommodadd")
     public Map getCommodadd(){
         return commodityListService.selectList();
-    }*/
+    }
     /**
      * 进货订单历史分页
      * @param pageNum 前台传当前页
@@ -179,6 +180,21 @@ public class PurchaseOrderController {
         mv.setViewName("cargomanagement/article-add");
         return mv;
     }
+
+    /**
+     * 根据商品名称查询
+     * @param commodityList 查询条件
+     * @return 商品列表单条数据
+     */
+    @RequestMapping("/selectListByClName")
+    public Map selectListByClName(CommodityList commodityList){
+        List<CommodityList> list = commodityListService.selectListByClName(commodityList);
+        Map map = new HashMap();
+        map.put("list",list);
+        System.out.println("*********////////"+list);
+        return map;
+    }
+
 
     /**
      * 审核进货订单 并增加进货历史

@@ -52,4 +52,9 @@ public class WarehouseReceiptServiceImpl extends ServiceImpl<WarehouseReceiptMap
         map.put("list", list);
         return map;
     }
+
+    @Override
+    public int deletewarehouseReceiptTwoById(Map warehouseReceipt) {
+        return warehouseReceiptMapper.deleteByMap(warehouseReceipt);
+    }
 }

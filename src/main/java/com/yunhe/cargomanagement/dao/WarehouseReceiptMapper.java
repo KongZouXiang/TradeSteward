@@ -37,4 +37,10 @@ public interface WarehouseReceiptMapper extends BaseMapper<WarehouseReceipt> {
      */
     List<WarehouseReceipt> selectwarehouseReceiptTwoByState(Page page,WarehouseReceipt warehouseReceipt);
 
+    /**
+     * 根据ID删除入库单
+     * @param warehouseReceipt 入库实体类
+     * @return int
+     */
+    int deletewarehouseReceiptTwoById(WarehouseReceipt warehouseReceipt);
 }

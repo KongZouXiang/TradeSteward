@@ -42,11 +42,6 @@
         </div>
         <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
-            <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i
-                    class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
-        <a href="/cargomanagement/purchase-order/addPurchase" id="addpurOrder"
-           class="btn btn-primary radius">
-        <i class="Hui-iconfont">&#xe600;</i> 添加进货订单</a>
         <a href="/cargomanagement/purchase-order/puchaseOrderExcel" id="Excel"
            class="btn btn-success radius">
         <i class="Hui-iconfont">&#xe644;</i>Excel导出</a>
@@ -60,29 +55,30 @@
                     <th scope="col" colspan="16">待入库单</th>
                 </tr>
                 <tr class="text-c">
-                    <th width="25"><input type="checkbox" id="checkAllDai"  name="" value=""></th>
                     <th width="40">ID</th>
                     <th width="130">操作</th>
                     <th width="150">业务日期</th>
                     <th width="150">单据编号</th>
-                    <th width="90">类型</th>
+                    <th width="95">类型</th>
                     <th width="130">往来单位名称</th>
                     <th width="130">入库仓库</th>
                     <th width="150">入库商品</th>
                     <th width="100">待入库量</th>
                     <th width="150">制单日期</th>
-                    <th width="90">经手人</th>
-                    <th width="90">制单人</th>
+                    <th width="100">经手人</th>
+                    <th width="100">制单人</th>
                     <th width="100">状态</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr class="text-c" v-for="(item,index) in result">
-                    <td><input type="checkbox" id="boxShou" :value="item.id" name=""></td>
                     <td>{{index+1}}</td>
                     <td class="td-manage">
                         <a title="详情" href="#" class="ml-5" style="text-decoration:none">
                             <i class="icon Hui-iconfont" id="sta">&#xe627;</i>
+                        </a>
+                        <a title="入库" href="#" class="ml-5" style="text-decoration:none">
+                            <i class="icon Hui-iconfont" id="111">&#xe627;</i>
                         </a>
                     </td>
                     <td>{{item.wreDate}}</td>
@@ -112,6 +108,8 @@
         </div>
         <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
+            <a href="javascript:;" id="datadel" class="btn btn-danger radius"><i
+                    class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
         <a href="/cargomanagement/purchase-order/puchaseOrderExcel" id="Excel1"
            class="btn btn-success radius">
         <i class="Hui-iconfont">&#xe644;</i>Excel导出</a>
@@ -143,7 +141,7 @@
                 </thead>
                 <tbody>
                 <tr class="text-c" v-for="(item,index) in result1">
-                    <td><input type="checkbox" id="box" :value="item.id"  name=""></td>
+                    <td><input type="checkbox" id="box" :value="item.id" name=""></td>
                     <td>{{index+1}}</td>
                     <td class="td-manage">
                         <a title="详情" href="#" class="ml-5" style="text-decoration:none">
@@ -313,6 +311,42 @@
 
         });
     };
+
+    /*批量删除*/
+    $("#datadel").click(function(){
+        var arr = new Array();
+        $("input:checkbox[id='box']:checked").each(function (i) {
+            arr[i]=$(this).val();
+        });
+        if (arr[0]==null){
+            layer.msg("请选择要删除的入库单！",{time:2000,icon:2})
+        }else{
+            layer.confirm('你确定要删除它们吗？',{
+                btn:['是','否']
+            },function () {
+                for (var i =0;i<arr.length;i++ ){
+                    $.ajax({
+                        type:'GET',
+                        dataType:'json',
+                        url: '/cargomanagement/warehouse-receipt/deletewarehouseReceiptTwoById',
+                        data: {
+                            id: arr[i],
+                        },
+                        success: function (msg) {
+                            console.log(msg);
+                            if (msg) {
+                                getWarehouseReceiptTwoList();
+                                layer.msg('成功删除',{icon:1});
+                            }
+                        }
+                    });
+                }
+            },function () {
+                layer.msg('删除失败！',{time:2000,icon:2});
+            });
+            $("input:checkbox[id='box']:checked").attr("checked",false);
+        };
+    });
 
 </script>
 </body>
