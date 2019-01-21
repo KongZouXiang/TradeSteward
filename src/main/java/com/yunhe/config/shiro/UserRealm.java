@@ -67,7 +67,6 @@ public class UserRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        System.out.println("认证");
 
 
 //        编写Shiro判断处理逻辑，判断用户名和密码
