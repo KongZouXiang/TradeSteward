@@ -1,8 +1,14 @@
 package com.yunhe.customermanagement.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.yunhe.customermanagement.entity.Customer;
 import com.yunhe.customermanagement.entity.Supplier;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.ibatis.annotations.Param;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +40,19 @@ public interface ISupplierService extends IService<Supplier> {
      * @param id 传过来id值
      * @return int
      */
+
     int deleteSupplier(int id);
+    /**
+     * <p>
+     * 删除（根据ID 批量删除）
+     * </p>
+     *
+     * @param idList 主键ID列表(不能为 null 以及 empty)
+     * @return 删除成功记录数
+     */
+    int deleteBatchIds(@Param(Constants.COLLECTION) Collection<? extends Serializable> idList);
+
+
 
     /**
      * <p>
@@ -53,18 +71,15 @@ public interface ISupplierService extends IService<Supplier> {
      */
     List<Supplier> selectAllExcel();
 
+
     /**
      * <p>
-     *     查询并分页
+     *     模糊查询分页
      * </p>
-     * @param current  当前页
-     * @param size     每页显示的条数
-
-     * @return
+     * @param supplier
+     * @return 模糊查询分页list
      */
-    Map selectAll(int current,int size);
-
-
+    IPage<Supplier> selectPage(int current, int size, Supplier supplier);
 
     /**
      * @author 史江浩
