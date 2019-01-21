@@ -6,17 +6,6 @@
     </sql>
 
 
-    <select id="selectAllSupplier" parameterType="com.yunhe.customermanagement.entity.Supplier" resultType="com.yunhe.customermanagement.entity.Supplier">
-
-        select
-        <include refid="sup"/>
-        from trades_teward.supplier where sup_compname like
-        concat('%',#{supplier.sup_compname},'%')
-    </select>
-
-    <select id="selectAll" resultType="com.yunhe.customermanagement.entity.Supplier">
-        SELECT * FROM trades_teward.supplier
-    </select>
     <select id="selectAllExcel" resultType="com.yunhe.customermanagement.entity.Supplier">
         SELECT * FROM trades_teward.supplier
     </select>

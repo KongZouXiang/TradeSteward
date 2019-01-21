@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html  xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="Bookmark" href="/favicon.ico">
+    <link rel="Shortcut Icon" href="/favicon.ico"/>
+    <script type="text/javascript" src="/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <script type="text/javascript" src="/js/vue/vue.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css"/>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <!--<script>DD_belatedPNG.fix('*');</script>-->
+    <title>客户等级价</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 客户等级价 <span
+        class="c-gray en">&gt;</span> 客户等级价 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+                                              href="javascript:location.replace(location.href);" title="刷新"><i
+        class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container" data-validator-option="{theme:'simple_right'}">
+    <table class="table table-border table-bordered table-bg" id="app">
+        <thead>
+        <tr>
+            <th scope="col" colspan="9">客户等级价表</th>
+        </tr>
+        <tr class="text-c">
+            <th width="40">ID</th>
+            <th width="80">客户级别</th>
+            <th width="80">对应等级价</th>
+            <th width="80">折扣（%）</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-c" v-for="(item,index) in result">
+            <td>{{index+1}}</td>
+            <td>{{item.clLevel}}</td>
+            <td>{{item.clCorrespondingGrade}}</td>
+            <td>{{item.clDiscount}}</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    <div id="pagenav" style="text-align: center"></div>
+</div>
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            result: []
+        }
+    });
+
+    var getPurchasePageList = function (curr) {
+        $.ajax({
+            type: 'get',
+            dataType: 'json',
+            url: '/customermanagement/customer-level/selectLevel',
+            data: {},
+            success: function (msg) {
+                app.result = msg.list;
+            }
+        });
+    };
+    getPurchasePageList();
+
+</script>
+</body>
+</html>
