@@ -89,32 +89,12 @@
 			<!--<td width="100">{{(item.saBalance+item.saBalance)}}</td>-->
 			<td width="100"></td>
 			<td width="100"></td>
-			<!--框架：基本概念、运行流程、手写框架-->
 		</tr>
 		</tbody>
 	</table>
 </div>
-<!--<div>
-	<table class="table table-bg" style="display:none;text-align: center" id="detailtab">
-		<tr>
-			<th>开户银行:<td>{{results.saBank}}</td></th>
-			<th>账户名称:<td>{{results.saName}}</td></th>
-		</tr>
-		<tr>
-			<th>状态:</th>
-			<th v-if="results.saState===1">
-				启用
-			</th>
-			<th v-else>
-				禁用
-			</th>
-			<th>联系人:</th>
-			<td>{{results.wmPerson}}</td>
-			<th>联系电话:{{results.wmTel}}</th>
-		</tr>
-	</table>
-</div>-->
 <div id="pagenav" style="text-align:center;position: fixed;left: 0px;bottom :50px;width: 100%;height: 50px"></div>
+
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
@@ -240,13 +220,9 @@
 				content : '/basicdata/settlement-account/detailaccount?id='+id,
 			});
 		}
-/*	/!*详情div块*!/
-     	  var detail=document.getElementById("detailtab")
-			   if(detail.style.display=="none"){
-				   detail.style.display="block";
-			   }else {
-				   detail.style.display ="none";
-			   }*/
+
+
+
 </script>
 </body>
 </html>

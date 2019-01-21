@@ -49,8 +49,8 @@ public class CommodityListController {
     @RequestMapping(value = "/addpage", method = RequestMethod.POST)
     @ResponseBody
     public int insertComm(@RequestParam("tiaoxingma") String tiaoxingma, @RequestParam("bianhao") String bianhao,
-                             @RequestParam("mingcheng") String mingcheng, @RequestParam("fenlei") String fenlei,
-                             @RequestParam("danwei") String danwei, @RequestParam("guige") String guige,
+                             @RequestParam("mingcheng") String mingcheng, /*@RequestParam("fenlei") String fenlei,*/
+                           @RequestParam("danwei") String danwei,@RequestParam("guige") String guige,
                              @RequestParam("cankaojinhuo") String cankaojinhuo, @RequestParam("pifajia") String pifajia,
                              @RequestParam("lingshoujia") String lingshoujia,@RequestParam("zuidilingshou") String zuidilingshou,
                              @RequestParam("czuidikc") int czuidikc,@RequestParam("czuigaok") int czuigaok) {
@@ -58,7 +58,7 @@ public class CommodityListController {
         System.out.println(tiaoxingma);
         commodityList.setClScan(tiaoxingma);
         commodityList.setClName(mingcheng);
-        commodityList.setUsId(2);
+        commodityList.setClUnit(danwei);
         commodityList.setClSpec(guige);
         commodityList.setClPurPrice(cankaojinhuo);
         commodityList.setClWhoPrice(pifajia);
@@ -80,9 +80,11 @@ public class CommodityListController {
     public ModelAndView selectbyid(@RequestParam("id") int id) {
         ModelAndView mv=new ModelAndView();
         CommodityList commodityListid = commodityListService.selectCommById(id);
-      /* WarehouseManagement whManagement= commodityListService.selectWmAndComm(id);*/
+       WarehouseManagement whManagement= commodityListService.selectWmAndComm(id);
+      Commclass commclass= commodityListService.selectclassAndComm(id);
         mv.addObject("commodityListid",commodityListid);
-       /* mv.addObject("whManagement",whManagement);*/
+        mv.addObject("whManagement",whManagement);
+        mv.addObject("commclass",commclass);
         mv.setViewName("basicdata/editCommodity");
         return mv;
     }
@@ -97,18 +99,24 @@ public class CommodityListController {
     public int  updateComm(@RequestParam("id") int id,@RequestParam("tiaoxingma") String tiaoxingma,
                           @RequestParam("bianhao") String bianhao,@RequestParam("mingcheng") String mingcheng,
                           @RequestParam("guige") String guige,@RequestParam("cankaojinhuo") String cankaojinhuo,
-                          @RequestParam("pifajia") String pifajia,@RequestParam("lingshoujia") String lingshoujia) {
+                          @RequestParam("pifajia") String pifajia,@RequestParam("lingshoujia") String lingshoujia,
+                           @RequestParam("comzuilingshoujia") String comzuilingshoujia,@RequestParam("comzuidikucun") int comzuidikucun,
+                           @RequestParam("comzuigaokucun") int comzuigaokucun,/*@RequestParam("fenlei") int fenlei,*/
+                           @RequestParam("danwei") String danwei) {
         CommodityList commodityList = new CommodityList();
         commodityList.setId(id);
         commodityList.setClScan(tiaoxingma);
         commodityList.setClName(mingcheng);
-        commodityList.setUsId(2);
+        commodityList.setClUnit(danwei);
         commodityList.setClSpec(guige);
         commodityList.setClPurPrice(cankaojinhuo);
         commodityList.setClWhoPrice(pifajia);
         commodityList.setClTagPrise(lingshoujia);
         commodityList.setCcId(1);
         commodityList.setClNumber(bianhao);
+        commodityList.setClMinLingPrice(comzuilingshoujia);
+        commodityList.setClMinStock(comzuidikucun);
+        commodityList.setClMAxStock(comzuigaokucun);
         return commodityListService.updateComm(commodityList);
     }
     @GetMapping("/detailcommodity")

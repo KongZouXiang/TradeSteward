@@ -10,9 +10,9 @@
     </select>
     <!--增加商品信息-->
     <insert id="insertComm" parameterType="CommodityList">
-        insert into commodity_list (cl_number, cl_name, cc_id, cl_spec, us_id, cl_scan, cl_tag_prise, cl_who_price,
+        insert into commodity_list (cl_number, cl_name, cc_id, cl_spec, cl_unit, cl_scan, cl_tag_prise, cl_who_price,
                                     cl_pur_price,cl_minstock,cl_maxstock,cl_minlingprice)
-        values (#{clNumber}, #{clName}, #{ccId}, #{clSpec}, #{usId}, #{clScan}, #{clTagPrise}, #{clWhoPrice},
+        values (#{clNumber}, #{clName}, #{ccId}, #{clSpec}, #{clUnit}, #{clScan}, #{clTagPrise}, #{clWhoPrice},
                 #{clPurPrice},#{clMinStock},#{clMAxStock},#{clMinLingPrice});
     </insert>
     <!--查询商品的详细信息-->
@@ -28,7 +28,7 @@
             cl_name=#{clName},
             cc_id=#{ccId},
             cl_spec=#{clSpec},
-            us_id=#{usId},
+            cl_unit=#{clUnit},
             cl_scan=#{clScan},
             cl_tag_prise=#{clTagPrise},
             cl_who_price=#{clWhoPrice},
