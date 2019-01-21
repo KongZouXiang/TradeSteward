@@ -1,7 +1,6 @@
 package com.yunhe.basicdata.controller;
 import com.yunhe.basicdata.entity.SettlementAccount;
 import com.yunhe.basicdata.service.impl.SettlementAccountServiceImpl;
-import org.apache.struts2.ServletActionContext;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
