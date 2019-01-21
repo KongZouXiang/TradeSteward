@@ -19,11 +19,11 @@
     <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
     <script type="text/javascript" src="/lib/respond.min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
-    <title>销售订单历史</title>
+    <title>出库历史</title>
 </head>
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 云管货 <span
-        class="c-gray en">&gt;</span> 订单历史 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+        class="c-gray en">&gt;</span> 出库历史 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
                                                href="javascript:location.replace(location.href);" title="刷新"><i
         class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
@@ -40,8 +40,8 @@
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
             <a href="javascript:;" id="deletell"  class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
-        <a href="/cargomanagement/sales-order-history/ceshi1" class="btn btn-primary radius">
-        <i class="Hui-iconfont">&#xe600;</i> 添加销售订单历史</a>
+        <a href="/cargomanagement/sales-history/saleAdd" class="btn btn-primary radius">
+        <i class="Hui-iconfont">&#xe600;</i> 出库单</a>
         <a href="javascript:;" onclick="Excel_out()"
                class="btn btn-primary radius">
         <i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
@@ -59,21 +59,14 @@
                 <th width="40">ID</th>
                 <th width="130">操作</th>
                 <th width="150">业务日期</th>
-                <th width="150">单据编号</th>
-                <th width="90">处理状态</th>
-                <th width="90">审核人</th>
-                <th width="130">客户名称</th>
-                <th width="150">销售订单商品</th>
-                <th width="100">销售订单数量</th>
-                <th width="100">折扣金额</th>
-                <th width="100">总计金额</th>
-                <th width="100">订金</th>
-                <th width="70">纸质单据</th>
-                <th width="150">制单日期</th>
-                <th width="150">未转销售数量</th>
-                <th width="150">送货日期</th>
-                <th width="90">经手人</th>
-                <th width="90">制单人</th>
+                <th width="150">类型</th>
+                <th width="90">往来单位名称</th>
+                <th width="130">出库仓库</th>
+                <th width="150">出库商品</th>
+                <th width="100">待出库量</th>
+                <th width="100">制单日期</th>
+                <th width="150">经手人</th>
+                <th width="150">制单人</th>
                 <th width="150">备注</th>
             </tr>
             </thead>
@@ -85,7 +78,7 @@
                 <td><input type="checkbox" id="box_" :value="item.id"></td>
                 <td>{{index+1}}</td>
                 <td class="td-manage">
-                    <a style="text-decoration:none" class="ml-5" @click="article_edit('编辑','/cargomanagement/sales-order-history/edit?id='+(item.id))" href="javascript:;" title="编辑">
+                    <a style="text-decoration:none" class="ml-5" @click="article_edit('编辑','/cargomanagement/sale-history/edit?id='+(item.id))" href="javascript:;" title="编辑">
                         <i class="Hui-iconfont">&#xe6df;</i>
                     </a>
                     <a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none">
@@ -95,23 +88,17 @@
                         <i class="icon Hui-iconfont">&#xe627;</i>
                     </a>
                 </td>
-                <td>{{item.soDate}}</td>
-                <td>{{item.soOrderNum}}</td>
-                <td>{{item.soStatus}}</td>
-                <td>{{item.soAuditor}}</td>
-                <td>{{item.soClient}}</td>
-                <td>{{item.soOrderComm}}</td>
-                <td>{{item.soOrderCount}}</td>
-                <td>{{item.soDiscount}}</td>
-                <td>{{item.soMoney}}</td>
-                <td>{{item.soEarnest}}</td>
-                <td>{{item.soBills}}</td>
-                <td>{{item.soBillDate}}</td>
-                <td>{{item.soSellCount}}</td>
-                <td>{{item.soDevlierDate}}</td>
-                <td>{{item.soHander}}</td>
-                <td>{{item.soMaker}}</td>
-                <td>{{item.soRemark}}</td>
+                <td>{{item.woDate}}</td>
+                <td>{{item.woNumber}}</td>
+                <td>{{item.woType}}</td>
+                <td>{{item.woCompany}}</td>
+                <td>{{item.woHouse}}</td>
+                <td>{{item.woGoods}}</td>
+                <td>{{item.woCount}}</td>
+                <td>{{item.woCreateDate}}</td>
+                <td>{{item.woHander}}</td>
+                <td>{{item.woMaker}}</td>
+                <td>{{item.wostatus}}</td>
             </tr>
             </tbody>
         </table>
@@ -148,7 +135,7 @@
         /**获取下面选中的checkbox*/
         var checkedbox = $("input[id^='box_']:checked");
         if(checkedbox.length == 0){
-            alert("请选择要删除的部门！！！");
+            alert("请选择要删除的订单！！！");
         }else{
             if(confirm("你确定要删除吗？？？")){
                 var ids = new Array();
@@ -160,7 +147,7 @@
                     type:'post',
                     dataType:'json',
                     contentType: 'application/json',
-                    url:'/cargomanagement/sales-order-history/deleteAll',
+                    url:'/cargomanagement/sales-history/deleteAll',
                     data:JSON.stringify(ids),
                     success: function (msg){
                         console.log(msg);
@@ -176,19 +163,19 @@
         $.ajax({
             type:'post',
             dataType:'json',
-            url:'/cargomanagement/sales-order-history/quertLikeList',
+            url:'/cargomanagement/wait-out-warehouse/quertLikeListWaitOutWarehouse',
             data:{
                 pageNum: curr || 1,
                 pageSize:4,
-                soClient:$("#soClient").val(),
-                soOrderNum:$("#soNumber").val(),
+                woClient:$("#soClient").val(),
+                woNumber:$("#soNumber").val(),
             },
             success: function (msg) {
-                app.result = msg.page;
+                app.result = msg.list;
                 $("#strong").html(msg.total);
                 laypage({
                     cont: 'pagenav',//容器  值支持id名、原生dom对象，jquery对象,
-                    pages: msg.totalPage,//总页数
+                    pages: msg.pages,//总页数
                     first: '首页',
                     last: '尾页',
                     curr: curr || 1,//初始化页数
@@ -215,7 +202,7 @@
             $.ajax({
                 type:'GET',
                 dataType:'json',
-                url: '/cargomanagement/sales-order-history/delete',
+                url: '/cargomanagement/sales-history/deleteSalesHistory',
                 data:{
                     id:id
                 },
@@ -232,7 +219,7 @@
         var index = layer.open({
             type: 2,
             title: '详细',
-            content: '/cargomanagement/sales-order-history/edit?id='+id,
+            content: '/cargomanagement/sales-history/edit?id='+id,
         });
         layer.full(index);
     };
