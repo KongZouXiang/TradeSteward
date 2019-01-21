@@ -33,4 +33,11 @@ public interface EmployMapper extends BaseMapper<Employ> {
 
     public int updatemess(Employ employ);
 
+    /**
+     * 查询出员工对应的板块
+     *
+     * @author 孔邹祥
+     */
+    List<String> selectEmployPlate(Integer id);
+
 }

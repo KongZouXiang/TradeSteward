@@ -71,6 +71,16 @@ public class EmployServiceImpl extends ServiceImpl<EmployMapper, Employ> impleme
         return employMapper.updatemess(employ);
     }
 
+    /**
+     * 生成验证码的随机数
+     * @param phone
+     */
+    @Override
+    public void createSmsCod(String phone) {
+        String smscode =(long)(Math.random()*1000000)+"";
+
+    }
+
     public EmployMapper getEmployMapper() {
         return employMapper;
     }

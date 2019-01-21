@@ -152,6 +152,16 @@
             <version>3.17</version>
         </dependency>
 
+        <!--
+        短信验证
+        增加人：贺裕基
+        依赖描述：发送短信验证码
+        -->
+        <dependency>
+            <groupId>com.github.qcloudsms</groupId>
+            <artifactId>qcloudsms</artifactId>
+            <version>1.0.6</version>
+        </dependency>
     </dependencies>
 
     <build>

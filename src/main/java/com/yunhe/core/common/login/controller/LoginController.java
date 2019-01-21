@@ -33,10 +33,12 @@ public class LoginController {
     public String login() {
         return "login";
     }
+
     @GetMapping("/tologin")
     public String toLogin() {
         return "login";
     }
+
     @GetMapping("/toindex")
     public String index() {
         return "index";
@@ -59,19 +61,18 @@ public class LoginController {
         try {
             subject.login(token);
             session.setAttribute("employ",employ);
-            return "toindex";
+            return "index";
 
         } catch (UnknownAccountException e) {
 //            e.printStackTrace()
 //            登录失败:用户名不存在
             model.addAttribute("loginMsg", "用户名不存在!");
-            return "tologin";
+            return "login";
 
         } catch (IncorrectCredentialsException e) {
 //            e.printStackTrace()
             model.addAttribute("loginMsg", "密码错误!");
-
-            return "index";
+            return "login";
 //            throw new GlobalException(ExceptionEnum.SUCCESS);
         }
 
