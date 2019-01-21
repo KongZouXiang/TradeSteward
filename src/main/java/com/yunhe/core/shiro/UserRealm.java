@@ -57,7 +57,7 @@ public class UserRealm extends AuthorizingRealm {
         List<String> list = employMapper.selectEmployPlate(employ.getId());
 
         for (String string : list) {
-
+            System.out.println(string);
             info.addStringPermission(string);
         }
 

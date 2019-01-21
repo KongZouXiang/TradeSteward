@@ -49,8 +49,8 @@ spring:
 #    add-mappings: false
 
 #配置日志
-logging:
-  #配置日志文件路径
-  path: log\
-  level:
-      com.yunhe.core.aop.WebLogAspect: info
+#logging:
+#  #配置日志文件路径
+#  path: log\
+#  level:
+#      com.yunhe.core.aop.WebLogAspect: info

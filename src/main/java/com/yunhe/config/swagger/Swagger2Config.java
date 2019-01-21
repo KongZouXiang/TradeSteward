@@ -42,13 +42,13 @@ public class Swagger2Config {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 //页面标题
-                .title("Spring Boot 测试使用 Swagger2 构建RESTful API")
+                .title("贸易管家后台API接口")
                 //创建人
-                .contact(new Contact("MarryFeng", "http://www.baidu.com", ""))
+                .contact(new Contact("南瞻部洲全员", "http://localhost:8080", ""))
                 //版本号
                 .version("1.0")
                 //描述
-                .description("API 描述")
+                .description("简单优雅的restfun风格")
                 .build();
     }
 }

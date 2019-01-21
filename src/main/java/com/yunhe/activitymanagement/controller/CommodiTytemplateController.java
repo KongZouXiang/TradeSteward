@@ -4,9 +4,15 @@ package com.yunhe.activitymanagement.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -27,6 +33,7 @@ import java.util.Map;
  * @author 刘栋
  * @since 2019-01-07
  */
+@Api("套餐管理.商品模板 ")
 @RestController
 @RequestMapping("/activitymanagement/commodi-tytemplate")
 public class CommodiTytemplateController {
@@ -60,6 +67,8 @@ public class CommodiTytemplateController {
      *
      * @return
      */
+    @ApiOperation("删除模块信息")
+    @ApiImplicitParam(name = "id", value = "模块的ID", dataType = "Integer")
     @RequestMapping("/delete")
     public int delete(int id) {
         return commodiTytemplateService.deleteById(id);
