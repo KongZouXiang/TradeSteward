@@ -45,7 +45,7 @@ public interface PurchaseOrderMapper extends BaseMapper<PurchaseOrder> {
      * @param id 进货订单历史表id
      * @return 进货订单历史详情 单条数据
      */
-    List<PurchaseOrder> getPurchaseById(Integer id);
+    PurchaseOrder getPurchaseById(Integer id);
 
 
     /**
@@ -76,6 +76,13 @@ public interface PurchaseOrderMapper extends BaseMapper<PurchaseOrder> {
      * @return int
      */
     int updateHistState(PurchaseOrder purchaseOrder);
+
+    /**
+     * 进货订单历史详情
+     * @param purchaseOrder 实体类数据
+     * @return 历史详情
+     */
+    List<PurchaseOrder> selectPuOrder(PurchaseOrder purchaseOrder);
 
 
 

@@ -128,6 +128,10 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
         return commodityListMapper.selectComclassAndCommdity(id);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Map selectComclassList1() {
         List<CommodityList> list = commodityListMapper.selectComclassList1();
@@ -136,8 +140,16 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
         return map;
     }
 
+    /**
+     *
+     * @param commodityList 查询的条件
+     * @return
+     */
     @Override
-    public List<CommodityList> selectListByClName(CommodityList commodityList) {
-        return commodityListMapper.selectList(new QueryWrapper<CommodityList>().eq("cl_name",commodityList.getClName()));
+    public Map selectListByClName(CommodityList commodityList) {
+        List<CommodityList> list = commodityListMapper.selectList(new QueryWrapper<CommodityList>().eq("cl_name", commodityList.getClName()));
+        Map<String, Object> map = new HashMap<>();
+        map.put("list",list);
+        return map;
     }
 }

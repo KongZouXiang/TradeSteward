@@ -100,9 +100,9 @@
                             class='Hui-iconfont'>&#xe6e2;</i></a>
                     </td>
                     <td>
-                        <select name="clName" class="select" id="clName">
+                        <select name="clName" class="select" id="clName" >
                             <option value="0">请选择</option>
-                            <option v-for="(item,index) in resulttwo" :value="index+1">{{item.clName}}</option>
+                            <option v-for="(item,index) in resulttwo" :value="item.clName">{{item.clName}}</option>
                         </select>
                     </td>
                     <td id="clNumber" name="clNumber">商品标号</td>
@@ -112,7 +112,7 @@
                     <td id="usId"></td>
                     <td id="poYingMoney">
                     </td>
-                    <td><input type="text" class="input-text" value="" placeholder="" id="poYingMoney1"
+                    <td id="spen11"><input type="text" class="input-text" value="" placeholder="" id="poYingMoney1"
                                name="poYingMoney1"></td>
                     <td><input type="text" class="input-text" value="默认无备注" placeholder="" id="poRemarks"
                                name="poRemarks">
@@ -146,7 +146,8 @@
                 </tr>
                 <tr>
                     <td width="1500"><span style="text-align: center"><span style="font-size: 30px">总计金额：</span>
-                    <span style="color: red;text-align: right;font-size: 20px" id="spen1"><span>0.00元</span></span></span>
+                    <span style="color: red;text-align: right;font-size: 20px"
+                          id="spen1"><span>0.00元</span></span></span>
                     </td>
                     <td><input class="btn btn-primary size-XL radius" type="button" value="特大按钮"></td>
                 </tr>
@@ -218,18 +219,24 @@
         if (clName == "请选择") {
         } else {
             m++;
-            var html = "<tr id='addx" + m + "' class='text-c'><td><a title='删除' href='javascript:;' class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6e2;</i></a></td><td><select name='clName' class='select' id='clName'><option value='0'>请选择</option>";
+            var html = "<tr id='addx" + m + "' class='text-c'><td>" +
+                "<a title='删除' href='javascript:;' class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6e2;</i></a></td><td>" +
+                "<select name='clName' class='select' id='clName'><option value='0'>请选择</option>";
             for (var i = 1; i < app.resulttwo.length; i++) {
-                html = html + "<option value='" + app.resulttwo[i].isOnline + "'>" + app.resulttwo[i].clName + "</option>";
+                html = html + "<option value='" + app.resulttwo[i].clName + "'>" + app.resulttwo[i].clName + "</option>";
             }
-            html = html + "</select></td><td id='clNumber' name='clNumber'>商品标号</td><td></td><td><input type='text' class='input-text' value='1' placeholder='' id='poQuantityOfPurchase'name='poQuantityOfPurchase'></td><td id='usId'></td><td><input type='text' class='input-text' value='' placeholder='' id='clWhoPrice' name='clWhoPrice'></td><td><input type='text' class='input-text' value='' placeholder='' id='poYingMoney' name='poYingMoney'></td><td><input type='text' class='input-text' value='默认无备注' placeholder='' id='poRemarks'name='poRemarks'></td></tr>\n";
+            html = html + "</select></td><td id='clNumber' name='clNumber'>" +
+                "商品标号</td><td></td><td><input type='text' class='input-text' value='1' placeholder='' id='poQuantityOfPurchase'name='poQuantityOfPurchase'>" +
+                "</td><td id='usId'></td><td><input type='text' class='input-text' value='' placeholder='' id='clWhoPrice' name='clWhoPrice'></td><td>" +
+                "<input type='text' class='input-text' value='' placeholder='' id='poYingMoney' name='poYingMoney'></td><td>" +
+                "<input type='text' class='input-text' value='默认无备注' placeholder='' id='poRemarks'name='poRemarks'></td></tr>\n";
             m--;
             document.getElementById("addx" + m).insertAdjacentHTML('afterend', html);
             m++;
         }
     });
 
-    /*$("#clName").on("change", function () {
+    $("#clName").on("click", function () {
         var clName = $("#clName").val();
         $.ajax({
             type: 'POST',
@@ -244,10 +251,15 @@
         });
         if (clName == "请选择") {
         } else {
-            var html = "<span>"+app.resultThree.clPurPrice+"</span>";
-            $("#spen1").html(html);
+            for (var i = 0; i <= app.resulttwo.length; i++) {
+                var html = "<span>"+app.resultThree[i].clName+"</span>";
+            }
+            /*var html = "<input type='text' class='input-text' value='"+app.resultThree.clPurPrice+"' id='poYingMoney1' name='poYingMoney1'>";*/
+            $("#span11").html(html);
+
+            /*alert(app.resultThree[1].clName);*/
         }
-    })*/
+    })
 </script>
 </body>
 </html>

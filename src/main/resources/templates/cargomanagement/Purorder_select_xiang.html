@@ -1,0 +1,158 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="Bookmark" href="/favicon.ico">
+    <link rel="Shortcut Icon" href="/favicon.ico"/>
+    <script type="text/javascript" src="/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css"/>
+    <script type="text/javascript" src="/js/vue/vue.min.js"></script>
+    <script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <title>进货订单历史详情</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+</head>
+<body>
+<div id="app">
+    <input th:value="${session.poId}" type="hidden" id="poId">
+    <article class="page-container">
+        <h1 style="text-align: center">进货订单详情</h1>
+        <div> <table class="table table-border table-bordered table-bg">
+            <thead>
+            <tr>
+                <th scope="col" colspan="9">进货订单详情</th>
+            </tr>
+            <tr class="text-c">
+                <th width="40">供应商</th>
+                <th width="170">处理状态</th>
+                <th width="170">单据编号</th>
+                <th width="170">经手人</th>
+                <th width="100">业务日期</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-c" >
+                <td th:text="${session.model.poSupName}"></td>
+                <td th:text="${session.model.poState}"></td>
+                <td th:text="${session.model.poNumber}"></td>
+                <td th:text="${session.model.poAuditor}"></td>
+                <td th:text="${session.model.poDate}"></td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        <form class="form form-horizontal" id="form-article-add">
+            <table class="table table-border table-bordered table-bg">
+                <thead>
+                <tr>
+                    <th scope="col" colspan="9">进货商品详情</th>
+                </tr>
+                <tr class="text-c">
+                    <th width="40">序号</th>
+                    <th width="170">商品名称/规格</th>
+                    <th width="170">商品编号</th>
+                    <th width="170">属性</th>
+                    <th width="100">数量</th>
+                    <th width="100">单位</th>
+                    <th width="150">折扣</th>
+                    <th width="150">金额</th>
+                    <th width="200">备注</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="text-c"  v-for="(item,index) in result">
+                    <td>{{index+1}}</td>
+                    <td>{{item.commodityList.clName}}</td>
+                    <td>{{item.commodityList.clNumber}}</td>
+                    <td>属性</td>
+                    <td>{{item.pcGeshu}}</td>
+                    <td>个</td>
+                    <td>无</td>
+                    <td>金额</td>
+                    <td></td>
+                </tr>
+                </tbody>
+                <thead>
+                <tr class="text-c">
+                    <th width="40">
+                        合计
+                    </th>
+                    <th width="130"></th>
+                    <th width="150"></th>
+                    <th width="150"></th>
+                    <th width="90">数量</th>
+                    <th width="90"></th>
+                    <th width="130"></th>
+                    <th width="150">金额</th>
+                    <th width="100"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td width="300"><span style="text-align: right"><h3>总计金额：</h3><span style="color: red"><span
+                            style="color: #8e8e99">¥</span> 0.00</span></span></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </article>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/lib/webuploader/0.1.5/webuploader.min.js"></script>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/ueditor.all.min.js"></script>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+
+<script type="text/javascript">
+
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            result: [],
+            resulttwo:[]
+        }
+    });
+
+    var getPurList = function (curr) {
+        var id = $("#poId").val();
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/cargomanagement/purchase-order/selectPuOrder',
+            data: {
+               id:id
+            },
+            success: function (msg) {
+                app.result = msg;
+            }
+        });
+
+    };
+    getPurList();
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

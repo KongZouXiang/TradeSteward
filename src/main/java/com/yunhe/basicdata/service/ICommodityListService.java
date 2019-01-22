@@ -100,5 +100,5 @@ public interface ICommodityListService extends IService<CommodityList> {
      * @param commodityList 查询的条件
      * @return 根据商id查询的结果
      */
-    List<CommodityList> selectListByClName(CommodityList commodityList);
+    Map selectListByClName(CommodityList commodityList);
 }

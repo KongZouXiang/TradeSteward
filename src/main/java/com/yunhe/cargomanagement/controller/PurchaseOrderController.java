@@ -3,6 +3,7 @@ package com.yunhe.cargomanagement.controller;
 
 import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
+import com.yunhe.cargomanagement.entity.PurComm;
 import com.yunhe.cargomanagement.entity.PurchaseHistory;
 import com.yunhe.cargomanagement.entity.PurchaseOrder;
 import com.yunhe.cargomanagement.service.IPurchaseHistoryService;
@@ -63,6 +64,17 @@ public class PurchaseOrderController {
     public ModelAndView test22(){
         ModelAndView mv = new ModelAndView();
         mv.setViewName("/cargomanagement/purorder-list");
+        return mv;
+    }
+
+    @RequestMapping("/puXiang")
+    public ModelAndView test33(HttpSession session,int id){
+        PurchaseOrder list = purchaseOrderService.getPurchaseById(id);
+        System.out.println("==========================="+list);
+        session.setAttribute("poId",id);
+        session.setAttribute("model",list);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/cargomanagement/Purorder_select_xiang");
         return mv;
     }
 
@@ -136,16 +148,16 @@ public class PurchaseOrderController {
         purchaseOrderService.insertPurchaseOrder(purchaseOrder);
     }
 
-    /**
+   /* *//**
      * 根据id查询进货订单历史 单条数据
      * @param id 进货订单历史表id  前台传的
      * @return
-     */
+     *//*
     @RequestMapping("/getPuById")
     public List<PurchaseOrder> getPurchaseById(int id){
         List<PurchaseOrder> list = purchaseOrderService.getPurchaseById(id);
         return list;
-    }
+    }*/
 
     /**
      * 根据id删除进货订单历史
@@ -153,7 +165,6 @@ public class PurchaseOrderController {
      */
     @RequestMapping("/deletePurchaseById")
     public int deletePurchById(int id){
-        System.out.println("这条数据的id"+id);
         return purchaseOrderService.deleteById(id);
     }
 
@@ -188,11 +199,20 @@ public class PurchaseOrderController {
      */
     @RequestMapping("/selectListByClName")
     public Map selectListByClName(CommodityList commodityList){
-        List<CommodityList> list = commodityListService.selectListByClName(commodityList);
-        Map map = new HashMap();
-        map.put("list",list);
-        System.out.println("*********////////"+list);
-        return map;
+        return commodityListService.selectListByClName(commodityList);
+    }
+
+
+    /**
+     * 进货订单历史详情
+     * @param purchaseOrder 实体类数据
+     * @return 历史详情
+     */
+    @RequestMapping("/selectPuOrder")
+    public List<PurComm> selectPuOrder(PurchaseOrder purchaseOrder){
+        List<PurComm> purComms = purchaseOrderService.selectPuOrder(purchaseOrder);
+        System.out.println("-=------------------=-="+purComms);
+        return purComms;
     }
 
 
