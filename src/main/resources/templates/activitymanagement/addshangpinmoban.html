@@ -45,7 +45,7 @@
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
 
-        <a href="javascript:;" onclick="c()"
+        <a href="javascript:;" onclick="add()"
            class="btn btn-primary radius">
 
         <i class="Hui-iconfont" style="cursor: move;" >&#xe600;</i> 添加商品</a>
@@ -73,28 +73,16 @@
                 <th width="130">操作</th>
                 <th width="130">商品名称/规格</th>
                 <th width="150">商品编号</th>
-                <th width="150">属性</th>
+                <th width="150">规格</th>
                 <th width="150">数量</th>
-                <th width="150">单位</th>
+                <th width="150">价格</th>
             </tr>
             </thead>
 
 
-            <tbody>
+            <tbody id="shuju">
             <!--*********************-->
-            <tr class="text-c">
-                <td id="id">1</td>
-                <td>
-                    <i class="layui-icon layui-icon-close-fill" style="font-size: 30px; color: #ff0a1e;"></i>
-                </td>
-                <td>
-                    <button class="layui-btn layui-btn-sm" onclick="c(1)">选择商品</button>
-                </td>
-                <td></td>
-                <td></td>
-                <td><input type="text" class="input-text" style="width:200px;" id="number" name=""></td>
-                <td></td>
-            </tr>
+
 
 
             </tbody>
@@ -191,7 +179,7 @@
 
 
     /*添加*/
-    var c = function () {
+    var add = function () {
         layer.open({
             type: 2,
             title: "选择商品",
@@ -206,6 +194,9 @@
             }
         });
     };
+
+
+
 
     var Excel_out = function () {
         window.location.href = "/activitymanagement/commodi-tytemplate/export1";
