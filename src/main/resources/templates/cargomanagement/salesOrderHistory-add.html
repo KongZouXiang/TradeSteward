@@ -31,11 +31,11 @@
         <h1 style="text-align: center">商品进货订单</h1>
         <form class="form form-horizontal" id="form-article-add">
             <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>供应商</label>
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>客户</label>
                 <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select name="articlecolumn" class="select">
-					<option value="0"></option>
-					<option value="index+1" v-for="(item,index) in result">{{item.supCompname}}</option>
+				<select name="customer" class="select">
+					<option value="0">请选择</option>
+					<option value="index+1" v-for="(item,index) in result">{{item.cusCompname}}</option>
 				</select>
 				</span>
                 </div>
@@ -169,23 +169,22 @@
     var app = new Vue({
         el: '#app',
         data: {
-            result: [],
+            result:[],
             resulttwo: []
         }
     });
-    //查询
-    var getsupplierList = function (curr) {
-        $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            url: '/cargomanagement/sales-order-history/asdfdgh',
-            data: {},
-            success: function (msg) {
-                app.result = msg.list;
-            }
-        });
-    };
-    getsupplierList();
+
+    $("#customer").click(function () {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/cargomanagement/sales-order-history/customerList',
+                data: {},
+                success: function (msg) {
+                    app.result = msg;
+                }
+            });
+        }
 
     var getCommodityList = function (curr) {
         $.ajax({

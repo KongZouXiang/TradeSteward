@@ -75,10 +75,15 @@ public class SalesOrderHistoryController {
      * 查询所有客户
      * @return
      */
-    @RequestMapping("/asdfdgh")
-    public List<Customer> listCustomer(){
+    @RequestMapping("/customerList")
+    public List<Customer> customerList(){
+
+        customerService.sellectAllExcel();
+
         return customerService.sellectAllExcel();
     }
+    
+
     public int insertSale(SalesOrderHistory sa){
         return salesOrderHistoryService.insertSale(sa);
     }

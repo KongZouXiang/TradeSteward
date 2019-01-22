@@ -66,7 +66,7 @@
                     <th width="100">数量</th>
                     <th width="100">单位</th>
                     <th width="150">折扣</th>
-                    <th width="150">金额</th>
+                    <th width="150">单价</th>
                     <th width="200">备注</th>
                 </tr>
                 </thead>
@@ -76,11 +76,11 @@
                     <td>{{item.commodityList.clName}}</td>
                     <td>{{item.commodityList.clNumber}}</td>
                     <td>属性</td>
-                    <td>{{item.clNumber}}</td>
-                    <td>个</td>
-                    <td>折扣</td>
-                    <td>金额</td>
-                    <td>备注</td>
+                    <td>{{item.orderCount}}</td>
+                    <td>{{item.commodityList.clUnit}}</td>
+                    <td>1.00</td>
+                    <td>{{item.commodityList.clTagPrise}}</td>
+                    <td>无</td>
                 </tr>
                 </tbody>
                 <thead>
