@@ -24,7 +24,7 @@ public class NumberFactory {
 
     public static String data(Integer bh) {
         Date now = new Date();
-        SimpleDateFormat ft = new SimpleDateFormat("{YYYY}{MM}{DD}");
+        SimpleDateFormat ft = new SimpleDateFormat("YYYYMMDD");
         return ft.format(now) + sum(bh);
     }
 

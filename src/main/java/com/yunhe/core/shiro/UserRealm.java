@@ -8,6 +8,7 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 
@@ -30,6 +31,7 @@ public class UserRealm extends AuthorizingRealm {
 
     @Resource
     EmployMapper employMapper;
+
     /**
      * <p>
      * 执行授权逻辑
@@ -75,13 +77,14 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 
-
+        System.out.println("认证");
 //        编写Shiro判断处理逻辑，判断用户名和密码
 //        1.判断用户名
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
 //            查询数据库的用户名和密码
         Employ employ = loginService.selectOneEmploy(token.getUsername());
-        if (employ == null){
+        SecurityUtils.getSubject().getSession().setAttribute("employ", employ);
+        if (employ == null) {
 //            用户名不存在
 //            底层会抛出UnKnowAccountException
             return null;

@@ -19,7 +19,7 @@ public class RUDResult {
      * @param array ResultRule的规则的属性
      * @return 如果＞1 返回成功 ,否则返回失败
      */
-    public static String convertString(Integer result, String[] array) {
+    public static String ConvertString(Integer result, String[] array) {
 
         if (result > 0) {
             return array[0];

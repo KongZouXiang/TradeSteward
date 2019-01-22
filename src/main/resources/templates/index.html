@@ -53,13 +53,16 @@
             </nav>
             <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
                 <ul class="cl">
-                    <li>超级管理员</li>
+                    <li th:text="${session.employ.emRole}">超级管理员</li>
                     <li class="dropDown dropDown_hover">
-                        <a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+                        <a href="#" class="dropDown_A" th:text="${session.employ.emRealname}" >
+                            <span ></span>
+                            <i class="Hui-iconfont">&#xe6d5;</i>
+                        </a>
                         <ul class="dropDown-menu menu radius box-shadow">
                             <li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
                             <li><a href="#">切换账户</a></li>
-                            <li><a href="#">退出</a></li>
+                            <li><a href="/">退出</a></li>
                         </ul>
                     </li>
                     <li id="Hui-msg"><a href="#" title="消息"><span class="badge badge-danger">1</span><i
@@ -84,7 +87,7 @@
 <aside class="Hui-aside">
     <div class="menu_dropdown bk_2">
         <dl shiro:haspermission="cargomanagement" id="menu-article">
-            <dt><i class="Hui-iconfont">&#xe616;</i> 云管货<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dt><i class="Hui-iconfont">&#xe669;</i> 云管货<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
                     <li><a data-href="/cargomanagement/sales-order-history/index1" data-title="销售订单历史"
@@ -105,7 +108,7 @@
         </dl>
 
         <dl  shiro:haspermission="billmanagement" id="menu-article">
-            <dt><i class="Hui-iconfont">&#xe616;</i> 云管账<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dt><i class="Hui-iconfont">&#xe60c;</i> 云管账<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
                     <li><a data-href="article-list.html" data-title="日常收支" href="javascript:void(0)">日常收支</a></li>
@@ -119,7 +122,7 @@
         </dl>
 
         <dl shiro:haspermission="customermanagement"  id="menu-article">
-            <dt><i class="Hui-iconfont">&#xe616;</i> 云管客<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dt><i class="Hui-iconfont">&#xe60d;</i> 云管客<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
                     <li><a data-href="admin.html" data-title="客户管理"
@@ -130,7 +133,7 @@
             </dd>
         </dl>
         <dl shiro:haspermission="reportanalysis"  id="menu-article">
-            <dt><i class="Hui-iconfont">&#xe616;</i> 云分析<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dt><i class="Hui-iconfont">&#xe618;</i> 云分析<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
                     <li><a data-href="sale-list.html" data-title="进货报表"
@@ -141,7 +144,7 @@
         </dl>
 
         <dl shiro:haspermission="activitymanagement"  id="menu-article">
-            <dt><i class="Hui-iconfont">&#xe616;</i> 云营销<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dt><i class="Hui-iconfont">&#xe6bb;</i> 云营销<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
                     <li><a data-href="/activitymanagement/merchandise-package/shangpintaocan" data-title="商品套餐" href="javascript:void(0)">商品套餐</a></li>
@@ -151,7 +154,7 @@
         </dl>
 
         <dl shiro:haspermission="basicdata"  id="menu-article">
-            <dt><i class="Hui-iconfont">&#xe616;</i> 基础资料<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dt><i class="Hui-iconfont">&#xe6b5;</i> 基础资料<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
                     <li><a data-href="sale-list.html" data-title="商品列表"

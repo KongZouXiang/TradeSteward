@@ -30,7 +30,8 @@ public class LoginController {
     ILoginService loginService;
 
     @GetMapping("/")
-    public String login() {
+    public String login(HttpSession session) {
+        session.removeAttribute("employ");
         return "login";
     }
 
@@ -60,7 +61,7 @@ public class LoginController {
 //        3.执行登录方法
         try {
             subject.login(token);
-            session.setAttribute("employ",employ);
+
             return "index";
 
         } catch (UnknownAccountException e) {
