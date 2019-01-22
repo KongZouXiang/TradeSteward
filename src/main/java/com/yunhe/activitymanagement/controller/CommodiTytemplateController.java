@@ -6,6 +6,7 @@ import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -33,7 +34,7 @@ import java.util.Map;
  * @author 刘栋
  * @since 2019-01-07
  */
-@Api("套餐管理.商品模板 ")
+@Api(value = "类描述",tags="套餐管理.商品模板 ")
 @RestController
 @RequestMapping("/activitymanagement/commodi-tytemplate")
 public class CommodiTytemplateController {
@@ -42,7 +43,9 @@ public class CommodiTytemplateController {
     @Resource
     ICommodiTytemplateService commodiTytemplateService;
 
-
+    @ApiOperation(value="使用账号密码贸易管家", notes="根据url的id来获取用户详细信息")
+    @ApiModelProperty(name = "user", value = "用户类", required = true, dataType = "User")
+    @ApiImplicitParam(value="状态",name="state",required=true)
     @GetMapping("MBcommodity")
     public ModelAndView MBcommodity(ModelAndView modelAndView) {
         modelAndView.setViewName("/activitymanagement/MBcommodity-list");

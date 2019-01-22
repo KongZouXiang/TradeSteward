@@ -103,13 +103,12 @@ public class WarehouseController {
      * </p>
      *
      * @param id 前台传过来的ID
-     * @param modelAndView 传到前台的数据
+     * @param model 传到前台数据
      * @return ModelAndView
      */
     @RequestMapping("selEvent")
     public ModelAndView selEvent(Integer id, Model model){
         Warehouse warehouse = warehouseService.getById(id);
-        System.out.println(warehouse);
         model.addAttribute("warehouse",warehouse);
         return new ModelAndView("cargomanagement/selEvent");
     }
