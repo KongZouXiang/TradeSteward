@@ -62,7 +62,22 @@ public class SalesOrderHistoryController {
         return new ModelAndView("cargomanagement/salesOrderHistory-add");
     }
 
-/*    *//**
+    /**
+     * 增加一个订单详情
+     * @param customer 客户
+     * @param poNumber 订单号
+     * @param articlecolumn 经手人
+     * @param commentdatemin 时间
+     * @param clName 商品
+     * @param orderCount 数量
+     * @return
+     */
+    @RequestMapping("/addList")
+    public String addList(String customer,String poNumber,String articlecolumn,String commentdatemin,String [] clName ,int [] orderCount){
+        return "ok";
+    }
+
+     /**
      * 根据id看详情
      * @param id
      * @return
@@ -78,9 +93,11 @@ public class SalesOrderHistoryController {
     @RequestMapping("/customerList")
     public List<Customer> customerList(){
 
-        customerService.sellectAllExcel();
-
-        return customerService.sellectAllExcel();
+        List<Customer> list = (List<Customer>)customerService.sellectAllExcel();
+        for (Customer customer : list) {
+            System.out.println(customer.getCusCompname());
+        }
+        return list;
     }
     
 
@@ -120,7 +137,6 @@ public class SalesOrderHistoryController {
      */
     @RequestMapping("/edit")
     public ModelAndView edit(int id, HttpSession httpSessionsion){
-        System.out.println(id);
         SalesOrderHistory salesOrderHistory = salesOrderHistoryService.selectById(id);
         httpSessionsion.setAttribute("sales",salesOrderHistory);
         return new ModelAndView("/cargomanagement/salesOrderHistory-detail");
@@ -145,10 +161,12 @@ public class SalesOrderHistoryController {
         return new ModelAndView("/cargomanagement/salesOrderHistory");
     }
 
-    @RequestMapping("/index")
+  @RequestMapping("/index")
     public ModelAndView index1(){
         return new ModelAndView("/index");
     }
+
+
     /**
      * 分页模糊查询销售订单历史
      * @param pageNum
@@ -170,14 +188,8 @@ public class SalesOrderHistoryController {
         return map;
     }
     @RequestMapping("/detailList")
-    public List<OrderConnectComm> detailList(){
-/*        ArrayList<CommodityList> commodityLists = new ArrayList<>();
-        List<OrderConnectComm> orderConnectComms = salesOrderHistoryService.detailList(1);
-        for (OrderConnectComm orderConnectComm : orderConnectComms) {
-            CommodityList commodityList = orderConnectComm.getCommodityList();
-            commodityLists.add(commodityList);
-        }*/
-        return salesOrderHistoryService.detailList(1);
+    public List<OrderConnectComm> detailList(int id){
+        return salesOrderHistoryService.detailList(id);
     }
     /**
      * excel导出

@@ -38,10 +38,10 @@ public class CommodityList implements Serializable {
     private String clName;
 
     /**
-     * 基本单位(外键)
+     * 基本单位
      */
-    @TableField("us_id")
-    private Integer usId;
+    @TableField("cl_unit")
+    private String clUnit;
 
     /**
      * 条形码
@@ -95,5 +95,20 @@ public class CommodityList implements Serializable {
      */
     @TableField("cl_number")
     private String clNumber;
+    /**
+     * 最低库存量
+     */
+    @TableField("cl_minstock")
+    private int clMinStock;
+    /**
+     * 最高库存量
+     */
+    @TableField("cl_maxstock")
+    private int clMAxStock;
+    /**
+     * 最低零售价
+     */
+    @TableField("cl_minlingprice")
+     private String clMinLingPrice;
 
 }

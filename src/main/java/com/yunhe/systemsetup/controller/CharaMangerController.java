@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 
@@ -89,11 +90,11 @@ public class CharaMangerController {
 
     //返回修改页面
     @RequestMapping("/chara_edit")
-    public ModelAndView toCharaEdit(int id, Model model){
+    public ModelAndView toCharaEdit(int id, HttpSession session){
         CharaManger charamanger = charaMangerService.getById(id);
         System.out.println(charamanger);
-        model.addAttribute("chara",charamanger);
-        return new ModelAndView("/systemsetup/cechara-edit");
+        session.setAttribute("chara",charamanger);
+        return new ModelAndView("/systemsetup/chararole-edit");
     }
     //删除角色
     @RequestMapping("/deleteRole")

@@ -19,10 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * <p>
@@ -45,19 +43,14 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
 
 
     @Override
-    public Map selectAllCustomer(int current, int size, Customer customer) {
-        Page page = new Page(current, size);
-        List<Customer> customerList = customerMapper.selectAllCustomer(page, customer);
-        Map map = new HashMap();
-        map.put("total", page.getTotal());
-        map.put("pages", page.getPages());
-        map.put("customerList", customerList);
-        return map;
+    public int deleteCustomer(int id) {
+        return customerMapper.deleteById(id);
     }
 
     @Override
-    public int deleteCustomer(int id) {
-        return customerMapper.deleteById(id);
+    public int deleteBatchIds(Collection<? extends Serializable> idList) {
+
+        return customerMapper.deleteBatchIds(idList);
     }
 
     @Override
@@ -65,41 +58,26 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         return customerMapper.insert(customer);
     }
 
-    @Override
-    public Map sellectAll(int current, int size) {
 
-        Map map = new HashMap();
-        Page<Customer> page = new Page(current, size);
-        List<Customer> list = customerMapper.sellectAll(page);
-
-        map.put("list", list);
-        map.put("current", current);
-        map.put("size", size);
-        map.put("totalPage", page.getPages());
-        return map;
-    }
 
     @Override
     public List sellectAllExcel() {
         return customerMapper.sellectAllExcel();
     }
 
+
     @Override
-    public List<Customer> selectLikeCustomer(Customer customer) {
-
-        return customerMapper.selectList(new QueryWrapper<Customer>().like("cus_compname", customer.getCusCompname())
-                .or().like("cus_tele", customer.getCusTele()));
-
+    public IPage<Customer> selectPage(int current, int size, Customer customer) {
+        System.out.println(customer);
+        return customerMapper.selectPage(new Page<>(current, size),
+                new QueryWrapper<Customer>().like("cus_compname", customer.getCusCompname())
+                        .or().like("cus_tele", customer.getCusCompname()).or().like("cus_number",customer.getCusCompname()));
 
     }
 
     @Override
-    public IPage<Customer> selectPage(int current, int size, Customer customer) {
-
-        return customerMapper.selectPage(new Page<>(current, size),
-                new QueryWrapper<Customer>().like("cus_compname", customer.getCusCompname())
-                        .or().like("cus_tele", customer.getCusTele()));
-
+    public List<Customer> selectCustomer() {
+        return customerMapper.selectList(null);
     }
 
 

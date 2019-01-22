@@ -7,51 +7,68 @@
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <link rel="Bookmark" href="/favicon.ico" >
-    <link rel="Shortcut Icon" href="/favicon.ico" />
+    <link rel="Bookmark" href="/favicon.ico">
+    <link rel="Shortcut Icon" href="/favicon.ico"/>
     <script type="text/javascript" src="/lib/html5shiv.js"></script>
     <script type="text/javascript" src="/lib/respond.min.js"></script>
     <script type="text/javascript" src="/js/vue/vue.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css" />
-    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css" />
-    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
-    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin" />
-    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css"/>
+    <link rel="stylesheet" href="/lib/layui/css/layui.css" media="all">
     <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <script type="text/javascript" src="/lib/layui/layui.all.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
     <title>进货历史</title>
+    <style>
+        #lab-file {
+            font-size: 12px;
+            padding: 5px 10px;
+            background: #0C0C0C;
+            color: #FFF;
+            border: none;
+            border-radius: 5px;
+        }
+        #photo {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 进货历史管理 <span
         class="c-gray en">&gt;</span> 进货历史 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
-                                               href="javascript:location.replace(location.href);" title="刷新"><i
+                                              href="javascript:location.replace(location.href);" title="刷新"><i
         class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
     <div class="text-c">
         <input type="text" class="input-text" style="width:250px" placeholder="输入单号" id="phNumber" name="">
         <input type="text" class="input-text" style="width:250px" placeholder="输入供应商" id="phSupname" name="">
-        <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜订单</button>
+        <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜订单
+        </button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
-            <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
-        <a href="/cargomanagement/purchase-order/addPurchase" id="addpurOrder"
-            class="btn btn-primary radius">
+            <a href="javascript:;" id="datadel" class="btn btn-danger radius"><i
+                    class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
+        <a href="/cargomanagement/purchase-history/addPurchase" id="addpurOrder"
+           class="btn btn-primary radius">
         <i class="Hui-iconfont">&#xe600;</i> 添加进货历史</a>
-        <a href="#"
-               class="btn btn-success radius">
+        <a href="/cargomanagement/purchase-history/puchaseHistoryExcel"
+           class="btn btn-success radius">
         <i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
     </span>
 
         <span class="r">共有数据：<strong>54</strong> 条</span></div>
-    <div id="app" style="height: 500px"  >
+    <div id="app" style="height: 500px">
         <table class="table table-border table-bordered table-bg">
             <thead>
             <tr>
-                <th scope="col" colspan="19">员工列表</th>
+                <th scope="col" colspan="19">进货历史</th>
             </tr>
             <tr class="text-c">
-                <th width="25"><input type="checkbox" name="" value=""></th>
+                <th width="25"><input type="checkbox" id="" value=""></th>
                 <th width="40">ID</th>
                 <th width="110">操作</th>
                 <th width="130">业务日期</th>
@@ -74,13 +91,16 @@
             </thead>
             <tbody>
             <tr class="text-c" v-for="(item,index) in result">
-                <td><input type="checkbox" value="" name=""></td>
+                <td><input type="checkbox" id="box" :value="item.id"></td>
                 <td>{{index+1}}</td>
                 <td class="td-manage">
-                    <a style="text-decoration:none" class="ml-5" @Click="article_edit('进货订单编辑','/cargomanagement/purchase-order/selectById?id='+(item.id),'1000')" href="javascript:;" title="编辑">
+                    <a style="text-decoration:none" class="ml-5"
+                       @Click="article_edit('进货订单编辑','/cargomanagement/purchase-order/selectById?id='+(item.id),'1000')"
+                       href="javascript:;" title="编辑">
                         <i class="Hui-iconfont">&#xe6df;</i>
                     </a>
-                    <a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none">
+                    <a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5"
+                       style="text-decoration:none">
                         <i class="Hui-iconfont">&#xe6e2;</i>
                     </a>
                     <a title="入库" href="javascript:;"
@@ -100,7 +120,7 @@
                 <td>{{item.phAmountPayable}}</td>
                 <td>{{item.phAmountPaid}}</td>
                 <td>{{item.phWarehouse}}</td>
-                <td>{{item.phBill}}</td>
+                <td><a href="#" id="img"></a></td>
                 <td>{{item.phJindate}}</td>
                 <td>{{item.phManeyHu}}</td>
                 <td>{{item.phExperiencedPerson}}</td>
@@ -116,16 +136,16 @@
 </div>
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
 <script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
     var app = new Vue({
-        el:'#app',
-        data:{
-            result:[]
+        el: '#app',
+        data: {
+            result: []
         }
     });
 
@@ -168,25 +188,61 @@
 
     /*删除账目*/
     var delEvent = function (id) {
-        layer.confirm('你确定要删除吗？',{
-            btn:['是','否']
-        },function () {
+        layer.confirm('你确定要删除吗？', {
+            btn: ['是', '否']
+        }, function () {
             $.ajax({
-                type:'GET',
-                dataType:'json',
+                type: 'GET',
+                dataType: 'json',
                 url: '/cargomanagement/purchase-history/deletePurchaseHistoryById',
-                data:{
-                    id:id
+                data: {
+                    id: id
                 },
-                success:function (msg) {
+                success: function (msg) {
                     getPurchaseHostPageList();
-                    layer.msg('成功删除' + id,{icon:5});
+                    layer.msg('成功删除' + id, {icon: 5});
                 }
             })
-        },function () {
+        }, function () {
 
         });
     };
+
+    /*批量删除*/
+    $("#datadel").click(function(){
+        var arr = new Array();
+        $("input:checkbox[id='box']:checked").each(function (i) {
+            arr[i]=$(this).val();
+        });
+        if (arr[0]==null){
+            layer.msg("请选择要删除的进货历史！",{time:2000,icon:2})
+        }else{
+            layer.confirm('你确定要删除它们吗？',{
+                btn:['是','否']
+            },function () {
+                for (var i =0;i<arr.length;i++ ){
+                    $.ajax({
+                        type:'GET',
+                        dataType:'json',
+                        url: '/cargomanagement/purchase-history/deletePurchaseHistoryById',
+                        data: {
+                            id: arr[i],
+                        },
+                        success: function (msg) {
+                            console.log(msg);
+                            if (msg) {
+                                getPurchaseHostPageList();
+                                layer.msg('成功删除',{icon:1});
+                            }
+                        }
+                    });
+                }
+            },function () {
+                layer.msg('删除失败！',{time:2000,icon:2});
+            });
+            $("input:checkbox[id='box']:checked").attr("checked",false);
+        };
+    });
 
     /*入库*/
     var stateEvent = function (id) {
@@ -200,19 +256,19 @@
                     url: '/cargomanagement/purchase-order/updateHistState',
                     data: {
                         id: id,
-                        poDate:poDate,
-                        poNumber:poNumber,
-                        poState:poState,
-                        poAuditor:poAuditor,
-                        poSupName:poSupName,
-                        poClName:poClName,
-                        poQuantityOfPurchase:poQuantityOfPurchase,
-                        poYingMoney:poYingMoney,
-                        poBill:poBill,
-                        poExperiencedPerson:poExperiencedPerson,
-                        poSinglePerson:poSinglePerson,
-                        poRemarks:poRemarks,
-                        poDateOrder:poDateOrder
+                        poDate: poDate,
+                        poNumber: poNumber,
+                        poState: poState,
+                        poAuditor: poAuditor,
+                        poSupName: poSupName,
+                        poClName: poClName,
+                        poQuantityOfPurchase: poQuantityOfPurchase,
+                        poYingMoney: poYingMoney,
+                        poBill: poBill,
+                        poExperiencedPerson: poExperiencedPerson,
+                        poSinglePerson: poSinglePerson,
+                        poRemarks: poRemarks,
+                        poDateOrder: poDateOrder
                     },
                     success: function (msg) {
                         getPurchasePageList();
@@ -222,7 +278,7 @@
             }, function () {
 
             });
-        }else {
+        } else {
             alert("此订单已审核！");
         }
 
@@ -231,7 +287,7 @@
 
 
     /*编辑修改*/
-    function article_edit(title,url,id,w,h){
+    function article_edit(title, url, id, w, h) {
         var index = layer.open({
             type: 2,
             title: title,
@@ -239,6 +295,7 @@
         });
         layer.full(index);
     }
+
 </script>
 </body>
 </html>

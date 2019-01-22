@@ -30,11 +30,14 @@
     <result column="so_client" property="soClient"/>
     <collection property="orderConnectComms"  ofType="OrderConnectComm">
         <id column="bid" property="id"/>
-        <result column="order_num" property="orderNum"/>
+        <result column="order_count" property="orderCount"/>
         <result column="cl_id" property="clId"/>
         <association property="commodityList" javaType="CommodityList">
-            <id column="id" property="id"/>
+            <id column="pid" property="id"/>
             <result column="cl_name" property="clName"/>
+            <result column="cl_unit" property="clUnit"/>
+            <result column="cl_tag_prise" property="clTagPrise"/>
+            <result column="cl_number" property="clNumber"/>
         </association>
     </collection>
 </resultMap>
@@ -43,10 +46,13 @@
           a.id,
           a.so_client,
           b.id bid,
-          b.order_num,
+          b.order_count,
           b.cl_id,
-          c.id,
-          c.cl_name
+          c.id pid,
+          c.cl_name,
+          c.cl_unit,
+          c.cl_tag_prise,
+          c.cl_number
           from sales_order_history a,order_connect_comm b ,commodity_list c where a.id =b.order_num and b.cl_id =c.id and a.id=#{id}
     </select>
     <select id="selectSaleById" resultType="com.yunhe.cargomanagement.entity.SalesOrderHistory">

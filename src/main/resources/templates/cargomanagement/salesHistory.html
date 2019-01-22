@@ -157,7 +157,7 @@
         /**获取下面选中的checkbox*/
         var checkedbox = $("input[id^='box_']:checked");
         if(checkedbox.length == 0){
-            alert("请选择要删除的部门！！！");
+            alert("请选择要删除的订单！！！");
         }else{
             if(confirm("你确定要删除吗？？？")){
                 var ids = new Array();
@@ -271,7 +271,7 @@
     }*/
 
     var Excel_out =function () {
-        window.location.href="/cargomanagement/sales-order-history/export";
+        window.location.href="/cargomanagement/sales-history/export";
     }
 
 </script>

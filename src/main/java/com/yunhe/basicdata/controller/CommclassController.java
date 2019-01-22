@@ -3,9 +3,11 @@ package com.yunhe.basicdata.controller;
 
 import com.yunhe.basicdata.entity.Commclass;
 import com.yunhe.basicdata.service.impl.CommclassServiceImpl;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -27,6 +29,7 @@ public class CommclassController {
     @Resource
     private CommclassServiceImpl commclassService;
 
+
     /**
      * <p>
      *   商品分类列表
@@ -40,6 +43,8 @@ public class CommclassController {
         map.put("commclass",list);
         return map;
     }
+
+
     /**
      * <p>
      *   增加商品分类前查重

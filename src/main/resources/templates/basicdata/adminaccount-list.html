@@ -46,7 +46,7 @@
 		<span class="l">
 		<button id="addAccountBtn"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加账户</button>
 		</span>
-		<span class="r">共有数据：<strong></strong> 条</span>
+		<span class="r">共有数据：<strong id="strong"></strong> 条</span>
 	</div>
 	<div  id="app">
 	<table class="table table-border table-bordered table-bg">
@@ -73,32 +73,28 @@
 				<td>{{item.saName}}</td>
 				<td>{{item.saBank}}</td>
 				<td>{{item.saBalance}}</td>
-				<td>{{item.saState}}</td>
+				<th v-if="item.saState==1">
+					启用
+				</th>
+				<th v-else>
+					禁用
+				</th>
 			</tr>
+		</tbody>
+		<tbody>
+		<tr>
+			<td width="100"></td>
+			<td width="100"><span style="align-content: center">合计</span></td>
+			<td width="100"></td>
+			<!--<td width="100">{{(item.saBalance+item.saBalance)}}</td>-->
+			<td width="100"></td>
+			<td width="100"></td>
+		</tr>
 		</tbody>
 	</table>
 </div>
-<!--<div>
-	<table class="table table-bg" style="display:none;text-align: center" id="detailtab">
-		<tr>
-			<th>开户银行:<td>{{results.saBank}}</td></th>
-			<th>账户名称:<td>{{results.saName}}</td></th>
-		</tr>
-		<tr>
-			<th>状态:</th>
-			<th v-if="results.saState===1">
-				启用
-			</th>
-			<th v-else>
-				禁用
-			</th>
-			<th>联系人:</th>
-			<td>{{results.wmPerson}}</td>
-			<th>联系电话:{{results.wmTel}}</th>
-		</tr>
-	</table>
-</div>-->
 <div id="pagenav" style="text-align:center;position: fixed;left: 0px;bottom :50px;width: 100%;height: 50px"></div>
+
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
@@ -119,7 +115,7 @@
 	/*查询分页*/
 	var getAccountPageList = function(curr) {
 		$.ajax({
-			type:'POST',
+			type:'Get',
 			dataType:'json',
 			url:'/basicdata/settlement-account/getrAccounlist',
 			data:{
@@ -127,6 +123,7 @@
 				size:2,
 			},
 			success:function(msg){
+				$("#strong").html(msg.total);
 				app.result = msg.accountList;
 				laypage({
 					cont:'pagenav',
@@ -223,13 +220,9 @@
 				content : '/basicdata/settlement-account/detailaccount?id='+id,
 			});
 		}
-/*	/!*详情div块*!/
-     	  var detail=document.getElementById("detailtab")
-			   if(detail.style.display=="none"){
-				   detail.style.display="block";
-			   }else {
-				   detail.style.display ="none";
-			   }*/
+
+
+
 </script>
 </body>
 </html>

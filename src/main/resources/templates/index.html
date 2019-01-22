@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE HTML>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -26,10 +26,11 @@
     <meta name="keywords" content="H-ui.admin v3.1,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
     <meta name="description" content="H-ui.admin v3.1，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
 </head>
+
 <body>
 <header class="navbar-wrapper">
     <div class="navbar navbar-fixed-top">
-        <div class="container-fluid cl"><a class="logo navbar-logo f-l mr-10 hidden-xs" href="/aboutHui.shtml">H-ui.admin</a>
+        <div class="container-fluid cl"><a class="logo navbar-logo f-l mr-10 hidden-xs" href="/aboutHui.shtml">贸易管家</a>
             <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/aboutHui.shtml">H-ui</a>
             <span class="logo navbar-slogan f-l mr-10 hidden-xs">v3.1</span>
             <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
@@ -82,7 +83,7 @@
 </header>
 <aside class="Hui-aside">
     <div class="menu_dropdown bk_2">
-        <dl id="menu-article">
+        <dl shiro:haspermission="cargomanagement" id="menu-article">
             <dt><i class="Hui-iconfont">&#xe616;</i> 云管货<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
@@ -92,15 +93,17 @@
                     <li><a data-href="article-list.html" data-title="销售退货历史" href="javascript:void(0)">销售退货历史</a></li>
                     <li><a data-href="/cargomanagement/purchase-order/Purlist" data-title="进货订单历史"
                            href="javascript:void(0)">进货订单历史</a></li>
-                    <li><a data-href="/cargomanagement/purchase-history/purchasehistoryList" data-title="进货历史" href="javascript:void(0)">进货历史</a></li>
-                    <li><a data-href="/cargomanagement/purchase-return-history/purchaseReturnHistoryList" data-title="进货退货历史" href="javascript:void(0)">进货退货历史</a></li>
-                    <li><a data-href="article-list.html" data-title="出库历史" href="javascript:void(0)">出库历史</a></li>
-                    <li><a data-href="/cargomanagement/wait-out-warehouse/tiao" data-title="入库历史" href="javascript:void(0)">入库历史</a></li>
-                    <li><a data-href="article-list.html" data-title="库存查询" href="javascript:void(0)">库存查询</a></li>
+                    <li><a data-href="/cargomanagement/purchase-history/purchasehistoryList" data-title="进货历史"
+                           href="javascript:void(0)">进货历史</a></li>
+                    <li><a data-href="/cargomanagement/purchase-return-history/purchaseReturnHistoryList"
+                           data-title="进货退货历史" href="javascript:void(0)">进货退货历史</a></li>
+                    <li><a data-href="cargomanagement/wait-out-warehouse/tiao" data-title="出库历史" href="javascript:void(0)">出库历史</a></li>
+                    <li><a data-href="/cargomanagement/warehouse-receipt/warehouse_receipt" data-title="入库历史" href="javascript:void(0)">入库历史</a></li>
                 </ul>
             </dd>
         </dl>
-        <dl id="menu-article">
+
+        <dl  shiro:haspermission="billmanagement" id="menu-article">
             <dt><i class="Hui-iconfont">&#xe616;</i> 云管账<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
@@ -114,18 +117,18 @@
             </dd>
         </dl>
 
-        <dl id="menu-article">
+        <dl shiro:haspermission="customermanagement"  id="menu-article">
             <dt><i class="Hui-iconfont">&#xe616;</i> 云管客<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="sale-list.html" data-title="客户管理"
+                    <li><a data-href="admin.html" data-title="客户管理"
                            href="javascript:void(0)">客户管理</a></li>
-                    <li><a data-href="article-list.html" data-title="客户等级价" href="javascript:void(0)">客户等级价</a></li>
-                    <li><a data-href="article-list.html" data-title="供应商管理" href="javascript:void(0)">供应商管理</a></li>
+                    <li><a data-href="costomerLevel.html" data-title="客户等级价" href="javascript:void(0)">客户等级价</a></li>
+                    <li><a data-href="supplier.html" data-title="供应商管理" href="javascript:void(0)">供应商管理</a></li>
                 </ul>
             </dd>
         </dl>
-        <dl id="menu-article">
+        <dl shiro:haspermission="reportanalysis"  id="menu-article">
             <dt><i class="Hui-iconfont">&#xe616;</i> 云分析<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
@@ -136,18 +139,17 @@
             </dd>
         </dl>
 
-        <dl id="menu-article">
+        <dl shiro:haspermission="activitymanagement"  id="menu-article">
             <dt><i class="Hui-iconfont">&#xe616;</i> 云营销<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="sale-list.html" data-title="商品套餐"
-                           href="javascript:void(0)">商品套餐</a></li>
-                    <li><a data-href="article-list.html" data-title="商品模板" href="javascript:void(0)">商品模板</a></li>
+                    <li><a data-href="/activitymanagement/merchandise-package/shangpintaocan" data-title="商品套餐" href="javascript:void(0)">商品套餐</a></li>
+                    <li><a data-href="/activitymanagement/commodi-tytemplate/shangpinmoban" data-title="商品模板" href="javascript:void(0)">商品模板</a></li>
                 </ul>
             </dd>
         </dl>
 
-        <dl id="menu-article">
+        <dl shiro:haspermission="basicdata"  id="menu-article">
             <dt><i class="Hui-iconfont">&#xe616;</i> 基础资料<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
@@ -161,13 +163,13 @@
             </dd>
         </dl>
 
-        <dl id="menu-system">
+        <dl shiro:haspermission="systemsetup"  id="menu-system">
             <dt><i class="Hui-iconfont">&#xe62e;</i>系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
                     <li><a data-href="system-base.html" data-title="系统设置" href="javascript:void(0)">系统设置</a></li>
-                    <li><a data-href="system-category.html" data-title="栏目管理" href="javascript:void(0)">栏目管理</a></li>
-                    <li><a data-href="system-data.html" data-title="数据字典" href="javascript:void(0)">数据字典</a></li>
+                    <li><a data-href="/systemsetup/employ/list" data-title="员工管理" href="javascript:void(0)">员工管理</a></li>
+                    <li><a data-href="/systemsetup/chara-manger/chara" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
                     <li><a data-href="system-shielding.html" data-title="屏蔽词" href="javascript:void(0)">屏蔽词</a></li>
                     <li><a data-href="system-log.html" data-title="系统日志" href="javascript:void(0)">系统日志</a></li>
                 </ul>

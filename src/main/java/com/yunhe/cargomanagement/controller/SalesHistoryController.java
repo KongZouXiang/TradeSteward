@@ -71,7 +71,6 @@ public class SalesHistoryController {
      */
     @RequestMapping("/edit")
     public ModelAndView edit(int id, HttpSession httpSessionsion) {
-        System.out.println(id);
         SalesHistory salesHistory = salesHistoryService.selectById(id);
         httpSessionsion.setAttribute("sales", salesHistory);
         return new ModelAndView("/cargomanagement/salesHistory-detail");
@@ -103,17 +102,21 @@ public class SalesHistoryController {
         return i;
     }
 
-
+    /**
+     * 根据id删除订单
+     * @param id
+     * @return
+     */
     @RequestMapping("/deleteSalesHistory")
     public int deleteSalesHistory(int id) {
         return salesHistoryService.deleteSalesHistory(id);
     }
 
+
     @RequestMapping("/tiao")
     public ModelAndView tiaozhuan() {
         return new ModelAndView("/cargomanagement/salesHistory");
     }
-
     /**
      *
      * @param pageNum      当前页
@@ -125,5 +128,9 @@ public class SalesHistoryController {
     public Map quertLikeListSalesHistory(int pageNum, int pageSize, SalesHistory salesHistory) {
         Map map = salesHistoryService.queryLikeSalesHistory(pageNum, pageSize, salesHistory);
         return map;
+    }
+    @RequestMapping("/detailList")
+    public List<OrderConnectComm> detailList(int id){
+        return salesHistoryService.detailList(id);
     }
 }

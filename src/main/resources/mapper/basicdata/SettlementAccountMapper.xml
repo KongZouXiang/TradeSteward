@@ -34,4 +34,8 @@
         from settlement_account
         where id = #{id}
     </delete>
+    <!--检查银行账号是否已存在-->
+    <select id="checkAccount" parameterType="SettlementAccount" resultType="SettlementAccount">
+        select * from settlement_account where sa_banknumber=#{saBankNumber};
+    </select>
 </mapper>
