@@ -2,6 +2,8 @@ package com.yunhe.activitymanagement;
 
 import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
 import com.yunhe.core.numbersetting.constant.NumberRule;
+import com.yunhe.core.util.RUDResult;
+import com.yunhe.core.util.ResultRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,8 +28,7 @@ public class activitymanagement {
 
     @Test
     public void contextLoads() {
-        System.out.println(new NumberRule().XSD_NUMBER);
-        System.out.println(new NumberRule().XSD_NUMBER);
+
     }
 
 

@@ -4,15 +4,10 @@ package com.yunhe.activitymanagement.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -33,7 +28,7 @@ import java.util.Map;
  * @author 刘栋
  * @since 2019-01-07
  */
-@Api("套餐管理.商品模板 ")
+@Api(value = "套餐管理.商品模板 ", tags = "套餐管理.商品模板 ")
 @RestController
 @RequestMapping("/activitymanagement/commodi-tytemplate")
 public class CommodiTytemplateController {
@@ -50,14 +45,15 @@ public class CommodiTytemplateController {
     }
 
 
-
-
     @RequestMapping("/xinzeng")
     public ModelAndView xinzeng() {
         return new ModelAndView("activitymanagement/addshangpinmoban");
     }
 
+    @ApiOperation(value="增加模板", httpMethod = "POST",notes="根据CommodiTytemplate对象增加用户")
 
+    @ApiImplicitParam(name = "sa", value = "用户详细实体CommodiTytemplate", required = true, dataType = "CommodiTytemplate")
+    @PostMapping("insertCt")
     public int insertCt(CommodiTytemplate sa) {
         return commodiTytemplateService.insertCt(sa);
     }

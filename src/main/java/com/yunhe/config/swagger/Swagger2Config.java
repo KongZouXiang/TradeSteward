@@ -9,10 +9,10 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
-/*@EnableSwagger2*/
-
+@EnableSwagger2
 @Configuration
 public class Swagger2Config {
 
@@ -29,7 +29,7 @@ public class Swagger2Config {
                 .apiInfo(apiInfo())
                 .select()
                 //为当前包路径
-                .apis(RequestHandlerSelectors.basePackage("com.yunhe.basicdata.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.yunhe"))
                 .paths(PathSelectors.any())
                 .build();
     }
