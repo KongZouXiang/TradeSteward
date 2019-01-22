@@ -35,15 +35,12 @@
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 客户应收欠款 <span class="c-gray en">&gt;</span> 客户应收欠款列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
 	<div class="text-c">
-		<input type="text" class="input-text" style="width:250px" placeholder="输入客户编号" id="fcdNumList" name="fcdNumList">
-		<input type="text" class="input-text" style="width:250px" placeholder="输入客户名称" id="fcdName" name="fcdName">
-		<input type="text" class="input-text" style="width:250px" placeholder="输入联系人" id="fcdLinkman" name="fcdLinkman">
-		<input type="text" class="input-text" style="width:250px" placeholder="输入联系电话" id="fcdTelephone" name="fcdTelephone">
+		<input type="text" class="input-text" style="width:400px" placeholder="输入客户编号、客户名称、联系人、联系电话" id="fcdNumList" name="fcdNumList">
 		<button type="submit" class="btn btn-success" id="findFcd" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-20" data-validator-option="{theme:'simple_right'}">
 		<span class="l"><a href="javascript:;" id="daoFcd" class="btn btn-success radius"><i class="Hui-iconfont">&#xe644;</i> Excel导出</a></span>
-		&nbsp;&nbsp;<a href="/billManagement/fund-client-debt/toAdd" id="addFcdBtn" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增欠款</a>
+		&nbsp;&nbsp;<a href="/billManagement/fund-client-debt/toAdd" id="addFcdBtn" class="btn btn-primary radius" data-title="日常收支"><i class="Hui-iconfont">&#xe600;</i> 新增欠款</a>
 		<span class="r">共有数据：<strong id="strong"></strong> 条</span>
 	</div>
 
@@ -51,65 +48,52 @@
 		<div style="height: 30px"></div>
 		<span class="font999">全部</span>
 	</div>
-	<!-- whiteBox -->
 	<div class="fl wf100" style="border-top: 3px solid #b2b2b2;font-size: 16px;height: 100px;margin-top: 15px;padding-top: 15px">
 		<table id="totalDataTable" class="expertSearch " border="0" cellpadding="5" cellspacing="0" width="100%">
 			<tbody><tr>
 				<td align="center" valign="middle">应收欠款</td>
-				<td class="font18" align="center" valign="middle">=</td>
+				<td class="font18" align="center" valign="middle"><h4>=</h4></td>
 				<td id="initReceAmtTd" align="center" valign="middle">期初欠款</td>
-				<td class="font18" align="center" valign="middle">+</td>
-				<td align="center" valign="middle">增加应收欠款</td>
-				<td class="font18" align="center" valign="middle">-</td>
+				<!--<td class="font18" align="center" valign="middle"><h4>+</h4></td>
+				<td align="center" valign="middle">增加应收欠款</td>-->
+				<td class="font18" align="center" valign="middle"><h4>-</h4></td>
 				<td align="center" valign="middle">收回欠款</td>
-				<td class="font18" align="center" valign="middle">-</td>
+				<td class="font18" align="center" valign="middle"><h4>-</h4></td>
 				<td align="center" valign="middle">优惠</td>
-				<td class="font18 free" align="center" valign="middle">-</td>
-				<td class="free" align="center" valign="middle">
-					抵消欠款
-					<span class="helpinfo" onmouseover="$(this).children().show()" onmouseout="$(this).children().hide()">
-						<span class="tips" style="display: none;left:-50px">
-							<h2 style="margin-left: 128px;"></h2>
-							<h1>与关联供应商抵消的欠款，在客户资料里可以选择关联供应商</h1>
-						</span>
-					</span>
-				</td>
+				<td class="font18 free" align="center" valign="middle"><h4>-</h4></td>
+				<td class="free" align="center" valign="middle">抵消欠款</td>
 			</tr>
 			<tr th:height="20px"></tr>
 			<tr>
 				<td class="font18 fontRed" align="center" valign="middle">
-					<span id="receivables" class="money">￥10650.00</span>
+					<span id="receivables" class="money" th:text="${session.countList.fcdReceive}"></span>
 				</td>
 				<td align="center" valign="middle">&nbsp;</td>
 				<td class="font18" align="center" valign="middle">
-					<span id="initamt" class="money">￥10000.00</span>
+					<span id="initamt" class="money" th:text="${session.countList.fcdBegin}"></span>
+				</td>
+				<!--<td align="center" valign="middle">&nbsp;</td>
+				<td class="font18" align="center" valign="middle">
+					<span id="totalreceiveamt" class="money" th:text="${session.countList.fcdAdd}"></span>
+				</td>-->
+				<td align="center" valign="middle">&nbsp;</td>
+				<td class="font18" align="center" valign="middle">
+					<span id="totalreceiveamted" class="money" th:text="${session.countList.fcdBack}"></span>
 				</td>
 				<td align="center" valign="middle">&nbsp;</td>
 				<td class="font18" align="center" valign="middle">
-					<span id="totalreceiveamt" class="money">￥2750.00</span>
-				</td>
-				<td align="center" valign="middle">&nbsp;</td>
-				<td class="font18" align="center" valign="middle">
-					<span id="totalreceiveamted" class="money">￥2100.00</span>
-				</td>
-				<td align="center" valign="middle">&nbsp;</td>
-				<td class="font18" align="center" valign="middle">
-					<span id="totalfavamt" class="money">￥0.00</span>
+					<span id="totalfavamt" class="money" th:text="${session.countList.fcdDiscount}"></span>
 				</td>
 				<td class="free" align="center" valign="middle">&nbsp;</td>
 				<td class="font18 free" align="center" valign="middle">
-					<span id="offsetarrears" class="money">￥0.00</span>
+					<span id="offsetarrears" class="money" th:text="${session.countList.fcdOffset}"></span>
 				</td>
 			</tr>
 			</tbody></table>
 	</div>
-	<table class="table table-border table-bordered table-bg" id="app">
+	<table class="table table-border table-bordered table-bg" id="app" style="margin-top: 15px">
 		<thead>
-		<tr>
-			<th scope="col" colspan="9">客户应收欠款列表</th>
-		</tr>
 		<tr class="text-c">
-			<!--<th width="25"><input type="checkbox" name="" value=""></th>-->
 			<th width="40">ID</th>
 			<th width="100">操作</th>
 			<th width="150">客户编号</th>
@@ -117,7 +101,7 @@
 			<th width="150">联系人</th>
 			<th width="150">联系电话</th>
 			<th width="150">期初欠款(元)</th>
-			<th width="150">增加应收欠款(元)</th>
+			<!--<th width="150">增加应收欠款(元)</th>-->
 			<th width="150">收回欠款(元)</th>
 			<th width="150">优惠(元)</th>
 			<th width="150">抵消欠款(元)</th>
@@ -129,15 +113,14 @@
 			<!--<td><input type="checkbox" value="1" name=""></td>-->
 			<td>{{index+1}}</td>
 			<td class="td-manage">
-				<a title="详情" href="javascript:;" @click="editEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
-				<!--<a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>-->
+				<a title="详情" href="javascript:;" @click="editEvent(item.fcdName)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
 			</td>
 			<td>{{item.fcdNumList}}</td>
 			<td>{{item.fcdName}}</td>
 			<td>{{item.fcdLinkman}}</td>
 			<td>{{item.fcdTelephone}}</td>
 			<td>{{item.fcdBeginDebt}}</td>
-			<td>{{item.fcdAddDebt}}</td>
+			<!--<td>{{item.fcdAddDebt}}</td>-->
 			<td>{{item.fcdBackDebt}}</td>
 			<td>{{item.fcdDiscount}}</td>
 			<td>{{item.fcdOffsetDeb}}</td>
@@ -172,10 +155,7 @@
             data:{
                 current: curr || 1,
                 size:5,
-                fcdNumList:$("#fcdNumList").val(),
-                fcdName:$("#fcdName").val(),
-                fcdLinkman:$("#fcdLinkman").val(),
-                fcdTelephone:$("#fcdTelephone").val()
+                fcdNumList:$("#fcdNumList").val()
             },
             success:function(msg){
                 $("#strong").html(msg.total);
@@ -201,37 +181,10 @@
     $("#findFcd").click(function () {
         getFcdPageList();
     });
-    /*/!*新增收支*!/
-    $("#addFcdBtn").click(function () {
-        layer.open({
-            type:2,
-            title:'新增收支',
-            fix:false,
-            maxmin:true,
-            shadeClose:true,
-            area:['1100px','600px'],
-            content:'/billManagement/fund-client-debt/toAdd',
-            end:function() {
-                getFcdPageList();
-            }
-        });
-    });*/
-    /*/!*收支详情*!/
-    var editEvent = function (id) {
-        //alert(id);
-        layer.open({
-            type:2,
-            title: '收支详情',
-            fix:false,
-            maxmin:true,
-            shadeClose:true,
-            area:['450px','350px'],
-            content:'/billManagement/finance-order/toDetail?id='+id,
-            end:function() {
-                getFoPageList();
-            }
-        });
-    }*/
+
+    var editEvent = function(fcdName){
+        window.location.href="/billManagement/fund-client-debt/fcdDetail?fcddFcdName="+fcdName;
+	};
     /*Excel导出*/
     $("#daoFcd").click(function () {
         window.location.href="/billManagement/fund-client-debt/export";

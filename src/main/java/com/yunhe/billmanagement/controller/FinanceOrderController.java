@@ -45,12 +45,12 @@ public class FinanceOrderController {
     @GetMapping("/toFo")
     public ModelAndView toFo(HttpSession session){
         System.out.println("toFo进入controller");
-        Map<String,Object> countListshou = financeOrderService.selectMoneyMapByShou();
+        /*Map<String,Object> countListshou = financeOrderService.selectMoneyMapByShou();
         Map<String,Object> countListzhi = financeOrderService.selectMoneyMapByZhi();
         System.out.println("收入总金额："+countListshou);
         System.out.println("支出总金额："+countListzhi);
         session.setAttribute("countListshou",countListshou);
-        session.setAttribute("countListzhi",countListzhi);
+        session.setAttribute("countListzhi",countListzhi);*/
         return new ModelAndView("billmanagement/bill-FinanceOrder");
     }
 

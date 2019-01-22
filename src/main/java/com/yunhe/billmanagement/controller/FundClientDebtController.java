@@ -1,7 +1,9 @@
 package com.yunhe.billmanagement.controller;
 
-
+import com.yunhe.billmanagement.entity.FinanceOrder;
 import com.yunhe.billmanagement.entity.FundClientDebt;
+import com.yunhe.billmanagement.entity.FundClientDebtDetail;
+import com.yunhe.billmanagement.service.IFundClientDebtDetailService;
 import com.yunhe.billmanagement.service.IFundClientDebtService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -14,10 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -34,6 +33,9 @@ public class FundClientDebtController {
     @Resource
     private IFundClientDebtService fundClientDebtService;
 
+    @Resource
+    private IFundClientDebtDetailService fundClientDebtDetailService;
+
     /**
      * <P>
      *    进入客户应收欠款页面
@@ -41,8 +43,11 @@ public class FundClientDebtController {
      * @return 进入bill-FundClientDebt.html
      */
     @GetMapping("/toFcd")
-    public ModelAndView toFcd(){
+    public ModelAndView toFcd(HttpSession session){
         System.out.println("toFcd进入controller");
+        Map<String,Object> countList = fundClientDebtService.selectFcdMap();
+        System.out.println("总和："+countList);
+        session.setAttribute("countList",countList);
         return new ModelAndView("billmanagement/bill-FundClientDebt");
     }
     /**
@@ -64,10 +69,62 @@ public class FundClientDebtController {
      * @return 进入FCD_add.html
      */
     @RequestMapping("/toAdd")
-    public ModelAndView toAdd(){
+    public ModelAndView toAdd(HttpSession session){
         System.out.println("toadd进入controller");
+        int id = fundClientDebtDetailService.maxId();
+        System.out.println("id:"+id);
+        int maxId = id+1;
+        session.setAttribute("maxId",maxId);
+        System.out.println(maxId);
         return new ModelAndView("billmanagement/bill-FCD-add");
     }
+
+    /**
+     * <P>
+     *    进入客户查找页面
+     * </P>
+     * @return 进入bill-FCD-add-customer.html
+     */
+    @RequestMapping("/selectCustomer")
+    public ModelAndView selectCustomer(){
+        System.out.println("selectCustomer进入controller");
+        return new ModelAndView("billmanagement/bill-FCD-add-customer");
+    }
+    /**
+     * <P>
+     *    通过id查找该客户是否欠款
+     * </P>
+     * @return 集合
+     */
+    @RequestMapping("/selectIdFcdExit")
+    public FundClientDebt selectIdFcdExit(String fcdName){
+        return fundClientDebtService.selectIdFcdExit(fcdName);
+    }
+    /**
+     * <P>
+     *     向欠款详细中添加数据
+     * </P>
+     * @param fundClientDebtDetail 新增收款的参数存在一个对象里
+     * @return  客户应收欠款表：增加是否成功
+     */
+    @RequestMapping("/insertFcdd")
+    public boolean insertFcdd(FundClientDebtDetail fundClientDebtDetail){
+        boolean i = fundClientDebtDetailService.save(fundClientDebtDetail);
+        if (i==true){
+            Map<String,Object> map = fundClientDebtDetailService.selectMoneyMapByName(fundClientDebtDetail.getFcddFcdName());
+            FundClientDebt fundClientDebt = new FundClientDebt();
+            System.out.println("开始了："+map);
+            fundClientDebt.setFcdBackDebt((Double)map.get("backDebt"));
+            fundClientDebt.setFcdBeginDebt((Double)map.get("beginDebt"));
+            fundClientDebt.setFcdDiscount((Double)map.get("discount"));
+            fundClientDebt.setFcdReceivable((Double)map.get("receivable"));
+            fundClientDebt.setFcdName(fundClientDebtDetail.getFcddFcdName());
+            int k = fundClientDebtService.updateFcd(fundClientDebt);
+            System.out.println(k);
+        }
+        return i;
+    }
+
     /**
      * <P>
      *     增加数据
@@ -78,6 +135,32 @@ public class FundClientDebtController {
     @PostMapping("/insertFcd")
     public int insertFcd(FundClientDebt fundClientDebt){
         return fundClientDebtService.insertFcd(fundClientDebt);
+    }
+    /**
+     * <P>
+     *     修改数据
+     * </P>
+     * @param fundClientDebt 修改数据的参数存在一个对象里
+     * @return  客户应收欠款表：增加是否成功
+     */
+    @PostMapping("/updateFcd")
+    public int updateFcd(FundClientDebt fundClientDebt){
+        return fundClientDebtService.updateFcd(fundClientDebt);
+    }
+    /**
+     * <P>
+     *    进入客户欠款详情页面
+     * </P>
+     * @return 进入bill-FCD-detail.html
+     */
+    @RequestMapping("/fcdDetail")
+    public ModelAndView fcdDetail(String fcddFcdName,HttpSession session){
+        System.out.println("fcdDetail进入controller");
+        session.setAttribute("fcddFcdName",fcddFcdName);
+        Map<String,Object> countList = fundClientDebtDetailService.selectMoneyMapByName(fcddFcdName);
+        System.out.println("全是钱："+countList);
+        session.setAttribute("countList",countList);
+        return new ModelAndView("billmanagement/bill-FCD-detail");
     }
 
     /**
@@ -97,7 +180,7 @@ public class FundClientDebtController {
         List<Map<String,Object>> solist = new ArrayList();
         for(FundClientDebt obj:newlist){
             //每次循环都要重新new一个map，表示不同对象
-            System.out.println("FinanceClassify的第一个字段"+obj.getId());
+            System.out.println("FundClientDebt的第一个字段"+obj.getId());
             Map<String,Object> map = new HashMap();
             map.put("id", obj.getId());
             map.put("fcdNumList",obj.getFcdNumList());

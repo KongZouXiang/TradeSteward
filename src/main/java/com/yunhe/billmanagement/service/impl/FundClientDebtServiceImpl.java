@@ -50,12 +50,27 @@ public class FundClientDebtServiceImpl extends ServiceImpl<FundClientDebtMapper,
     }
 
     @Override
+    public FundClientDebt selectIdFcdExit(String fcdName) {
+        return fundClientDebtMapper.selectFcdByName(fcdName);
+    }
+
+    @Override
     public int insertFcd(FundClientDebt fundClientDebt) {
         return fundClientDebtMapper.insert(fundClientDebt);
     }
 
     @Override
+    public int updateFcd(FundClientDebt fundClientDebt) {
+        return fundClientDebtMapper.updateFcd(fundClientDebt);
+    }
+
+    @Override
     public List<FundClientDebt> selectFcd() {
         return fundClientDebtMapper.selectList(null);
+    }
+
+    @Override
+    public Map<String, Object> selectFcdMap() {
+        return fundClientDebtMapper.selectFcdMap();
     }
 }

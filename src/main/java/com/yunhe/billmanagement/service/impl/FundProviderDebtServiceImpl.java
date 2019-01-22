@@ -51,4 +51,9 @@ public class FundProviderDebtServiceImpl extends ServiceImpl<FundProviderDebtMap
     public FundProviderDebt selectFpd(int id) {
         return fundProviderDebtMapper.selectById(id);
     }
+
+    @Override
+    public Map<String, Object> selectFpdMap() {
+        return fundProviderDebtMapper.selectFpdMap();
+    }
 }

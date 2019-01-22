@@ -9,9 +9,9 @@
     <select id="selectFpdPage" resultType="com.yunhe.billmanagement.entity.FundProviderDebt" parameterType="com.yunhe.billmanagement.entity.FundProviderDebt">
         select <include refid="fpdCols"/> from fund_provider_debt
         where (fpd_num_list like concat('%',#{fundProviderDebt.fpdNumList},'%'))
-        and (fpd_name like concat('%',#{fundProviderDebt.fpdName},'%'))
-        and (fpd_linkman like concat('%',#{fundProviderDebt.fpdLinkman},'%'))
-        and (fpd_telephone like concat('%',#{fundProviderDebt.fpdTelephone},'%'))
+        or (fpd_name like concat('%',#{fundProviderDebt.fpdNumList},'%'))
+        or (fpd_linkman like concat('%',#{fundProviderDebt.fpdNumList},'%'))
+        or (fpd_telephone like concat('%',#{fundProviderDebt.fpdNumList},'%'))
         order by id desc
     </select>
 </mapper>

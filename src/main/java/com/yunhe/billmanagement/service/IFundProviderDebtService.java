@@ -41,4 +41,12 @@ public interface IFundProviderDebtService extends IService<FundProviderDebt> {
      * @return  一行或多行数据
      */
     FundProviderDebt selectFpd(int id);
+
+    /**
+     * <P>
+     *     供应商应付欠款表
+     * </P>
+     * @return 查询所有款项之和
+     */
+    Map<String,Object> selectFpdMap();
 }

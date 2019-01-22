@@ -34,8 +34,11 @@ public class FundProviderDebtController {
      * @return 进入bill-FundProviderDebt.html
      */
     @RequestMapping("/toFpd")
-    public ModelAndView toFpd(){
+    public ModelAndView toFpd(HttpSession session){
         System.out.println("toFpd进入controller");
+        Map<String,Object> countList = fundProviderDebtService.selectFpdMap();
+        System.out.println("总和："+countList);
+        session.setAttribute("countList",countList);
         return new ModelAndView("billmanagement/bill-FundProviderDebt");
     }
 
@@ -64,6 +67,17 @@ public class FundProviderDebtController {
         return new ModelAndView("billmanagement/bill-FPD-add");
     }
 
+    /**
+     * <P>
+     *    进入供应商查找页面
+     * </P>
+     * @return 进入bill-FCD-add-supplier.html
+     */
+    @RequestMapping("/selectSupplier")
+    public ModelAndView selectSupplier(){
+        System.out.println("selectSupplier进入controller");
+        return new ModelAndView("billmanagement/bill-FCD-add-supplier");
+    }
     /**
      * <P>
      *     增加数据

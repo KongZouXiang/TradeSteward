@@ -39,14 +39,15 @@ public class FinanceOrderServiceImpl extends ServiceImpl<FinanceOrderMapper, Fin
         Map map = new HashMap();
         List<FinanceOrder> list = financeOrderMapper.selectFoPage(page,financeOrder);
         System.out.println("遍历出来的长度："+list.size());
-        /*for (FinanceOrder order : list) {
-            System.out.println(order.getFoNumList()+":"+order.getFinanceClassify().getFcType());
-        }*/
         map.put("total",page.getTotal());
         map.put("pages",page.getPages());
         map.put("list",list);
         System.out.println("总页数："+page.getPages());
         System.out.println("总条数："+page.getTotal());
+        Map<String,Object> countListshou = financeOrderMapper.selectMoneyMapByShou();
+        Map<String,Object> countListzhi = financeOrderMapper.selectMoneyMapByZhi();
+        map.put("countListshou",countListshou);
+        map.put("countListzhi",countListzhi);
         return map;
     }
 

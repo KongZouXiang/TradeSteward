@@ -37,6 +37,14 @@ public interface IFundClientDebtService extends IService<FundClientDebt> {
 
     /**
      * <P>
+     *    通过id查找该客户是否欠款
+     * </P>
+     * @return 集合
+     */
+    FundClientDebt selectIdFcdExit(String fcdName);
+
+    /**
+     * <P>
      *     增加数据
      * </P>
      * @param fundClientDebt 新增收款的参数存在一个对象里
@@ -46,9 +54,25 @@ public interface IFundClientDebtService extends IService<FundClientDebt> {
 
     /**
      * <P>
+     *     增加数据
+     * </P>
+     * @param fundClientDebt 新增收款的参数存在一个对象里
+     * @return  客户应收欠款表：增加是否成功
+     */
+    int updateFcd(FundClientDebt fundClientDebt);
+    /**
+     * <P>
      *     查询所有记录
      * </P>
      * @return 客户应收欠款的条数
      */
     List<FundClientDebt> selectFcd();
+
+    /**
+     * <P>
+     *     客户应收欠款表
+     * </P>
+     * @return 查询所有款项之和
+     */
+    Map<String,Object> selectFcdMap();
 }

@@ -35,10 +35,10 @@
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 供应商应付欠款 <span class="c-gray en">&gt;</span> 供应商应付欠款 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
     <div class="text-c">
-        <input type="text" class="input-text" style="width:250px" placeholder="输入供应商编号" id="fpdNumList" name="fpdNumList">
-        <input type="text" class="input-text" style="width:250px" placeholder="输入供应商名称" id="fpdName" name="fpdName">
+        <input type="text" class="input-text" style="width:400px" placeholder="输入供应商编号、供应商名称、联系人、联系电话" id="fpdNumList" name="fpdNumList">
+        <!--<input type="text" class="input-text" style="width:250px" placeholder="输入供应商名称" id="fpdName" name="fpdName">
         <input type="text" class="input-text" style="width:250px" placeholder="输入联系人" id="fpdLinkman" name="fpdLinkman">
-        <input type="text" class="input-text" style="width:250px" placeholder="输入联系电话" id="fpdTelephone" name="fpdTelephone">
+        <input type="text" class="input-text" style="width:250px" placeholder="输入联系电话" id="fpdTelephone" name="fpdTelephone">-->
         <button type="submit" class="btn btn-success" id="findFpd" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20" data-validator-option="{theme:'simple_right'}">
@@ -78,27 +78,27 @@
             <tr th:height="20px"></tr>
             <tr>
                 <td class="font18 fontRed" align="center" valign="middle">
-                    <span id="receivables" class="money">￥10650.00</span>
+                    <span id="receivables" class="money" th:text="${session.countList.fpdReceive}"></span>
                 </td>
                 <td align="center" valign="middle">&nbsp;</td>
                 <td class="font18" align="center" valign="middle">
-                    <span id="initamt" class="money">￥10000.00</span>
+                    <span id="initamt" class="money" th:text="${session.countList.fpdBegin}"></span>
                 </td>
                 <td align="center" valign="middle">&nbsp;</td>
                 <td class="font18" align="center" valign="middle">
-                    <span id="totalreceiveamt" class="money">￥2750.00</span>
+                    <span id="totalreceiveamt" class="money" th:text="${session.countList.fpdAdd}"></span>
                 </td>
                 <td align="center" valign="middle">&nbsp;</td>
                 <td class="font18" align="center" valign="middle">
-                    <span id="totalreceiveamted" class="money">￥2100.00</span>
+                    <span id="totalreceiveamted" class="money" th:text="${session.countList.fpdPay}"></span>
                 </td>
                 <td align="center" valign="middle">&nbsp;</td>
                 <td class="font18" align="center" valign="middle">
-                    <span id="totalfavamt" class="money">￥0.00</span>
+                    <span id="totalfavamt" class="money" th:text="${session.countList.fpdDiscount}"></span>
                 </td>
                 <td class="free" align="center" valign="middle">&nbsp;</td>
                 <td class="font18 free" align="center" valign="middle">
-                    <span id="offsetarrears" class="money">￥0.00</span>
+                    <span id="offsetarrears" class="money" th:text="${session.countList.fpdOffset}"></span>
                 </td>
             </tr>
             </tbody></table>
@@ -172,10 +172,10 @@
             data:{
                 current: curr || 1,
                 size:5,
-                fpdNumList:$("#fpdNumList").val(),
-                fpdName:$("#fpdName").val(),
+                fpdNumList:$("#fpdNumList").val()
+                /*fpdName:$("#fpdName").val(),
                 fpdLinkman:$("#fpdLinkman").val(),
-                fpdTelephone:$("#fpdTelephone").val()
+                fpdTelephone:$("#fpdTelephone").val()*/
             },
             success:function(msg){
                 $("#strong").html(msg.total);
@@ -201,37 +201,7 @@
     $("#findFpd").click(function () {
         getFpdPageList();
     });
-    /*/!*新增收支*!/
-    $("#addFcdBtn").click(function () {
-        layer.open({
-            type:2,
-            title:'新增收支',
-            fix:false,
-            maxmin:true,
-            shadeClose:true,
-            area:['1100px','600px'],
-            content:'/billManagement/fund-client-debt/toAdd',
-            end:function() {
-                getFcdPageList();
-            }
-        });
-    });*/
-    /*收支详情*/
-   /* var editEvent = function (id) {
-        //alert(id);
-        layer.open({
-            type:2,
-            title: '收支详情',
-            fix:false,
-            maxmin:true,
-            shadeClose:true,
-            area:['450px','350px'],
-            content:'/billManagement/fund_provider_debt/toDetail?id='+id,
-            end:function() {
-                getFoPageList();
-            }
-        });
-    }*/
+
     /*Excel导出*/
     $("#daoFpd").click(function () {
         window.location.href="/billManagement/fund_provider_debt/export";

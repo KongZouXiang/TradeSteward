@@ -41,6 +41,7 @@ public class FinanceClassifyServiceImpl extends ServiceImpl<FinanceClassifyMappe
         System.out.println("每页条数："+size);
         System.out.println("当前页数："+current);
         List<FinanceClassify> list = financeClassifyMapper.selectFcPage(page,financeClassify);
+        System.out.println("遍历出来的长度："+list.size());
         map.put("list",list);
         map.put("total",page.getTotal());
         map.put("pages",page.getPages());
