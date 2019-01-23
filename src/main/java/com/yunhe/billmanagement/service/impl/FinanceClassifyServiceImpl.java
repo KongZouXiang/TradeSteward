@@ -38,15 +38,10 @@ public class FinanceClassifyServiceImpl extends ServiceImpl<FinanceClassifyMappe
     public Map selectFcPage(int current, int size, FinanceClassify financeClassify) {
         Map map = new HashMap();
         Page page = new Page(current,size);
-        System.out.println("每页条数："+size);
-        System.out.println("当前页数："+current);
         List<FinanceClassify> list = financeClassifyMapper.selectFcPage(page,financeClassify);
-        System.out.println("遍历出来的长度："+list.size());
         map.put("list",list);
         map.put("total",page.getTotal());
         map.put("pages",page.getPages());
-        System.out.println("总条数："+page.getTotal());
-        System.out.println("总页数："+page.getPages());
         return map;
     }
 

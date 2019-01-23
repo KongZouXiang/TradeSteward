@@ -6,7 +6,6 @@ import com.yunhe.billmanagement.service.IRunningAccountsService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -44,9 +43,7 @@ public class RunningAccountsController {
      */
     @RequestMapping("/toRa")
     public ModelAndView toRa(HttpSession session){
-        System.out.println("toRa进入controller");
         Map<String,Object> countList = runningAccountsService.selectCountMap();
-        System.out.println("总收入："+countList);
         session.setAttribute("countList",countList);
         return new ModelAndView("billmanagement/bill-RunningAccounts");
     }
@@ -76,12 +73,10 @@ public class RunningAccountsController {
     public String createExcel(HttpServletResponse response) throws IOException {
         //获取查询结果的数据,只要对其进行封装就行了
         List<RunningAccounts> newlist = runningAccountsService.selectRa();
-        System.out.println("数据行数："+newlist.size());
         //数据封装，这里的map之所以敢这样add是因为这里的add顺序和hql中的select字段顺序是一样的，总共就查询那么多字段
         List<Map<String,Object>> solist = new ArrayList();
         for(RunningAccounts obj:newlist){
             //每次循环都要重新new一个map，表示不同对象
-            System.out.println("RunningAccounts的第一个字段"+obj.getId());
             Map<String,Object> map = new HashMap();
             map.put("id", obj.getId());
             map.put("raTime",obj.getRaTime());
@@ -226,7 +221,6 @@ public class RunningAccountsController {
             HSSFCell cell09=rowx.createCell(9);
             cell09.setCellStyle(style);
             cell09.setCellValue((Double) map.get("raCurrentBalance"));
-
         }
         //输出Excel文件
         OutputStream output=response.getOutputStream();
@@ -236,7 +230,7 @@ public class RunningAccountsController {
         response.setContentType("application/msexcel");
         wb.write(output);
         output.close();
-        return null;
+        return "SUCCESS";
     }
 
 }

@@ -43,7 +43,7 @@ public interface IFinanceOrderService extends IService<FinanceOrder> {
      * @param foFlag 查询的条件
      * @return 日常收支表：查询的结果集
      */
-    List<FinanceOrder> selectFoByFlag(String foFlag);
+    List<Map<String,Object>> selectFoByFlag(String foFlag);
 
     /**
      * <P>
@@ -62,15 +62,6 @@ public interface IFinanceOrderService extends IService<FinanceOrder> {
      * @return FinanceOrder对象
      */
     FinanceOrder detailById(int id);
-
-    /**
-     * <P>
-     *     修改数据
-     * </P>
-     * @param financeOrder 日常收支类对象
-     * @return  日常收支表：修改是否成功
-     */
-    int updateFo(FinanceOrder financeOrder);
 
     /**
      * <P>

@@ -68,6 +68,9 @@
             <td>{{item.atPerson}}</td>
             <td>{{item.atRemark}}</td>
         </tr>
+        <tr id="detail" >
+
+        </tr>
         </tbody>
         <tbody data-validator-option="{theme:'simple_right'}">
         <tr class="text-c">
@@ -162,25 +165,40 @@
     });
 
     /*收支详情*/
-    var editEvent = function (id) {
-        //alert(id);
-        layer.open({
-            type:2,
-            title: '收支详情',
-            fix:false,
-            maxmin:true,
-            shadeClose:true,
-            area:['450px','350px'],
-            content:'/billManagement/account-transfer/toDetail?id='+id,
-            end:function() {
-                getAtPageList();
+    var editEvent = function (id){
+        $.ajax({
+            type:'get',
+            dataType:'json',
+            url:'/billManagement/account-transfer/toDetail',
+            data:{
+                id:id
+            },
+            success:function (msg) {
+                var xiangqing = "<td height='75px'colspan='11'>" +
+                    "<div style='border-bottom:1px solid #b2b2b2;height: 25px '>转账金额:<span>"+msg.atMoney+"</span></div>" +
+                    "<div style='height: 25px '>" +
+                    "   <div style='width: 25%;float: left'>转出账户:<span>"+msg.atOutAccount+"</span></div>" +
+                    "   <div style='width: 25%;float: left'>转入账户:<span>"+msg.atIntoAccount+"</span></div>" +
+                    "   <div style='width: 25%;float: left'>手续费:<span>"+msg.atCharge+"</span></div>" +
+                    "   <div style='width: 25%;float: left'>备注:<span>"+msg.atRemark+"</span></div></div>" +
+                    "<div style='height: 25px'>"  +
+                    "   <div style='width: 25%;float: left'>转出日期:<span>"+msg.atOutTime+"</span></div>" +
+                    "   <div style='width: 25%;float: left'>到账日期:<span>"+msg.atIntoTime+"</span></div>" +
+                    "   <div style='width: 25%;float: left'>手续费支付方:<span>"+msg.atChargePerson+"</span></div>" +
+                    "   <div style='width: 25%;float: left'>经手人:<span>"+msg.atPerson+"</span></div></div></td>";
+
+                if ($("#detail").val().length == 0){
+                    document.getElementById("detail").insertAdjacentHTML('afterend',xiangqing);
+                } else if ($("#detail").val().length != 0){
+                    document.getElementById("detail").closest(xiangqing);
+                }
+
             }
-        });
-    }
+        })
+    };
 
     /*删除订单*/
     var delEvent = function (id) {
-        /*alert(id);*/
         layer.confirm('你确定要删除吗？',{
             btn:['是','否']
         },function () {

@@ -4,10 +4,10 @@
     <sql id="foCols">
         id,fo_num_list,fo_time,fo_money,fo_account,fo_person,fo_remark,fo_image,fc_id,fo_flag
     </sql>
-    <select id="selectFoPage" resultType="com.yunhe.billmanagement.entity.FinanceOrder">
+    <!--<select id="selectFoPage" resultType="com.yunhe.billmanagement.entity.FinanceOrder">
         select <include refid="foCols"/> from finance_order
         where (fo_flag like concat('%',#{financeOrder.foFlag},'%')) and (fo_num_list like concat('%',#{financeOrder.foNumList},'%')) order by id desc
-    </select>
+    </select>-->
     <!--<select id="selectFoPage" resultType="com.yunhe.billmanagement.entity.FinanceOrder">
         select
             fo.id oid,

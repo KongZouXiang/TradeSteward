@@ -46,6 +46,12 @@ public interface FundClientDebtMapper extends BaseMapper<FundClientDebt> {
      */
     FundClientDebt selectFcdByName(String fcdName);
 
+    /**
+     * <P>
+     *    当客户还款时，更新信息
+     * </P>
+     * @return int类型
+     */
     @Update("update fund_client_debt set fcd_begin_debt = #{fcdBeginDebt},fcd_back_debt=#{fcdBackDebt},fcd_discount=#{fcdDiscount},fcd_receivable=#{fcdReceivable} where fcd_name=#{fcdName} ")
     int updateFcd(FundClientDebt fundClientDebt);
 }

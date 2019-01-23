@@ -76,7 +76,7 @@ public class FundProviderDebtController {
     @RequestMapping("/selectSupplier")
     public ModelAndView selectSupplier(){
         System.out.println("selectSupplier进入controller");
-        return new ModelAndView("billmanagement/bill-FCD-add-supplier");
+        return new ModelAndView("billmanagement/bill-FPD-add-supplier");
     }
     /**
      * <P>

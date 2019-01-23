@@ -38,7 +38,6 @@ public class AccountTransferController {
      */
     @RequestMapping("/toAt")
     public ModelAndView toAt(){
-        System.out.println("toAt进入controller");
         return new ModelAndView("billmanagement/bill-AccountTransfer");
     }
     /**
@@ -72,7 +71,6 @@ public class AccountTransferController {
      */
     @RequestMapping("/toAdd")
     public ModelAndView toAdd(){
-        System.out.println("toadd进入controller");
         return new ModelAndView("billmanagement/bill-AT-add");
     }
     /**
@@ -84,7 +82,6 @@ public class AccountTransferController {
      */
     @RequestMapping("/insertAt")
     public int insertAt(AccountTransfer accountTransfer) {
-        System.out.println("要添加的转账数据："+accountTransfer);
         return accountTransferService.insertAt(accountTransfer);
     }
 
@@ -93,15 +90,11 @@ public class AccountTransferController {
      *    进入详情页面
      * </P>
      * @param id 查询详情的id
-     * @param session 将传输到前台的数据存在session里
      * @return 进入FO_detail.html
      */
     @RequestMapping("/toDetail")
-    public ModelAndView toDetail(int id, HttpSession session){
-        System.out.println("toDetail进入controller");
-        AccountTransfer at = accountTransferService.detailById(id);
-        session.setAttribute("accountTransfer",at);
-        return new ModelAndView("billmanagement/bill-AT-detail");
+    public AccountTransfer toDetail(int id){
+        return accountTransferService.detailById(id);
     }
 
     /**
@@ -113,9 +106,7 @@ public class AccountTransferController {
      */
     @RequestMapping("/deleteAt")
     public int deleteAt(AccountTransfer accountTransfer) {
-        System.out.println("是否删除："+accountTransferService.deleteAt(accountTransfer));
         int i = accountTransferService.deleteAt(accountTransfer);
-        System.out.println(i);
         return i;
     }
 }

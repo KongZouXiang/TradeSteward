@@ -32,8 +32,6 @@ public class AccountTransferServiceImpl extends ServiceImpl<AccountTransferMappe
     @Override
     public Map selectAtPage(int current, int size, AccountTransfer accountTransfer) {
         Page page = new Page(current,size);
-        System.out.println("每页条数："+size);
-        System.out.println("当前页数："+current);
         List<AccountTransfer> list = accountTransferMapper.selectAtPage(page,accountTransfer);
         Map<String, Object> ma = accountTransferMapper.selectAtCountMap();
         Map map = new HashMap();
@@ -41,8 +39,6 @@ public class AccountTransferServiceImpl extends ServiceImpl<AccountTransferMappe
         map.put("pages",page.getPages());
         map.put("total",page.getTotal());
         map.put("ma",ma);
-        System.out.println("总条数："+page.getTotal());
-        System.out.println("总页数："+page.getPages());
         return map;
     }
 
@@ -66,8 +62,4 @@ public class AccountTransferServiceImpl extends ServiceImpl<AccountTransferMappe
         return accountTransferMapper.deleteById(accountTransfer);
     }
 
-    @Override
-    public Map<String, Object> selectAtCountMap() {
-        return accountTransferMapper.selectAtCountMap();
-    }
 }

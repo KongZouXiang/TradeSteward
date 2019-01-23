@@ -44,13 +44,6 @@ public class FinanceOrderController {
      */
     @GetMapping("/toFo")
     public ModelAndView toFo(HttpSession session){
-        System.out.println("toFo进入controller");
-        /*Map<String,Object> countListshou = financeOrderService.selectMoneyMapByShou();
-        Map<String,Object> countListzhi = financeOrderService.selectMoneyMapByZhi();
-        System.out.println("收入总金额："+countListshou);
-        System.out.println("支出总金额："+countListzhi);
-        session.setAttribute("countListshou",countListshou);
-        session.setAttribute("countListzhi",countListzhi);*/
         return new ModelAndView("billmanagement/bill-FinanceOrder");
     }
 
@@ -65,8 +58,6 @@ public class FinanceOrderController {
      */
     @GetMapping(value = "/selectFoPage")
     public Map selectFoPage(int current, int size,FinanceOrder financeOrder){
-        System.out.println("进入分页的controller");
-        /*System.out.println("大小："+financeOrderService.selectFoPage(current,size,financeOrder).size());*/
         return financeOrderService.selectFoPage(current,size,financeOrder);
     }
 
@@ -89,7 +80,6 @@ public class FinanceOrderController {
      */
     @RequestMapping("/toAddShou")
     public ModelAndView toAddShou(){
-        System.out.println("toAddShou进入controller");
         return new ModelAndView("billmanagement/bill-FO-addShou");
     }
 
@@ -101,7 +91,6 @@ public class FinanceOrderController {
      */
     @RequestMapping("/toAddZhi")
     public ModelAndView toAddZhi(){
-        System.out.println("toAddZhi进入controller");
         return new ModelAndView("billmanagement/bill-FO-addZhi");
     }
     /**
@@ -113,15 +102,11 @@ public class FinanceOrderController {
      */
     @GetMapping("/insertFo")
     public int insertFo(FinanceOrder financeOrder) {
-        System.out.println("要添加的数据："+financeOrder);
         Map map = new HashMap();
         map.put("financeOrder",financeOrder);
         int i = financeOrderService.insertFo(financeOrder);
-        System.out.println("是否添加成功："+i);
         int maxId = financeOrderService.maxId();
-        System.out.println("要修改的最大ID："+maxId);
         map.put("maxId",maxId);
-        System.out.println("是否修改成功："+financeOrderService.gaiFo(map));
         return financeOrderService.gaiFo(map);
     }
 
@@ -135,7 +120,6 @@ public class FinanceOrderController {
      */
     @RequestMapping("/toDetail")
     public ModelAndView toDetail(int id, HttpSession session){
-        System.out.println("toDetail进入controller");
         FinanceOrder fo = financeOrderService.detailById(id);
         session.setAttribute("financeOrder",fo);
         return new ModelAndView("billmanagement/bill-FO-detail");
@@ -174,7 +158,6 @@ public class FinanceOrderController {
      */
     @RequestMapping("/deleteAll")
     public boolean deleteAll(@RequestBody List<Integer> ids)  {
-        System.out.println("要批量删除的ids："+ids);
         for (Integer id : ids) {
             financeOrderService.deleteFo(id);
         }
@@ -191,24 +174,22 @@ public class FinanceOrderController {
     @RequestMapping("/export")
     public String createExcel(HttpServletResponse response,String foFlag) throws IOException {
         //获取查询结果的数据,只要对其进行封装就行了
-        List<FinanceOrder> newlist = financeOrderService.selectFoByFlag(foFlag);
-        System.out.println("数据行数："+newlist.size());
+        List<Map<String,Object>> newlist = financeOrderService.selectFoByFlag(foFlag);
         //数据封装，这里的map之所以敢这样add是因为这里的add顺序和hql中的select字段顺序是一样的，总共就查询那么多字段
         List<Map<String,Object>> solist = new ArrayList();
-        for(FinanceOrder obj:newlist){
+        for(Map<String,Object> obj:newlist){
             //每次循环都要重新new一个map，表示不同对象
-            System.out.println("FinanceClassify的第一个字段"+obj.getId());
             Map<String,Object> map = new HashMap();
-            map.put("id", obj.getId());
-            map.put("foNumList",obj.getFoNumList());
-            map.put("foTime",obj.getFoTime());
-            map.put("fcId",obj.getFcId());
-            map.put("foMoney",obj.getFoMoney());
-            map.put("foAccount",obj.getFoAccount());
-            map.put("foPerson",obj.getFoPerson());
-            map.put("foRemark",obj.getFoRemark());
-            map.put("foImage",obj.getFoImage());
-            map.put("foFlag",obj.getFoFlag());
+            map.put("id", obj.get("oid"));
+            map.put("foNumList",obj.get("foNumList"));
+            map.put("foTime",obj.get("foTime"));
+            map.put("fcType",obj.get("fcType"));
+            map.put("foMoney",obj.get("foMoney"));
+            map.put("foAccount",obj.get("foAccount"));
+            map.put("foPerson",obj.get("foPerson"));
+            map.put("foRemark",obj.get("foRemark"));
+            map.put("foImage",obj.get("foImage"));
+            map.put("foFlag",obj.get("foFlag"));
             solist.add(map);
         }
         //创建HSSFWorkbook对象(excel的文档对象)
@@ -316,7 +297,7 @@ public class FinanceOrderController {
 
             HSSFCell cell03=rowx.createCell(3);
             cell03.setCellStyle(style);
-            cell03.setCellValue((Integer) map.get("fcId"));
+            cell03.setCellValue((String) map.get("fcType"));
 
             HSSFCell cell04=rowx.createCell(4);
             cell04.setCellStyle(style);

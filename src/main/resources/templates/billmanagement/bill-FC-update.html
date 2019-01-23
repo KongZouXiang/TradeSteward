@@ -87,7 +87,6 @@
                     },
 
                     success:function (msg) {
-                        alert("是否存在？"+msg);
                         if (msg == true){
                             check= "该账目类型名已存在！";
                         }
@@ -99,11 +98,8 @@
         });
         var Sort = function(){
             var sortValue = $("#fcvalue").val();
-            /*console.log(sortValue);*/
             var oppion = new Array();
             oppion = $(".sort");
-           /*console.log($("#zhi").val()==sortValue);
-			console.log(oppion[1]);*/
             $("#zhi").val()==sortValue;
         };
 
@@ -111,7 +107,6 @@
 
         var textarea = function(){
 			var textVal = $("#textValue").val();
-            /*console.log(textVal);*/
 			$("#fcRemark").html(textVal);
 		};
 

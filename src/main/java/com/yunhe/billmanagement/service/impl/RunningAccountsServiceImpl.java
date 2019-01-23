@@ -28,14 +28,10 @@ public class RunningAccountsServiceImpl extends ServiceImpl<RunningAccountsMappe
 
     @Override
     public Map selectRaPage(int current, int size,RunningAccounts runningAccounts) {
-        System.out.println("每页条数："+size);
-        System.out.println("当前页数："+current);
         Map map = new HashMap();
         Page page = new Page(current,size);
         List<RunningAccounts> list = runningAccountsMapper.selectRaPage(page,runningAccounts);
         map.put("list",list);
-        System.out.println("总条数："+page.getTotal());
-        System.out.println("总页数："+page.getPages());
         map.put("pages",page.getPages());
         map.put("total",page.getTotal());
         return map;

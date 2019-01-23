@@ -62,11 +62,4 @@ public interface IAccountTransferService extends IService<AccountTransfer> {
      */
      int deleteAt(AccountTransfer accountTransfer);
 
-    /**
-     * <p>
-     *     账户转账表
-     * </p>
-     * @return 查询总金额和总手续费
-     */
-    Map<String,Object> selectAtCountMap();
 }

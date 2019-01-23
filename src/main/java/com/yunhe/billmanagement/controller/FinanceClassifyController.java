@@ -47,7 +47,6 @@ public class FinanceClassifyController {
      */
     @RequestMapping("/toIndex")
     public ModelAndView toIndex(){
-        System.out.println("toIndex进入controller");
         return new ModelAndView("index");
     }
 
@@ -59,7 +58,6 @@ public class FinanceClassifyController {
      */
     @RequestMapping("/toFc")
     public ModelAndView toFc(){
-        System.out.println("toFc进入controller");
         return new ModelAndView("billmanagement/bill-FinanceClassify");
     }
     /**
@@ -72,7 +70,6 @@ public class FinanceClassifyController {
      */
     @RequestMapping(value = "/selectFcPage",method = RequestMethod.GET)
     public Map selectFcPage(int current, int size, FinanceClassify financeClassify) {
-        System.out.println("进入分页的controller");
         return financeClassifyService.selectFcPage(current, size,financeClassify);
     }
     /**
@@ -83,7 +80,6 @@ public class FinanceClassifyController {
      */
     @RequestMapping(value = "/selectFc",method = RequestMethod.POST)
     public List<FinanceClassify> selectFc() {
-        System.out.println(financeClassifyService.selectFc());
         return financeClassifyService.selectFc();
     }
 
@@ -96,7 +92,6 @@ public class FinanceClassifyController {
      */
     @RequestMapping(value = "/selectFcBySort",method = RequestMethod.POST)
     public List<FinanceClassify> selectFcBySort(FinanceClassify financeClassify) {
-        System.out.println(financeClassifyService.selectFcBySort(financeClassify));
         return financeClassifyService.selectFcBySort(financeClassify);
     }
 
@@ -108,7 +103,6 @@ public class FinanceClassifyController {
      */
     @RequestMapping("/toAdd")
     public ModelAndView toAdd(){
-        System.out.println("toadd进入controller");
         return new ModelAndView("billmanagement/bill-FC-add");
     }
 
@@ -133,7 +127,6 @@ public class FinanceClassifyController {
      */
     @RequestMapping(value = "/checkFcExit",method = RequestMethod.GET)
     public boolean checkFcExit(FinanceClassify financeClassify){
-        System.out.println("检查是否存在："+financeClassifyService.checkFcExit(financeClassify));
         return financeClassifyService.checkFcExit(financeClassify);
     }
     /**
@@ -146,10 +139,7 @@ public class FinanceClassifyController {
      */
     @RequestMapping("/toUpdate")
     public ModelAndView toUpdate(int id, HttpSession session){
-        System.out.println("toUpdate进入controller");
-        System.out.println("要修改的ID："+id);
         FinanceClassify financeClassify = financeClassifyService.selectFcById(id);
-        System.out.println("查询到的要修改的对象："+financeClassify);
         session.setAttribute("financeClassify",financeClassify);
         return new ModelAndView("billmanagement/bill-FC-update");
     }
@@ -162,7 +152,6 @@ public class FinanceClassifyController {
      */
     @RequestMapping(value = "/updateFc",method = RequestMethod.GET)
     public int updateFc(FinanceClassify financeClassify) {
-        System.out.println("修改的内容："+financeClassify);
         return financeClassifyService.updateFc(financeClassify);
     }
     /**
@@ -176,7 +165,6 @@ public class FinanceClassifyController {
     public int deleteFc(int id) {
         int i =1;//1代表不能删,0代表可以删
         List<FinanceOrder> list = financeOrderService.list(new QueryWrapper<FinanceOrder>().eq("fc_id", id));
-        System.out.println("这个分类是否在用："+list);
         if(list.size()>0){
             i=1;
         }else {
@@ -198,12 +186,10 @@ public class FinanceClassifyController {
     public String createExcel(HttpServletResponse response) throws IOException {
         //获取查询结果的数据,只要对其进行封装就行了
         List<FinanceClassify> newlist = financeClassifyService.selectFc();
-        System.out.println("数据行数："+newlist.size());
         //数据封装，这里的map之所以敢这样add是因为这里的add顺序和hql中的select字段顺序是一样的，总共就查询那么多字段
         List<Map<String,Object>> solist = new ArrayList();
         for(FinanceClassify obj:newlist){
             //每次循环都要重新new一个map，表示不同对象
-            System.out.println("FinanceClassify的第一个字段"+obj.getId());
             Map<String,Object> map = new HashMap();
             map.put("id", obj.getId());
             map.put("fcType",obj.getFcType());

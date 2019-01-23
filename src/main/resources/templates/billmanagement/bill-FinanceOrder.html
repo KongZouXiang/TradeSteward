@@ -62,11 +62,11 @@
             <tbody>
             <tr class="text-c" v-for="(item,index) in result">
                 <td>{{index+1}}</td>
-                <td class="td-manage"><a title="详情" href="javascript:;" @click="editEventShou(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
-                    <a title="删除" href="javascript:;" @click="delEventShou(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+                <td class="td-manage"><a title="详情" href="javascript:;" @click="editEventShou(item.oid)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
+                    <a title="删除" href="javascript:;" @click="delEventShou(item.oid)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
                 <td>{{item.foNumList}}</td>
                 <td>{{item.foTime}}</td>
-                <td>{{item.fcId}}</td>
+                <td>{{item.fcType}}</td>
                 <td>{{item.foMoney}}</td>
                 <td>{{item.foAccount}}</td>
                 <td>{{item.foFlag}}</td>
@@ -117,11 +117,11 @@
             <tbody>
             <tr class="text-c" v-for="(item,index) in result">
                 <td>{{index+1}}</td>
-                <td class="td-manage"><a title="详情" href="javascript:;" @click="editEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
-                    <a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+                <td class="td-manage"><a title="详情" href="javascript:;" @click="editEvent(item.oid)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
+                    <a title="删除" href="javascript:;" @click="delEvent(item.oid)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
                 <td>{{item.foNumList}}</td>
                 <td>{{item.foTime}}</td>
-                <td>{{item.fcId}}</td>
+                <td>{{item.fcType}}</td>
                 <td>{{item.foMoney}}</td>
                 <td>{{item.foAccount}}</td>
                 <td>{{item.foFlag}}</td>
@@ -248,7 +248,6 @@
 
     /*收支详情*/
     var editEventShou = function (id) {
-        //alert(id);
         layer.open({
             type:2,
             title: '收支详情',
@@ -265,7 +264,6 @@
 
     /*删除订单*/
     var delEventShou = function (id) {
-        alert(id);
         layer.confirm('你确定要删除吗？',{
             btn:['是','否']
         },function () {
@@ -276,7 +274,7 @@
                 data:{id:id},
                 success:function (msg) {
                     getFoPageListShou();
-                    layer.msg('成功删除订单' + id,{icon:5});
+                    layer.msg('成功删除订单',{icon:5});
                 }
             })
         },function () {
