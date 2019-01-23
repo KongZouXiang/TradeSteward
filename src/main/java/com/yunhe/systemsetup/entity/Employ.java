@@ -117,5 +117,11 @@ public class Employ implements Serializable {
     @TableField("em_address")
     private String emAddress;
 
+    /**
+     * 角色id
+     */
+    @TableField("ch_id")
+    private int ch_id;
+
 
 }

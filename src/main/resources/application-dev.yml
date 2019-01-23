@@ -40,3 +40,13 @@ spring:
       ##  path: log\
     ##  level:
     ##      com.yunhe.core.aop.WebLogAspect: info
+
+      #配置redis
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#    pool:
+#     max-wait: -1
+#     max-active: 8
+#      max-idle: 8
+#      timeout: 0
