@@ -3,6 +3,7 @@ package com.yunhe.cargomanagement.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yunhe.cargomanagement.dao.WarehouseReceiptMapper;
+import com.yunhe.cargomanagement.entity.PurComm;
 import com.yunhe.cargomanagement.entity.WarehouseReceipt;
 import com.yunhe.cargomanagement.service.IWarehouseReceiptService;
 import org.springframework.stereotype.Service;
@@ -56,5 +57,20 @@ public class WarehouseReceiptServiceImpl extends ServiceImpl<WarehouseReceiptMap
     @Override
     public int deletewarehouseReceiptTwoById(Map warehouseReceipt) {
         return warehouseReceiptMapper.deleteByMap(warehouseReceipt);
+    }
+
+    @Override
+    public WarehouseReceipt selectWarhouseXiangList(int id) {
+        return warehouseReceiptMapper.selectWarhouseXiangList(id);
+    }
+
+    @Override
+    public WarehouseReceipt selectWarhouseXiangTwoList(int id) {
+        return warehouseReceiptMapper.selectWarhouseXiangTwoList(id);
+    }
+
+    @Override
+    public List<PurComm> selectWarHouseZhong(int id) {
+        return warehouseReceiptMapper.selectWarHouseZhong(id);
     }
 }

@@ -108,7 +108,9 @@
                        style="text-decoration:none">
                         <i class="Hui-iconfont">&#xe644;</i>
                     </a>
-                    <a title="详情" href="#" class="ml-5" style="text-decoration:none">
+                    <a title="详情" href="#"
+                       @Click="article_xiang('进货订单详情','/cargomanagement/purchase-history/hostXiang?id='+(item.id),'1000')"
+                       class="ml-5" style="text-decoration:none">
                         <i class="icon Hui-iconfont">&#xe627;</i>
                     </a>
                 </td>
@@ -207,6 +209,16 @@
 
         });
     };
+    /*详情*/
+    function article_xiang(title, url, id, w, h) {
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+    }
+
 
     /*批量删除*/
     $("#datadel").click(function(){

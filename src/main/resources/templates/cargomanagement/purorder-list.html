@@ -100,7 +100,9 @@
                        style="text-decoration:none">
                         <i class="Hui-iconfont">&#xe644;</i>
                     </a>
-                    <a title="详情" href="#" class="ml-5" style="text-decoration:none">
+                    <a title="详情" href="javascript:;"
+                       @Click="article_xiang('进货订单详情','/cargomanagement/purchase-order/puXiang?id='+(item.id),'1000')"
+                       class="ml-5" style="text-decoration:none">
                         <i class="icon Hui-iconfont" id="sta">&#xe627;</i>
                     </a>
                 </td>
@@ -113,10 +115,10 @@
                 <td>{{item.poQuantityOfPurchase}}</td>
                 <td>{{item.poYingMoney}}</td>
                 <td>{{item.poBill}}</td>
+                <td>{{item.poDateOrder}}</td>
                 <td>{{item.poExperiencedPerson}}</td>
                 <td>{{item.poSinglePerson}}</td>
                 <td>{{item.poRemarks}}</td>
-                <td>{{item.poDateOrder}}</td>
             </tr>
             </tbody>
         </table>
@@ -304,6 +306,16 @@
 
     /*编辑修改*/
     function article_edit(title, url, id, w, h) {
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+    }
+
+    //进货订单详情
+    function article_xiang(title, url, id, w, h) {
         var index = layer.open({
             type: 2,
             title: title,

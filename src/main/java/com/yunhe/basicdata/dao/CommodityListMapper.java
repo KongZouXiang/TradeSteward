@@ -82,4 +82,11 @@ public interface CommodityListMapper extends BaseMapper<CommodityList> {
      * @return 查询商品
      */
     List<CommodityList> selectComclassList1();
+
+    /**
+     * @author 史江浩
+     * @since 2019-01-21
+     * @return 根据商品名查询商品
+     */
+    CommodityList selectListByClName(String clName);
 }

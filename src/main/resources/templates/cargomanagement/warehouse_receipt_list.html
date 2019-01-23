@@ -30,8 +30,8 @@
         class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
     <div class="btn-group">
-        <span class="btn btn-primary radius" style="border-color: #dddddd" id="dairk">日常收入</span>
-        <span class="btn btn-default radius" id="quanburk">日常支出</span>
+        <span class="btn btn-primary radius" style="border-color: #dddddd" id="dairk">待入库单</span>
+        <span class="btn btn-default radius" id="quanburk">入库单</span>
     </div>
     <div style="display: block" id="dairu">
         <div class="text-c">
@@ -74,10 +74,12 @@
                 <tr class="text-c" v-for="(item,index) in result">
                     <td>{{index+1}}</td>
                     <td class="td-manage">
-                        <a title="详情" href="#" class="ml-5" style="text-decoration:none">
+                        <a title="入库" href="#" class="ml-5" style="text-decoration:none">
                             <i class="icon Hui-iconfont" id="sta">&#xe627;</i>
                         </a>
-                        <a title="入库" href="#" class="ml-5" style="text-decoration:none">
+                        <a title="详情" href="#"
+                           @Click="article_xiang1('待入库单详情','/cargomanagement/warehouse-receipt/wareHostXiang?id='+(item.id),'1000')"
+                           class="ml-5" style="text-decoration:none">
                             <i class="icon Hui-iconfont" id="111">&#xe627;</i>
                         </a>
                     </td>
@@ -144,7 +146,9 @@
                     <td><input type="checkbox" id="box" :value="item.id" name=""></td>
                     <td>{{index+1}}</td>
                     <td class="td-manage">
-                        <a title="详情" href="#" class="ml-5" style="text-decoration:none">
+                        <a title="详情" href="#"
+                           @Click="article_xiang2('入库单详情','/cargomanagement/warehouse-receipt/wareHostXiangTwo?id='+(item.id),'1000')"
+                           class="ml-5" style="text-decoration:none">
                             <i class="icon Hui-iconfont" id="sta1">&#xe627;</i>
                         </a>
                     </td>
@@ -347,6 +351,25 @@
             $("input:checkbox[id='box']:checked").attr("checked",false);
         };
     });
+
+    /*详情*/
+    function article_xiang1(title, url, id, w, h) {
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+    }
+
+    function article_xiang2(title, url, id, w, h) {
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+    }
 
 </script>
 </body>
