@@ -127,4 +127,17 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
     public Commclass selectclassAndComm(int id) {
         return commodityListMapper.selectComclassAndCommdity(id);
     }
+
+    @Override
+    public Map selectComclassList1() {
+        List<CommodityList> list = commodityListMapper.selectComclassList1();
+        Map<String, Object> map = new HashMap<>();
+        map.put("list",list);
+        return map;
+    }
+
+    @Override
+    public List<CommodityList> selectListByClName(CommodityList commodityList) {
+        return commodityListMapper.selectList(new QueryWrapper<CommodityList>().eq("cl_name",commodityList.getClName()));
+    }
 }

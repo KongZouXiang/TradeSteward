@@ -1,7 +1,6 @@
 package com.yunhe.basicdata.controller;
 import com.yunhe.basicdata.entity.SettlementAccount;
 import com.yunhe.basicdata.service.impl.SettlementAccountServiceImpl;
-import org.apache.struts2.ServletActionContext;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,7 +28,7 @@ public class SettlementAccountController {
      * @param settlementAccount 实体类信息
      * @return 所有账户的信息
      */
-    @RequestMapping(value = "/getrAccounlist", method = RequestMethod.GET)
+    @RequestMapping(value = "/getrAccounlist", method = RequestMethod.POST)
     @ResponseBody
     public Map selectAccountPage(int current, int size, SettlementAccount settlementAccount) {
         return settlementAccountService.selectAllAcountList(current, size, settlementAccount);
@@ -54,10 +53,10 @@ public class SettlementAccountController {
      * @param sabanknumber 开户银行
      * @return 无返回
      */
-    @RequestMapping(value = "/insertaccount", method = RequestMethod.POST)
+    @RequestMapping(value = "/insertaccount", method = RequestMethod.GET)
     public int insertAccountinfo(@RequestParam("zhanghu") String zhanghu, @RequestParam("sabank") String sabank,
                                     @RequestParam("sabanknumber") String sabanknumber ,@RequestParam("beginbalance") String beginbalance ,
-                                    @RequestParam("zhangbalance") double zhangbalance,@RequestParam("zhangstate")int zhangstate) {
+                                    @RequestParam("zhangbalance") double zhangbalance,@RequestParam("zhangstate") String zhangstate) {
         SettlementAccount settlementAccount = new SettlementAccount();
         System.out.println("taiozahung");
         settlementAccount.setSaName(zhanghu);
@@ -109,7 +108,7 @@ public class SettlementAccountController {
     @ResponseBody
     public int  updateAccountInfo(@RequestParam("zhanghu") String zhanghu, @RequestParam("sabank") String sabank,
                                           @RequestParam("sabanknumber") String sabanknumber, @RequestParam("beginbalance") String beginbalance,
-                                          @RequestParam("zhangbalance") double zhangbalance, @RequestParam("zhangstate") int  zhangstate,
+                                          @RequestParam("zhangbalance") double zhangbalance, @RequestParam("zhangstate") String zhangstate,
                                           @RequestParam("id") int id) {
         SettlementAccount settlementAccount = new SettlementAccount();
         settlementAccount.setSaName(zhanghu);

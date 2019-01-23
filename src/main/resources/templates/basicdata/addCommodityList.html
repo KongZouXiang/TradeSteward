@@ -3,48 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>新增商品</title>
-  <!--<link rel="stylesheet" href="https://cdn.zhsmjxc.com/CDN/Static-webapp/jsmin/style.css?version=5.7.0.201901051730" type="text/css">-->
-<!-- <link rel="stylesheet" href="https://cdn.zhsmjxc.com/CDN/Static-webapp/jsmin/javascript/validator/jquery.validator.css" />
- <script type="text/javascript" src="https://cdn.zhsmjxc.com/CDN/UCenter-webapp/js/product/product.js?version=5.7.0.201901051730"></script>
-    <script src="https://cdn.zhsmjxc.com/CDN/UCenter-webapp/js/product/number.js?version=5.7.0.201901051730"></script>
-    <script type="text/javascript" src="http://www.sz886.com/js/jquery-1.9.1.min.js"></script>-->
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+ <!-- <link rel="stylesheet" href="https://cdn.zhsmjxc.com/CDN/Static-webapp/jsmin/style.css?version=5.7.0.201901051730" type="text/css">-->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/js/laypage/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" href="/lib/layui/css/layui.css"  media="all">
+    <script type="text/javascript" src="/lib/layui/layui.js"></script>
     <script src="/Vue/vue.min.js"></script>
-    <script src="/js/jquery/jquery.min.js"></script>
+    <script src="/jquery/jquery-3.3.1.js"></script>
     <script src="/js/laypage/laypage.js" charset="utf-8"></script>
     <script src="/js/layer/layer.js" charset="utf-8"></script>
-<!--<script src="/js/jquery.validation/1.14.0/jquery.validate.min.js"></script>-->
-    <!--   <script src="/js/jquery.validation/1.14.0/messages_zh.min.js"></script>-->
 </head>
 <body>
 <div class="container" id="app">
     <form id="addCommdityForm">
-    <br/>
-       <div style="width: auto;height: auto">
-             <table>
-                 <tr>
-                     <td >
-                       <span style="text-align: center"><a  href="#" onclick="CommodityList()" class="btn btn-danger radius" style="text-decoration:none;background-color: #1e97f7">商品列表</a></span>
-                     </td>
-                 </tr>
-             </table>
-         </div>
-       <hr style="height:1px;background-color: #2E2D3C"/>
+    <br>
            <b>基本信息</b>
             <hr style="height:1px;background-color: #2E2D3C"/>
-                条形码 <input type="text" name="tiaoxingma" id="tiaoxingma" placeholder="选填，扫描或录入条形码"><br><br>
-            <span class="fontRed">*</span> 编号&nbsp;&nbsp;&nbsp;<input type="text" name="bianhao" id="bianhao"><br><br>
-            <span class="fontRed">*</span>名称&nbsp;&nbsp;&nbsp;<input type="text" name="mingcheng" id="mingcheng" ><br><br>
+                条形码&nbsp; <input type="text" name="tiaoxingma" id="tiaoxingma" placeholder="选填，扫描或录入条形码"><br><br>
+            <span class="c-red">*</span> 编号&nbsp;&nbsp;&nbsp;<input type="text" name="bianhao" id="bianhao"><br><br>
+            <span class="c-red">*</span>名称&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="mingcheng" id="mingcheng" ><br><br>
             分类 &nbsp;&nbsp;&nbsp;<select name="fenlei" id="fenlei">
             <option value="moren">默认分类</option>
             <option value="xinjian "> 新建分类</option>
            </select><br><br>
             <tr id="singleUnitTr">
                 <td width="100" align="right" class="font14">
-                    <span class="fontRed">*</span>单位
-                    <select name="danwei" id="danwei" onfocus="selectFocus(this)">
-                        <option value="" onclick="selectClick(this)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                    <span class="c-red">*</span>单位&nbsp;&nbsp;&nbsp;
+                    <select style="width: 100px" name="danwei" id="sadanwei"  onfocus="selectFocus(this)">
                         <option value="" onclick="selectClick(this)">包</option>
                         <option value="" onclick="selectClick(this)">杯</option>
                         <option value="" onclick="selectClick(this)">袋</option>
@@ -65,8 +55,6 @@
              规格&nbsp;&nbsp;&nbsp;<input type="text" id="guige" name="guige" placeholder="选填，如'红色长款'"><br><br>
        <tr class="free">
             <td id="multPropertiesTd">
-              <!--  <input id="enableMultProperties" name="" type="checkbox" value="" onclick="enableMultProperties(this)">
-                <label for="enableMultProperties">多属性支持</label>-->
                 <input type="checkbox" id="propertyid" name="propertyname" onclick="enableProperty(this)"><b>多属性支持</b>
             </td>
         </tr>
@@ -75,7 +63,8 @@
           <div id="multPropertyDiv" style="display:none">
             品&nbsp;&nbsp;&nbsp;牌&nbsp;&nbsp;&nbsp;<select id="pinpai" name="pinpai" style="width: 200px">
                 <option></option>
-            </select><br><br>
+            </select>
+              <a href="/basicdata/commodity-list/getcommdityfenye" style="margin-left: 800px">属性设置</a><br><br>
               产&nbsp;&nbsp;&nbsp;地&nbsp;&nbsp;&nbsp;<select id="chandi" name="chandi" style="width: 200px">
               <option></option>
           </select><br><br>
@@ -96,29 +85,29 @@
                     <table  border="2" align="center">
                         <thead>
                         <tr>
-                            <th width="100" rowspan="2" style="text-align: center">价格类别</th>
-                            <th width="100"></th>
-                            <th width="600" style="text-align: center">价格/只</th>
+                            <th width="100" rowspan="2" style="text-align: center" height="50"><b><span style="font-size: 14px">价格类别</span></b></th>
+                            <th width="100" height="50"></th>
+                            <th width="600" style="text-align: center" height="50"><b><span style="font-size: 14px">价格</span></b></th>
                         </tr>
                         </thead>
                         <tr>
-                            <td width="300" rowspan="3" style="text-align: center">销售</td>
-                            <td width="100" style="text-align: center">零售价</td>
-                            <td width="600" style="text-align: center"><input type="text" id="comlingshoujia" style="text-align: center"></td>
+                            <td width="300"  rowspan="3" style="text-align: center" height="50"><b><span style="font-size: 14px">销售</span></b></td>
+                            <td width="100" style="text-align: center" height="50"><b><span style="font-size: 14px">零售价</span></b></td>
+                            <td width="600" style="text-align: center" height="50"><input type="text" size="25" id="comlingshoujia" style="text-align: center"></td>
 
                         </tr>
                         <tr>
-                            <td width="100" style="text-align: center">最低零售价</td>
-                            <td width="600" style="text-align: center"><input type="text" id="comzuilingshoujia" style="text-align: center"></td>
+                            <td width="100" height="50" style="text-align: center"><b><span style="font-size: 14px">最低零售价</span></b></td>
+                            <td width="600" height="50" style="text-align: center"><input type="text" size="25" id="comzuilingshoujia" style="text-align: center"></td>
                         </tr>
                         <tr>
-                            <td width="100" style="text-align: center">批发价</td>
-                            <td width="600" style="text-align: center"><input type="text" id="compifajia" style="text-align: center"></td>
+                            <td width="100" height="50" style="text-align: center"><b><span style="font-size: 14px">批发价</span></b></td>
+                            <td width="600" height="50" style="text-align: center"><input type="text" size="25" id="compifajia" style="text-align: center"></td>
                         </tr>
                         <tr>
-                            <td width="100" style="text-align: center">进货</td>
-                            <td width="100" style="text-align: center">参考进货价</td>
-                            <td width="600" style="text-align: center"><input type="text" id="cankaojinhuojia" style="text-align: center"></td>
+                            <td width="100" height="50" style="text-align: center"><b><span style="font-size: 14px">进货</span></b></td>
+                            <td width="100" height="50" style="text-align: center"><b><span style="font-size: 14px">参考进货价</span></b></td>
+                            <td width="600" height="50" style="text-align: center"><input type="text" size="25" id="cankaojinhuojia" style="text-align: center"></td>
                         </tr>
                     </table>
                 </div>
@@ -134,43 +123,34 @@
             <hr style="height:1px;background-color: #2E2D3C"/>
         </div>
         <div  id="kucunlaing" style="display: none">
-          最低库存量&nbsp;&nbsp;&nbsp;<input type="text" id="zuidikucun" name="zuidikucun"><br><br>
-            最高库存量&nbsp;&nbsp;&nbsp;<input type="text" id="zuigaokucun" name="zuigaokucun">
+          最低库存量&nbsp;&nbsp;&nbsp;<input type="text" size="15"  id="zuidikucun" name="zuidikucun"><br><br>
+            最高库存量&nbsp;&nbsp;&nbsp;<input type="text" size="15" id="zuigaokucun" name="zuigaokucun">
         </div>
         <div id="cangku" style="display: block" >
             <table border="1px black solid" align="center">
                 <tr style="width: auto;height: auto">
-                    <td width="300" style="text-align: center">仓库</td>
-                    <td width="300" style="text-align: center" >最低库存量</td>
-                    <td width="300" style="text-align: center">最高库存量</td>
+                    <td width="300" height="50" style="text-align: center"><b><span style="font-size: 14px">仓库</span></b></td>
+                    <td width="300" height="50" style="text-align: center" ><b><span style="font-size: 14px">最低库存量</span></b></td>
+                    <td width="300" height="50" style="text-align: center"><b><span style="font-size: 14px">最高库存量</span></b></td>
                 </tr>
                 <tr>
-                    <td width="300" style="text-align: center">默认库</td>
-                    <td style="text-align: center"><input type="text" id="comzuidikucun" name="czuidikc" style="text-align: center"> </td>
-                    <td style="text-align: center"><input type="text"  id="comzuigaokucun" name="czuigaok" style="text-align: center"></td>
+                    <td width="300"  height="50" style="text-align: center"><b><span style="font-size: 14px">默认库</span></b></td>
+                    <td style="text-align: center" height="50" ><input type="text" size="25" id="comzuidikucun" name="czuidikc" style="text-align: center"> </td>
+                    <td style="text-align: center"  height="50" ><input type="text" size="25" id="comzuigaokucun" name="czuigaok" style="text-align: center"></td>
                 </tr>
             </table>
         </div>
                 <hr>
-        <div class="formTitle">其他</div>
+             <div class="formTitle"><b><span style="font-size: 18px">其他</span></b></div>
+             <hr>
         <table width="100%" border="0" cellspacing="0" cellpadding="8">
-            <tr>
-                <td width="100" align="right" class="font14">商品状态&nbsp;&nbsp;&nbsp;</td>
-                <td>
-                    <input id="productstate1" name="productstate" type="radio" value="1" checked>
-                    启用&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input id="productstate2" name="productstate" type="radio" value="0"> 停用
-                </td>
-            </tr>
-            <tr>
-                <td align="right" class="font14" valign="top">备注&nbsp;&nbsp;&nbsp;</td>
-                <td>
-                    <textarea id="productremark" name="productremark" rows="" style="height: 40px;" class="inputText wf95" maxlength="500"></textarea>
-                </td>
-            </tr>
+            <div class="form-group">
+                <label for="remark"><b><span style="font-size: 18px">备注：</span></b></label>
+                <textarea class="form-control" id="remark" name="remark" rows="3" cols="150" ></textarea>
+            </div>
         </table>
             </div>
-        <div class="form-group">
+        <div class="form-group"  style="margin-top: 10px">
             <button type="button" id="SaveBtn" class="btn btn-success">提交</button>
             <button type="button" id="CancelBtn" class="btn btn-default">取消</button>
         </div>
@@ -178,26 +158,29 @@
 </div>
 <script>
   var addCommity=function () {
+      var clunit=$("#sadanwei").find("option:selected").text();
+
         $.ajax({
             type:'POST',
             dataType:'json',
             url:"/basicdata/commodity-list/addpage",
             data:{
-                tiaoxingma:$("#tiaoxingma").val(),
-                bianhao:$("#bianhao").val(),
-                mingcheng:$("#mingcheng").val(),
-                fenlei:$("#fenlei").val(),
-                danwei:$("#danwei").val(),
-                guige:$("#guige").val(),
-                cankaojinhuo:$("#cankaojinhuojia").val(),
-                pifajia:$("#compifajia").val(),
-                lingshoujia:$("#comlingshoujia").val(),
-                zuidilingshou:$("#comzuilingshoujia").val(),
-                czuidikc:$("#comzuidikucun").val(),
-                czuigaok:$("#comzuigaokucun").val(),
-
+                clScan:$("#tiaoxingma").val(),
+                clNumber:$("#bianhao").val(),
+                clName:$("#mingcheng").val(),
+                fenlei:1/*$("#fenlei").val()*/,
+                clUnit:clunit,
+                clSpec:$("#guige").val(),
+                clPurPrice:$("#cankaojinhuojia").val(),
+                clWhoPrice:$("#compifajia").val(),
+                clTagPrise:$("#comlingshoujia").val(),
+                wmId:1,
+                clMinLingPrice:$("#comzuilingshoujia").val(),
+                clMinStock:$("#comzuidikucun").val(),
+                clMAxStock:$("#comzuigaokucun").val(),
             },
             success:function () {
+                alert(clunit);
                 $("#CancelBtn").click();
             }
         });
@@ -244,7 +227,8 @@
             kucunlaing.style.display="none";
         }
   }
-  var CommodityList=function () {
+  /*分类管理*/
+  var property=function () {
         window.location.href="/basicdata/commodity-list/getcommdityfenye";
     }
 </script>
