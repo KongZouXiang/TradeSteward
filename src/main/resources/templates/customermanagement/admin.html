@@ -50,66 +50,66 @@
     </span>
 
         <span class="r">共有数据：<strong id="strong"></strong> 条</span></div>
-    <div id="app" style="overflow: scroll;height: 500px">
-        <table class="table table-border table-bordered table-bg">
-            <thead>
-            <tr>
-                <th scope="col" colspan="9">客户列表</th>
-            </tr>
-            <tr class="text-c">
-                <th width="25">
-                    <label>
-                        <input type="checkbox" id="checkAll">
-                    </label>
-                </th>
-                <th width="40">ID</th>
-                <th width="130">操作</th>
-                <th width="150">编号</th>
-                <th width="150">公司名</th>
-                <th width="90">应收欠款</th>
-                <th width="90">联系方式</th>
-                <th width="130">联系人</th>
-                <th width="150">客户状态</th>
-                <th width="100">关联人员</th>
-                <th width="100">公司地址</th>
-                <th width="70">公司邮箱</th>
-                <th width="150">联系人qq</th>
-                <th width="150">备注</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="text-c" v-for="(item,index) in result">
-                <td><input type="checkbox" id="box" :value="item.id"></td>
-                <td>{{index+1}}</td>
-                <td class="td-manage">
-                    <a style="text-decoration:none" class="ml-5"
-                       @click="editEvent(item.id)('编辑','article-add.html','10001')" href="javascript:;" title="编辑">
-                        <i class="Hui-iconfont">&#xe6df;</i>
-                    </a>
-                    <a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5"
-                       style="text-decoration:none">
-                        <i class="Hui-iconfont">&#xe6e2;</i>
-                    </a>
 
-                </td>
-                <td>{{item.cusNumber}}</td>
-                <td>{{item.cusCompname}}</td>
-                <td>{{item.cusMoney}}</td>
-                <td>{{item.cusTele}}</td>
-                <td>{{item.cusName}}</td>
-                <td>{{item.cusFlag}}</td>
-                <td>{{item.cusConnname}}</td>
-                <td>{{item.cusAddress}}</td>
-                <td>{{item.cusEmail}}</td>
-                <td>{{item.cusQq}}</td>
-                <td>{{item.cusRemarks}}</td>
+    <table class="table table-border table-bordered table-bg" id="app">
+        <thead>
+        <tr>
+            <th scope="col" colspan="9">客户列表</th>
+        </tr>
+        <tr class="text-c">
+            <th width="25">
+                <label>
+                    <input type="checkbox" id="checkAll">
+                </label>
+            </th>
+            <th width="40">ID</th>
+            <th width="130">操作</th>
+            <th width="150">编号</th>
+            <th width="150">公司名</th>
+            <th width="90">应收欠款</th>
+            <th width="90">联系方式</th>
+            <th width="130">联系人</th>
+            <th width="150">客户状态</th>
+            <th width="100">关联人员</th>
+            <th width="100">公司地址</th>
+            <th width="70">公司邮箱</th>
+            <th width="150">联系人qq</th>
+            <th width="150">备注</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-c" v-for="(item,index) in result">
+            <td><input type="checkbox" id="box" :value="item.id"></td>
+            <td>{{index+1}}</td>
+            <td class="td-manage">
+                <a style="text-decoration:none" class="ml-5"
+                   @click="editEvent(item.id)('编辑','article-add.html','10001')" href="javascript:;" title="编辑">
+                    <i class="Hui-iconfont">&#xe6df;</i>
+                </a>
+                <a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5"
+                   style="text-decoration:none">
+                    <i class="Hui-iconfont">&#xe6e2;</i>
+                </a>
 
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div id="pagenav" style="text-align: center"></div>
+            </td>
+            <td>{{item.cusNumber}}</td>
+            <td>{{item.cusCompname}}</td>
+            <td>{{item.cusMoney}}</td>
+            <td>{{item.cusTele}}</td>
+            <td>{{item.cusName}}</td>
+            <td>{{item.cusFlag==1?"正常":"禁用"}}</td>
+            <td>{{item.cusConnname}}</td>
+            <td>{{item.cusAddress}}</td>
+            <td>{{item.cusEmail}}</td>
+            <td>{{item.cusQq}}</td>
+            <td>{{item.cusRemarks}}</td>
+
+        </tr>
+        </tbody>
+    </table>
 </div>
+<div id="pagenav" style="text-align: center"></div>
+
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
 <script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
@@ -136,9 +136,9 @@
                 current: curr || 1,
                 /*每页大小*/
                 size: 3,
-                cusCompname:$("#poSupName").val(),
-                cusTele:$("#poSupName").val(),
-                cusNumber:$("#poSupName").val()
+                cusCompname: $("#poSupName").val(),
+                cusTele: $("#poSupName").val(),
+                cusNumber: $("#poSupName").val()
             },
             success: function (msg) {
                 $("#strong").html(msg.total);
@@ -186,21 +186,21 @@
     };
 
     /*批量删除*/
-    $("#deleteAll").click(function(){
+    $("#deleteAll").click(function () {
         var arr = new Array();
         $("input:checkbox[id='box']:checked").each(function (i) {
-            arr[i]=$(this).val();
+            arr[i] = $(this).val();
         });
-        if (arr[0]==null){
-            layer.msg("请选择要删除的客户！",{time:2000,icon:2})
-        }else{
-            layer.confirm('你确定要删除它们吗？',{
-                btn:['是','否']
-            },function () {
-                for (var i =0;i<arr.length;i++ ){
+        if (arr[0] == null) {
+            layer.msg("请选择要删除的客户！", {time: 2000, icon: 2})
+        } else {
+            layer.confirm('你确定要删除它们吗？', {
+                btn: ['是', '否']
+            }, function () {
+                for (var i = 0; i < arr.length; i++) {
                     $.ajax({
-                        type:'POST',
-                        dataType:'json',
+                        type: 'POST',
+                        dataType: 'json',
                         url: '/customermanagement/customer/deleteCustomer',
                         data: {
                             id: arr[i],
@@ -214,11 +214,12 @@
                         }
                     });
                 }
-            },function () {
-                layer.msg('删除失败！',{time:2000,icon:2});
+            }, function () {
+                layer.msg('删除失败！', {time: 2000, icon: 2});
             });
-            $("input:checkbox[id='box']:checked").attr("checked",false);
-        };
+            $("input:checkbox[id='box']:checked").attr("checked", false);
+        }
+        ;
     });
 
     /*编辑修改*/
@@ -231,7 +232,8 @@
             maxmin: true,
             shadeClose: true,
             area: ['1100px', '600px'],
-            content: '/customermanagement/customer/editCustomer?id='+id,
+            content: '/customermanagement/customer/editCustomer?id=' + id,
+
             end: function () {
                 getPurchasePageList();
                 layer.msg('修改成功', {icon: 1});
@@ -258,7 +260,6 @@
 
         });
     };
-
 
 
     function excel() {

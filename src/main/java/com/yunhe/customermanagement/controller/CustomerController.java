@@ -9,11 +9,8 @@ import org.apache.poi.ss.usermodel.*;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.springframework.web.servlet.ModelAndView;
 
@@ -68,7 +65,7 @@ public class CustomerController {
      * @param customer 客户
      * @return list页面
      */
-    @PostMapping("/updateCustomer")
+    @RequestMapping(value = "/updateCustomer",method = RequestMethod.POST)
     @ResponseBody
     public Integer updateCustomer(Customer customer) {
 

@@ -64,7 +64,7 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier> i
     public IPage<Supplier> selectPage(int current, int size, Supplier supplier) {
         return supplierMapper.selectPage(new Page<>(current, size),
                 new QueryWrapper<Supplier>().like("sup_compname", supplier.getSupCompname())
-                        .or().like("sup_tele", supplier.getSupTele()));
+                        .or().like("sup_tele", supplier.getSupTele()).or().like("sup_number",supplier.getSupNumber()));
     }
 
     @Override
