@@ -7,9 +7,11 @@ import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
 import com.yunhe.cargomanagement.dao.PurchaseOrderMapper;
 import com.yunhe.cargomanagement.dao.SalesOrderHistoryMapper;
-import com.yunhe.cargomanagement.entity.OrderConnectComm;
-import com.yunhe.cargomanagement.entity.PurchaseOrder;
-import com.yunhe.cargomanagement.entity.SalesOrderHistory;
+import com.yunhe.cargomanagement.dao.WarehouseReceiptMapper;
+import com.yunhe.cargomanagement.entity.*;
+import com.yunhe.cargomanagement.service.IPurchaseHistoryService;
+import com.yunhe.cargomanagement.service.IWarehouseReceiptService;
+import com.yunhe.core.util.DateUtil;
 import com.yunhe.customermanagement.service.ISupplierService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,16 +35,16 @@ public class cargomanagement {
     @Resource
     CommodityListServiceImpl commodityListService;
 
-    /*@Test
+    @Resource
+    private IPurchaseHistoryService purchaseHistoryService;
+
+    @Resource
+    private IWarehouseReceiptService warehouseReceiptService;
+
+    @Test
     public void text() {
-        PurchaseOrder purchaseOrder = new PurchaseOrder();
-        purchaseOrder.setId(3);
-        List<PurchaseOrder> list = purchaseOrderMapper.selectPuOrder(purchaseOrder);
-        for (PurchaseOrder order : list) {
-            order.getPurComm().
-        }
+
     }
-*/
 
 }
 

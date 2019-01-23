@@ -141,15 +141,14 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
     }
 
     /**
-     *
-     * @param commodityList 查询的条件
+     * 根据商品名查询
+     * @author 史江浩
+     * @param clName 查询的条件
      * @return
      */
     @Override
-    public Map selectListByClName(CommodityList commodityList) {
-        List<CommodityList> list = commodityListMapper.selectList(new QueryWrapper<CommodityList>().eq("cl_name", commodityList.getClName()));
-        Map<String, Object> map = new HashMap<>();
-        map.put("list",list);
-        return map;
+    public CommodityList selectListByClName(String clName) {
+        CommodityList list = commodityListMapper.selectListByClName(clName);
+        return list;
     }
 }

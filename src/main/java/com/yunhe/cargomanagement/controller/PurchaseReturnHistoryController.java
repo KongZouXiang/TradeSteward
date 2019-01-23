@@ -1,6 +1,7 @@
 package com.yunhe.cargomanagement.controller;
 
 
+import com.yunhe.cargomanagement.entity.PurComm;
 import com.yunhe.cargomanagement.entity.PurchaseHistory;
 import com.yunhe.cargomanagement.entity.PurchaseReturnHistory;
 import com.yunhe.cargomanagement.service.IPurchaseReturnHistoryService;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -39,6 +41,31 @@ public class PurchaseReturnHistoryController {
     public ModelAndView getGoToPurchaseHistory(){
         ModelAndView mv = new ModelAndView();
         mv.setViewName("cargomanagement/purreturnhistory-list");
+        return mv;
+    }
+
+    /**
+     * 跳转进货退货历史页面 并且session传值过去
+     * @param session session
+     * @param id 进货退货历史页面传过来的id
+     * @return 要跳转的页面
+     */
+    @RequestMapping("/rderHostXiang")
+    public ModelAndView test33(HttpSession session, int id) {
+        PurchaseReturnHistory purchaseReturnHistory = purchaseReturnHistoryService.selectOrderXiangList(id);
+        List<PurComm> purComms = purchaseReturnHistoryService.selectOrderHistZhong(id);
+        int zongjia = 0;
+        int zongshu = 0;
+        for (PurComm purComm : purComms) {
+            zongjia += purComm.getPcGeshu() * Integer.parseInt(purComm.getCommodityList().getClPurPrice());
+            zongshu+=purComm.getPcGeshu();
+        }
+        session.setAttribute("shuliang",zongshu);
+        session.setAttribute("jiage",zongjia);
+        session.setAttribute("pulist", purchaseReturnHistory);
+        session.setAttribute("poId", id);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/cargomanagement/Pur_order_history_select_xiang");
         return mv;
     }
 
@@ -91,6 +118,16 @@ public class PurchaseReturnHistoryController {
     @RequestMapping("/deletePurchaseReturnHistory")
     public int deletePurchaseReturnHistory(int id){
         return purchaseReturnHistoryService.deletePurchaseReturnHistory(id);
+    }
+
+    /**
+     * 进货退货历史商品详情
+     * @param purchaseReturnHistory  进货退货历史实体类接收
+     * @return 进货退货历史商品详情信息
+     */
+    @RequestMapping("/selectOrderHistZhong")
+    public List<PurComm> selectOrderHistZhong(PurchaseReturnHistory purchaseReturnHistory){
+        return purchaseReturnHistoryService.selectOrderHistZhong(purchaseReturnHistory.getId());
     }
 
     /**

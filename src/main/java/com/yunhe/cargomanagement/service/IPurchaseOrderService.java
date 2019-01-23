@@ -85,4 +85,10 @@ public interface IPurchaseOrderService extends IService<PurchaseOrder> {
      */
     List<PurComm> selectPuOrder(PurchaseOrder purchaseOrder);
 
+    /**
+     * 一对一
+     * @return 商品信息
+     */
+    List<PurComm> selectComZhong(int id);
+
 }

@@ -19,7 +19,7 @@
     <script type="text/javascript" src="/js/vue/vue.min.js"></script>
     <script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
-    <title>进货订单历史详情</title>
+    <title>进货历史详情</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 </head>
@@ -27,15 +27,17 @@
 <div id="app">
     <input th:value="${session.poId}" type="hidden" id="poId">
     <article class="page-container">
-        <h1 style="text-align: center">进货订单详情</h1>
-        <div> <table class="table table-border table-bordered table-bg">
+        <h1 style="text-align: center">进货详情</h1>
+        <div>
+            <table class="table table-border table-bordered table-bg">
             <thead>
             <tr>
-                <th scope="col" colspan="9">进货订单详情</th>
+                <th scope="col" colspan="9">进货详情</th>
             </tr>
             <tr class="text-c">
+                <th width="40">入库仓库</th>
                 <th width="40">供应商</th>
-                <th width="170">处理状态</th>
+                <th width="170">入库状态</th>
                 <th width="170">单据编号</th>
                 <th width="170">经手人</th>
                 <th width="100">业务日期</th>
@@ -43,11 +45,12 @@
             </thead>
             <tbody>
             <tr class="text-c" >
-                <td th:text="${session.model.poSupName}"></td>
-                <td th:text="${session.model.poState}"></td>
-                <td th:text="${session.model.poNumber}"></td>
-                <td th:text="${session.model.poAuditor}"></td>
-                <td th:text="${session.model.poDate}"></td>
+                <td th:text="${session.pulist.phWarehouse}"></td>
+                <td th:text="${session.pulist.phSupname}"></td>
+                <td th:text="${session.pulist.phWarehousingStatus}"></td>
+                <td th:text="${session.pulist.phNumber}"></td>h
+                <td th:text="${session.pulist.phExperiencedPerson}"></td>
+                <td th:text="${session.pulist.phDate}"></td>
             </tr>
             </tbody>
         </table>
@@ -79,29 +82,34 @@
                     <td>{{item.pcGeshu}}</td>
                     <td>个</td>
                     <td>无</td>
-                    <td>金额</td>
-                    <td></td>
+                    <td>{{item.commodityList.clPurPrice}}</td>
+                    <td>无备注</td>
                 </tr>
                 </tbody>
                 <thead>
-                <tr class="text-c">
+                <tr class="text-c" >
                     <th width="40">
                         合计
                     </th>
                     <th width="130"></th>
                     <th width="150"></th>
                     <th width="150"></th>
-                    <th width="90">数量</th>
+                    <th width="90" th:text="${session.shuliang}"></th>
                     <th width="90"></th>
                     <th width="130"></th>
-                    <th width="150">金额</th>
+                    <th width="150" th:text="${session.jiage}"></th>
                     <th width="100"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td width="300"><span style="text-align: right"><h3>总计金额：</h3><span style="color: red"><span
-                            style="color: #8e8e99">¥</span> 0.00</span></span></td>
+                    <td width="300">
+                        <span style="text-align: right"><h3>总计金额：</h3>
+                    </span>
+                    </td>
+                    <td>
+                        <h3><span style="color: red;text-align: center;font-size: 20px" th:text="${session.jiage}"></span>元</h3>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -131,7 +139,8 @@
         el: '#app',
         data: {
             result: [],
-            resulttwo:[]
+            resulttwo:[],
+            resultthree:[]
         }
     });
 
@@ -140,7 +149,7 @@
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: '/cargomanagement/purchase-order/selectPuOrder',
+            url: '/cargomanagement/purchase-history/selectComHistZhong',
             data: {
                id:id
             },

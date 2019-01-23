@@ -126,7 +126,33 @@
              pur_comm pc,
              commodity_list co
         WHERE pu.id = pc.pu_id
-          AND pc.com_id = co.id AND pu.id= #{id}
+          AND pc.com_id = co.id
+          AND pu.id = #{id}
+    </select>
+
+    <resultMap id="selectZhong" type="com.yunhe.cargomanagement.entity.PurComm">
+        <id column="id" property="id"/>
+        <result column="pc_geshu" property="pcGeshu"/>
+        <association property="commodityList" javaType="com.yunhe.basicdata.entity.CommodityList">
+            <id column="id" property="id"/>
+            <result column="cl_name" property="clName"/>
+            <result column="cl_number" property="clNumber"/>
+            <result column="cl_unit" property="clUnit"/>
+            <result column="cl_pur_price" property="clPurPrice"/>
+        </association>
+    </resultMap>
+
+    <select id="selectComZhong" resultMap="selectZhong">
+        SELECT
+            co.cl_name,
+            co.cl_number,
+            pc.pc_geshu,
+            co.cl_unit,
+            co.cl_pur_price
+        FROM
+            pur_comm pc,
+            commodity_list co
+        WHERE pc.com_id = co.id and pu_id=#{id}
     </select>
 
 
