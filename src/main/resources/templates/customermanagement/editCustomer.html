@@ -31,36 +31,36 @@
             </div>
             <div class="form-group">
                 <label for="cus_tele">联系方式：</label>
-                <input type="text" class="form-control" id="cus_tele" name="cus_tele"   placeholder="期初余额">
+                <input type="text" class="form-control" id="cus_tele" name="cus_tele" th:value='${customer.cusTele}'  placeholder="联系方式">
             </div>
             <div class="form-group">
                 <label for="cus_name">联系人：</label>
-                <input type="text" class="form-control" id="cus_name" name="cus_name"  placeholder="账户余额">
+                <input type="text" class="form-control" id="cus_name" name="cus_name" th:value='${customer.cusName}' placeholder="联系人">
             </div>
             <div class="form-group">
                 <label for="cus_flag">状态：</label>
-                <input type="text" class="form-control" id="cus_flag" name="cus_flag"   placeholder="状态">
+                <input type="text" class="form-control" id="cus_flag" name="cus_flag"  th:value='${customer.cusFlag}' placeholder="状态">
             </div>
             <div class="form-group">
                 <label for="cus_connname">关联人员：</label>
-                <textarea class="form-control" id="cus_connname" name="cus_connname" ></textarea>
+                <input type="text"  class="form-control" id="cus_connname" name="cus_connname" th:value='${customer.cusConnname}' placeholder="关联人员">
             </div>
             <div class="form-group">
                 <label for="cus_address">地址：</label>
-                <textarea class="form-control" id="cus_address" name="cus_address" ></textarea>
+                <input type="text"  class="form-control" id="cus_address" name="cus_address" th:value='${customer.cusAddress}' placeholder="地址">
             </div>
             <div class="form-group">
                 <label for="cus_email">邮箱：</label>
-                <textarea class="form-control" id="cus_email" name="cus_email" ></textarea>
+                <input type="text" class="form-control" id="cus_email" name="cus_email" th:value='${customer.cusEmail}' placeholder="邮箱">
             </div>
 
             <div class="form-group">
                 <label for="cus_qq">qq：</label>
-                <textarea class="form-control" id="cus_qq" name="cus_qq" ></textarea>
+                <input type="text"  class="form-control" id="cus_qq" name="cus_qq" th:value='${customer.cusQq}' placeholder="QQ">
             </div>
             <div class="form-group">
                 <label for="cus_remarks">备注：</label>
-                <textarea class="form-control" id="cus_remarks" name="cus_remarks" ></textarea>
+                <input type="text"  class="form-control" id="cus_remarks" name="cus_remarks" th:value='${customer.cusRemarks}' placeholder="备注">
             </div>
 
 
@@ -81,9 +81,9 @@
 */
 
     var updateAccount = function () {
-       /* if (!check().form()) {
+       if (!check().form()) {
             return;
-        }*/
+        }
         $.ajax({
             type: 'POST',
             dataType: 'json',
@@ -122,30 +122,45 @@
     });
 
 
-   /* function check() {
+ function check() {
         return $("#updateAccountForm").validate({
             rules: {
-                cus_number: {
+                cusNumber: {
                     required: true
                 },
-                cus_compname: {
+                cusCompname: {
                     required: true
                 },
-                cus_money: {
+                cusMoney: {
                     required: true
                 },
-                cus_tele: {
+                cusTele: {
                     required: true
                 },
-                cus_name: {
+                cusName: {
                     required: true
                 },
-                cus_flag: {
+                cusFlag: {
+                    required: true
+                },
+                cusConnname: {
+                    required: true
+                },
+                cusAddress: {
+                    required: true
+                },
+                cusEmail: {
+                    required: true
+                },
+                cus_Qq: {
+                    required: true
+                },
+                cusRemarks: {
                     required: true
                 }
             }
         });
-    }*/
+    }
 </script>
 </body>
 </html>

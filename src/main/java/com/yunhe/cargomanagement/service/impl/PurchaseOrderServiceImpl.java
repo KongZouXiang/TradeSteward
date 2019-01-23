@@ -78,6 +78,11 @@ public class PurchaseOrderServiceImpl extends ServiceImpl<PurchaseOrderMapper, P
         return purchaseOrderMapper.updateById(purchaseOrder);
     }
 
+    @Override
+    public List<PurchaseOrder> selectPurchaseOrder() {
+        return purchaseOrderMapper.selectList(null);
+    }
+
     public PurchaseOrderMapper getPurchaseOrderMapper() {
         return purchaseOrderMapper;
     }

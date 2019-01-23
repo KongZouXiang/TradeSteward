@@ -1,8 +1,11 @@
 package com.yunhe.activitymanagement.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.yunhe.activitymanagement.entity.MerchandisePackage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -17,23 +20,18 @@ import java.util.Map;
 public interface IMerchandisePackageService extends IService<MerchandisePackage> {
 
 
+    IPage selectLikePage(int current, int size, MerchandisePackage merchandisePackage);
 
+
+    List<MerchandisePackage> selectAll();
     /**
      * <P>
-     *     商品模板表
+     *     删除数据
      * </P>
-     * @param current 当前页
-     * @param size 每页条数
-     * @param merchandisePackage 查询条件放在对象里
-     * @return 商品模板表：分页的结果集
+     * @param
+     * @return  商品套餐表：删除是否成功
      */
-    Map selectmpPage(int current, int size, MerchandisePackage merchandisePackage);
+    int deleteById(Serializable id);
 
-    /**
-     * <P>
-     *     查询数据
-     * </P>
-     * @return 商品模板表：查询的结果集
-     */
-    List<MerchandisePackage> selectmp();
+
 }

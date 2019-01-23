@@ -59,7 +59,7 @@ public class SalesOrderHistoryController {
         return new ModelAndView("cargomanagement/salesOrderHistory-add");
     }
 
-/*    *//**
+     /**
      * 根据id看详情
      * @param id
      * @return
@@ -133,10 +133,12 @@ public class SalesOrderHistoryController {
         return new ModelAndView("/cargomanagement/salesOrderHistory");
     }
 
-    @RequestMapping("/index")
+  @RequestMapping("/index")
     public ModelAndView index1(){
         return new ModelAndView("/index");
     }
+
+
     /**
      * 分页模糊查询销售订单历史
      * @param pageNum

@@ -13,4 +13,6 @@ import com.yunhe.activitymanagement.entity.PackageCommodity;
  */
 public interface PackageCommodityMapper extends BaseMapper<PackageCommodity> {
 
+
+
 }

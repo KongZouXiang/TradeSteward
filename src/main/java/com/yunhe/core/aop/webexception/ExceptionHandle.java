@@ -2,10 +2,9 @@ package com.yunhe.core.aop.webexception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Demo class
@@ -19,20 +18,19 @@ public class ExceptionHandle {
     private final static Logger logger = LoggerFactory.getLogger(ExceptionHandle.class);
 
     @ExceptionHandler(value = Exception.class)
-    public String handle(Exception e, Model model) {
-
+    public ModelAndView handle(Exception e ) {
+        ModelAndView modelAndView = new ModelAndView();
         if (e instanceof GlobalException) {
             GlobalException globalException = (GlobalException) e;
-            model.addAttribute("code", globalException.getCode());
-            model.addAttribute("msg", globalException.getMessage());
-        } else if (e instanceof NoHandlerFoundException) {
-            model.addAttribute("code", 404);
-            model.addAttribute("msg","页面找不到啦");
+            modelAndView.addObject("code", globalException.getCode());
+            modelAndView.addObject("msg", globalException.getMessage());
         } else {
-            logger.info("【系统异常】{}", e);
-            model.addAttribute("code", ExceptionEnum.UNKNOW_ERROR.getCode());
-            model.addAttribute("msg", ExceptionEnum.UNKNOW_ERROR.getMsg());
+            logger.info("【系统异常】={}", e);
+            e.getClass().getName();
+            modelAndView.addObject("code", ExceptionEnum.UNKNOW_ERROR.getCode());
+            modelAndView.addObject("msg", ExceptionEnum.UNKNOW_ERROR.getMsg());
         }
-        return "error";
+        modelAndView.setViewName("error");
+        return modelAndView;
     }
 }

@@ -7,7 +7,7 @@
     </sql>
     <sql id="empl3">
         em_username,em_password,em_realname,em_role,em_sex,em_phone,em_email,em_status,
-        em_repo,em_shiro,em_sel_invoice,em_del_invoice,em_sel_user,em_address
+        em_repo,em_shiro,em_sel_invoice,em_del_invoice,em_sel_user,em_address,ch_id
     </sql>
 
     <sql id="empl2">
@@ -26,11 +26,19 @@
 
     <insert id="insertEmploy"  parameterType="com.yunhe.systemsetup.entity.Employ">
         insert into employ(<include refid="empl3"/>) values (#{emUsername},#{emPassword},#{emRealname},#{emRole},#{emSex},#{emPhone},#{emEmail},#{emStatus}
-        ,#{emRepo},#{emShiro},#{emSelInvoice},#{emDelInvoice},#{emSelUser},#{emAddress})
+        ,#{emRepo},#{emShiro},#{emSelInvoice},#{emDelInvoice},#{emSelUser},#{emAddress},#{ch_id})
     </insert>
 
    <select id="checkemname" parameterType="com.yunhe.systemsetup.entity.Employ" resultType="String">
         select em_username from employ where em_username =#{emUsername}
+    </select>
+
+    <!--
+    查询出员工对应的板块
+    author 孔邹祥
+    -->
+    <select id="selectEmployPlate" resultType="java.lang.String">
+        SELECT p.`pe_name` FROM employ e,chara_manger c,permission p WHERE e.`id`=#{value} AND e.ch_id = c.`id` AND c.`id`=p.`ch_id`
     </select>
 
     <update id="updatePass" parameterType="com.yunhe.systemsetup.entity.Employ">
@@ -38,6 +46,6 @@
     </update>
 
     <update id="updatemess" parameterType="com.yunhe.systemsetup.entity.Employ">
-        update employ set  em_username=#{emUsername},em_realname=#{emRealname},em_role=#{emRole},em_sex=#{emSex},em_phone=#{emPhone},em_email=#{emEmail},em_status=#{emStatus},em_address=#{emAddress} where id=#{id}
+        update employ set  em_username=#{emUsername},em_realname=#{emRealname},em_role=#{emRole},em_sex=#{emSex},em_phone=#{emPhone},em_email=#{emEmail},em_status=#{emStatus},em_address=#{emAddress},ch_id=#{ch_id} where id=#{id}
 </update>
 </mapper>

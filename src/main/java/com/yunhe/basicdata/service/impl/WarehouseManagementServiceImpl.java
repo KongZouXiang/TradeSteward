@@ -30,12 +30,12 @@ public class WarehouseManagementServiceImpl extends ServiceImpl<WarehouseManagem
     private WarehouseManagementMapper warehouseManagementMapper;
 
     @Override
-    public Map selectWareList(int pageSize, int pageNum) {
+    public Map selectWareList(String data,int pageSize, int pageNum) {
 
         Page<WarehouseManagement> page = new Page<WarehouseManagement>();
         page.setSize(pageSize);
         page.setCurrent(pageNum);
-        List<WarehouseManagement> list = warehouseManagementMapper.selectWareList(page);
+        List<WarehouseManagement> list = warehouseManagementMapper.selectWareList(data,page);
         Map map = new HashMap();
         map.put("pagenum", pageNum);
         map.put("pageSize", pageSize);
@@ -53,8 +53,8 @@ public class WarehouseManagementServiceImpl extends ServiceImpl<WarehouseManagem
 
 
     @Override
-    public void update(WarehouseManagement warehouseManagemen) {
-        warehouseManagementMapper.updateById(warehouseManagemen);
+    public Integer update(WarehouseManagement warehouseManagemen) {
+      return  warehouseManagementMapper.updateById(warehouseManagemen);
     }
 
     @Override
@@ -64,7 +64,15 @@ public class WarehouseManagementServiceImpl extends ServiceImpl<WarehouseManagem
 
     @Override
     public Map vagueselect1(String data) {
-        Map map = new HashMap();
+       Map map = new HashMap();
+       /* Page<WarehouseManagement> page = new Page<WarehouseManagement>();
+        page.setSize(pageSize);
+        page.setCurrent(pageNum);
+        map.put("pagenum", pageNum);
+        map.put("pageSize", pageSize);
+        map.put("totalPage",page.getPages());
+        map.put("count",page.getTotal());*/
+        //map.put("list", list);
         List<WarehouseManagement> warehouseManagements = (List<WarehouseManagement>) warehouseManagementMapper.selectList(new QueryWrapper<WarehouseManagement>().like("wm_number", data).or().like("wm_name", data).or().like("wm_person", data).or().like("wm_tel",data).or().like("wm_address",data).or().like("wm_remark",data)
         );
         map.put("list",warehouseManagements);
@@ -72,7 +80,7 @@ public class WarehouseManagementServiceImpl extends ServiceImpl<WarehouseManagem
     }
 
     @Override
-    public void addWarehouse(WarehouseManagement warehouseManagement) {
-        warehouseManagementMapper.insert(warehouseManagement);
+    public Integer addWarehouse(WarehouseManagement warehouseManagement) {
+      return warehouseManagementMapper.insert(warehouseManagement);
     }
 }

@@ -29,13 +29,7 @@ public interface CustomerMapper extends BaseMapper<Customer> {
      */
     List<Customer> selectAllCustomer(Page page, Customer customer);
 
-    /**
-     * <p>
-     *     分页
-     *</p>
-     * @return 客户列表
-     */
-    List<Customer> sellectAll(Page page);
+
 
 /**
  * <p>

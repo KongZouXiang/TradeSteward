@@ -29,7 +29,7 @@ public class  NumberRule extends Number {
      */
 
 
-/*    public String XSD_NUMBER = "XSD" + NumberFactory.data(XSD);
+   public String XSD_NUMBER = "XSD" + NumberFactory.data(XSD);
 
     public String JDD_NUMBER = "JDD" + NumberFactory.data(JDD);
 
@@ -49,7 +49,7 @@ public class  NumberRule extends Number {
 
     public String MB_NUMBER = "XSD" + NumberFactory.data(MB);
 
-    public String JRG_NUMBER = "JRG" + NumberFactory.data(JRG);*/
+    public String JRG_NUMBER = "JRG" + NumberFactory.data(JRG);
 
 
 

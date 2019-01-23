@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
@@ -16,13 +17,16 @@ public class RedisServiceImpl implements RedisService {
     private RedisTemplate<String,?> redisTemplate;
     @Override
     public boolean set(final String key,final String value) {
+        Jedis jedis=new Jedis();
         boolean result =redisTemplate.execute(new RedisCallback<Boolean>() {
             @Override
             public Boolean doInRedis(RedisConnection connection) throws DataAccessException {
                 RedisSerializer<String> serializer=redisTemplate.getStringSerializer();
                 connection.set(serializer.serialize(key), serializer.serialize(value));
+                jedis.expire(key,300);
                 return true;
             }
+
         });
         return result;
     }
@@ -48,6 +52,7 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public boolean remove(String key) {
+
         boolean result = redisTemplate.execute(new RedisCallback<Boolean>() {
             @Override
             public Boolean doInRedis(RedisConnection connection) throws DataAccessException {
@@ -56,6 +61,8 @@ public class RedisServiceImpl implements RedisService {
                 return true;
             }
         });
+
+
         return result;
 
     }

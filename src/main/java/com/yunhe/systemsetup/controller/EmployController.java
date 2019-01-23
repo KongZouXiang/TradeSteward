@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
 import com.github.qcloudsms.httpclient.HTTPException;
+import com.yunhe.redis.service.RedisService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.json.JSONException;
@@ -44,6 +45,8 @@ import java.util.Map;
 public class EmployController {
     @Autowired
     private EmployServiceImpl employService;
+    @Autowired
+    private RedisService redisService;
 
 
     @RequestMapping(value = "/selectpage")
@@ -76,9 +79,24 @@ public class EmployController {
         return new ModelAndView("/systemsetup/admin-add");
     }
 
+    /**
+     * 插入员工信息
+     * @param employ
+     * @return
+     */
     @RequestMapping(value = "/insertempl")
     public int inserEmploy(Employ employ){
         System.out.println("进入Controleer");
+        System.out.println(employ.getEmRole().equals("财务员"));
+        if (employ.getEmRole().equals("管理员")){
+            employ.setCh_id(1);
+        }else if(employ.getEmRole().equals("财务员")){
+            employ.setCh_id(2);
+        }else if(employ.getEmRole().equals("仓管员")){
+            employ.setCh_id(3);
+        }else if (employ.getEmRole().equals("销售员")){
+            employ.setCh_id(4);
+        }
         int a =employService.insertEmploy(employ);
         return a;
     }
@@ -134,6 +152,15 @@ public class EmployController {
     @RequestMapping(value = "/submitupdate")
     public int submitupdate(Employ employ){
         System.out.println("修改员工信息进入controller");
+        if (employ.getEmRole().equals("管理员")){
+            employ.setCh_id(1);
+        }else if(employ.getEmRole().equals("财务员")){
+            employ.setCh_id(2);
+        }else if(employ.getEmRole().equals("仓管员")){
+            employ.setCh_id(3);
+        }else if (employ.getEmRole().equals("销售员")){
+            employ.setCh_id(4);
+        }
         int a =employService.updateMessage(employ);
         return a;
     }
@@ -143,6 +170,20 @@ public class EmployController {
     @RequestMapping(value = "/smsSend")
     public void smsSend(String phone){
         employService.createSmsCod(phone);
+    }
+    /**
+     * 验证码校验
+     */
+    @RequestMapping(value = "/checkSend")
+    public boolean checkSend(String phone,String num){
+       String checknum=redisService.get(phone);
+        System.out.println(checknum);
+       if (checknum.equals(num)){
+           return true;
+       }else {
+           return false;
+       }
+
     }
 
 

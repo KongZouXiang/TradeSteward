@@ -26,7 +26,7 @@ public class systemsetup {
         // 短信应用SDK AppKey
         String appkey = "6e6e4d71ce749e28816f733f012e48e6";
         // 需要发送短信的手机号码
-        String[] phoneNumbers = {"13103877752", "", ""};
+        String[] phoneNumbers = {"18236256555", "", ""};
         // 短信模板ID，需要在短信应用中申请
         int templateId = 269927; // NOTE: 这里的模板ID`7839`只是一个示例，真实的模板ID需要在短信控制台中申请
         // 签名

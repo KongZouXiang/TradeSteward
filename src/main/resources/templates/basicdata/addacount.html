@@ -9,8 +9,6 @@
     <script src="/js/jquery/jquery.min.js"></script>
     <script src="/js/laypage/laypage.js" charset="utf-8"></script>
     <script src="/js/layer/layer.js" charset="utf-8"></script>
-    <script src="/js/jquery.validation/1.14.0/jquery.validate.min.js"></script>
-    <script src="/js/jquery.validation/1.14.0/messages_zh.min.js"></script>
 </head>
 <body>
 <div class="container" id="app">
@@ -60,9 +58,6 @@
         }
     });
     var addAccount=function () {
-        if(!check().form()){
-            return ;
-        }
         $.ajax({
             type:'POST',
             dataType:'json',
@@ -73,7 +68,7 @@
                 sabanknumber:$("#sabanknumber").val(),
                 beginbalance:$("#beginbalance").val(),
                 zhangbalance:$("#zhangbalance").val(),
-                zhangstate:$("#zhangstate").val()
+                zhangstate:1,
             },
             success:function () {
 
@@ -89,31 +84,6 @@
         parent.getAccountPageList();
         parent.layer.close(index);
     });
-    function check() {
-        return $("#addAccountForm").validate({
-            rules:{
-                zhanghu: {
-                    required: true
-                },
-                sabank: {
-                    required: true
-                },
-                sabanknumber: {
-                    required: true
-                },
-                beginbalance: {
-                    required: true
-                },
-                zhangbalance: {
-                    required: true
-                },
-                zhangstate: {
-                    required: true
-                }
-            },
-        });
-
-    }
 </script>
 </body>
 </html>

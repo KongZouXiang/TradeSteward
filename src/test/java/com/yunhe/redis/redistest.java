@@ -24,7 +24,7 @@ public class redistest {
      */
     @Test
     public void setString() {
-        redisService.set("redis_string_test", "springboot redis test");
+        redisService.set("2", "3");
     }
 
     /**
