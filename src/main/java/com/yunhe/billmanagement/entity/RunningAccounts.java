@@ -19,16 +19,21 @@ import lombok.experimental.Accessors;
 public class RunningAccounts implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    /**
+     * ID
+     */
+    private Integer id;
 
     /**
      * 业务日期
      */
-    private String raNumList;
+    private String raTime;
+
 
     /**
      * 单据编号
      */
-    private String raTime;
+    private String raNumList;
 
     /**
      * 往来单位名称

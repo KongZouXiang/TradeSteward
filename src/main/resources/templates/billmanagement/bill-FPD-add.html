@@ -1,6 +1,6 @@
 ﻿<!--_meta 作为公共模版分离出去-->
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html>
 <head>
 	<meta charset="utf-8">
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -21,18 +21,17 @@
 	<script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js"></script>
 	<script>DD_belatedPNG.fix('*');</script>
 	<link rel="stylesheet" href="/lib/layui/css/layui.css"  media="all">
-	<title>新增进货订单</title>
+	<title>新增付款</title>
 	<meta name="keywords" content="">
 	<meta name="description" content="">
 </head>
-<body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 客户应收欠款 <span class="c-gray en">&gt;</span> 增加欠款 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 供应商应付欠款 <span class="c-gray en">&gt;</span> 新增付款 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" data-validator-option="{theme:'simple_right'}">
 	<form class="layui-form" action="">
 		<div class="layui-form-item">
-			<h2 style="text-align: center">收款单</h2>
+			<h2 style="text-align: center">付款单</h2>
 			<div class="layui-inline" style="float: left;width: 20%">
-				<label class="layui-form-label"><span class="c-red">*</span>客户</label>
+				<label class="layui-form-label"><span class="c-red">*</span>供应商</label>
 				<div class="layui-input-inline">
 					<input type="text" id="fcddFcdName" lay-verify="fcddFcdName" autocomplete="off" class="layui-input"  >
 				</div>
@@ -68,8 +67,8 @@
 				<tr class="text-c">
 					<th width="40">序号</th>
 					<th width="150">结算账户</th>
-					<th width="150">应收金额(元)</th>
-					<th width="150">本次收款(元)</th>
+					<th width="150">应付金额(元)</th>
+					<th width="150">本次付款(元)</th>
 					<th width="150">优惠金额(元)</th>
 					<th></th>
 				</tr>
@@ -162,7 +161,7 @@
 
         function f() {
             /*alert("进入")*/
-            var numList = "SKD";
+            var numList = "FKD";
             /*alert(numList);*/
             //获取当前时间
             var date = new Date();
@@ -199,14 +198,14 @@
                     fcddDate:$("#fcddDate").val(),
                     fcddNumList:$("#fcddNumList").val(),
                     fcddPerson:$("#fcddPerson").val(),
-                    fcddType:'收回欠款',
+                    fcddType:'进货商品',
                     fcddReceivable:0-$("#fcddBackDebt").val()-$("#fcddDiscount").val(),
                     fcddBackDebt:$("#fcddBackDebt").val(),
                     fcddDiscount:$("#fcddDiscount").val(),
                     fcddAccount:$("#fcddAccount").val()
                 },
                 success: function(msg){
-                    window.location.href="/billManagement/fund-client-debt/toFcd";
+                    window.location.href="/billManagement/fund_provider_debt/toFpd";
                 }
             });
             return false;
@@ -216,12 +215,12 @@
     $("#fcddFcdName").click(function () {
         layer.open({
             type:2,
-            title:'选择客户',
+            title:'选择供应商',
             fix:false,
             maxmin:true,
             shadeClose:true,
             area:['800px','650px'],
-            content:'/billManagement/fund-client-debt/selectCustomer',
+            content:'/billManagement/fund_provider_debt/selectSupplier',
             end:function(index) {
             }
         });

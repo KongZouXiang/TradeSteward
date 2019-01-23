@@ -35,6 +35,16 @@ public interface IFinanceOrderService extends IService<FinanceOrder> {
      */
     List<FinanceOrder> selectFo();
 
+
+    /**
+     * <P>
+     *     通过条件查询查询数据
+     * </P>
+     * @param foFlag 查询的条件
+     * @return 日常收支表：查询的结果集
+     */
+    List<Map<String,Object>> selectFoByFlag(String foFlag);
+
     /**
      * <P>
      *     增加数据
@@ -55,21 +65,12 @@ public interface IFinanceOrderService extends IService<FinanceOrder> {
 
     /**
      * <P>
-     *     修改数据
-     * </P>
-     * @param financeOrder 日常收支类对象
-     * @return  日常收支表：修改是否成功
-     */
-    int updateFo(FinanceOrder financeOrder);
-
-    /**
-     * <P>
      *     删除数据
      * </P>
-     * @param financeOrder 日常收支类对象
+     * @param id 通过id删除数据
      * @return  日常收支表：删除是否成功
      */
-    int deleteFo(FinanceOrder financeOrder);
+    int deleteFo(int id);
 
     /**
      * <P>
@@ -87,4 +88,20 @@ public interface IFinanceOrderService extends IService<FinanceOrder> {
      * @return 修改是否成功
      */
     int gaiFo(Map<String, Object> map);
+
+    /**
+     * <p>
+     * 日常收支表
+     * </p>
+     * @return 查询收入总金额
+     */
+    Map<String,Object> selectMoneyMapByShou();
+
+    /**
+     * <p>
+     * 日常收支表
+     * </p>
+     * @return 查询支出总金额
+     */
+    Map<String,Object> selectMoneyMapByZhi();
 }

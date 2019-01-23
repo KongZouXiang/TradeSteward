@@ -8,9 +8,13 @@
     <select id="selectFcdPage" resultType="com.yunhe.billmanagement.entity.FundClientDebt">
         select <include refid="fcdCols"/> from fund_client_debt
         where (fcd_num_list like concat('%',#{fundClientDebt.fcdNumList},'%'))
-          and (fcd_name like concat('%',#{fundClientDebt.fcdName},'%'))
-          and (fcd_linkman like concat('%',#{fundClientDebt.fcdLinkman},'%'))
-          and (fcd_telephone like concat('%',#{fundClientDebt.fcdTelephone},'%'))
+          or (fcd_name like concat('%',#{fundClientDebt.fcdNumList},'%'))
+          or (fcd_linkman like concat('%',#{fundClientDebt.fcdNumList},'%'))
+          or (fcd_telephone like concat('%',#{fundClientDebt.fcdNumList},'%'))
         order by id desc
+    </select>
+
+    <select id="selectFcdByName" resultType="com.yunhe.billmanagement.entity.FundClientDebt">
+        select * from fund_client_debt where fcd_name like concat('%',#{fcdName},'%')
     </select>
 </mapper>

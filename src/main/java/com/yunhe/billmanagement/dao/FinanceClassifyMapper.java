@@ -28,5 +28,4 @@ public interface FinanceClassifyMapper extends BaseMapper<FinanceClassify> {
      */
     List<FinanceClassify> selectFcPage(Page page, FinanceClassify financeClassify);
 
-
 }

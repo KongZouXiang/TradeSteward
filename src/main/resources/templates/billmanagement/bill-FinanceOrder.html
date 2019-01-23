@@ -24,56 +24,126 @@
     <script type="text/javascript" src="/js/vue/vue.min.js"></script>
     <link rel="stylesheet" href="/js/laypage/skin/laypage.css">
     <script type="text/javascript" src="/js/laypage/laypage.js"></script>
+    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
     <title>日常收支</title>
 </head>
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 日常收支 <span class="c-gray en">&gt;</span> 日常收支列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-    <div class="text-c">
-        <input type="text" class="input-text" style="width:250px" placeholder="输入收支类型" id="foFlag" name="foFlag">
-        <input type="text" class="input-text" style="width:250px" placeholder="输入单据编号" id="foNumList" name="foNumList">
-        <button type="submit" class="btn btn-success" id="findFo" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索账目类型</button>
+    <div class="btn-group">
+        <span class="btn btn-primary radius" style="border-color: #dddddd" id="shouru">日常收入</span>
+        <span class="btn btn-default radius" id="zhichu">日常支出</span>
     </div>
-    <div class="cl pd-5 bg-1 bk-gray mt-20" data-validator-option="{theme:'simple_right'}">
-        <span class="l"><a href="javascript:;" id="daoFo" class="btn btn-success radius"><i class="Hui-iconfont">&#xe644;</i> Excel导出</a></span>
-        &nbsp;&nbsp;<a href="javascript:;" id="addFoBtn" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增账目</a>
-        <span class="r">共有数据：<strong th:text="${session.total}"></strong> 条</span>
+    <div style="display: block" id="shou">
+        <div class="text-c">
+            <input type="hidden" class="input-text" style="width:250px" id="foFlagShou" value="收入">
+            <input type="text" class="input-text" style="width:250px" placeholder="输入单据编号" id="foNumListShou">
+            <button type="submit" class="btn btn-success" id="findFoShou" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索单据</button>
+        </div>
+        <div class="cl pd-5 bg-1 bk-gray mt-20" data-validator-option="{theme:'simple_right'}">
+            <a href="javascript:;" id="daoFoShou" class="btn btn-success radius"><i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
+            &nbsp;&nbsp;<a href="javascript:;" id="addFoBtnShou" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增一笔收入</a>
+            <span class="r">共有数据：<strong id="strongShou"></strong> 条</span>
+        </div>
+        <table class="table table-border table-bordered table-bg" id="appShou">
+            <thead>
+            <tr class="text-c">
+                <th width="40">ID</th>
+                <th width="100">操作</th>
+                <th width="150">单据编号</th>
+                <th width="150">业务日期</th>
+                <th width="150">账目类型</th>
+                <th width="150">金额</th>
+                <th width="150">收入账户</th>
+                <th width="150">收支类型</th>
+                <th>备注</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-c" v-for="(item,index) in result">
+                <td>{{index+1}}</td>
+                <td class="td-manage"><a title="详情" href="javascript:;" @click="editEventShou(item.oid)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
+                    <a title="删除" href="javascript:;" @click="delEventShou(item.oid)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+                <td>{{item.foNumList}}</td>
+                <td>{{item.foTime}}</td>
+                <td>{{item.fcType}}</td>
+                <td>{{item.foMoney}}</td>
+                <td>{{item.foAccount}}</td>
+                <td>{{item.foFlag}}</td>
+                <td>{{item.foRemark}}</td>
+            </tr>
+            </tbody>
+            <tbody data-validator-option="{theme:'simple_right'}">
+            <tr class="text-c">
+                <th width="40"></th>
+                <th width="150">合计</th>
+                <th width="150"></th>
+                <th width="150"></th>
+                <th width="150"></th>
+                <th width="150"><span style="color: red;font-size: 20px" id="moneyshou"></span></th>
+                <th width="150"></th>
+                <th width="150"></th>
+                <th></th>
+            </tr>
+            </tbody>
+        </table>
+        <div id="pagenavShou" style="text-align: center;position:absolute;margin-top:150px;left:0;right:0"></div>
     </div>
-    <table class="table table-border table-bordered table-bg" id="app">
-        <thead>
-        <tr>
-            <th scope="col" colspan="9">收支分类列表</th>
-        </tr>
-        <tr class="text-c">
-            <th width="25"><input type="checkbox" name="" value=""></th>
-            <th width="100">操作</th>
-            <th width="40">ID</th>
-            <th width="150">单据编号</th>
-            <th width="150">业务日期</th>
-            <th width="150">账目类型</th>
-            <th width="150">金额</th>
-            <th width="150">收入账户</th>
-            <th width="150">收支类型</th>
-            <th>备注</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class="text-c" v-for="(item,index) in result">
-            <td><input type="checkbox" value="1" name=""></td>
-            <td class="td-manage"><a title="详情" href="javascript:;" @click="editEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
-                <a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-            <td>{{index+1}}</td>
-            <td>{{item.foNumList}}</td>
-            <td>{{item.foTime}}</td>
-            <td>{{item.fcId}}</td>
-            <td>{{item.foMoney}}</td>
-            <td>{{item.foAccount}}</td>
-            <td>{{item.foFlag}}</td>
-            <td>{{item.foRemark}}</td>
-        </tr>
-        </tbody>
-    </table>
-    <div id="pagenav" style="text-align: center;position:fixed;bottom:100px;left:0;right:0"></div>
+    <div style="display: none" id="zhi">
+        <div class="text-c">
+            <input type="hidden" class="input-text" style="width:250px" id="foFlag" name="foFlag" value="支出">
+            <input type="text" class="input-text" style="width:250px" placeholder="输入单据编号" id="foNumList" name="foNumList">
+            <button type="submit" class="btn btn-success" id="findFo" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索单据</button>
+        </div>
+        <div class="cl pd-5 bg-1 bk-gray mt-20" data-validator-option="{theme:'simple_right'}">
+            <a href="javascript:;" id="daoFo" class="btn btn-success radius"><i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
+            &nbsp;&nbsp;<a href="javascript:;" id="addFoBtn" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增一笔支出</a>
+            <span class="r">共有数据：<strong id="strong"></strong> 条</span>
+        </div>
+        <table class="table table-border table-bordered table-bg" id="app">
+            <thead>
+            <tr class="text-c">
+                <th width="40">ID</th>
+                <th width="100">操作</th>
+                <th width="150">单据编号</th>
+                <th width="150">业务日期</th>
+                <th width="150">账目类型</th>
+                <th width="150">金额</th>
+                <th width="150">收入账户</th>
+                <th width="150">收支类型</th>
+                <th>备注</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-c" v-for="(item,index) in result">
+                <td>{{index+1}}</td>
+                <td class="td-manage"><a title="详情" href="javascript:;" @click="editEvent(item.oid)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
+                    <a title="删除" href="javascript:;" @click="delEvent(item.oid)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+                <td>{{item.foNumList}}</td>
+                <td>{{item.foTime}}</td>
+                <td>{{item.fcType}}</td>
+                <td>{{item.foMoney}}</td>
+                <td>{{item.foAccount}}</td>
+                <td>{{item.foFlag}}</td>
+                <td>{{item.foRemark}}</td>
+            </tr>
+            </tbody>
+            <tbody data-validator-option="{theme:'simple_right'}">
+            <tr class="text-c">
+                <th width="40"></th>
+                <th width="150">合计</th>
+                <th width="150"></th>
+                <th width="150"></th>
+                <th width="150"></th>
+                <th width="150"><span style="color: red;font-size: 20px" id="moneyzhi"></span></th>
+                <th width="150"></th>
+                <th width="150"></th>
+                <th></th>
+            </tr>
+            </tbody>
+        </table>
+        <div id="pagenav" style="text-align: center;position:absolute;margin-top:150px;left:0;right:0"></div>
+    </div>
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
@@ -85,6 +155,139 @@
 <script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+<script src="/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+
+    $("#shouru").on('click',function () {
+
+        var s = document.getElementById("shou");
+        var z = document.getElementById("zhi");
+        $("#shouru").css('background-color','#5a98dc');
+        $("#zhichu").css('background-color','white');
+        if (s.style.display="none"){
+            s.style.display="block";
+            z.style.display="none";
+        }
+    });
+
+    $("#zhichu").on('click',function () {
+        var z = document.getElementById("zhi");
+        var s = document.getElementById("shou");
+        $("#zhichu").css('background-color','#5a98dc');
+        $("#shouru").css('background-color','white');
+        $("#shouru").css('color','#0C0C0C');
+        if (z.style.display="none"){
+            z.style.display="block";
+            s.style.display="none";
+        }
+    });
+</script>
+<script type="text/javascript">
+    var appShou = new Vue({
+        el:'#appShou',
+        data:{
+            result:[]
+        }
+    });
+
+    var getFoPageListShou = function(curr) {
+        $.ajax({
+            type:'get',
+            dataType:'json',
+            url:'/billManagement/finance-order/selectFoPage',
+            data:{
+                current: curr || 1,
+                size:5,
+                foFlag:$("#foFlagShou").val(),
+                foNumList:$("#foNumListShou").val()
+            },
+            success:function(msg){
+                $("#strongShou").html(msg.total);
+                $("#moneyshou").html(msg.countListshou.moneyshou);
+                $("#moneyzhi").html(msg.countListzhi.moneyzhi);
+                appShou.result = msg.list;
+                laypage({
+                    cont:'pagenavShou',
+                    pages:msg.pages,
+                    first:'首页',
+                    last:'尾页',
+                    skin: '#00A0E9',
+                    curr: curr || 1,
+                    jump: function (obj, first) {
+                        if (!first) {
+                            getFoPageListShou(obj.curr);
+                        }
+                    }
+                });
+            }
+        });
+    };
+    getFoPageListShou();
+
+    /*搜索*/
+    $("#findFoShou").click(function () {
+        getFoPageListShou();
+    });
+
+    /*新增收支*/
+    $("#addFoBtnShou").click(function () {
+        layer.open({
+            type:2,
+            title:'新增收支',
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['700px','650px'],
+            content:'/billManagement/finance-order/toAddShou',
+            end:function() {
+                getFoPageListShou();
+                layer.msg('新增成功', {icon: 1});
+            }
+        });
+    });
+
+    /*收支详情*/
+    var editEventShou = function (id) {
+        layer.open({
+            type:2,
+            title: '收支详情',
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['450px','350px'],
+            content:'/billManagement/finance-order/toDetail?id='+id,
+            end:function() {
+                getFoPageListShou();
+            }
+        });
+    }
+
+    /*删除订单*/
+    var delEventShou = function (id) {
+        layer.confirm('你确定要删除吗？',{
+            btn:['是','否']
+        },function () {
+            $.ajax({
+                type:'GET',
+                dataType:'json',
+                url: '/billManagement/finance-order/deleteFo',
+                data:{id:id},
+                success:function (msg) {
+                    getFoPageListShou();
+                    layer.msg('成功删除订单',{icon:5});
+                }
+            })
+        },function () {
+
+        });
+    };
+
+    /*Excel导出*/
+    $("#daoFoShou").click(function () {
+        var flag = $("#foFlagShou").val();
+        window.location.href="/billManagement/finance-order/export?foFlag="+flag;
+    })
+</script>
 <script type="text/javascript">
     var app = new Vue({
         el:'#app',
@@ -105,6 +308,7 @@
                 foNumList:$("#foNumList").val()
             },
             success:function(msg){
+                $("#strong").html(msg.total);
                 app.result = msg.list;
                 laypage({
                     cont:'pagenav',
@@ -122,9 +326,7 @@
             }
         });
     };
-
     getFoPageList();
-
     /*搜索*/
     $("#findFo").click(function () {
         getFoPageList();
@@ -139,9 +341,10 @@
             maxmin:true,
             shadeClose:true,
             area:['1100px','600px'],
-            content:'/billManagement/finance-order/toAdd',
+            content:'/billManagement/finance-order/toAddZhi',
             end:function() {
                 getFoPageList();
+                layer.msg('新增成功', {icon: 1});
             }
         });
     });
@@ -186,7 +389,8 @@
 
     /*Excel导出*/
     $("#daoFo").click(function () {
-        window.location.href="/billManagement/finance-order/export";
+        var flag = $("#foFlag").val();
+        window.location.href="/billManagement/finance-order/export?foFlag="+flag;
     })
 </script>
 </body>
