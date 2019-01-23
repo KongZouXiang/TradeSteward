@@ -2,6 +2,7 @@ package com.yunhe.core.shiro;
 
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,6 +26,7 @@ import java.util.Map;
 public class ShiroConfig {
 
     /**
+     * 安全管理器
      * 创建ShrioFilterFactoryBean
      */
     @Bean
@@ -100,4 +102,7 @@ public class ShiroConfig {
     public ShiroDialect shiroDialect() {
         return new ShiroDialect();
     }
+
+
+
 }

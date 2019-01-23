@@ -30,8 +30,12 @@ public class LoginController {
     ILoginService loginService;
 
     @GetMapping("/")
-    public String login(HttpSession session) {
-        session.removeAttribute("employ");
+    public String login() {
+//        退出登录
+        Subject subject = SecurityUtils.getSubject();
+        if (subject != null) {
+            subject.logout();
+        }
         return "login";
     }
 
@@ -42,11 +46,16 @@ public class LoginController {
 
     @GetMapping("/toindex")
     public String index() {
+//        退出登录
+        Subject subject = SecurityUtils.getSubject();
+        if (subject != null) {
+            subject.logout();
+        }
         return "index";
     }
 
     @PostMapping("/login")
-    public String login(Employ employ,Model model,HttpSession session) {
+    public String login(Employ employ, Model model, HttpSession session) {
 
 
         /**
