@@ -29,7 +29,7 @@
 
     <article class="page-container">
         <h1 style="text-align: center">商品进货订单</h1>
-        <form class="form form-horizontal" id="form-article-add" action="/cargomanagement/sales-order-history/addList">
+        <form class="form form-horizontal" id="form-article-add" action="/cargomanagement/sales-history/addList">
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>客户</label>
                 <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
@@ -192,7 +192,7 @@
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: '/cargomanagement/purchase-order/getCommodadd',
+            url: '/cargomanagement/sales-order-history/getCommodadd',
             data: {},
             success: function (msg) {
                 app.resulttwo = msg.list;

@@ -88,6 +88,18 @@ public class CommodityListController {
         mv.setViewName("basicdata/editCommodity");
         return mv;
     }
+
+    /**
+     * 根据id查询所有的商品.刘延琦2019-1-23 16:10:22
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/selectcommdityId")
+    public CommodityList selectcommdityId(@RequestParam("id") int id) {
+
+        CommodityList commodityListid = commodityListService.selectCommById(id);
+        return commodityListid;
+    }
     /**
      * 更改商品的信息
      * @param id     传过来的id

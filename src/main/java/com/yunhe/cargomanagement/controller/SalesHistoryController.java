@@ -44,15 +44,19 @@ public class SalesHistoryController {
         return new ModelAndView("cargomanagement/salesHistory-add");
     }
 
-    @RequestMapping("/nimabo")
-    @ResponseBody
-    public String sumbiiiit(HttpServletResponse response, String[] soClient, String[] clNumber){
-        for (int i=0;i<soClient.length;i++){
-            SalesHistory salesHistory = new SalesHistory();
-            salesHistory.setShClient(soClient[i]);
-            System.out.println(salesHistory.getShClient());
-        }
-        return "haha";
+    /**
+     * 增加一个订单详情
+     * @param customer 客户
+     * @param poNumber 订单号
+     * @param articlecolumn 经手人
+     * @param commentdatemin 时间
+     * @param clName 商品
+     * @param orderCount 数量
+     * @return
+     */
+    @RequestMapping("/addList")
+    public String addList(String customer,String poNumber,String articlecolumn,String commentdatemin,String [] clName ,int [] orderCount){
+        return "ok";
     }
     /**
      * 增加一条销售历史 _已测试成功

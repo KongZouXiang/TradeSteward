@@ -1,6 +1,7 @@
 package com.yunhe.cargomanagement.controller;
 
 
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
@@ -94,9 +95,6 @@ public class SalesOrderHistoryController {
     public List<Customer> customerList(){
 
         List<Customer> list = (List<Customer>)customerService.sellectAllExcel();
-        for (Customer customer : list) {
-            System.out.println(customer.getCusCompname());
-        }
         return list;
     }
     
@@ -113,10 +111,14 @@ public class SalesOrderHistoryController {
         return salesOrderHistoryService.deleteById(id);
     }
 
-/*    @RequestMapping("/getCommodadd")
+    /**
+     * 查询商品
+     * @return 商品列表
+     */
+    @RequestMapping("/getCommodadd")
     public Map getCommodadd(){
-        return commodityListService.selectList();
-    }*/
+        return commodityListService.selectComclassList1();
+    }
     /**
      * 批量删除
      * @param request
@@ -131,7 +133,7 @@ public class SalesOrderHistoryController {
         return true;
     }
     /**
-     * 修改页面跳转--根据id获取当前订单的所有信息
+     * 页面跳转--根据id获取当前订单的所有信息
      * @param id 销售订单的id
      * @return int 是否成功
      */
@@ -141,15 +143,29 @@ public class SalesOrderHistoryController {
         httpSessionsion.setAttribute("sales",salesOrderHistory);
         return new ModelAndView("/cargomanagement/salesOrderHistory-detail");
     }
+
+    /**
+     * 页面跳转--根据id获取当前订单的所有信息(可修改页面)
+     * @param id 销售订单的id
+     * @return  是否成功
+     */
+    @RequestMapping("/editor")
+    public ModelAndView editor(int id, HttpSession httpSessionsion){
+        SalesOrderHistory salesOrderHistory = salesOrderHistoryService.selectById(id);
+        httpSessionsion.setAttribute("sales",salesOrderHistory);
+        return new ModelAndView("/cargomanagement/salesOrderHistory-editor");
+    }
     /**
      * 修改销售订单信息
-     * @param salesOrderHistory 参数为要修改的订单详情
+     * @param
      * @return
      */
     @RequestMapping("/update")
-    public ModelAndView updateSale(SalesOrderHistory salesOrderHistory){
-        int i = salesOrderHistoryService.updateSale(salesOrderHistory);
-        return new ModelAndView("updateSale");
+    public String updateSale(SalesOrderHistory salesOrderHistory){
+        System.out.println(salesOrderHistory);
+       /* int i = salesOrderHistoryService.updateSale(salesOrderHistory);
+        new ModelAndView("updateSale");*/
+        return "true";
     }
 
     /**
@@ -166,6 +182,13 @@ public class SalesOrderHistoryController {
         return new ModelAndView("/index");
     }
 
+    @RequestMapping("/commList")
+    public ModelAndView commList(int id){
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("message", id);
+        mv.setViewName("/cargomanagement/commList");
+        return mv;
+    }
 
     /**
      * 分页模糊查询销售订单历史
@@ -180,7 +203,6 @@ public class SalesOrderHistoryController {
         map.put("pageSize", pageSize);
         map.put("pageNum", pageNum);
         map.put("salesOrderHistory", salesOrderHistory);
-        System.out.println(salesOrderHistory.getSoClient());
         Page page=salesOrderHistoryService.queryLikeList(map);
         map.put("page", page.getRecords());
         map.put("totalPage",page.getPages());
