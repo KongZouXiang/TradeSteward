@@ -1,7 +1,6 @@
 package com.yunhe.systemsetup.dao;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yunhe.systemsetup.entity.Area;
 import com.yunhe.systemsetup.entity.Employ;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
