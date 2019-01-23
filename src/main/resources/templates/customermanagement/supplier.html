@@ -33,7 +33,7 @@
         <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax"
                class="input-text Wdate" style="width:120px;">-->
         <!--<input type="text" class="input-text" style="width:250px" placeholder="输入手机号" id="poNumber" name="">-->
-        <input type="text" class="input-text" style="width:250px" placeholder="输入供应商公司或手机号" id="poSupName" name="">
+        <input type="text" class="input-text" style="width:250px" placeholder="输入供应商编号或供应商名或手机号" id="poSupName" name="">
         <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜索</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -47,62 +47,54 @@
            class="btn btn-success radius">
         <i class="Hui-iconfont" >&#xe644;</i> Excel导出</a>
     </span>
-
-        <span class="r">共有数据：<strong>54</strong> 条</span></div>
-    <div id="app" style="overflow: scroll;height: 500px"  >
-        <table class="table table-border table-bordered table-bg">
-            <thead>
-            <tr>
-                <th scope="col" colspan="9">供应商列表</th>
-            </tr>
-            <tr class="text-c">
-
-                <th width="25">
-                    <input type="checkbox" id="checkAll"></th>
-                <th width="40">ID</th>
-                <th width="130">操作</th>
-                <th width="150">公司名</th>
-                <th width="150">编号</th>
-                <th width="90">应收欠款</th>
-                <th width="90">联系方式</th>
-                <th width="130">客户状态</th>
-                <th width="150">联系人</th>
-                <th width="100">关联人员</th>
-                <th width="100">公司邮箱</th>
-                <th width="150">备注</th>
-
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="text-c" v-for="(item,index) in result">
-                <td><input type="checkbox" id="box" :value="item.id"></td>
-                <td>{{index+1}}</td>
-                <td class="td-manage">
-                    <a style="text-decoration:none" class="ml-5" @click="editEvent(item.id)" href="javascript:;" title="编辑">
-                        <i class="Hui-iconfont">&#xe6df;</i>
-                    </a>
-                    <a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5"
-                       style="text-decoration:none">
-                        <i class="Hui-iconfont">&#xe6e2;</i>
-                    </a>
-
-                </td>
-                <td>{{item.supCompname}}</td>
-                <td>{{item.supNumber}}</td>
-                <td>{{item.supMoney}}</td>
-                <td>{{item.supTele}}</td>
-                <td>{{item.supFlag}}</td>
-                <td>{{item.supLinkman}}</td>
-                <td>{{item.supConn}}</td>
-                <td>{{item.supEmail}}</td>
-                <td>{{item.supRemarks}}</td>
-
-
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div id="pagenav" style="text-align: center"></div>
+    <span class="r">共有数据：<strong>54</strong> 条</span></div>
+    <table class="table table-border table-bordered table-bg" id="app">
+        <thead>
+        <tr>
+            <th scope="col" colspan="9">供应商列表</th>
+        </tr>
+        <tr class="text-c">
+            <th width="25">
+                <input type="checkbox" id="checkAll"></th>
+            <th width="40">ID</th>
+            <th width="130">操作</th>
+            <th width="150">公司名</th>
+            <th width="150">编号</th>
+            <th width="90">应收欠款</th>
+            <th width="90">联系方式</th>
+            <th width="130">客户状态</th>
+            <th width="150">联系人</th>
+            <th width="100">关联人员</th>
+            <th width="100">公司邮箱</th>
+            <th width="150">备注</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-c" v-for="(item,index) in result">
+            <td><input type="checkbox" id="box" :value="item.id"></td>
+            <td>{{index+1}}</td>
+            <td class="td-manage">
+                <a style="text-decoration:none" class="ml-5" @click="editEvent(item.id)" href="javascript:;" title="编辑">
+                    <i class="Hui-iconfont">&#xe6df;</i>
+                </a>
+                <a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5"
+                   style="text-decoration:none">
+                    <i class="Hui-iconfont">&#xe6e2;</i>
+                </a>
+            </td>
+            <td>{{item.supCompname}}</td>
+            <td>{{item.supNumber}}</td>
+            <td>{{item.supMoney}}</td>
+            <td>{{item.supTele}}</td>
+            <td>{{item.supFlag}}</td>
+            <td>{{item.supLinkman}}</td>
+            <td>{{item.supConn}}</td>
+            <td>{{item.supEmail}}</td>
+            <td>{{item.supRemarks}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div id="pagenav" style="text-align: center;position: absolute;margin-top: 250px;left:0;right:0"></div>
 </div>
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
@@ -125,20 +117,17 @@
             dataType: 'json',
             url: '/customermanagement/supplier/selectPage',
             data: {
-                /*当前页*/
                 current: curr || 1,
-                /*每页大小*/
-                size: 3,
+                size: 1,
                 supCompname:$("#poSupName").val(),
-                supTele:$("#poSupName").val()
-
-
+                supTele:$("#poSupName").val(),
+                supNumber:$("#poSupName").val()
             },
             success: function (msg) {
                 app.result = msg.records;
                 laypage({
                     cont: 'pagenav',//容器  值支持id名、原生dom对象，jquery对象,
-                    pages: msg.total,//总页数
+                    pages: msg.pages,//总页数
                     first: '首页',
                     last: '尾页',
                     curr: curr || 1 ,//初始化页数
