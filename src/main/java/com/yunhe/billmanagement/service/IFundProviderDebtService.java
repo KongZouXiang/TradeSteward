@@ -3,6 +3,7 @@ package com.yunhe.billmanagement.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yunhe.billmanagement.entity.FundProviderDebt;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,10 +38,9 @@ public interface IFundProviderDebtService extends IService<FundProviderDebt> {
      * <P>
      *     增加数据
      * </P>
-     * @param id 要查看的数据的id
      * @return  一行或多行数据
      */
-    FundProviderDebt selectFpd(int id);
+    List<FundProviderDebt> selectFpd();
 
     /**
      * <P>
@@ -49,4 +49,20 @@ public interface IFundProviderDebtService extends IService<FundProviderDebt> {
      * @return 查询所有款项之和
      */
     Map<String,Object> selectFpdMap();
+
+    /**
+     * <P>
+     *    通过id查找该是否欠该供应商款
+     * </P>
+     * @return 集合
+     */
+    FundProviderDebt selectIdFpdExit(String fpdName);
+    /**
+     * <P>
+     *     修改数据
+     * </P>
+     * @param fundProviderDebt 修改的参数存在一个对象里
+     * @return  供应商应付欠款表：修改是否成功
+     */
+    int updateFpd(FundProviderDebt fundProviderDebt);
 }

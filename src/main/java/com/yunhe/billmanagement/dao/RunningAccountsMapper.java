@@ -4,12 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.billmanagement.entity.RunningAccounts;
 import org.apache.ibatis.annotations.Select;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Repository;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Map;

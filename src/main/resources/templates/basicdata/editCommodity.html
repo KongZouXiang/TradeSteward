@@ -13,27 +13,6 @@
     <script src="/js/jquery/jquery.min.js"></script>
   <!-- <script src="/jquery/validation.1.14.0/jquery.validate.js/jquery.validate.min.js"></script>
     <script src="/jquery/validation.1.14.0/messages_zh.js/messages_zh.min.js"></script>-->
-    <script type="text/javascript">
-        //返回单个单位
-     function returnSingleUnit() {
-            // 不启用
-        $("#isenablemultiunit").val(0);
-            // 不启用多单位checkbox增加选中状态
-            $("#doNotEnableMultiUnit").attr("checked", "checked");
-            // 单个单位所在的tr显示
-            $("#singleUnitTr").show();
-            // 多单位所在的div隐藏
-            $("#multiUnitDiv").hide();
-            // 多单位价格所在div隐藏
-            $("#multiUnitPriceDiv").hide();
-            // 单个单位价格所在div显示
-            $("#unitPriceDiv").show();
-            // 多单位条形码div隐藏
-            $("#multiUnitBarcodeDiv").hide();
-            // 单个单位条形码div显示
-            $("#unitBarcodeDiv").show();
-        }
-    </script>
 </head>
 <body>
 <div class="container" id="app">
@@ -61,9 +40,9 @@
             <span class="fontRed">*</span> 编号&nbsp;&nbsp;&nbsp;<input type="text" th:value="${commodityListid.clNumber}" name="bianhao" id="bianhao"><br><br>
             <span class="fontRed">*</span>名称&nbsp;&nbsp;&nbsp;<input type="text" name="mingcheng" id="mingcheng"  th:value="${commodityListid.clName}"><br><br>
         <input type="hidden" id="ids" th:value="${commodityListid.id}">
-            分类 &nbsp;&nbsp;&nbsp;<input type="text" name="fenlei" id="fenlei" th:value="${}">
+            分类 &nbsp;&nbsp;&nbsp;<input type="text" name="fenlei" id="fenlei" th:value="${commclass.ccDefault}"><br><br>
         <span class="fontRed">*</span>单位&nbsp;&nbsp;&nbsp;<input type="text" name="danwei" id="sdanwei"  th:value="${commodityListid.usId}"><br><br>
-         <!--   <tr id="singleUnitTr">
+     <tr id="singleUnitTr">
                 <td width="100" align="right" class="font14">
                     <span class="fontRed">*</span>单位
                     <select name="danwei" onfocus="selectFocus(this)">
@@ -84,113 +63,76 @@
                         <option value="" onclick="selectClick(this)">箱</option>
                         <option value="" onclick="selectClick(this)">支</option>
                     </select>
-                <td>
-                  &lt;!&ndash;  <input class="free" id="enableMultiUnit" name="" type="checkbox" value="" onclick="enableMultiUnit(this)">&nbsp;&nbsp;&ndash;&gt;
-                    <input id="enableMultiUnit" name="" type="checkbox" value="多单位支持" onclick="enableMultiUnit(this)" >
-                    &lt;!&ndash;<label class="free" for="enableMultiUnit">多单位支持</label>&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;
                 </td>
-            </tr><br><br>-->
+            </tr><br><br>
              规格&nbsp;&nbsp;&nbsp;<input type="text" id="guige" name="guige" th:value="${commodityListid.clSpec}"><br><br>
         <tr class="free">
             <td id="multPropertiesTd">
-                <input id="enableMultProperties" name="" type="checkbox" value="" onclick="enableMultProperties(this)">
-                <label for="enableMultProperties">多属性支持</label>
+                <input type="checkbox" id="propertyid" name="propertyname" onclick="enableProperty(this)"><b>多属性支持</b>
             </td>
         </tr>
-        <div id="multiUnitDiv" style="display: none">
-            <div class="formTitle" style="position: static !important;">
-                多单位
-                <span class="font999" style="font-size: 12px">（多单位时需要把最小度量单位作为基本单位）</span>
-            </div>
-            <span class="fontRed">*</span>基本单位
-            <select name="danwei"  id="danwei" onfocus="selectFocus(this)">
-                <option value="" onclick="selectClick(this)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                <option value="" onclick="selectClick(this)">包</option>
-                <option value="" onclick="selectClick(this)">杯</option>
-                <option value="" onclick="selectClick(this)">袋</option>
-                <option value="" onclick="selectClick(this)">个</option>
-                <option value="" onclick="selectClick(this)">公斤</option>
-                <option value="" onclick="selectClick(this)">罐</option>
-                <option value="" onclick="selectClick(this)">升</option>
-                <option value="" onclick="selectClick(this)">件</option>
-                <option value="" onclick="selectClick(this)">斤</option>
-                <option value="" onclick="selectClick(this)">克</option>
-                <option value="" onclick="selectClick(this)">排</option>
-                <option value="" onclick="selectClick(this)">瓶</option>
-                <option value="" onclick="selectClick(this)">提</option>
-                <option value="" onclick="selectClick(this)">箱</option>
-                <option value="" onclick="selectClick(this)">支</option>
-            </select>
-            <table id="multiUnitTable" width="100%" border="0" cellspacing="0" cellpadding="8" class="formTable">
-                <tr>
-                    <td colspan="3">
-                        <table id="multiUnitTableDiv" width="100%" border="0" cellspacing="0" cellpadding="8" class="formTable">
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table width="100%" border="0" cellspacing="0" cellpadding="8" class="formTable">
-                            <td width="100" align="right" class="font14"></td>
-                            <td width="200">
-                                <a href="javascript:;" onclick="addUnit()" class="button">增加单位</a>&nbsp;&nbsp;
-                            </td>
-                            <td colspan="4"></td>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </div>
             <div class="height10"></div>
-            <div id="multPropertiesDiv" style="display: none">
-                <div class="formTitle free">
-                    属性
-                    <a class="fr font12" href="">属性设置</a>
-                    <hr>
-                <table id="multPropertiesTable" width="100%" border="0" cellspacing="0" cellpadding="8" class="formTable">
-                    <tr style="display: none" id="multPropertiesTemplate">
-                        <td id="multPropertiesTemplateName" name="multPropertiesTemplateName" width="100" align="right" class="font14">
-                            <span class="operate delLine"></span>
-                        </td>
-                        <td width="200">
-												<span class="ui-combo-wrap" id="multPropertiesTemplateSpan" name="multPropertiesTemplateSpan">
-													<input type="text" id="" name="" class="input-txt" autocomplete="off" value="" data-ref="date" maxlength="20">
-													<i class="trigger"></i>
-												</span>
-                        </td>
-                        <td>
-                            <span class="font999"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="100" align="right" class="font14"></td>
-                        <td width="200">
-                            <a href="javascript:;" onclick="addProperties()" class="button" style="display: none">增加属性</a>&nbsp;&nbsp;
-                         <input id="doNotEnableMultiProperties" name="" type="checkbox" value="" onclick="enableMultProperties(this)" checked>
-                           <label for="doNotEnableMultiProperties">多属性支持</label>
-                        </td>
-                        <td></td>
-                    </tr>
-                </table>
-            <div class="height15"></div>
+        <div id="multPropertyDiv" style="display:none">
+            品&nbsp;&nbsp;&nbsp;牌&nbsp;&nbsp;&nbsp;<select id="pinpai" name="pinpai" style="width: 200px">
+            <option></option>
+        </select><br>
+            产&nbsp;&nbsp;&nbsp;地&nbsp;&nbsp;&nbsp;<select id="chandi" name="chandi" style="width: 200px">
+            <option></option>
+        </select><br>
+            自定义属性1&nbsp;&nbsp;&nbsp;<select id="zidingyione" name="zidingyione" style="width: 200px">
+            <option></option>
+        </select><br>
+            自定义属性2&nbsp;&nbsp;&nbsp;<select id="zidingyitwo" name="zidingyitwo" style="width: 200px">
+            <option></option>
+        </select><br>
+            自定义属性3&nbsp;&nbsp;&nbsp;<select id="zidingyithree" name="zidingyithree" style="width: 200px">
+            <option></option>
+        </select><br>
         </div>
-            </div>
-        <div class="formTitle" style="position: static !important;">
+      <!--  <div class="formTitle" style="position: static !important;">
             销售价格
             <span class="font999" style="font-size: 12px">（未开启按客户等级定价，可在<a href="">客户等级价</a>中开启）</span>
             <hr style="height:1px;background-color: #2E2D3C"/>
-            <table>
-
-            </table>
 					零售价(元)&nbsp;&nbsp;&nbsp;<input type="text" th:value="${commodityListid.clTagPrise}" id="lingshoujia" name="lingshoujia"><br><br>
                      批发价(元)&nbsp;&nbsp;&nbsp;<input type="text"  th:value="${commodityListid.clWhoPrice}"  id="pifajia" name="pifajia"><br><br>
                     最低零售价(元)&nbsp;&nbsp;&nbsp;<input type="text" name="zuidilingshou" id="zuidilingshou"  >
-        </div>
-        <div class="formTitle" style="position: static !important;">
             进货价格
             <hr style="height:1px;background-color: #2E2D3C"/>
             参考进货价(元)&nbsp;&nbsp;&nbsp;<input type="text" id="cankaojinhuo" name="cankaojinhuo" th:value="${commodityListid.clPurPrice}" ><br><br>
+        </div>-->
+        <div class="formTitle" style="position: static !important;display: block">
+            价格管理
+            <hr style="height:1px;background-color: #2E2D3C"/>
+            <table  border="2" align="center">
+                <thead>
+                <tr>
+                    <th width="100" rowspan="2" style="text-align: center">价格类别</th>
+                    <th width="100"></th>
+                    <th width="600" style="text-align: center">价格/只</th>
+                </tr>
+                </thead>
+                <tr>
+                    <td width="300" rowspan="3" style="text-align: center">销售</td>
+                    <td width="100" style="text-align: center">零售价</td>
+                    <td width="600" style="text-align: center"><input type="text" id="comlingshoujia" style="text-align: center" th:value="${commodityListid.clTagPrise}"></td>
+
+                </tr>
+                <tr>
+                    <td width="100" style="text-align: center">最低零售价</td>
+                    <td width="600" style="text-align: center"><input type="text" id="comzuilingshoujia" style="text-align: center" th:value="${commodityListid.clMinLingPrice}"></td>
+                </tr>
+                <tr>
+                    <td width="100" style="text-align: center">批发价</td>
+                    <td width="600" style="text-align: center"><input type="text" id="compifajia" style="text-align: center" th:value="${commodityListid.clWhoPrice}"></td>
+                </tr>
+                <tr>
+                    <td width="100" style="text-align: center">进货</td>
+                    <td width="100" style="text-align: center">参考进货价</td>
+                    <td width="600" style="text-align: center"><input type="text" id="cankaojinhuojia" style="text-align: center" th:value="${commodityListid.clPurPrice}"></td>
+                </tr>
+            </table>
         </div>
+        <hr>
         <div class="formTitle" style="position: static !important;">
             库存预警
             <div class="fr font12" >
@@ -201,24 +143,25 @@
             </div>
             <hr style="height:1px;background-color: #2E2D3C"/>
         </div>
-     <div  id="kucunlaing" style="display: block" >
-          最低库存量&nbsp;&nbsp;&nbsp;<input type="text" id="zuidikucun" name="zuidikucun"><br><br>
-            最高库存量&nbsp;&nbsp;&nbsp;<input type="text" id="zuigaokucun" name="zuigaokucun">
+     <div  id="kucunlaing" style="display: none" >
+          最低库存量&nbsp;&nbsp;&nbsp;<input type="text" id="zuidikucun" name="zuidikucun" th:value="${commodityListid.clMinStock}" ><br><br>
+            最高库存量&nbsp;&nbsp;&nbsp;<input type="text" id="zuigaokucun" name="zuigaokucun" th:value="${commodityListid.clMAxStock}">
         </div>
-    <div id="cangku" style="display: none" >
-            <table border="1px black solid">
-                <tr style="width: auto;height: auto">
-                    <td>仓库</td>
-                    <td>最低库存量</td>
-                    <td>最高库存量</td>
-                </tr>
-                <tr>
-                    <td ></td>
-                    <td><input type="text" id="czuidikc" name=""czuidikc></td>
-                    <td><input type="text" id="czuigaok" name="czuigaok"></td>
-                </tr>
-            </table>
-        </div>
+<div id="cangku" style="display: block" >
+    <table border="1px black solid" align="center">
+        <tr style="width: auto;height: auto">
+            <td width="300" style="text-align: center">仓库</td>
+            <td width="300" style="text-align: center" >最低库存量</td>
+            <td width="300" style="text-align: center">最高库存量</td>
+        </tr>
+        <tr>
+            <td width="300" style="text-align: center"><input type="text" id="whwmName" name="whwmName" th:value="${whManagement.wmName}"></td>
+            <td style="text-align: center"><input type="text" id="comzuidikucun"  name="czuidikc" style="text-align: center" th:value="${commodityListid.clMinStock}"> </td>
+            <td style="text-align: center"><input type="text"  id="comzuigaokucun" name="czuigaok" style="text-align: center" th:value="${commodityListid.clMAxStock}"></td>
+        </tr>
+    </table>
+</div>
+<hr>
         <div class="formTitle">其他</div>
         <table width="100%" border="0" cellspacing="0" cellpadding="8">
             <tr>
@@ -239,16 +182,7 @@
     </form>
 </div>
 <script>
-/*    var app=new Vue({
-        el:'#app',
-        data:{
-            result:[]
-        }
-    });*/
     var updatecommodity=function () {
-     /* if(!check().form()){
-            return ;
-        }*/
         $.ajax({
             type:"post",
             dataType:"json",
@@ -261,9 +195,13 @@
                 fenlei:$("#fenlei").val(),
                 danwei:$("#danwei").val(),
                 guige:$("#guige").val(),
-                cankaojinhuo:$("#cankaojinhuo").val(),
-                pifajia:$("#pifajia").val(),
-                lingshoujia:$("#lingshoujia").val()
+                cankaojinhuo:$("#cankaojinhuojia").val(),
+                pifajia:$("#compifajia").val(),
+                lingshoujia:$("#comlingshoujia").val(),
+                comzuilingshoujia:$("#comzuilingshoujia").val(),
+                comzuidikucun:$("#comzuidikucun").val(),
+                comzuigaokucun:$("#comzuigaokucun").val(),
+
             },
             success:function (msg) {
                 $("#CancelBtnn").click();
@@ -278,43 +216,7 @@
         parent.getCommdityPageList();
         parent.layer.close(index);
     });
-    /*function check() {
-        return $("#addCommdityForm").validate({
-            rules:{
-               tiaoxingma: {
-                    required: true
-                },
-                bianhao: {
-                    required: true
-                },
-                mingcheng: {
-                    required: true
-                },
-                fenlei: {
-                    required: true
-                },
-                jibendanwei: {
-                    required: true
-                },
-                guige: {
-                    required: true
-                },
-                cankaojinhuo: {
-                    required: true
-                },
-                pifajia: {
-                    required: true
-                },
-                lingshoujia: {
-                    required: true
-                },
-            },
-        });
-
-    }
-*/
 </script>
-
 <script  type="text/javascript">
     /**
      * 实现select的滚动条的script
@@ -329,39 +231,28 @@
         $(that).parent().children("[selected='selected']").removeAttr("selected");
         $(that).attr("selected", "");
     };
-    /*单位设置的script*/
-    $(document).ready(function (e) {
-        $("#enableMultiUnit").click(function () {
-             if ($(this).is(":checked")) {
-                 $("#multiUnitDiv").show();
-             }else {
-                 $("#multiUnitDiv").hide();
-             }
-        });
-    });
     /*属性设置的script
     * */
-    $(document).ready(function (e) {
-        $("#enableMultProperties").click(function () {
-            if ($(this).is(":checked")) {
-                $("#multPropertiesDiv").show();
-            }else{
-                $("#multPropertiesDiv").hide();
-            }
-        });
-    });
+    function enableProperty(obj){
+        var checks=document.getElementById("multPropertyDiv");
+        if (obj.checked){
+            checks.style.display="block";
+        } else{
+            checks.style.display="none";
+        }
+    }
 /*   仓库管理*/
-    $(document).ready(function (e) {
-        $("kucunyujing").click(function () {
-            if ($(this).is(":checked")) {
-                $("#kucunlaing").style.display= "block";
-                $("#cangku").style.display= "none";
-            }else{
-                $("#kucunlaing").style.display= "none";
-                $("#cangku").style.display= "block";
-            }
-        });
-    });
+    function enableMultiUnit(obj){
+        var cangku=document.getElementById("cangku");
+        var kucunlaing=document.getElementById("kucunlaing");
+        if (obj.checked){
+            cangku.style.display="none";
+            kucunlaing.style.display="block";
+        }else{
+            cangku.style.display="block";
+            kucunlaing.style.display="none";
+        }
+    }
 </script>
 
 </body>

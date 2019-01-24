@@ -32,7 +32,7 @@
 	</style>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 客户应收欠款 <span class="c-gray en">&gt;</span> 客户应收欠款列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> <a href="/billManagement/fund-client-debt/toFcd">客户应收欠款</a> <span class="c-gray en">&gt;</span> 客户应收欠款列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
 	<div class="text-c">
 		<input type="text" class="input-text" style="width:400px" placeholder="输入客户编号、客户名称、联系人、联系电话" id="fcdNumList" name="fcdNumList">
@@ -54,8 +54,6 @@
 				<td align="center" valign="middle">应收欠款</td>
 				<td class="font18" align="center" valign="middle"><h4>=</h4></td>
 				<td id="initReceAmtTd" align="center" valign="middle">期初欠款</td>
-				<!--<td class="font18" align="center" valign="middle"><h4>+</h4></td>
-				<td align="center" valign="middle">增加应收欠款</td>-->
 				<td class="font18" align="center" valign="middle"><h4>-</h4></td>
 				<td align="center" valign="middle">收回欠款</td>
 				<td class="font18" align="center" valign="middle"><h4>-</h4></td>
@@ -72,10 +70,6 @@
 				<td class="font18" align="center" valign="middle">
 					<span id="initamt" class="money" th:text="${session.countList.fcdBegin}"></span>
 				</td>
-				<!--<td align="center" valign="middle">&nbsp;</td>
-				<td class="font18" align="center" valign="middle">
-					<span id="totalreceiveamt" class="money" th:text="${session.countList.fcdAdd}"></span>
-				</td>-->
 				<td align="center" valign="middle">&nbsp;</td>
 				<td class="font18" align="center" valign="middle">
 					<span id="totalreceiveamted" class="money" th:text="${session.countList.fcdBack}"></span>
@@ -101,7 +95,6 @@
 			<th width="150">联系人</th>
 			<th width="150">联系电话</th>
 			<th width="150">期初欠款(元)</th>
-			<!--<th width="150">增加应收欠款(元)</th>-->
 			<th width="150">收回欠款(元)</th>
 			<th width="150">优惠(元)</th>
 			<th width="150">抵消欠款(元)</th>
@@ -110,7 +103,6 @@
 		</thead>
 		<tbody>
 		<tr class="text-c" v-for="(item,index) in result">
-			<!--<td><input type="checkbox" value="1" name=""></td>-->
 			<td>{{index+1}}</td>
 			<td class="td-manage">
 				<a title="详情" href="javascript:;" @click="editEvent(item.fcdName)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
@@ -120,7 +112,6 @@
 			<td>{{item.fcdLinkman}}</td>
 			<td>{{item.fcdTelephone}}</td>
 			<td>{{item.fcdBeginDebt}}</td>
-			<!--<td>{{item.fcdAddDebt}}</td>-->
 			<td>{{item.fcdBackDebt}}</td>
 			<td>{{item.fcdDiscount}}</td>
 			<td>{{item.fcdOffsetDeb}}</td>

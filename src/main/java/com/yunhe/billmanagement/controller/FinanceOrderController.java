@@ -127,18 +127,6 @@ public class FinanceOrderController {
 
     /**
      * <P>
-     *     通过id查找数据，显示详情
-     * </P>
-     * @param id  查询数据的条件
-     * @return FinanceOrder对象
-     */
-    @GetMapping(value = "/detailById")
-    public FinanceOrder detailById(int id) {
-        return financeOrderService.detailById(id);
-    }
-
-    /**
-     * <P>
      *     删除数据
      * </P>
      * @param id 通过id删除数据
@@ -149,20 +137,6 @@ public class FinanceOrderController {
         return financeOrderService.deleteFo(id);
     }
 
-    /**
-     * <P>
-     *     批量删除数据
-     * </P>
-     * @param ids 批量删除的id存在集合中
-     * @return  删除是否成功true or false
-     */
-    @RequestMapping("/deleteAll")
-    public boolean deleteAll(@RequestBody List<Integer> ids)  {
-        for (Integer id : ids) {
-            financeOrderService.deleteFo(id);
-        }
-        return true;
-    }
     /**
      * <P>
      *      Excel导出

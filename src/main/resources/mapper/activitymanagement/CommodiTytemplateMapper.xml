@@ -10,16 +10,9 @@
         ct_remarks
     </sql>
 
-
-<!--    <select id="selectAllPage" resultType="com.yunhe.activitymanagement.entity.CommodiTytemplate">
-    select <include refid="ctCols"/> from trades_teward..commodi_tytemplate
-    where ct_template_number like concat('%', #{commoditytemplate.ctTemplateNumber}, '%')
-    and ct_tytemplate_name like concat('%',#{commoditytemplate.ctTemplateName},'%')
-</select>-->
-
     <!--查询的是商品模板里面的所有已存在的模板-->
-    <select id="selectAllPage" resultType="com.yunhe.activitymanagement.entity.CommodiTytemplate">
-    select <include refid="ctCols"/> from trades_teward.commodi_tytemplate
-</select>
+    <select id="selectAll" resultType="com.yunhe.activitymanagement.entity.CommodiTytemplate">
+        select <include refid="ctCols"/> from trades_teward.commodi_tytemplate
+    </select>
 
 </mapper>

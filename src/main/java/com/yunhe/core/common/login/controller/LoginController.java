@@ -2,6 +2,13 @@ package com.yunhe.core.common.login.controller;
 
 import com.yunhe.core.common.login.service.ILoginService;
 import com.yunhe.systemsetup.entity.Employ;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -16,7 +23,7 @@ import javax.servlet.http.HttpSession;
  * @author 孔邹祥
  * @date 2019年1月9日
  */
-//@Controller
+@Controller
 public class LoginController {
 
     @Resource
@@ -24,20 +31,60 @@ public class LoginController {
 
     @GetMapping("/")
     public String login() {
+//        退出登录
+        Subject subject = SecurityUtils.getSubject();
+        if (subject != null) {
+            subject.logout();
+        }
         return "login";
     }
 
-    @GetMapping("toindex")
+    @GetMapping("/tologin")
+    public String toLogin() {
+        return "login";
+    }
+
+    @GetMapping("/toindex")
     public String index() {
+//        退出登录
+        Subject subject = SecurityUtils.getSubject();
+        if (subject != null) {
+            subject.logout();
+        }
         return "index";
     }
+
     @PostMapping("/login")
-    public String login(Employ employ, HttpSession session) {
-        if (loginService.login(employ) != null) {
-            session.setAttribute("employ", employ);
+    public String login(Employ employ, Model model, HttpSession session) {
+
+
+        /**
+         * 使用Shiro编写认证操作
+         */
+//        1.获取Subject
+        Subject subject = SecurityUtils.getSubject();
+
+//        2.封装用户数据
+        UsernamePasswordToken token = new UsernamePasswordToken(employ.getEmUsername(), employ.getEmPassword());
+
+//        3.执行登录方法
+        try {
+            subject.login(token);
 
             return "index";
+
+        } catch (UnknownAccountException e) {
+//            e.printStackTrace()
+//            登录失败:用户名不存在
+            model.addAttribute("loginMsg", "用户名不存在!");
+            return "login";
+
+        } catch (IncorrectCredentialsException e) {
+//            e.printStackTrace()
+            model.addAttribute("loginMsg", "密码错误!");
+            return "login";
+//            throw new GlobalException(ExceptionEnum.SUCCESS);
         }
-      return "login";
+
     }
 }

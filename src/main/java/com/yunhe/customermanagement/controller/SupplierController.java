@@ -1,10 +1,11 @@
 package com.yunhe.customermanagement.controller;
 
-
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yunhe.customermanagement.entity.Supplier;
 import com.yunhe.customermanagement.service.ISupplierService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,9 +17,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * <p>
@@ -34,6 +35,18 @@ public class SupplierController {
     @Resource
     ISupplierService supplierService;
 
+    @RequestMapping("/editSupplier")
+    public ModelAndView selectAllCustomer(Integer id, Model model) {
+        Supplier supplier = supplierService.getById(id);
+        model.addAttribute("supplier", supplier);
+        return new ModelAndView ("customermanagement/editSupplier");
+    }
+
+    @RequestMapping("/addSupplier")
+    public ModelAndView addSupplier() {
+        System.out.println("进入添加页面");
+        return new ModelAndView ("customermanagement/addSupplier");
+    }
 
     @RequestMapping("/supp")
     @ResponseBody
@@ -43,23 +56,18 @@ public class SupplierController {
 
     /**
      * <p>
-     *     查询所有b并分页
+     * 模糊查询
      * </p>
      *
-     * @param
-     * @return 供应商
+     * @param supplier
+     * @return 供应商列表
      */
-    @RequestMapping("/selectSupplier")
+    @RequestMapping("/selectPage")
     @ResponseBody
-    public Map selectAllSupplier(int current,int size) {
-        Map map = new HashMap();
-        map =  supplierService.selectAll(current, size);
+    public IPage<Supplier> selectPage(int current, int size, Supplier supplier) {
         System.out.println(current);
-        System.out.println(size);
-        return map;
+        return supplierService.selectPage(current, size, supplier);
     }
-
-
 
 
     /**
@@ -71,10 +79,8 @@ public class SupplierController {
      */
     @RequestMapping("/updateSupplier")
     @ResponseBody
-    public String updateSupplier(Supplier supplier) {
-        supplierService.updateSupplier(supplier);
-
-        return "list";
+    public Integer updateSupplier(Supplier supplier) {
+        return supplierService.updateSupplier(supplier);
     }
 
     /**
@@ -86,9 +92,8 @@ public class SupplierController {
      */
     @RequestMapping("/insertSupplier")
     @ResponseBody
-    public String insertSupplier(Supplier supplier){
-        supplierService.insertSupplier(supplier);
-        return "list";
+    public Integer insertSupplier(Supplier supplier){
+        return  supplierService.insertSupplier(supplier);
     }
 
     /**
@@ -101,10 +106,12 @@ public class SupplierController {
 
     @PostMapping("/deleteSupplier")
     @ResponseBody
-    public String deleteSupplier(int id) {
-        supplierService.deleteSupplier(id);
-        return "list";
+    public Integer deleteSupplier(int id) {
+        return  supplierService.deleteSupplier(id);
     }
+
+
+
 
     /**
      * <p>

@@ -32,17 +32,14 @@
     </style>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 供应商应付欠款 <span class="c-gray en">&gt;</span> 供应商应付欠款 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> <a href="/billManagement/fund_provider_debt/toFpd">供应商应付欠款</a> <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
     <div class="text-c">
         <input type="text" class="input-text" style="width:400px" placeholder="输入供应商编号、供应商名称、联系人、联系电话" id="fpdNumList" name="fpdNumList">
-        <!--<input type="text" class="input-text" style="width:250px" placeholder="输入供应商名称" id="fpdName" name="fpdName">
-        <input type="text" class="input-text" style="width:250px" placeholder="输入联系人" id="fpdLinkman" name="fpdLinkman">
-        <input type="text" class="input-text" style="width:250px" placeholder="输入联系电话" id="fpdTelephone" name="fpdTelephone">-->
         <button type="submit" class="btn btn-success" id="findFpd" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20" data-validator-option="{theme:'simple_right'}">
-        <span class="l"><a href="javascript:;" id="daoFcd" class="btn btn-success radius"><i class="Hui-iconfont">&#xe644;</i> Excel导出</a></span>
+        <span class="l"><a href="javascript:;" id="daoFpd" class="btn btn-success radius"><i class="Hui-iconfont">&#xe644;</i> Excel导出</a></span>
         &nbsp;&nbsp;<a href="/billManagement/fund_provider_debt/toAdd" id="addFpdBtn" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增付款</a>
         <span class="r">共有数据：<strong id="strong"></strong> 条</span>
     </div>
@@ -58,8 +55,6 @@
                 <td align="center" valign="middle">应付欠款</td>
                 <td class="font18" align="center" valign="middle">=</td>
                 <td id="initReceAmtTd" align="center" valign="middle">期初欠款</td>
-                <td class="font18" align="center" valign="middle">+</td>
-                <td align="center" valign="middle">增加应付欠款</td>
                 <td class="font18" align="center" valign="middle">-</td>
                 <td align="center" valign="middle">支付欠款</td>
                 <td class="font18" align="center" valign="middle">-</td>
@@ -86,10 +81,6 @@
                 </td>
                 <td align="center" valign="middle">&nbsp;</td>
                 <td class="font18" align="center" valign="middle">
-                    <span id="totalreceiveamt" class="money" th:text="${session.countList.fpdAdd}"></span>
-                </td>
-                <td align="center" valign="middle">&nbsp;</td>
-                <td class="font18" align="center" valign="middle">
                     <span id="totalreceiveamted" class="money" th:text="${session.countList.fpdPay}"></span>
                 </td>
                 <td align="center" valign="middle">&nbsp;</td>
@@ -109,7 +100,6 @@
             <th scope="col" colspan="9">供应商应付欠款列表</th>
         </tr>
         <tr class="text-c">
-            <!--<th width="25"><input type="checkbox" name="" value=""></th>-->
             <th width="40">ID</th>
             <th width="100">操作</th>
             <th width="150">供应商编号</th>
@@ -117,7 +107,6 @@
             <th width="150">联系人</th>
             <th width="150">联系电话</th>
             <th width="150">期初欠款(元)</th>
-            <th width="150">增加应付欠款(元)</th>
             <th width="150">支付欠款(元)</th>
             <th width="150">优惠欠款(元)</th>
             <th width="150">抵消欠款(元)</th>
@@ -126,18 +115,15 @@
         </thead>
         <tbody>
         <tr class="text-c" v-for="(item,index) in result">
-            <!--<td><input type="checkbox" value="1" name=""></td>-->
             <td>{{index+1}}</td>
             <td class="td-manage">
-                <a title="详情" href="/billManagement/fund_provider_debt/toDetail" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
-                <!--<a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>-->
+                <a title="详情" @click="editEvent(item.fpdName)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
             </td>
             <td>{{item.fpdNumList}}</td>
             <td>{{item.fpdName}}</td>
             <td>{{item.fpdLinkman}}</td>
             <td>{{item.fpdTelephone}}</td>
             <td>{{item.fpdBeginDebt}}</td>
-            <td>{{item.fpdAddDebt}}</td>
             <td>{{item.fpdPayDebt}}</td>
             <td>{{item.fpdDiscount}}</td>
             <td>{{item.fpdOffsetDeb}}</td>
@@ -173,9 +159,6 @@
                 current: curr || 1,
                 size:5,
                 fpdNumList:$("#fpdNumList").val()
-                /*fpdName:$("#fpdName").val(),
-                fpdLinkman:$("#fpdLinkman").val(),
-                fpdTelephone:$("#fpdTelephone").val()*/
             },
             success:function(msg){
                 $("#strong").html(msg.total);
@@ -201,7 +184,9 @@
     $("#findFpd").click(function () {
         getFpdPageList();
     });
-
+    var editEvent = function(fpdName){
+        window.location.href="/billManagement/fund_provider_debt/fpdDetail?fcddFcdName="+fpdName;
+    };
     /*Excel导出*/
     $("#daoFpd").click(function () {
         window.location.href="/billManagement/fund_provider_debt/export";

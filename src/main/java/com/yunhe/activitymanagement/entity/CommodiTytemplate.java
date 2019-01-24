@@ -30,9 +30,8 @@ public class CommodiTytemplate implements Serializable {
     /**
      * 模板id
      */
-
-    @TableId(value = "id",type = IdType.AUTO)
-    private Integer id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private int id;
 
 
     /**
@@ -59,7 +58,5 @@ public class CommodiTytemplate implements Serializable {
     @TableField(value = "ct_remarks")
     private String ctRemarks;
 
-   /* @TableField(exist = false)
-    private List<Integer> commodityId;
-*/
+
 }

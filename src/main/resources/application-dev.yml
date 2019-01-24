@@ -1,7 +1,3 @@
-mybatis-plus:
-  #mybatis对应的映射文件路径
-  mapper-locations: classpath*:mapper/*/*Mapper.xml
-  type-aliases-package: com.yunhe.*.entity
 spring:
   #数据库连接配置
   datasource:
@@ -12,7 +8,6 @@ spring:
     password: root
     #连接地址
     url: jdbc:mysql://172.16.35.99:3306/trades_teward?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
-#    url: jdbc:mysql://47.106.37.123:3306/trades_teward?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
     #连接类型
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
@@ -30,16 +25,7 @@ spring:
       maximum-pool-size: 15
       #最小连接
       minimum-idle: 5
-  #thymeleaf:
-  thymeleaf:
-    #不设置静态页面缓存
-    cache: false
-    prefix: classpath:/templates/
-    suffix: .html
-    encoding: UTF-8
-    mode: HTML5
-    servlet:
-      content-type: text/html
+
 
   #出现错误时直接抛出异常
   mvc:
@@ -47,3 +33,10 @@ spring:
   #关闭工程中的资源文件建立映射
 #  resources:
 #    add-mappings: false
+
+#配置日志
+#logging:
+      ##  #配置日志文件路径
+      ##  path: log\
+    ##  level:
+    ##      com.yunhe.core.aop.WebLogAspect: info

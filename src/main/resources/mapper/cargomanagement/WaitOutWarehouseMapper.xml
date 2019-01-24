@@ -7,7 +7,7 @@
     </sql>
     <select id="queryLikeWaitOutWarehouse" resultType="com.yunhe.cargomanagement.entity.WaitOutWarehouse">
         select <include refid="Cols"/>
-        from wait_out_warehouse;
+        from wait_out_warehouse
     </select>
 
 </mapper>

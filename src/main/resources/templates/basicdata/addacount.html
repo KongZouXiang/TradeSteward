@@ -25,15 +25,15 @@
         </div>
         <div class="form-group">
         <label for="sabanknumber">银行账号：</label>
-        <input type="text" class="form-control" id="sabanknumber" name="sabanknumber" placeholder="银行账号">
+        <input type="text" class="form-control" id="sabanknumber" name="sabanknumber" placeholder="银行账号18-21位"><span id="spannumber"></span>
     </div>
         <div class="form-group">
             <label for="beginbalance">期初余额：</label>
-            <input type="text" class="form-control" id="beginbalance" name="beginbalance" placeholder="期初余额">
+            <input type="text" class="form-control" id="beginbalance" name="beginbalance" placeholder="期初余额"><span id="spanbeginbalance" ></span>
         </div>
         <div class="form-group">
             <label for="zhangbalance">账户余额：</label>
-            <input type="text" class="form-control" id="zhangbalance" name="zhangbalance" placeholder="账户余额">
+            <input type="text" class="form-control" id="zhangbalance" name="zhangbalance" placeholder="账户余额"><span id="spanzhangbalance"></span>
         </div>
         <div class="form-group">
             <label for="zhangstate">状态：</label>
@@ -71,7 +71,6 @@
                 zhangstate:1,
             },
             success:function () {
-
                 $("#cancelBtn").click();
             }
         });
@@ -83,6 +82,62 @@
         var index=parent.layer.getFrameIndex(window.name);
         parent.getAccountPageList();
         parent.layer.close(index);
+    });
+    //验证银行账号
+
+    var chechnumber=false;
+    $(function () {
+        $("#sabanknumber").on("blur", function () {
+            var sabanknumber = $("#sabanknumber").val();
+            var reg = /[0-9]{18,21}/;
+            var b = reg.test(sabanknumber);
+            if (b) {
+                $.ajax({
+                    type:"post",
+                    url: "/basicdata/settlement-account/checkaccount",
+                    data: {
+                        "sabanknumber": sabanknumber
+                    },
+                    success: function (result, state, xhr) {
+                        if (result == "success") {
+                            $("#spannumber").html("<strong style='color: #1e97f7'>银行账号已存在</strong>");
+                            chechnumber = true;
+                        } else {
+                            $("#spannumber").html("<strong style='color: #1e97f7'>正确</strong>")
+                        }
+                    },
+                    dataType: "text"
+                })
+            } else {
+                $("#spannumber").html("<strong style='color: red'>此银行账号错误</strong>")
+            }
+        });
+    });
+    //验证期初余额
+    var beg=false;
+    $("#beginbalance").on("blur",function () {
+        var beginbalance=$("#beginbalance").val();
+        var reg=/[0-9]/;
+        var b=reg.test(beginbalance);
+        if(b){
+            $("#spanbeginbalance").html("<strong style='color: #1e97f7'>输入正确</strong>")
+            beg=true;
+        }else{
+            $("#spanbeginbalance").html("<strong style='color: red'>格式错误</strong>")
+        }
+    });
+    //验证账户余额
+    var zhang=false;
+    $("#zhangbalance").on("blur",function () {
+        var zhangbalance=$("#zhangbalance").val();
+        var reg=/[0-9]/;
+        var b=reg.test(zhangbalance);
+        if(b){
+            $("#spanzhangbalance").html("<strong style='color: #1e97f7'>输入正确</strong>")
+            zhang=true;
+        }else{
+            $("#spanzhangbalance").html("<strong  style='color: red'>格式错误</strong>")
+        }
     });
 </script>
 </body>

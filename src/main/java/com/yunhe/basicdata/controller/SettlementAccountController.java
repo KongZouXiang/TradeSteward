@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,10 +21,8 @@ import java.util.Map;
 public class SettlementAccountController {
     @Resource
     SettlementAccountServiceImpl settlementAccountService;
-
     /**
      * 查询账户的信息 分页
-     *
      * @param current           当前页
      * @param size              每页的条数
      * @param settlementAccount 实体类信息
@@ -81,7 +80,6 @@ public class SettlementAccountController {
         mv.setViewName("basicdata/editaccount");
         return mv;
     }
-
     /**
      * 账户详情
      * @param id 传过来的id
@@ -134,6 +132,28 @@ public class SettlementAccountController {
         System.out.println(id);
         settlementAccount.setId(id);
         return  settlementAccountService.deleteAccount(settlementAccount);
+    }
+
+    /**
+     * 检查银行账号是否存在
+     * @param sabanknumber
+     * @return
+     * @throws IOException
+     */
+    @PostMapping("/checkaccount")
+    @ResponseBody
+    public String  checkAccountnum(@RequestParam("sabanknumber") String sabanknumber){
+        SettlementAccount seetlement=new SettlementAccount();
+        seetlement.setSaBankNumber(sabanknumber);
+      List<Map<String,String>> list=  settlementAccountService.checkAccount(seetlement);
+      String accoungNumber;
+      if(list.size()>0){
+          //银行账号存在
+          return "success";
+      }else {
+          //银行账号不存在
+          return "error";
+      }
     }
     @RequestMapping("/addacounthtml")
     public ModelAndView AddAcount(){

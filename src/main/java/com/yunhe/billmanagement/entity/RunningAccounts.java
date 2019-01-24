@@ -19,6 +19,7 @@ import lombok.experimental.Accessors;
 public class RunningAccounts implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     /**
      * ID
      */

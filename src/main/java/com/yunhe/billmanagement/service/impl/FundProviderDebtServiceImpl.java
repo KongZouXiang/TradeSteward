@@ -3,6 +3,7 @@ package com.yunhe.billmanagement.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yunhe.billmanagement.dao.FundProviderDebtMapper;
+import com.yunhe.billmanagement.entity.FundClientDebt;
 import com.yunhe.billmanagement.entity.FundProviderDebt;
 import com.yunhe.billmanagement.service.IFundProviderDebtService;
 import org.springframework.stereotype.Service;
@@ -28,18 +29,18 @@ public class FundProviderDebtServiceImpl extends ServiceImpl<FundProviderDebtMap
 
     @Override
     public Map selectFpdPage(int current, int size,FundProviderDebt fundProviderDebt) {
-        System.out.println("每页条数："+size);
-        System.out.println("当前页数："+current);
         Page page = new Page(current,size);
-        System.out.println("总条数："+page.getTotal());
-        System.out.println("总页数："+page.getPages());
         Map map = new HashMap();
         List<FundProviderDebt> list =fundProviderDebtMapper.selectFpdPage(page,fundProviderDebt);
-        System.out.println(list);
         map.put("list",list);
         map.put("pages",page.getPages());
         map.put("total",page.getTotal());
         return map;
+    }
+
+    @Override
+    public FundProviderDebt selectIdFpdExit(String fpdName) {
+        return fundProviderDebtMapper.selectFpdByName(fpdName);
     }
 
     @Override
@@ -48,8 +49,13 @@ public class FundProviderDebtServiceImpl extends ServiceImpl<FundProviderDebtMap
     }
 
     @Override
-    public FundProviderDebt selectFpd(int id) {
-        return fundProviderDebtMapper.selectById(id);
+    public int updateFpd(FundProviderDebt fundProviderDebt) {
+        return fundProviderDebtMapper.updateFpd(fundProviderDebt);
+    }
+
+    @Override
+    public List<FundProviderDebt> selectFpd() {
+        return fundProviderDebtMapper.selectList(null);
     }
 
     @Override

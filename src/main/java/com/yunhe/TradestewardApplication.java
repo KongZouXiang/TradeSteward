@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 /**
  * Demo class
  *
- * @author keriezhang
+ * @author 孔邹祥
  * @date 2016/10/31
  */
 @SpringBootApplication

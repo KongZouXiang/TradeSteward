@@ -23,4 +23,15 @@
         <include refid="warehouse_receipt"/>
         from warehouse_receipt where wre_number like concat('%', #{warehouseReceipt.wreNumber}, '%') AND wre_current_unit like concat('%', #{warehouseReceipt.wreCurrentUnit}, '%') and wre_state = '未入库' order by id desc
     </select>
+
+    <select id="selectwarehouseReceiptTwoByState" parameterType="com.yunhe.cargomanagement.entity.WarehouseReceipt"
+            resultType="com.yunhe.cargomanagement.entity.WarehouseReceipt">
+        select
+        <include refid="warehouse_receipt"/>
+        from warehouse_receipt where wre_number like concat('%', #{warehouseReceipt.wreNumber}, '%') AND wre_current_unit like concat('%', #{warehouseReceipt.wreCurrentUnit}, '%') and wre_state = '全部入库' order by id desc
+    </select>
+
+    <!--<delete id="deletewarehouseReceiptTwoById" parameterType="com.yunhe.cargomanagement.entity.WarehouseReceipt">
+        DELETE FROM warehouse_receipt WHERE id = #{warehouseReceipt.id} and wre_state = '全部入库'
+    </delete>-->
 </mapper>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8">
 <title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
@@ -12,10 +12,10 @@
   <button v-on:click="add">增加 1</button>
   <p>这个按钮被点击了 {{counter}} 次。</p>
 	<div id="addTr">
-		
+
 	</div>
-	
-	 
+
+
 </div>
 
 <script>
@@ -29,7 +29,7 @@
 		 add() {
 		 var html ="<select name='clName' class='select' id='clName'>";
 			 for ( var i = 0; i <app.resulttwo.length; i++){
-			
+
 					html = html+"<option value='"+app.resulttwo[i].isOnline+"'>"+app.resulttwo[i].name+"</option>";
 				}
 				html = html+"</select>";

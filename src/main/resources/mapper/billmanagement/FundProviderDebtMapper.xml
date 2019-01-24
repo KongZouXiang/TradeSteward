@@ -14,4 +14,7 @@
         or (fpd_telephone like concat('%',#{fundProviderDebt.fpdNumList},'%'))
         order by id desc
     </select>
+    <select id="selectFpdByName" resultType="com.yunhe.billmanagement.entity.FundProviderDebt">
+        select * from fund_provider_debt where fpd_name like concat('%',#{fpdName},'%')
+    </select>
 </mapper>
