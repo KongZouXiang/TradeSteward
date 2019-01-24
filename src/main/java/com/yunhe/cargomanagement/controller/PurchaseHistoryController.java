@@ -1,6 +1,7 @@
 package com.yunhe.cargomanagement.controller;
 
 
+import com.yunhe.cargomanagement.entity.PurComm;
 import com.yunhe.cargomanagement.entity.PurchaseHistory;
 import com.yunhe.cargomanagement.entity.PurchaseOrder;
 import com.yunhe.cargomanagement.service.IPurchaseHistoryService;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -41,6 +43,31 @@ public class PurchaseHistoryController {
     public ModelAndView getGoToPurchaseHistory(){
         ModelAndView mv = new ModelAndView();
         mv.setViewName("cargomanagement/purhistory-list");
+        return mv;
+    }
+
+    /**
+     * 跳转进货历史页面 并且session传值过去
+     * @param session session
+     * @param id 进货历史页面传过来的id
+     * @return 要跳转的页面
+     */
+    @RequestMapping("/hostXiang")
+    public ModelAndView test33(HttpSession session, int id) {
+        int jiage = 0;
+        int shuliang = 0;
+        PurchaseHistory purchaseHistory = purchaseHistoryService.selectXiangList(id);
+        List<PurComm> purComms = purchaseHistoryService.selectComHistZhong(id);
+        for (PurComm purComm : purComms) {
+            shuliang+=purComm.getPcGeshu();
+            jiage += purComm.getPcGeshu() * Integer.parseInt(purComm.getCommodityList().getClPurPrice());
+        }
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/cargomanagement/Pur_history_select_xiang");
+        session.setAttribute("pulist", purchaseHistory);
+        session.setAttribute("shuliang",shuliang);
+        session.setAttribute("jiage",jiage);
+        session.setAttribute("poId", id);
         return mv;
     }
 
@@ -100,6 +127,16 @@ public class PurchaseHistoryController {
     public int updatePurchaseHistoryById(PurchaseHistory purchaseHistory){
         System.out.println("*****"+purchaseHistory.getId());
         return purchaseHistoryService.updatePurchaseHistoryById(purchaseHistory);
+    }
+
+    /**
+     * 进货历史商品详情
+     * @param purchaseHistory  进货历史实体类接收
+     * @return 进货历史商品详情信息
+     */
+    @RequestMapping("/selectComHistZhong")
+    public List<PurComm> selectComHistZhong(PurchaseHistory purchaseHistory){
+        return purchaseHistoryService.selectComHistZhong(purchaseHistory.getId());
     }
 
     /**

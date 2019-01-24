@@ -25,7 +25,7 @@ public interface IWarehouseManagementService extends IService<WarehouseManagemen
      * @param pageNum 当前页
      * @return 仓库列表
      */
-    Map selectWareList(String data,int pageSize, int pageNum);
+    Map selectWareList(String data, int pageSize, int pageNum);
 
     /**
      * <>

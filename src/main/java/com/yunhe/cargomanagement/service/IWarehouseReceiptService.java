@@ -1,8 +1,10 @@
 package com.yunhe.cargomanagement.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yunhe.cargomanagement.entity.PurComm;
 import com.yunhe.cargomanagement.entity.WarehouseReceipt;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,7 +40,26 @@ public interface IWarehouseReceiptService extends IService<WarehouseReceipt> {
      * @param warehouseReceipt 入库实体类
      * @return int
      */
-    /*int deletewarehouseReceiptTwoById(WarehouseReceipt warehouseReceipt);*/
     int deletewarehouseReceiptTwoById(Map warehouseReceipt);
+
+    /**
+     * 待入库单详情
+     * @param id 根据id查询
+     * @return 待入库单详情
+     */
+    WarehouseReceipt selectWarhouseXiangList(int id);
+
+    /**
+     * 入库单详情
+     * @param id 根据id查询
+     * @return 入库单详情
+     */
+    WarehouseReceipt selectWarhouseXiangTwoList(int id);
+
+    /**
+     * 一对一
+     * @return 商品信息
+     */
+    List<PurComm> selectWarHouseZhong(int id);
 
 }

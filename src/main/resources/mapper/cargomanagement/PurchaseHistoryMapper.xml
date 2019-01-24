@@ -46,7 +46,8 @@
             parameterType="com.yunhe.cargomanagement.entity.PurchaseHistory">
         select
         <include refid="purchase_history"/>
-        from purchase_history where ph_number like concat('%', #{purchaseHistory.phNumber}, '%') and ph_supname like concat('%', #{purchaseHistory.phSupname}, '%') order by id desc
+        from purchase_history where ph_number like concat('%', #{purchaseHistory.phNumber}, '%') and ph_supname like
+        concat('%', #{purchaseHistory.phSupname}, '%') order by id desc
     </select>
 
     <update id="updatePurchaseHistoryById" parameterType="com.yunhe.cargomanagement.entity.PurchaseHistory">
@@ -66,6 +67,40 @@
             ph_single_person=#{phSinglePerson},
             ph_other_expenses=#{phOtherExpenses},
             ph_warehousing_status=#{phWarehousingStatus},
-            ph_remarks=#{phRemarks} where id=#{id}
+            ph_remarks=#{phRemarks}
+        where id = #{id}
     </update>
+
+    <select id="selectXiangList" parameterType="Integer"
+            resultType="com.yunhe.cargomanagement.entity.PurchaseHistory">
+        select
+        <include refid="purchase_history"/>
+        from purchase_history where id=#{id}
+    </select>
+
+
+    <resultMap id="selectHistZhong" type="com.yunhe.cargomanagement.entity.PurComm">
+        <id column="id" property="id"/>
+        <result column="pc_geshu" property="pcGeshu"/>
+        <association property="commodityList" javaType="com.yunhe.basicdata.entity.CommodityList">
+            <id column="id" property="id"/>
+            <result column="cl_name" property="clName"/>
+            <result column="cl_number" property="clNumber"/>
+            <result column="cl_unit" property="clUnit"/>
+            <result column="cl_pur_price" property="clPurPrice"/>
+        </association>
+    </resultMap>
+
+    <select id="selectComHistZhong" resultMap="selectHistZhong">
+        SELECT
+            co.cl_name,
+            co.cl_number,
+            pc.pc_geshu,
+            co.cl_unit,
+            co.cl_pur_price
+        FROM
+            pur_comm pc,
+            commodity_list co
+        WHERE pc.com_id = co.id and puh_id=#{id}
+    </select>
 </mapper>

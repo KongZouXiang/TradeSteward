@@ -1,6 +1,7 @@
 package com.yunhe.cargomanagement.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -114,6 +115,11 @@ public class PurchaseOrder implements Serializable {
      */
     @TableField(value = "po_date_order")
     private String poDateOrder;
+
+    /**
+     * 进货中间表实体类
+     */
+    private List<PurComm> purComm;
 
 
     public static long getSerialVersionUID() {

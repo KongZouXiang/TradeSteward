@@ -18,10 +18,6 @@
        <div style="width: auto;height: auto">
              <table>
                  <tr>
-                     <td>
-                     <a href="#"  class="ml-5" style="text-decoration:none">  <button type="button"  id="editBtn" class="btn btn-success">编辑</button></a>
-                         <a title="编辑" href="javascript:;" @click="editEventcommdity(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-                     </td>
                      <td >
                           <a  href="#" onclick="commoditylist()" class="btn btn-danger radius" style="text-decoration:none"> <i class="Hui-iconfont">&#xe600;</i>商品列表</a>
                      </td>
@@ -104,14 +100,6 @@
         <div class="formTitle">其他</div>
         <table width="100%" border="0" cellspacing="0" cellpadding="8">
             <tr>
-                <td width="100" align="right" class="font14">商品状态&nbsp;&nbsp;&nbsp;</td>
-                <td>
-                    <input id="productstate1" name="productstate" type="radio" value="1" checked>
-                    启用&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input id="productstate2" name="productstate" type="radio" value="0"> 停用
-                </td>
-            </tr>
-            <tr>
                 <td align="right" class="font14" valign="top">备注&nbsp;&nbsp;&nbsp;</td>
                 <td>
                     <textarea id="productremark" name="productremark" rows="" style="height: 40px;" class="inputText wf95" maxlength="500"></textarea>
@@ -124,16 +112,6 @@
     var commoditylist=function () {
         window.location.href="/basicdata/commodity-list/getcommdityfenye";
     };
-    $("#editBtn").click(function () {
-        $.ajax({
-            type:'Get',
-            dataType:'json',
-            data:{
-                id:$("#idsa").val(),
-            },
-        });
-        window.location.href='/basicdata/commodity-list/selectcommditybyid';
-    })
 </script>
 </body>
 </html>

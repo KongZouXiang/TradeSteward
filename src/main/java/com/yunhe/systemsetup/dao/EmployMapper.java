@@ -17,9 +17,11 @@ import java.util.List;
  */
 @Repository
 public interface EmployMapper extends BaseMapper<Employ> {
+
     public List<Employ> selectPageEmploy(Page page, Employ employ);
 
-    public  int insertEmploy(Employ employ);
+    //插入员工
+     public  int insertEmploy(Employ employ);
 
     //验证用户名是否存在,返回id
 
@@ -32,6 +34,7 @@ public interface EmployMapper extends BaseMapper<Employ> {
     //修改用户信息
 
     public int updatemess(Employ employ);
+
 
     /**
      * 查询出员工对应的板块
