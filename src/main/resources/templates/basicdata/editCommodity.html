@@ -30,7 +30,7 @@
              </table>
          </div>
         <hr style="height:1px;background-color: #2E2D3C"/>
-           <b>基本信息</b>
+           <span style="font-size: 16px">基本信息</span>
             <hr style="height:1px;background-color: #2E2D3C"/>
         <b><span style="font-size: 14px">条形码 </span></b>&nbsp;&nbsp;&nbsp;<input style="text-align: center"  type="text" name="tiaoxingma" id="tiaoxingma" th:value="${commodityListid.clScan}" placeholder="选填，扫描或录入条形码"><br><br>
             <span class="c-red">*</span><b><span style="font-size: 14px">编号 </span></b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="text-align: center" type="text" th:value="${commodityListid.clNumber}" name="bianhao" id="bianhao"><br><br>
@@ -106,8 +106,8 @@
             <hr style="height:1px;background-color: #2E2D3C"/>
         </div>
      <div  id="kucunlaing" style="display: none" >
-         <span style="font-size: 14px"><b> 最低库存量</b></span>&nbsp;&nbsp;&nbsp;<input type="text" id="zuidikucun" name="zuidikucun" th:value="${commodityListid.clMinStock}" ><br><br>
-         <span style="font-size: 14px"><b> 最高库存量</b></span>&nbsp;&nbsp;&nbsp;<input type="text" id="zuigaokucun" name="zuigaokucun" th:value="${commodityListid.clMAxStock}">
+         <span style="font-size: 14px;text-align: center"><b> 最低库存量</b></span>&nbsp;&nbsp;&nbsp;<input type="text" id="zuidikucun" name="zuidikucun" th:value="${commodityListid.clMinStock}" ><br><br>
+         <span style="font-size: 14px;text-align: center"><b> 最高库存量</b></span>&nbsp;&nbsp;&nbsp;<input type="text" id="zuigaokucun" name="zuigaokucun" th:value="${commodityListid.clMAxStock}">
         </div>
 <div id="cangku" style="display: block" >
     <table border="1px black solid" align="center">
@@ -129,7 +129,7 @@
             <tr>
                 <td align="right" class="font14" valign="top"><b><span style="font-size: 18px">备注</span></b>&nbsp;&nbsp;&nbsp;</td>
                 <td>
-                    <textarea id="productremark" name="productremark"  rows="3" cols="150"  style="height: 40px;" class="inputText wf95" maxlength="500"></textarea>
+                    <textarea id="productremark" name="productremark"  rows="4" cols="150"  style="height: 40px;" class="inputText wf95" maxlength="500"></textarea>
                 </td>
             </tr>
         </table>
@@ -208,6 +208,5 @@
         }
     }
 </script>
-
 </body>
 </html>
