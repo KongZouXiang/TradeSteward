@@ -102,6 +102,11 @@ public class PurchaseOrderServiceImpl extends ServiceImpl<PurchaseOrderMapper, P
         return purchaseOrderMapper.selectComZhong(id);
     }
 
+    @Override
+    public PurchaseOrder selectPurOrderByPoNumber(String poNumber) {
+        return purchaseOrderMapper.selectPurOrderByPoNumber(poNumber);
+    }
+
     public PurchaseOrderMapper getPurchaseOrderMapper() {
         return purchaseOrderMapper;
     }

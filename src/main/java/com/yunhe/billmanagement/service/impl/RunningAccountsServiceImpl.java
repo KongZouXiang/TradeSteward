@@ -6,6 +6,8 @@ import com.yunhe.billmanagement.service.IRunningAccountsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * <p>
  * 资金流水表(ymy) 服务实现类
@@ -17,4 +19,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class RunningAccountsServiceImpl extends ServiceImpl<RunningAccountsMapper, RunningAccounts> implements IRunningAccountsService {
 
+    @Resource RunningAccountsMapper runningAccountsMapper;
+
+    @Override
+    public int insertRunningAccountsOne(RunningAccounts runningAccounts) {
+        return runningAccountsMapper.insert(runningAccounts);
+    }
+
+    @Override
+    public RunningAccounts selectRunningMaxIdMoney() {
+        return runningAccountsMapper.selectRunningMaxIdMoney();
+    }
 }

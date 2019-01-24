@@ -83,4 +83,9 @@ public class WarehouseManagementServiceImpl extends ServiceImpl<WarehouseManagem
     public Integer addWarehouse(WarehouseManagement warehouseManagement) {
       return warehouseManagementMapper.insert(warehouseManagement);
     }
+
+    @Override
+    public List<WarehouseManagement> selectquanWarList() {
+        return warehouseManagementMapper.selectList(null);
+    }
 }

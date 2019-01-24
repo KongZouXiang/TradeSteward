@@ -10,6 +10,7 @@ import com.yunhe.cargomanagement.dao.SalesOrderHistoryMapper;
 import com.yunhe.cargomanagement.dao.WarehouseReceiptMapper;
 import com.yunhe.cargomanagement.entity.*;
 import com.yunhe.cargomanagement.service.IPurchaseHistoryService;
+import com.yunhe.cargomanagement.service.IPurchaseOrderService;
 import com.yunhe.cargomanagement.service.IWarehouseReceiptService;
 import com.yunhe.core.util.DateUtil;
 import com.yunhe.customermanagement.service.ISupplierService;
@@ -41,9 +42,12 @@ public class cargomanagement {
     @Resource
     private IWarehouseReceiptService warehouseReceiptService;
 
+    @Resource
+    private IPurchaseOrderService purchaseOrderService;
     @Test
     public void text() {
-
+        PurchaseOrder purchaseOrder1 = purchaseOrderService.selectPurOrderByPoNumber("ADD20190123194420");
+        System.out.println(purchaseOrder1.getId());
     }
 
 }

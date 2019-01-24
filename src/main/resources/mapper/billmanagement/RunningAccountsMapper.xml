@@ -2,4 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yunhe.billmanagement.dao.RunningAccountsMapper">
 
+
+    <!--史江浩 2019-01-24 12：17 查询最大id的剩余金额-->
+    <select id="selectRunningMaxIdMoney" resultType="com.yunhe.billmanagement.entity.RunningAccounts">
+        select *
+        from running_accounts where id=(select MAX(id) as id from running_accounts)
+    </select>
+
 </mapper>

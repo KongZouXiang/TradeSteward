@@ -6,8 +6,10 @@ import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
 import com.yunhe.cargomanagement.entity.PurComm;
 import com.yunhe.cargomanagement.entity.PurchaseHistory;
 import com.yunhe.cargomanagement.entity.PurchaseOrder;
+import com.yunhe.cargomanagement.service.IPurCommService;
 import com.yunhe.cargomanagement.service.IPurchaseHistoryService;
 import com.yunhe.cargomanagement.service.IPurchaseOrderService;
+import com.yunhe.cargomanagement.service.impl.PurCommServiceImpl;
 import com.yunhe.core.util.DateUtil;
 import com.yunhe.customermanagement.service.ISupplierService;
 import org.apache.poi.hssf.usermodel.*;
@@ -55,7 +57,13 @@ public class PurchaseOrderController {
      * 商品列表
      */
     @Resource
-    CommodityListServiceImpl commodityListService;
+    private CommodityListServiceImpl commodityListService;
+
+    /**
+     * 进货详情中间表
+     */
+    @Resource
+    private IPurCommService purCommService;
 
     @RequestMapping("/Purlist")
     public ModelAndView test22() {
@@ -180,6 +188,18 @@ public class PurchaseOrderController {
         purchaseOrder.setPoQuantityOfPurchase(a);
         purchaseOrder.setPoDateOrder(purchaseOrder.getPoDate());
         purchaseOrderService.insertPurchaseOrder(purchaseOrder);
+
+        for (String s : poClName) {
+            CommodityList list1 = commodityListService.selectListByClName(s);
+            for (int m : QuantityOfPurchase) {
+                PurchaseOrder purchaseOrder1 = purchaseOrderService.selectPurOrderByPoNumber(purchaseOrder.getPoNumber());
+                PurComm purComm = new PurComm();
+                purComm.setPuId(purchaseOrder.getId());
+                purComm.setComId(list1.getId());
+                purComm.setPcGeshu(m);
+                purCommService.insertPurComm(purComm);
+            }
+        }
         ModelAndView mv = new ModelAndView();
         mv.setViewName("/cargomanagement/purorder-list");
         return mv;
@@ -272,7 +292,7 @@ public class PurchaseOrderController {
         purchaseHistory.setPhManeyHu("现金");
         purchaseHistory.setPhExperiencedPerson(purchaseOrder.getPoExperiencedPerson());
         purchaseHistory.setPhSinglePerson("老板");
-        purchaseHistory.setPhOtherExpenses("");
+        purchaseHistory.setPhOtherExpenses(0);
         purchaseHistory.setPhWarehousingStatus("未入库");
         purchaseHistory.setPhRemarks(purchaseOrder.getPoRemarks());
         purchaseHistoryService.insertPurchaseHistory(purchaseHistory);
