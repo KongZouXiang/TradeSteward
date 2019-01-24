@@ -31,7 +31,7 @@ public enum ExceptionEnum {
     SELF_ERROR(103, "自己抛出的异常"),
 
     /**
-     * 业务异常
+     * 日志异常
      */
     LOG_ERROR(99, "日志出现了异常!"),
     ;

@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.List;
 
@@ -26,9 +27,11 @@ import java.util.List;
  */
 @Service
 public class EmployServiceImpl extends ServiceImpl<EmployMapper, Employ> implements IEmployService {
-    @Autowired
+
+    @Resource
     private EmployMapper employMapper;
-    @Autowired
+
+    @Resource
     private RedisService redisService;
     @Override
     public List<Employ> selectPageEmploy(Page page, Employ employ) {

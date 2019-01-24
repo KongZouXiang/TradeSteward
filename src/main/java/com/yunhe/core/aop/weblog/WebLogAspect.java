@@ -32,8 +32,8 @@ import java.lang.reflect.Method;
  * @date 2019年1月10日
  */
 
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class WebLogAspect {
 
     private final static Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
