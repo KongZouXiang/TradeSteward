@@ -52,7 +52,7 @@
         <span class="l">
             <a href="javascript:;" id="datadel" class="btn btn-danger radius"><i
                     class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
-        <a href="/cargomanagement/purchase-history/addPurchase" id="addpurOrder"
+        <a href="/cargomanagement/purchase-history/addPurchaseHistory"
            class="btn btn-primary radius">
         <i class="Hui-iconfont">&#xe600;</i> 添加进货历史</a>
         <a href="/cargomanagement/purchase-history/puchaseHistoryExcel"
@@ -102,11 +102,6 @@
                     <a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5"
                        style="text-decoration:none">
                         <i class="Hui-iconfont">&#xe6e2;</i>
-                    </a>
-                    <a title="入库" href="javascript:;"
-                       @click="stateEvent(item.id)" class="ml-5"
-                       style="text-decoration:none">
-                        <i class="Hui-iconfont">&#xe644;</i>
                     </a>
                     <a title="详情" href="#"
                        @Click="article_xiang('进货订单详情','/cargomanagement/purchase-history/hostXiang?id='+(item.id),'1000')"

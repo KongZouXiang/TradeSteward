@@ -155,6 +155,12 @@
         WHERE pc.com_id = co.id and pu_id=#{id}
     </select>
 
+    <select id="selectPurOrderByPoNumber" parameterType="String" resultType="com.yunhe.cargomanagement.entity.PurchaseOrder">
+        select
+        <include refid="getPurchaseOrderByNumber"/>
+        from purchase_order where po_number=#{poNumber}
+    </select>
+
 
     <!--增加进货订单历史-->
     <!--<insert id="addPurchase" parameterType="com.yunhe.cargomanagement.entity.PurchaseOrder">

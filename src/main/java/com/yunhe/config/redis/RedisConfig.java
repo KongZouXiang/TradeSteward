@@ -1,8 +1,6 @@
 package com.yunhe.config.redis;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +8,8 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import javax.annotation.Resource;
 
 /**
  * <p>
@@ -21,12 +21,12 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  */
 
 @Configuration
-@EnableAutoConfiguration
 public class RedisConfig extends CachingConfigurerSupport {
+
     /**
      * 注入 RedisConnectionFactory
      */
-    @Autowired
+    @Resource
     RedisConnectionFactory redisConnectionFactory;
 
     /**
@@ -34,7 +34,7 @@ public class RedisConfig extends CachingConfigurerSupport {
      *
      * @return
      */
-    @Bean
+    @Bean(name = "redisTemplate")
     public RedisTemplate<String, Object> functionDomainRedisTemplate() {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         initDomainRedisTemplate(redisTemplate, redisConnectionFactory);

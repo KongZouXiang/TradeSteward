@@ -73,6 +73,11 @@ public class PurchaseHistoryServiceImpl extends ServiceImpl<PurchaseHistoryMappe
         return purchaseHistoryMapper.selectComHistZhong(id);
     }
 
+    @Override
+    public PurchaseHistory selectPurchaseHistoryByNumber(String phNumber) {
+        return purchaseHistoryMapper.selectPurchaseHistoryByNumber(phNumber);
+    }
+
     public PurchaseHistoryMapper getPurchaseHistoryMapper() {
         return purchaseHistoryMapper;
     }

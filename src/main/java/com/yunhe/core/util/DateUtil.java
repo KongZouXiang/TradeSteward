@@ -15,6 +15,11 @@ import java.util.Date;
 
 public class DateUtil {
 
+    /**
+     * 公司启动资金
+     */
+    public static double SumMoney=10000000;
+
     public static String curr() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return simpleDateFormat.format(new Date());

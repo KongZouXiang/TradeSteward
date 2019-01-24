@@ -20,7 +20,7 @@
     <script type="text/javascript" src="/js/vue/vue.min.js"></script>
     <script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
-    <title>新增进货订单</title>
+    <title>新增进货历史</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 </head>
@@ -29,13 +29,23 @@
 
     <article class="page-container">
         <h1 style="text-align: center">商品进货订单</h1>
-        <form class="form form-horizontal" id="form-article-add" action="/cargomanagement/purchase-order/addPurchaseGoTo">
+        <form class="form form-horizontal" id="form-article-add" action="/cargomanagement/purchase-history/addPurchaseGoTo">
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>供应商</label>
                 <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select  class="select" name="poSupName">
-					<option value="0"></option>
+				<select  class="select" name="phSupname">
+					<option value="默认"></option>
 					<option :value="item.supCompname" v-for="(item,index) in result">{{item.supCompname}}</option>
+				</select>
+				</span>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>入库仓库</label>
+                <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select  class="select" name="phWarehouse">
+					<option value="默认仓库"></option>
+					<option :value="item.wmName" v-for="(item,index) in resultThreeOne">{{item.wmName}}</option>
 				</select>
 				</span>
                 </div>
@@ -44,14 +54,14 @@
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>单据编号</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <input type="text" class="input-text" th:value="${session.curr}" placeholder="" id="poNumber"
-                           name="poNumber">
+                           name="phNumber">
                 </div>
             </div>
 
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>经手人</label>
                 <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select  class="select" name="poExperiencedPerson">
+				<select  class="select" name="phExperiencedPerson">
 					<option value="老板">老板</option>
 					<option value="财务">财务</option>
 					<option value="仓库">仓库</option>
@@ -65,7 +75,7 @@
                 <div class="formControls col-xs-8 col-sm-9">
                     <input type="text"
                            onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'commentdatemax\')||\'%y-%M-%d\'}' })"
-                           id="poDate" name="poDate" class="input-text Wdate">
+                           id="phDate" name="phDate" class="input-text Wdate">
                 </div>
             </div>
             <div class="row cl">
@@ -80,7 +90,7 @@
             <table class="table table-border table-bordered table-bg">
                 <thead>
                 <tr>
-                    <th scope="col" colspan="5">新增进货商品列表</th>
+                    <th scope="col" colspan="6">新增进货商品列表</th>
                 </tr>
                 <tr class="text-c">
                     <th width="40">序号</th>
@@ -88,6 +98,7 @@
                     <th width="170">商品编号</th>
                     <th width="170">属性</th>
                     <th width="100">数量</th>
+                    <th width="100">其他费用</th>
                 </tr>
                 </thead>
                 <tbody id="addTr">
@@ -96,7 +107,7 @@
                             class='Hui-iconfont'>&#xe6e2;</i></a>
                     </td>
                     <td>
-                        <select name="poClName" class="select" id="poClName" >
+                        <select name="phClname" class="select" id="phClname" >
                             <option value="0">请选择</option>
                             <option v-for="(item,index) in resulttwo" :value="item.clName">{{item.clName}}</option>
                         </select>
@@ -106,6 +117,10 @@
                     <td><input type="text" class="input-text" placeholder="" id="QuantityOfPurchase"
                                name="QuantityOfPurchase"></td>
                     <td id="usId"></td>
+                    <td>
+                        <input type="text" class="input-text"
+                               name="phOtherExpenses" >
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -130,9 +145,9 @@
                 <tbody>
                 <tr>
                     <td width="1500">
-                        <textarea type="text" class="textarea radius" name="poRemarks"></textarea>
+                        <textarea type="text" class="textarea radius" name="phRemarks"></textarea>
                     </td>
-                    <td><input class="btn btn-primary size-XL radius" type="submit" value="提交"></td>
+                    <td><input class="btn btn-primary size-XL radius" type="submit" value="提交并入库"></td>
                 </tr>
                 </tbody>
             </table>
@@ -163,7 +178,8 @@
         data: {
             result: [],
             resulttwo: [],
-            resultThree: []
+            resultThree: [],
+            resultThreeOne: []
         }
     });
     //查询
@@ -192,6 +208,21 @@
         });
     };
     getCommodityList();
+
+    var getWarehouseManageList = function (curr) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/cargomanagement/purchase-history/selectquanWarList',
+            data: {},
+            success: function (msg) {
+                app.resultThreeOne = msg;
+            }
+        });
+    };
+    getWarehouseManageList();
+
+
 
 
     var m = 0;

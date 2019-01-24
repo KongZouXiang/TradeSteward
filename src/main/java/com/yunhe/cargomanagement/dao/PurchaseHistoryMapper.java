@@ -56,4 +56,10 @@ public interface PurchaseHistoryMapper extends BaseMapper<PurchaseHistory> {
      */
     List<PurComm> selectComHistZhong(int id);
 
+    /**
+     * 根据进货历史编号查询进货历史id
+     * @param phNumber 进货历史编号
+     * @return 进货历史信息
+     */
+    PurchaseHistory selectPurchaseHistoryByNumber(String phNumber);
 }

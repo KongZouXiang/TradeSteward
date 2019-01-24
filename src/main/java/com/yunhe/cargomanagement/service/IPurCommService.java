@@ -13,4 +13,10 @@ import com.yunhe.cargomanagement.entity.PurComm;
  */
 public interface IPurCommService extends IService<PurComm> {
 
+    /**
+     * 增加进货详情中间表
+     * @param purComm 进货详情中间表实体类
+     * @return int
+     */
+    int insertPurComm(PurComm purComm);
 }

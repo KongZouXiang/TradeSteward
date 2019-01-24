@@ -103,4 +103,9 @@
             commodity_list co
         WHERE pc.com_id = co.id and puh_id=#{id}
     </select>
+
+    <select id="selectPurchaseHistoryByNumber" resultType="com.yunhe.cargomanagement.entity.PurchaseHistory" parameterType="String">
+       select <include refid="purchase_history"/>
+       from purchase_history where ph_number=#{phNumber}
+    </select>
 </mapper>
