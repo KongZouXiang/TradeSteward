@@ -20,14 +20,15 @@ public class RedisService {
      * @param value
      * @return
      */
-    public boolean set(final String key, Object value) {
+    public boolean set(final String key, Object value) throws Exception {
         boolean result = false;
         try {
             ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
             operations.set(key, value);
             result = true;
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new Exception("Redis出现了异常");
+//            e.printStackTrace();
         }
         return result;
     }

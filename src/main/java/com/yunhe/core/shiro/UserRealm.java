@@ -87,8 +87,6 @@ public class UserRealm extends AuthorizingRealm {
 //            查询数据库的用户名和密码
         Employ employ = loginService.selectOneEmploy(token.getUsername());
         SecurityUtils.getSubject().getSession().setAttribute("employ", employ);
-      /*  redisService.add("employ","employ");
-        redisService.get("employ");*/
         if (employ == null) {
 //            用户名不存在
 //            底层会抛出UnKnowAccountException

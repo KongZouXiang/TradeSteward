@@ -1,11 +1,12 @@
 package com.yunhe.activitymanagement;
 
 import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
+import com.yunhe.core.redis.RedisService;
+import com.yunhe.systemsetup.entity.Employ;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
@@ -24,16 +25,21 @@ public class activitymanagement {
     RedisTemplate redisTemplate;
 
     @Resource
+    RedisService redisService;
+    @Resource
     ICommodiTytemplateService commodiTytemplateService;
 
 
     @Test
-    public void contextLoads() {
+    public void contextLoads() throws Exception {
 
-        ValueOperations<String, String> valueStr = redisTemplate.opsForValue();
+        Employ employ = new Employ();
+        employ.setEmDelInvoice("123");
+        employ.setEmEmail("1231");
         //存储一条数据
-        valueStr.set("goodsProdu","长安");
-        System.out.println( valueStr.get("goodsProdu"));
+        redisService.set("employ", employ);
+
+        System.out.println( "************"+redisService.get("employ").toString());
     }
 
 

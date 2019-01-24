@@ -34,7 +34,7 @@ public class RedisConfig extends CachingConfigurerSupport {
      *
      * @return
      */
-    @Bean
+    @Bean(name = "redisTemplate")
     public RedisTemplate<String, Object> functionDomainRedisTemplate() {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         initDomainRedisTemplate(redisTemplate, redisConnectionFactory);
