@@ -90,7 +90,7 @@ public class EmployServiceImpl extends ServiceImpl<EmployMapper, Employ> impleme
         String smscode =(long)(Math.random()*1000000)+"";
         System.out.println("验证码:"+smscode);
         //将验证码存入到redis中
-//        redisService.set(phone,smscode);
+        redisService.set(phone,smscode);
         // 短信应用SDK AppID
         int appid = 1400182121; // 1400开头
         // 短信应用SDK AppKey

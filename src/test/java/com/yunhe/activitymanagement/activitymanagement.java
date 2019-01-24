@@ -1,6 +1,5 @@
 package com.yunhe.activitymanagement;
 
-import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
 import com.yunhe.core.redis.RedisService;
 import com.yunhe.systemsetup.entity.Employ;
 import org.junit.Test;
@@ -26,8 +25,6 @@ public class activitymanagement {
 
     @Resource
     RedisService redisService;
-    @Resource
-    ICommodiTytemplateService commodiTytemplateService;
 
 
     @Test
