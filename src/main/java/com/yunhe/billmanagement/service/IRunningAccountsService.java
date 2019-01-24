@@ -1,6 +1,6 @@
 package com.yunhe.billmanagement.service;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.yunhe.billmanagement.entity.RunningAccounts;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yunhe.billmanagement.entity.RunningAccounts;
 
@@ -16,6 +16,13 @@ import java.util.Map;
  * @since 2019-01-02
  */
 public interface IRunningAccountsService extends IService<RunningAccounts> {
+    /**
+     * @author 史江浩
+     * @since 2019-01-24 12:18
+     * 插入资金流水
+     * @return int
+     */
+    int insertRunningAccountsOne(RunningAccounts runningAccounts);
 
     /**
      * <p>
@@ -45,4 +52,11 @@ public interface IRunningAccountsService extends IService<RunningAccounts> {
     Map<String,Object> selectCountMap();
 
 
+    /**
+     * @author 史江浩
+     * @since 2019-01-24 12:18
+     * 查询最大id值的所剩金额
+     * @return 最大id值的所剩金额
+     */
+    RunningAccounts selectRunningMaxIdMoney();
 }

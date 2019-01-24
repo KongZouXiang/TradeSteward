@@ -66,4 +66,12 @@ public interface IWarehouseManagementService extends IService<WarehouseManagemen
      * @param warehouseManagement 要增加仓库的实体类
      */
     Integer addWarehouse(WarehouseManagement warehouseManagement);
+
+    /**
+     * 查询所有
+     * @author 史江浩
+     * @since 2019-01-24 09:45
+     * @return 所有仓库信息
+     */
+    List<WarehouseManagement> selectquanWarList();
 }

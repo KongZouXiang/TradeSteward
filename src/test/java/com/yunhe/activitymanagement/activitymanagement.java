@@ -4,6 +4,8 @@ import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
@@ -18,6 +20,8 @@ import javax.annotation.Resource;
 @SpringBootTest
 public class activitymanagement {
 
+    @Resource
+    RedisTemplate redisTemplate;
 
     @Resource
     ICommodiTytemplateService commodiTytemplateService;
@@ -26,6 +30,10 @@ public class activitymanagement {
     @Test
     public void contextLoads() {
 
+        ValueOperations<String, String> valueStr = redisTemplate.opsForValue();
+        //存储一条数据
+        valueStr.set("goodsProdu","长安");
+        System.out.println( valueStr.get("goodsProdu"));
     }
 
 

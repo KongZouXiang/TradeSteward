@@ -57,9 +57,7 @@ public class UserRealm extends AuthorizingRealm {
 //        得到数据库查询当前登录用户的授权字符串
         Subject subject = SecurityUtils.getSubject();
         Employ employ = (Employ) subject.getPrincipal();
-      /* redisService.add("employ",employ);
 
-        System.out.println("Redis获取"+redisService.get("employ"));*/
 //        根据ID查找出员工对应的板块
         List<String> list = employMapper.selectEmployPlate(employ.getId());
 
@@ -89,6 +87,8 @@ public class UserRealm extends AuthorizingRealm {
 //            查询数据库的用户名和密码
         Employ employ = loginService.selectOneEmploy(token.getUsername());
         SecurityUtils.getSubject().getSession().setAttribute("employ", employ);
+      /*  redisService.add("employ","employ");
+        redisService.get("employ");*/
         if (employ == null) {
 //            用户名不存在
 //            底层会抛出UnKnowAccountException
