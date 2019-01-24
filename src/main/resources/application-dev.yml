@@ -39,7 +39,7 @@ spring:
       ##  #配置日志文件路径
       ##  path: log\
       ##  level:
-      ##      com.yunhe.core.aop.WebLogAspect: info
+      ##      com.yunhe.core.aop.weblog.WebLogAspect: info
 
     #配置redis
   redis:
