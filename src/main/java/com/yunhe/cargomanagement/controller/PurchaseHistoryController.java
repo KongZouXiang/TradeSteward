@@ -114,12 +114,11 @@ public class PurchaseHistoryController {
     public ModelAndView insertPurchaseOrder(PurchaseHistory purchaseHistory,String[] phClname,int[] QuantityOfPurchase) {
         int a = 0;
         int maney = 0;
-        for (String s : phClname) {
-            CommodityList list = commodityListService.selectListByClName(s);
-            for (int m : QuantityOfPurchase) {
-                maney+=Integer.parseInt(list.getClPurPrice())*m;
-            }
+        for (int i = 0;i<=phClname.length-1;i++){
+            CommodityList list = commodityListService.selectListByClName(phClname[i]);
+            maney+=Integer.parseInt(list.getClPurPrice())*QuantityOfPurchase[i];
         }
+
         for (int s : QuantityOfPurchase) {
             a+=s;
         }
@@ -127,6 +126,7 @@ public class PurchaseHistoryController {
         purchaseHistory.setPhAmountPaid(maney+purchaseHistory.getPhOtherExpenses());
         purchaseHistory.setPhBill("无");
         purchaseHistory.setPhJindate(purchaseHistory.getPhDate());
+        purchaseHistory.setPhQuantity(a);
         purchaseHistory.setPhManeyHu("现金");
         purchaseHistory.setPhSinglePerson("老板");
         purchaseHistory.setPhWarehousingStatus("正在入库");
@@ -144,17 +144,16 @@ public class PurchaseHistoryController {
         runningAccounts.setRaOutcome(maney+purchaseHistory.getPhOtherExpenses());
         runningAccounts.setRaCurrentBalance(runningAccounts1.getRaCurrentBalance()-(maney+purchaseHistory.getPhOtherExpenses()));
         runningAccountsService.insertRunningAccountsOne(runningAccounts);
-        for (String s : phClname) {
-            CommodityList list1 = commodityListService.selectListByClName(s);
-            for (int m : QuantityOfPurchase) {
-                PurchaseHistory purchaseHistory1 = purchaseHistoryService.selectPurchaseHistoryByNumber(purchaseHistory.getPhNumber());
-                PurComm purComm = new PurComm();
-                purComm.setPuhId(purchaseHistory1.getId());
-                purComm.setComId(list1.getId());
-                purComm.setPcGeshu(m);
-                purCommService.insertPurComm(purComm);
-            }
+        for (int i = 0;i<=phClname.length-1;i++){
+            CommodityList list1 = commodityListService.selectListByClName(phClname[i]);
+            PurchaseHistory purchaseHistory1 = purchaseHistoryService.selectPurchaseHistoryByNumber(purchaseHistory.getPhNumber());
+            PurComm purComm = new PurComm();
+            purComm.setPuhId(purchaseHistory1.getId());
+            purComm.setComId(list1.getId());
+            purComm.setPcGeshu(QuantityOfPurchase[i]);
+            purCommService.insertPurComm(purComm);
         }
+
         ModelAndView mv = new ModelAndView();
         mv.setViewName("/cargomanagement/purhistory-list");
         return mv;

@@ -6,7 +6,6 @@
         ,
         prh_date,
         prh_number,
-        prh_pur_order,
         prh_supname,
         prh_returnsup,
         prh_total_amount,
@@ -60,7 +59,15 @@
         FROM
             pur_comm pc,
             commodity_list co
-        WHERE pc.com_id = co.id and prh_id=#{id}
+        WHERE pc.com_id = co.id
+          and prh_id = #{id}
+    </select>
+
+    <select id="selectRurchaseReturnHistByNum" resultType="com.yunhe.cargomanagement.entity.PurchaseReturnHistory"
+            parameterType="String">
+        SELECT
+        <include refid="purchase_return_history"/>
+        from purchase_return_history where prh_number=#{prhNumber}
     </select>
 
 </mapper>

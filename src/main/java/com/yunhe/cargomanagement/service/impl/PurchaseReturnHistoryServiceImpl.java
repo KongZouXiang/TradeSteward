@@ -72,6 +72,11 @@ public class PurchaseReturnHistoryServiceImpl extends ServiceImpl<PurchaseReturn
         return purchaseReturnHistoryMapper.selectOrderHistZhong(id);
     }
 
+    @Override
+    public PurchaseReturnHistory selectRurchaseReturnHistByNum(String prhNumber) {
+        return purchaseReturnHistoryMapper.selectRurchaseReturnHistByNum(prhNumber);
+    }
+
     public PurchaseReturnHistoryMapper getPurchaseReturnHistoryMapper() {
         return purchaseReturnHistoryMapper;
     }

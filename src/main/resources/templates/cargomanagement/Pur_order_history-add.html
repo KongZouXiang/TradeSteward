@@ -20,7 +20,7 @@
     <script type="text/javascript" src="/js/vue/vue.min.js"></script>
     <script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
-    <title>新增进货订单</title>
+    <title>新增进货退货历史</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 </head>
@@ -28,13 +28,24 @@
 <div id="app">
 
     <article class="page-container">
-        <h1 style="text-align: center">商品进货订单</h1>
-        <form class="form form-horizontal" id="form-article-add" action="/cargomanagement/purchase-order/addPurchaseGoTo">
+        <h1 style="text-align: center">商品退货订单</h1>
+        <form class="form form-horizontal" id="form-article-add" action="/cargomanagement/purchase-return-history/addPurchaseReturnGoTo">
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>供应商</label>
                 <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select  class="select" name="poSupName" required="required">
+				<select  class="select" name="prhSupname" required="required">
+					<option value="默认"></option>
 					<option :value="item.supCompname" v-for="(item,index) in result">{{item.supCompname}}</option>
+				</select>
+				</span>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>出库仓库</label>
+                <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select  class="select" name="prhOutgoingWarehouse" required="required">
+					<option value="默认仓库"></option>
+					<option :value="item.wmName" v-for="(item,index) in resultThreeOne">{{item.wmName}}</option>
 				</select>
 				</span>
                 </div>
@@ -43,14 +54,14 @@
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>单据编号</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <input type="text" class="input-text" th:value="${session.curr}" placeholder="" id="poNumber"
-                           name="poNumber" required="required">
+                           name="prhNumber" required="required">
                 </div>
             </div>
 
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>经手人</label>
                 <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select  class="select" name="poExperiencedPerson" required="required">
+				<select  class="select" name="prhExperiencedPerson" required="required">
 					<option value="老板">老板</option>
 					<option value="财务">财务</option>
 					<option value="仓库">仓库</option>
@@ -60,11 +71,11 @@
                 </div>
             </div>
             <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>业务日期：</label>
+                <label class="form-label col-xs-4 col-sm-2">业务日期：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <input type="text"
                            onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'commentdatemax\')||\'%y-%M-%d\'}' })"
-                           id="poDate" name="poDate" class="input-text Wdate" required="required">
+                           id="prhDate" name="prhDate" class="input-text Wdate" required="required">
                 </div>
             </div>
             <div class="row cl">
@@ -92,20 +103,21 @@
                 </thead>
                 <tbody id="addTr">
                 <tr class="text-c" id="addx0">
-                    <td><a title='清除' href='javascript:;' class='ml-5' style='text-decoration:none'><i
+                    <td><a title='删除' href='javascript:;'  class='ml-5' style='text-decoration:none'><i
                             class='Hui-iconfont'>&#xe6a6;</i></a>
                     </td>
                     <td>
-                        <select name="poClName" class="select" id="poClName" required="required">
+                        <select name="prhReturnsup" class="select" id="prhReturnsup" required="required">
                             <option v-for="(item,index) in resulttwo" :value="item.clName">{{item.clName}}</option>
                         </select>
                     </td>
-                    <td id="clNumber" name="clNumber">商品编号</td>
+                    <td>商品编号</td>
                     <td></td>
-                    <td><input type="text" class="input-text" placeholder="" id="QuantityOfPurchase"
+                    <td><input type="text" class="input-text" placeholder="" id="QuantityOfPurchase" value="1"
                                name="QuantityOfPurchase" required="required"></td>
                     <td>
-                        <input type="text" class="input-text">
+                        <input type="text" class="input-text"
+                               name="prhOtherExpenses" >
                     </td>
                 </tr>
                 </tbody>
@@ -131,9 +143,9 @@
                 <tbody>
                 <tr>
                     <td width="1500">
-                        <textarea type="text" class="textarea radius" name="poRemarks" value="备注：" required="required"></textarea>
+                        <textarea type="text" class="textarea radius" name="prhRemarks" required="required"></textarea>
                     </td>
-                    <td><input class="btn btn-primary size-XL radius" type="submit" value="提交"></td>
+                    <td><input class="btn btn-primary size-XL radius" type="submit" value="提交并入库"></td>
                 </tr>
                 </tbody>
             </table>
@@ -164,7 +176,8 @@
         data: {
             result: [],
             resulttwo: [],
-            resultThree: []
+            resultThree: [],
+            resultThreeOne: []
         }
     });
     //查询
@@ -194,6 +207,21 @@
     };
     getCommodityList();
 
+    var getWarehouseManageList = function (curr) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/cargomanagement/purchase-history/selectquanWarList',
+            data: {},
+            success: function (msg) {
+                app.resultThreeOne = msg;
+            }
+        });
+    };
+    getWarehouseManageList();
+
+
+
 
     var m = 0;
     $("#addxx").on("click", function () {
@@ -205,19 +233,18 @@
             m++;
             var html = "<tr id='addx" + m + "' class='text-c'><td>" +
                 "<a title='删除' href='javascript:;' onclick='deleteRow(this)' class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6a6;</i></a></td><td>" +
-                "<select name='poClName' class='select' id='poClName'><option value='0'>请选择</option>";
+                "<select name='prhReturnsup' class='select' id='prhReturnsup'><option value='0'>请选择</option>";
             for (var i = 1; i < app.resulttwo.length; i++) {
                 html = html + "<option value='" + app.resulttwo[i].clName + "'>" + app.resulttwo[i].clName + "</option>";
             }
             html = html + "</select></td><td>" +
                 "商品标号</td><td></td><td><input type='text' class='input-text' value='1' placeholder='' id='QuantityOfPurchase' name='QuantityOfPurchase'>" +
-                "</td><td><input type='text' class='input-text'></td></tr>\n";
+                "</td><td><input type='text' class='input-text' name='prhOtherExpenses' ></td></tr>\n";
             m--;
             document.getElementById("addx" + m).insertAdjacentHTML('afterend', html);
             m++;
         }
     });
-
 
 
     function deleteRow(obj) {

@@ -1,10 +1,18 @@
 package com.yunhe.cargomanagement.controller;
 
 
+import com.yunhe.basicdata.entity.CommodityList;
+import com.yunhe.basicdata.service.IWarehouseManagementService;
+import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
+import com.yunhe.billmanagement.entity.RunningAccounts;
+import com.yunhe.billmanagement.service.IRunningAccountsService;
 import com.yunhe.cargomanagement.entity.PurComm;
 import com.yunhe.cargomanagement.entity.PurchaseHistory;
 import com.yunhe.cargomanagement.entity.PurchaseReturnHistory;
+import com.yunhe.cargomanagement.service.IPurCommService;
 import com.yunhe.cargomanagement.service.IPurchaseReturnHistoryService;
+import com.yunhe.core.util.DateUtil;
+import com.yunhe.customermanagement.service.ISupplierService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,12 +45,112 @@ public class PurchaseReturnHistoryController {
     @Resource
     private IPurchaseReturnHistoryService purchaseReturnHistoryService;
 
+    /**
+     * 供应商列表
+     */
+    @Resource
+    private ISupplierService supplierService;
+
+    /**
+     * 商品列表
+     */
+    @Resource
+    private CommodityListServiceImpl commodityListService;
+
+    /**
+     * 进货详情中间表
+     */
+    @Resource
+    private IPurCommService purCommService;
+
+    /**
+     * 仓库列表
+     */
+    @Resource
+    private IWarehouseManagementService warehouseManagementService;
+
+    /**
+     * 资金流水
+     */
+    @Resource
+    private IRunningAccountsService runningAccountsService;
+
     @RequestMapping("/purchaseReturnHistoryList")
     public ModelAndView getGoToPurchaseHistory(){
         ModelAndView mv = new ModelAndView();
         mv.setViewName("cargomanagement/purreturnhistory-list");
         return mv;
     }
+
+    /**
+     * 增加进货退货历史页面
+     * @return 页面
+     */
+    @RequestMapping("/addPurchaseReturnHist")
+    public ModelAndView addPurchaseReturnHist(HttpSession session){
+        String curr = DateUtil.curr();
+        String curr2 = curr.replace(" ", "");
+        String curr3 = "-";
+        String curr4 = curr2.replace(curr3,"");
+        String curr5 = ":";
+        String curr6 = curr4.replace(curr5,"");
+        String curr7 = "TDD"+curr6;
+        session.setAttribute("curr",curr7);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("cargomanagement/Pur_order_history-add");
+        return mv;
+    }
+
+    /**
+     * 增加进货历史
+     * @param purchaseReturnHistory 进货退货历史实体类数据
+     */
+    @RequestMapping("/addPurchaseReturnGoTo")
+    public ModelAndView insertPurchaseOrder(PurchaseReturnHistory purchaseReturnHistory,String[] prhReturnsup,int[] QuantityOfPurchase){
+        int a = 0;
+        int maney = 0;
+        for (int i = 0; i <= prhReturnsup.length - 1; i++) {
+            CommodityList list = commodityListService.selectListByClName(prhReturnsup[i]);
+                maney+=Integer.parseInt(list.getClPurPrice())*QuantityOfPurchase[i];
+        }
+        for (int s : QuantityOfPurchase) {
+            a+=s;
+        }
+        purchaseReturnHistory.setPrhTotalAmount(maney+purchaseReturnHistory.getPrhOtherExpenses());
+        purchaseReturnHistory.setPrhRefundAmount(maney+purchaseReturnHistory.getPrhOtherExpenses());
+        purchaseReturnHistory.setPrhBill("无");
+        purchaseReturnHistory.setPrhJindate(purchaseReturnHistory.getPrhDate());
+        purchaseReturnHistory.setPrhManeyHu("现金");
+        purchaseReturnHistory.setPrhSinglePerson("老板");
+        purchaseReturnHistory.setPrhOutgoingState("待出库");
+        purchaseReturnHistoryService.insertPurchaseReturnHistoryPage(purchaseReturnHistory);
+        //增加资金流水
+        RunningAccounts runningAccounts1 = runningAccountsService.selectRunningMaxIdMoney();
+        RunningAccounts runningAccounts = new RunningAccounts();
+        runningAccounts.setRaNumList(purchaseReturnHistory.getPrhNumber());
+        runningAccounts.setRaTime(DateUtil.curr());
+        runningAccounts.setRaCompanyName(purchaseReturnHistory.getPrhSupname());
+        runningAccounts.setRaProjectName("退货支出");
+        runningAccounts.setRaAccount("现金");
+        runningAccounts.setRaPerson("老板");
+        runningAccounts.setRaIncome(maney+purchaseReturnHistory.getPrhOtherExpenses());
+        runningAccounts.setRaOutcome(0.0);
+        runningAccounts.setRaCurrentBalance(runningAccounts1.getRaCurrentBalance()+(maney+purchaseReturnHistory.getPrhOtherExpenses()));
+        runningAccountsService.insertRunningAccountsOne(runningAccounts);
+        for (int i = 0; i <= prhReturnsup.length - 1; i++) {
+            CommodityList list1 = commodityListService.selectListByClName(prhReturnsup[i]);
+                PurchaseReturnHistory purchaseReturnHistory1 = purchaseReturnHistoryService.selectRurchaseReturnHistByNum(purchaseReturnHistory.getPrhNumber());
+                PurComm purComm = new PurComm();
+                purComm.setPrhId(purchaseReturnHistory1.getId());
+                purComm.setComId(list1.getId());
+                purComm.setPcGeshu(QuantityOfPurchase[i]);
+                purCommService.insertPurComm(purComm);
+        }
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("cargomanagement/purreturnhistory-list");
+        return mv;
+    }
+
 
     /**
      * 跳转进货退货历史页面 并且session传值过去
@@ -152,7 +260,6 @@ public class PurchaseReturnHistoryController {
             map.put("id",obj.getId());
             map.put("prhDate",obj.getPrhDate());
             map.put("prhNumber",obj.getPrhNumber());
-            map.put("prhPurOrder",obj.getPrhPurOrder());
             map.put("prhSupname",obj.getPrhSupname());
             map.put("prhReturnsup",obj.getPrhReturnsup());
             map.put("prhTotalAmount",obj.getPrhReturnsup());

@@ -80,11 +80,11 @@ public class PurchaseOrderController {
         int jiage = 0;
         int shuliang = 0;
         for (PurComm purComm : purComms) {
-            shuliang+=purComm.getPcGeshu();
+            shuliang += purComm.getPcGeshu();
             jiage += purComm.getPcGeshu() * Integer.parseInt(purComm.getCommodityList().getClPurPrice());
         }
-        session.setAttribute("shuliang",shuliang);
-        session.setAttribute("jiage",jiage);
+        session.setAttribute("shuliang", shuliang);
+        session.setAttribute("jiage", jiage);
         session.setAttribute("poId", id);
         session.setAttribute("model", list);
         ModelAndView mv = new ModelAndView();
@@ -115,11 +115,11 @@ public class PurchaseOrderController {
         String curr = DateUtil.curr();
         String curr2 = curr.replace(" ", "");
         String curr3 = "-";
-        String curr4 = curr2.replace(curr3,"");
+        String curr4 = curr2.replace(curr3, "");
         String curr5 = ":";
-        String curr6 = curr4.replace(curr5,"");
-        String curr7 = "ADD"+curr6;
-        session.setAttribute("curr",curr7);
+        String curr6 = curr4.replace(curr5, "");
+        String curr7 = "ADD" + curr6;
+        session.setAttribute("curr", curr7);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("cargomanagement/Pur_order-add");
         return mv;
@@ -168,17 +168,15 @@ public class PurchaseOrderController {
      * @param purchaseOrder 进货订单历史实体类数据
      */
     @RequestMapping("/addPurchaseGoTo")
-    public ModelAndView insertPurchaseOrder(PurchaseOrder purchaseOrder,String[] poClName,int[] QuantityOfPurchase) {
+    public ModelAndView insertPurchaseOrder(PurchaseOrder purchaseOrder, String[] poClName, int[] QuantityOfPurchase) {
         int a = 0;
         int maney = 0;
-        for (String s : poClName) {
-            CommodityList list = commodityListService.selectListByClName(s);
-            for (int m : QuantityOfPurchase) {
-                maney+=Integer.parseInt(list.getClPurPrice())*m;
-            }
+        for (int i = 0; i <= poClName.length - 1; i++) {
+            CommodityList list = commodityListService.selectListByClName(poClName[i]);
+            maney += Integer.parseInt(list.getClPurPrice()) * QuantityOfPurchase[i];
         }
         for (int s : QuantityOfPurchase) {
-            a+=s;
+            a += s;
         }
         purchaseOrder.setPoYingMoney(maney);
         purchaseOrder.setPoState("未审核");
@@ -189,16 +187,14 @@ public class PurchaseOrderController {
         purchaseOrder.setPoDateOrder(purchaseOrder.getPoDate());
         purchaseOrderService.insertPurchaseOrder(purchaseOrder);
 
-        for (String s : poClName) {
-            CommodityList list1 = commodityListService.selectListByClName(s);
-            for (int m : QuantityOfPurchase) {
-                PurchaseOrder purchaseOrder1 = purchaseOrderService.selectPurOrderByPoNumber(purchaseOrder.getPoNumber());
-                PurComm purComm = new PurComm();
-                purComm.setPuId(purchaseOrder.getId());
-                purComm.setComId(list1.getId());
-                purComm.setPcGeshu(m);
-                purCommService.insertPurComm(purComm);
-            }
+        for (int i = 0; i <= poClName.length - 1; i++) {
+            CommodityList list1 = commodityListService.selectListByClName(poClName[i]);
+            PurchaseOrder purchaseOrder1 = purchaseOrderService.selectPurOrderByPoNumber(purchaseOrder.getPoNumber());
+            PurComm purComm = new PurComm();
+            purComm.setPuId(purchaseOrder.getId());
+            purComm.setComId(list1.getId());
+            purComm.setPcGeshu(QuantityOfPurchase[i]);
+            purCommService.insertPurComm(purComm);
         }
         ModelAndView mv = new ModelAndView();
         mv.setViewName("/cargomanagement/purorder-list");
