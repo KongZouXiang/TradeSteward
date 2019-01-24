@@ -11,7 +11,7 @@ import java.util.List;
  * 角色管理 服务类
  * </p>
  *
- * @author 刘延奇,heyuji
+ * @author 贺裕基
  * @since 2019-01-02
  */
 public interface ICharaMangerService extends IService<CharaManger> {
@@ -32,4 +32,6 @@ public interface ICharaMangerService extends IService<CharaManger> {
      * 检查角色的名称
      */
     public Boolean checkRole(CharaManger charaManger);
+
+
 }
