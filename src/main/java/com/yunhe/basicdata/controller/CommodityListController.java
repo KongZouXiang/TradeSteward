@@ -48,28 +48,8 @@ public class CommodityListController {
      */
     @RequestMapping(value = "/addpage", method = RequestMethod.POST)
     @ResponseBody
-    public int insertComm(@RequestParam("tiaoxingma") String tiaoxingma, @RequestParam("bianhao") String bianhao,
-                             @RequestParam("mingcheng") String mingcheng, /*@RequestParam("fenlei") String fenlei,*/
-                           @RequestParam("danwei") String danwei,@RequestParam("guige") String guige,
-                             @RequestParam("cankaojinhuo") String cankaojinhuo, @RequestParam("pifajia") String pifajia,
-                             @RequestParam("lingshoujia") String lingshoujia,@RequestParam("zuidilingshou") String zuidilingshou,
-                             @RequestParam("czuidikc") int czuidikc,@RequestParam("czuigaok") int czuigaok) {
-        CommodityList commodityList = new CommodityList();
-        System.out.println(tiaoxingma);
-        commodityList.setClScan(tiaoxingma);
-        commodityList.setClName(mingcheng);
-        commodityList.setClUnit(danwei);
-        commodityList.setClSpec(guige);
-        commodityList.setClPurPrice(cankaojinhuo);
-        commodityList.setClWhoPrice(pifajia);
-        commodityList.setClTagPrise(lingshoujia);
-        commodityList.setCcId(1);
-        commodityList.setClNumber(bianhao);
-        commodityList.setClMinLingPrice(zuidilingshou);
-        commodityList.setClMinStock(czuidikc);
-        commodityList.setClMAxStock(czuigaok);
-        System.out.println("太区庄");
-        return commodityListService.insertComm(commodityList);
+    public int insertComm(CommodityList commodityList) {
+        return  commodityListService.insertComm(commodityList);
     }
     /**
      * 查询商品的详细信息
@@ -79,13 +59,13 @@ public class CommodityListController {
     @GetMapping(value = "/selectcommditybyid")
     public ModelAndView selectbyid(@RequestParam("id") int id) {
         ModelAndView mv=new ModelAndView();
-        CommodityList commodityListid = commodityListService.selectCommById(id);
-       WarehouseManagement whManagement= commodityListService.selectWmAndComm(id);
-      Commclass commclass= commodityListService.selectclassAndComm(id);
+         CommodityList commodityListid = commodityListService.selectCommById(id);
+        WarehouseManagement whManagement= commodityListService.selectWmAndComm(id);
+       Commclass commclass= commodityListService.selectclassAndComm(id);
         mv.addObject("commodityListid",commodityListid);
         mv.addObject("whManagement",whManagement);
         mv.addObject("commclass",commclass);
-        mv.setViewName("basicdata/editCommodity");
+       mv.setViewName("basicdata/editCommodity");
         return mv;
     }
     /**
