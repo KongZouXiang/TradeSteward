@@ -31,6 +31,7 @@ public class LoginController {
 
     @GetMapping("/")
     public String login() {
+
 //        退出登录
         Subject subject = SecurityUtils.getSubject();
         if (subject != null) {
