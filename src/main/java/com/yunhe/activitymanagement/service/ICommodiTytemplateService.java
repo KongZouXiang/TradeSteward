@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yunhe.basicdata.entity.CommodityList;
+import com.yunhe.billmanagement.entity.FinanceOrder;
 import com.yunhe.cargomanagement.entity.SalesOrderHistory;
 
 
@@ -51,21 +52,23 @@ public interface ICommodiTytemplateService extends IService<CommodiTytemplate> {
      */
 
 
-
-    /**
-     * 根据id查询对应的销售
-     * @param id
-     * @return
-     */
-    CommodiTytemplate selectById(int id);
-
     /**
      * <P>
      *     查询商品模板详情
      * </P>
      * @return 商品模板表：查询的结果集
      */
-   /* List<CommodityList> selectCt(Integer ctId);*/
+
+
+
+    /**
+     * <P>
+     *     通过id查找数据，显示详情
+     * </P>
+     * @param id  查询数据的条件
+     * @return FinanceOrder对象
+     */
+    CommodiTytemplate selectById(int id);
 
 
 

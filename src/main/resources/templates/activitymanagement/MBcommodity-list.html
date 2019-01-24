@@ -61,7 +61,8 @@
             <tbody>
             <tr class="text-c" v-for="(item,index) in result">
                 <td><input type="checkbox" :value=index  name="aid"></td>
-                <td>{{index+1}}</td>
+                <td >{{index+1}}</td>
+                <td style="display: none" class="clid">{{item.id}}</td>
                 <td>
                     <button class="layui-btn" style="width:15px; height: 24px" @click="jia(index)">+</button>
                     <input type="text" class="input-text" style="width:40px; height: 24px" id="commdiNumber" name="" value="0">
@@ -186,6 +187,11 @@
     
     function  tijiao() {
 
+        var clid =new Array();
+        $(".clid").each(function(i) {
+            clid[i] =$(this).text() ;
+        })
+
         var clName =new Array();
         $(".clName").each(function(i) {
            clName[i] =$(this).text() ;
@@ -211,15 +217,26 @@
 
         var check = new Array();
         check = $('input[name=aid]:checked');
+        var sid =new Array()
         for (var i =0;i<check.length;i++){
                 var s=check[i].value;
                 alert(s);
                 var d =i+1;
                 var sd =parent.$("#shuju");
-                sd.append("<tr><td>"+d+"</td><td style='text-align: center'>  <button class=\"layui-btn layui-btn-danger layui-btn-sm\" ><i class=\"layui-icon\"></i></button></td><td>"+clName[s]+"</td><td>"+clNumber[s]+"</td><td>"+clSpec[s]+"</td><td><input value="+commdiNumber[d]+"></td><td>"+clTagPrise[s]+"</td></tr>");
+                parent.$("#index").append(new Option(d));
+                parent.$("#sid").val(clid[s]);
+                parent.$("#sid").append( $("<option value='"+i+"' id='sid'>"+clid[s]+",</option>"))
+                parent.$("#shopname").append( $("<option value='"+i+"'>"+clName[s]+",</option>"))
+                parent.$("#shopnuber").append($("<option value='"+i+"'>"+clNumber[s]+",</option>"))
+                parent.$("#shopguige").append($("<option value='"+i+"'>"+clSpec[s]+",</option>"))
+                parent.$("#shopsize").append($("<option value='"+i+"'>"+commdiNumber[d]+",</option>"))
+                parent.$("#shopjiage").append($("<option value='"+i+"'>"+clTagPrise[s]+",</option>"))
 
+                sd.append("<tr><td class='id' hidden='hidden' >"+clid[s]+"</td>  <td>"+d+"</td><td style='text-align: center'>  <button class=\"layui-btn layui-btn-danger layui-btn-sm\" ><i class=\"layui-icon\"></i></button></td><td id='names'>"+clName[s]+"</td><td>"+clNumber[s]+"</td><td>"+clSpec[s]+"</td><td><input value="+commdiNumber[d]+"></td><td>"+clTagPrise[s]+"</td></tr>");
         }
+
         var index = parent.layer.getFrameIndex(window.name);
+
         parent.layer.close(index);
 
     }

@@ -4,6 +4,7 @@ package com.yunhe.activitymanagement.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
+import com.yunhe.billmanagement.entity.FinanceOrder;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -50,6 +52,23 @@ public class CommodiTytemplateController {
         return new ModelAndView("activitymanagement/addshangpinmoban");
     }
 
+    /**
+     * 查询模板详情
+     * @param id
+     * @param session
+     * @return
+     */
+    @RequestMapping("/toDetail")
+    public ModelAndView toDetail(int id, HttpSession session){
+        System.out.println("toDetail进入controller");
+        CommodiTytemplate co = commodiTytemplateService.selectById(id);
+        session.setAttribute("commditytemplate",co);
+        return new ModelAndView("activitymanagement/mobanxiangqing");
+    }
+
+
+
+
 
     public int insertCt(CommodiTytemplate sa) {
         return commodiTytemplateService.insertCt(sa);
@@ -80,6 +99,18 @@ public class CommodiTytemplateController {
         return true;
     }
 
+
+    /**
+     * <P>
+     *     通过id查找数据，显示详情
+     * </P>
+     * @param id  查询数据的条件
+     * @return C对象
+     */
+    @GetMapping(value = "/selectById")
+    public CommodiTytemplate selectById(int id) {
+        return commodiTytemplateService.selectById(id);
+    }
 
     /**
      * <p>
