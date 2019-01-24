@@ -1,32 +1,21 @@
 package com.yunhe.systemsetup.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.github.qcloudsms.SmsSingleSender;
-import com.github.qcloudsms.SmsSingleSenderResult;
-import com.github.qcloudsms.httpclient.HTTPException;
-import com.yunhe.redis.service.RedisService;
-import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.json.JSONException;
-import org.junit.Test;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
-
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yunhe.core.redis.RedisService;
 import com.yunhe.systemsetup.entity.Employ;
 import com.yunhe.systemsetup.service.impl.EmployServiceImpl;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +35,7 @@ public class EmployController {
 
     @Autowired
     private EmployServiceImpl employService;
+
     @Autowired
     private RedisService redisService;
 
@@ -177,7 +167,7 @@ public class EmployController {
      */
     @RequestMapping(value = "/checkSend")
     public boolean checkSend(String phone,String num){
-       String checknum=redisService.get(phone);
+       String checknum=(String)redisService.get(phone);
         System.out.println(checknum);
        if (checknum.equals(num)){
            return true;

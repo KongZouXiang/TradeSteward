@@ -1,6 +1,7 @@
 package com.yunhe.core.shiro;
 
 import com.yunhe.core.common.login.service.ILoginService;
+import com.yunhe.core.redis.RedisService;
 import com.yunhe.systemsetup.dao.EmployMapper;
 import com.yunhe.systemsetup.entity.Employ;
 import org.apache.shiro.SecurityUtils;
@@ -8,7 +9,6 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 
@@ -32,6 +32,9 @@ public class UserRealm extends AuthorizingRealm {
     @Resource
     EmployMapper employMapper;
 
+    @Resource
+    RedisService redisService;
+
     /**
      * <p>
      * 执行授权逻辑
@@ -54,7 +57,9 @@ public class UserRealm extends AuthorizingRealm {
 //        得到数据库查询当前登录用户的授权字符串
         Subject subject = SecurityUtils.getSubject();
         Employ employ = (Employ) subject.getPrincipal();
+      /* redisService.add("employ",employ);
 
+        System.out.println("Redis获取"+redisService.get("employ"));*/
 //        根据ID查找出员工对应的板块
         List<String> list = employMapper.selectEmployPlate(employ.getId());
 
