@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -73,7 +74,6 @@ public class WarehouseManagementController {
         map = warehouseManagementService.selectWareList(data,pageSize, pageNum);
         return map;
     }
-
     /**
      * <>
      * 删除仓库
@@ -151,7 +151,14 @@ public class WarehouseManagementController {
         System.out.println("asd===" + warehouseManagement);
         return warehouseManagementService.addWarehouse(warehouseManagement);
     }
-
+  /*查询仓库*/
+    @RequestMapping("/selectware")
+    public Map selectwarelist(){
+       List<WarehouseManagement> warelist= warehouseManagementService.selectware();
+       Map map=new HashMap();
+       map.put("warelist",warelist);
+       return map;
+    }
 }
 
 

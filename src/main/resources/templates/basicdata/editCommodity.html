@@ -36,7 +36,10 @@
             <span class="c-red">*</span><b><span style="font-size: 14px">编号 </span></b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="text-align: center" type="text" th:value="${commodityListid.clNumber}" name="bianhao" id="bianhao"><br><br>
             <span class="c-red">*</span><b><span style="font-size: 14px">名称</span></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="text-align: center" type="text" name="mingcheng" id="mingcheng"  th:value="${commodityListid.clName}"><br><br>
         <input type="hidden" id="ids" th:value="${commodityListid.id}">
-        <b><span style="font-size: 14px">分类 </span></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="text-align: center" type="text" name="fenlei" id="fenlei" th:value="${commclass.ccDefault}"><br><br>
+<!--        <b><span style="font-size: 14px">分类 </span></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="text-align: center" type="text" name="fenlei" id="fenlei" th:value="${commclass.ccDefault}"><br><br>-->
+        分类 &nbsp;&nbsp;&nbsp;
+        <select id="comclass" name="comclass" class="select"  style="width: 100px">
+        </select>
         <span class="c-red">*</span><b><span style="font-size: 14px">单位</span></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="text-align: center" type="text" name="danwei" id="sdanwei"  th:value="${commodityListid.clUnit}"><br><br>
         <b><span style="font-size: 14px">规格</span></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="text-align: center" type="text" id="guige" name="guige" th:value="${commodityListid.clSpec}"><br><br>
         <tr class="free">
@@ -117,7 +120,9 @@
             <td width="300" height="50" style="text-align: center"><span style="font-size: 14px"><b> 最高库存量</b></span></td>
         </tr>
         <tr>
-            <td width="300" height="50" style="text-align: center"><span style="font-size: 14px"><b> <input type="text" id="whwmName" name="whwmName" th:value="${whManagement.wmName}"></b></span></td>
+            <!--<td width="300" height="50" style="text-align: center"><span style="font-size: 14px"><b> <input type="text" id="whwmName" name="whwmName" th:value="${whManagement.wmName}"></b></span></td>-->
+            <td width="300" height="50" style="text-align: center"><span style="font-size: 14px"><b> <select id="warehouse" name="warehouse" class="select"  style="width: 100px"></select> </b></span></td>
+
             <td height="50" style="text-align: center"><span style="font-size: 14px"><b> <input type="text" id="comzuidikucun"  name="czuidikc" style="text-align: center" th:value="${commodityListid.clMinStock}"> </b></span></td>
             <td height="50" style="text-align: center"><span style="font-size: 14px"><b> <input type="text"  id="comzuigaokucun" name="czuigaok" style="text-align: center" th:value="${commodityListid.clMAxStock}"></b></span></td>
         </tr>
@@ -137,6 +142,8 @@
 </div>
 <script>
     var updatecommodity=function () {
+        var clid=$("#comclass").find("option:selected").val();
+        var wmid=$("#warehouse").find("option:selected").val();
         $.ajax({
             type:"post",
             dataType:"json",
@@ -146,7 +153,8 @@
                 tiaoxingma: $("#tiaoxingma").val(),
                 bianhao:$("#bianhao").val(),
                 mingcheng:$("#mingcheng").val(),
-                fenlei:$("#fenlei").val(),
+                fenlei:clid,
+                wmid:wmid,
                 danwei:$("#sdanwei").val(),
                 guige:$("#guige").val(),
                 cankaojinhuo:$("#cankaojinhuojia").val(),
@@ -207,6 +215,38 @@
             kucunlaing.style.display="none";
         }
     }
+    //商品分类
+    var getCommclassList = function() {
+        $.ajax({
+            type : "POST",
+            dataType : "json",
+            url : "/basicdata/commclass/queryList",
+            success:function(msg) {
+                var html="<option value=''>请选择</option>";
+                for(var i=0;i<msg.commclass.length;i++){
+                    html += "<option value= '"+msg.commclass[i].id+"'>"+msg.commclass[i].ccDefault+"</option>";
+                }
+                $("#comclass").html('').append(html);
+            }
+        });
+    }
+    getCommclassList();
+    /*仓库分类*/
+    var getWarehouseList = function() {
+        $.ajax({
+            type : "POST",
+            dataType : "json",
+            url : "/basicdata/warehouse-management/selectware",
+            success:function(msg) {
+                var html="<option value=''>请选择</option>";
+                for(var i=0;i<msg.warelist.length;i++){
+                    html += "<option value= '"+msg.warelist[i].id+"'>"+msg.warelist[i].wmName+"</option>";
+                }
+                $("#warehouse").html('').append(html);
+            }
+        });
+    }
+    getWarehouseList();
 </script>
 </body>
 </html>

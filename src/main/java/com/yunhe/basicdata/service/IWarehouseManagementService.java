@@ -66,4 +66,6 @@ public interface IWarehouseManagementService extends IService<WarehouseManagemen
      * @param warehouseManagement 要增加仓库的实体类
      */
     Integer addWarehouse(WarehouseManagement warehouseManagement);
+    /*查询仓库*/
+    List<WarehouseManagement> selectware();
 }

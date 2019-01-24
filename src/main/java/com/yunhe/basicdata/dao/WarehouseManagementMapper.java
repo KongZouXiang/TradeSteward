@@ -23,5 +23,6 @@ public interface WarehouseManagementMapper extends BaseMapper<WarehouseManagemen
      */
     List<WarehouseManagement> selectWareList(String data,Page page);
 
-
+  /*查询仓库*/
+    List<WarehouseManagement> selectware();
 }
