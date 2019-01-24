@@ -95,7 +95,7 @@ public interface IFinanceOrderService extends IService<FinanceOrder> {
      * </p>
      * @return 查询收入总金额
      */
-    Map<String,Object> selectMoneyMapByShou();
+    List<FinanceOrder> selectMoneyMapByShou();
 
     /**
      * <p>
@@ -103,5 +103,5 @@ public interface IFinanceOrderService extends IService<FinanceOrder> {
      * </p>
      * @return 查询支出总金额
      */
-    Map<String,Object> selectMoneyMapByZhi();
+    List<FinanceOrder> selectMoneyMapByZhi();
 }

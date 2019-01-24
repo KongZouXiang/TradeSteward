@@ -56,7 +56,7 @@ public interface FinanceOrderMapper extends BaseMapper<FinanceOrder> {
      * @return 查询收入总金额
      */
     @Select("select SUM(fo_money) as moneyshou from finance_order where fo_flag='收入'")
-    Map<String,Object> selectMoneyMapByShou();
+    List<FinanceOrder> selectMoneyMapByShou();
 
     /**
      * <p>
@@ -65,7 +65,7 @@ public interface FinanceOrderMapper extends BaseMapper<FinanceOrder> {
      * @return 查询支出总金额
      */
     @Select("select SUM(fo_money) as moneyzhi from finance_order where fo_flag='支出'")
-    Map<String,Object> selectMoneyMapByZhi();
+    List<FinanceOrder> selectMoneyMapByZhi();
 
     /**
      * <p>

@@ -2,7 +2,9 @@ package com.yunhe.billmanagement.controller;
 
 
 import com.yunhe.billmanagement.entity.AccountTransfer;
+import com.yunhe.billmanagement.entity.RunningAccounts;
 import com.yunhe.billmanagement.service.IAccountTransferService;
+import com.yunhe.billmanagement.service.IRunningAccountsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -12,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +34,8 @@ public class AccountTransferController {
     @Resource
     private IAccountTransferService accountTransferService;
 
+    @Resource
+    private IRunningAccountsService runningAccountsService;
     /**
      * <P>
      *    进入账户转账页面
@@ -82,7 +88,23 @@ public class AccountTransferController {
      */
     @RequestMapping("/insertAt")
     public int insertAt(AccountTransfer accountTransfer) {
-        return accountTransferService.insertAt(accountTransfer);
+        int i= accountTransferService.insertAt(accountTransfer);
+        if (i==1){
+            RunningAccounts runningAccounts = new RunningAccounts();
+            runningAccounts.setRaCompanyName("账户转账");//公司名称
+            runningAccounts.setRaAccount(accountTransfer.getAtOutAccount());//转出账户
+            runningAccounts.setRaOutcome(accountTransfer.getAtMoney()+accountTransfer.getAtCharge());//转出金额
+            runningAccounts.setRaTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));//业务日期
+            SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
+            System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
+            int maxId = runningAccountsService.selectRunningMaxIdMoney().getId();
+            runningAccounts.setRaNumList("ZZ"+df.format(new Date())+"00"+maxId);//单据编号
+            runningAccounts.setRaPerson(accountTransfer.getAtPerson());//经手人
+            runningAccounts.setRaProjectName("转账支出");//收支项目名称
+            runningAccounts.setRaCurrentBalance(runningAccountsService.selectRunningMaxIdMoney().getRaCurrentBalance()-(accountTransfer.getAtMoney()+accountTransfer.getAtCharge()));//当前余额
+            runningAccountsService.insertRunningAccountsOne(runningAccounts);
+        }
+        return i;
     }
 
     /**

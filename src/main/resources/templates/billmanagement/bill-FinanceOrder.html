@@ -203,8 +203,8 @@
             },
             success:function(msg){
                 $("#strongShou").html(msg.total);
-                $("#moneyshou").html(msg.countListshou.moneyshou);
                 $("#moneyzhi").html(msg.countListzhi.moneyzhi);
+                $("#moneyshou").html(msg.countListshou.moneyshou);
                 appShou.result = msg.list;
                 laypage({
                     cont:'pagenavShou',
@@ -368,7 +368,6 @@
 
     /*删除订单*/
     var delEvent = function (id) {
-        alert(id);
         layer.confirm('你确定要删除吗？',{
             btn:['是','否']
         },function () {

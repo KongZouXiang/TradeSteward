@@ -36,7 +36,7 @@ CREATE TABLE `account_transfer` (
 
 /*Data for the table `account_transfer` */
 
-insert  into `account_transfer`(`id`,`at_out_account`,`at_out_time`,`at_into_account`,`at_into_time`,`at_money`,`at_charge`,`at_charge_person`,`at_person`,`at_remark`) values 
+insert  into `account_transfer`(`id`,`at_out_account`,`at_out_time`,`at_into_account`,`at_into_time`,`at_money`,`at_charge`,`at_charge_person`,`at_person`,at_remark) values
 (1,'建设银行','2019-01-05','现金','2019-01-05',5400,2.5,'转出账户支付','财务','1111'),
 (2,'建设银行','2019-01-05','现金','2019-01-05',689090,5,'转出账户支付','仓管或采购','2222'),
 (3,'现金','2019-01-05','建设银行','2019-01-05',3264.23,1,'转出账户支付','老板','3333'),

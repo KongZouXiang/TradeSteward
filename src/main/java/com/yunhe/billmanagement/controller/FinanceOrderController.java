@@ -1,7 +1,9 @@
 package com.yunhe.billmanagement.controller;
 
 import com.yunhe.billmanagement.entity.FinanceOrder;
+import com.yunhe.billmanagement.entity.RunningAccounts;
 import com.yunhe.billmanagement.service.IFinanceOrderService;
+import com.yunhe.billmanagement.service.IRunningAccountsService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -16,10 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * <p>
@@ -35,6 +35,9 @@ public class FinanceOrderController {
 
     @Resource
     private IFinanceOrderService financeOrderService;
+
+    @Resource
+    IRunningAccountsService runningAccountsService;
 
     /**
      * <P>
@@ -107,7 +110,29 @@ public class FinanceOrderController {
         int i = financeOrderService.insertFo(financeOrder);
         int maxId = financeOrderService.maxId();
         map.put("maxId",maxId);
-        return financeOrderService.gaiFo(map);
+        int j = financeOrderService.gaiFo(map);
+        if(j==1){
+            RunningAccounts runningAccounts = new RunningAccounts();
+            runningAccounts.setRaCompanyName(financeOrder.getFoFlag());//公司名称
+            runningAccounts.setRaAccount(financeOrder.getFoAccount());//转出账户
+            if (financeOrder.getFoFlag().equals("日常支出")){
+                runningAccounts.setRaOutcome(financeOrder.getFoMoney());//转出金额
+                runningAccounts.setRaIncome(0.0);//转入金额
+            }else if(financeOrder.getFoFlag().equals("日常收入")){
+                runningAccounts.setRaOutcome(0.0);//转出金额
+                runningAccounts.setRaIncome(financeOrder.getFoMoney());//转入金额
+            }
+            runningAccounts.setRaTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));//业务日期
+            SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
+            System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
+            int maxid = runningAccountsService.selectRunningMaxIdMoney().getId();
+            runningAccounts.setRaNumList("SZ"+df.format(new Date())+"00"+maxid);//单据编号
+            runningAccounts.setRaPerson(financeOrder.getFoPerson());//经手人
+            runningAccounts.setRaProjectName(financeOrder.getFoFlag());//收支项目名称
+            runningAccounts.setRaCurrentBalance(runningAccountsService.selectRunningMaxIdMoney().getRaCurrentBalance()-financeOrder.getFoMoney());//当前余额
+            runningAccountsService.insertRunningAccountsOne(runningAccounts);
+        }
+        return j;
     }
 
     /**
