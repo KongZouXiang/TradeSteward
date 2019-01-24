@@ -5,9 +5,13 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
+import com.yunhe.cargomanagement.dao.OrderConnectCommMapper;
 import com.yunhe.cargomanagement.entity.OrderConnectComm;
 import com.yunhe.cargomanagement.entity.SalesOrderHistory;
+import com.yunhe.cargomanagement.service.IOrderConnectCommService;
+import com.yunhe.cargomanagement.service.impl.OrderConnectCommServiceImpl;
 import com.yunhe.cargomanagement.service.impl.SalesOrderHistoryServiceImpl;
+import com.yunhe.cargomanagement.util.DateUtil;
 import com.yunhe.customermanagement.entity.Customer;
 import com.yunhe.customermanagement.service.ICustomerService;
 import org.apache.poi.hssf.usermodel.*;
@@ -54,39 +58,60 @@ public class SalesOrderHistoryController {
 
     @Resource
     private CommodityListServiceImpl commodityListService;
+
+    @Resource
+    private IOrderConnectCommService orderConnectCommService;
     /**
      * 新增页面的跳转
      * @return web页面
      */
-    @RequestMapping("/ceshi1")
-    public ModelAndView ceshi1(){
-        return new ModelAndView("cargomanagement/salesOrderHistory-add");
+    @RequestMapping("/addJump")
+    public ModelAndView addJump(){
+        ModelAndView mv = new ModelAndView();
+        String xsd = DateUtil.numberXSD();
+        mv.addObject("xsd",xsd);
+        mv.setViewName("cargomanagement/salesOrderHistory-add");
+        return mv;
     }
 
     /**
      * 增加一个订单详情
-     * @param customer 客户
-     * @param poNumber 订单号
-     * @param articlecolumn 经手人
-     * @param commentdatemin 时间
      * @param clName 商品
      * @param orderCount 数量
      * @return
      */
     @RequestMapping("/addList")
-    public String addList(String customer,String poNumber,String articlecolumn,String commentdatemin,String [] clName ,int [] orderCount){
-        return "ok";
+    public ModelAndView addList(SalesOrderHistory salesOrderHistory,int [] clName,int [] orderCount){
+        ModelAndView mv = new ModelAndView();
+        System.out.println(salesOrderHistory);
+        int count=0; double price=0; String arr="";
+        for (int i=0;i<=clName.length-1;i++) {
+            CommodityList commodityList = commodityListService.selectCommById(clName[i]);
+            String clName1 = commodityList.getClName();
+            arr=arr + "," + clName1;
+            int i1 = orderCount[i];
+            count =count +i1;
+            float clWhoPrice = Float.parseFloat((commodityList.getClWhoPrice()));
+            price = price +clWhoPrice*i1;
+        }
+        salesOrderHistory.setSoOrderComm(arr);
+        salesOrderHistory.setSoOrderCount(count);
+        salesOrderHistory.setSoMoney(price);
+        System.out.println(salesOrderHistory);
+        int x = salesOrderHistoryService.insertSale(salesOrderHistory);
+        SalesOrderHistory salesOrderHistory1 = salesOrderHistoryService.selectByNumber(salesOrderHistory);
+        Integer id = salesOrderHistory1.getId();
+        System.out.println(id);
+        for (int i=0;i<= clName.length-1;i++){
+            OrderConnectComm orderConnectComm = new OrderConnectComm();
+            orderConnectComm.setOrderNum(id);
+            orderConnectComm.setClId(clName[i]);
+            orderConnectComm.setOrderCount(orderCount[i]);
+            orderConnectCommService.insertConn(orderConnectComm);
+        }
+        mv.setViewName("/cargomanagement/salesOrderHistory");
+        return mv;
     }
-
-     /**
-     * 根据id看详情
-     * @param id
-     * @return
-     *//*
-    @RequestMapping("/detailSale")
-    public SalesOrderHistory detailSale(int id){
-        return salesOrderHistoryService.selectById(id);
-    }*/
     /**
      * 查询所有客户
      * @return

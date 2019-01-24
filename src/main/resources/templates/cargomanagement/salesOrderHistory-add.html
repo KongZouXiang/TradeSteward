@@ -29,11 +29,11 @@
 
     <article class="page-container">
         <h1 style="text-align: center">商品进货订单</h1>
-        <form class="form form-horizontal" id="form-article-add" action="/cargomanagement/sales-history/addList">
+        <form class="form form-horizontal" id="form-article-add" action="/cargomanagement/sales-order-history/addList">
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>客户</label>
                 <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select name="customer" class="select">
+				<select name="soClient" class="select">
 					<option value="0">请选择</option>
 					<option :value="item.id" v-for="(item,index) in result">{{item.cusCompname}}</option>
 				</select>
@@ -43,15 +43,15 @@
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>单据编号</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" class="input-text" value="ADD54554445" placeholder="" id="poNumber"
-                           name="poNumber">
+                    <input type="text" class="input-text" th:value="${xsd}" placeholder="" id="soOrderNum"
+                           name="soOrderNum">
                 </div>
             </div>
 
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>经手人</label>
                 <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select name="articlecolumn" class="select">
+				<select name="soAuditor" class="select">
 					<option value="老板">老板</option>
 					<option value="财务">财务</option>
 					<option value="仓库">仓库</option>
@@ -65,7 +65,7 @@
                 <div class="formControls col-xs-8 col-sm-9">
                     <input type="text"
                            onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'commentdatemax\')||\'%y-%M-%d\'}' })"
-                           id="commentdatemin" name="commentdatemin" class="input-text Wdate">
+                           id="soDate" name="soDate" class="input-text Wdate">
                 </div>
             </div>
             <div class="row cl">
@@ -76,16 +76,13 @@
                            id="commentdatemax" name="commentdatemax" class="input-text Wdate">
                 </div>
             </div>
-            <a id="addxx"
-               class="btn btn-primary radius">
-                <i class="Hui-iconfont">&#xe600;</i> 添加商品选择</a>
             <table class="table table-border table-bordered table-bg">
                 <thead>
                 <tr>
                     <th scope="col" colspan="9">新增进货商品列表</th>
                 </tr>
                 <tr class="text-c">
-                    <th width="40">序号</th>
+                    <th width="40">操作</th>
                     <th width="170">商品名称/规格</th>
                     <th width="170">商品标号</th>
                     <th width="170">属性</th>
@@ -103,17 +100,17 @@
 
                     </td>
                     <td>
-                        <select name="clName" class="select" id="clName">
+                        <select name="clName" class="select" id="clName" onchange="changeList(this.options[this.options.selectedIndex].value,m)">
                             <option value="0">请选择</option>
                             <option v-for="(item,index) in resulttwo" :value="item.id">{{item.clName}}</option>
                         </select>
                     </td>
-                    <td id="clNumber" name="clNumber">商品标号</td>
+                    <td id="clNumber0" name="clNumber">商品编号</td>
                     <td></td>
                     <td><input type="text" class="input-text"  placeholder="1" id="orderCount"
                                name="orderCount"></td>
-                    <td id="usId"></td>
-                    <td><input type="text" class="input-text" value="" placeholder="" id="clWhoPrice" name="clWhoPrice">
+                    <td id="clUnit0" name="clUnit"></td>
+                    <td><input type="text" class="input-text" value="" placeholder="" id="clTagPrise0" name="clTagPrise">
                     </td>
                     <td><input type="text" class="input-text" value="" placeholder="" id="poYingMoney"
                                name="poYingMoney"></td>
@@ -121,8 +118,15 @@
                                name="poRemarks">
                     </td>
                 </tr>
+
+
                 </tbody>
                 <thead>
+                <tr>
+                    <a href="#" id="addxx"
+                       class="btn btn-block radius">
+                        <i class="Hui-iconfont">&#xe600;</i>添加商品表格</a>
+                </tr>
                 <tr class="text-c">
                     <th width="40">
                         合计
@@ -139,12 +143,13 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td width="300"><span style="text-align: right"><h3>总计金额：</h3><span style="color: red"><span
-                            style="color: #8e8e99">¥</span> 0.00</span></span></td>
+                    <td width="300"><span style="text-align: right"></span></td>
+                    <td width="300"><span style="text-align: right"></span></td>
+                    <td width="300"><span style="text-align: right"><input type="submit" value="提交"></span></td>
                 </tr>
                 </tbody>
             </table>
-            <input type="submit" value="提交">
+
         </form>
     </article>
 </div>
@@ -210,11 +215,11 @@
         if (clName == "请选择") {
         } else {
             m++;
-            var html = "<tr id='addx"+m+"' class='text-c'><td><a title='删除' href='javascript:;' onclick='deleteRow(this)'  class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6e2;</i></a></td><td><select name='clName' class='select' id='clName'><option value='0'>请选择</option>";
+            var html = "<tr id='addx"+m+"' class='text-c'><td><a title='删除' href='javascript:;' onclick='deleteRow(this)'  class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6e2;</i></a></td><td><select name='clName'  onchange='changeList(this.options[this.options.selectedIndex].value,m)' class='select' id='clName'><option value='0'>请选择</option>";
             for (var i = 1; i < app.resulttwo.length; i++) {
-                html = html + "<option name='clName' :value='" + app.resulttwo[i].clName + "'>" + app.resulttwo[i].clName + "</option>";
+                html = html + "<option name='clName' value='" + app.resulttwo[i].id + "'>" + app.resulttwo[i].clName + "</option>";
             }
-            html = html + "</select></td><td id='clNumber' name='clNumber'>商品标号</td><td></td><td><input type='text' class='input-text'  placeholder='1' id='orderCount'name='orderCount'></td><td id='usId'></td><td><input type='text' class='input-text' value='' placeholder='' id='clWhoPrice' name='clWhoPrice'></td><td><input type='text' class='input-text' value='' placeholder='' id='poYingMoney' name='poYingMoney'></td><td><input type='text' class='input-text' value='默认无备注' placeholder='' id='poRemarks'name='poRemarks'></td></tr>\n";
+            html = html + "</select></td><td id='clNumber"+m+"' name='clNumber'>商品编号</td><td></td><td><input type='text' class='input-text'  placeholder='1' id='orderCount'name='orderCount'></td><td id='clUnit"+m+"' name='clUnit'></td><td><input type='text' class='input-text' value=''  id='clTagPrise"+m+"' name='clTagPrise'></td><td><input type='text' class='input-text' value='' placeholder='' id='poYingMoney' name='poYingMoney'></td><td><input type='text' class='input-text' value='默认无备注' placeholder='' id='poRemarks'name='poRemarks'></td></tr>\n";
             m--;
             document.getElementById("addx"+m).insertAdjacentHTML('afterend', html);
             m++;
@@ -223,6 +228,22 @@
 
     function deleteRow(obj) {
             $(obj).parents("tr").remove();
+    }
+
+    function changeList(v,obj) {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url:'/basicdata/commodity-list/selectcommdityId',
+            data:{
+                id:v
+            },
+            success:function (com) {
+                $("#clNumber"+obj).html(com.clNumber);
+                $("#clUnit"+obj).html(com.clUnit);
+                $("#clTagPrise"+obj).val(com.clTagPrise);
+            }
+        })
     }
 </script>
 </body>

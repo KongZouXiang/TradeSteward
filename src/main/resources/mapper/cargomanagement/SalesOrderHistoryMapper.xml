@@ -5,6 +5,10 @@
         id,so_date,so_order_num,so_status,so_auditor,so_client,so_order_comm,so_order_count,so_discount,
     so_money,so_earnest,so_bills,so_bill_date,so_sell_count,so_devlier_date,so_hander,so_maker,so_remark
 </sql>
+    <insert id="insert">
+        insert into sales_order_history(so_date,so_order_num,so_auditor,so_client,so_order_comm,so_order_count,so_money)
+         values (#{soDate},#{soOrderNum},#{soAuditor},#{soClient},#{soOrderComm},#{soOrderCount},#{soMoney})
+    </insert>
 
     <!--***********************************分页查询所有的销售订单历史记录***********************************-->
     <select id="selectSaleList" resultType="com.yunhe.cargomanagement.entity.SalesOrderHistory">
@@ -57,5 +61,8 @@
     </select>
     <select id="selectSaleById" resultType="com.yunhe.cargomanagement.entity.SalesOrderHistory">
         select <include refid="Sql"/> from sales_order_history where id=#{id}
+    </select>
+    <select id="selectByNumber" resultType="com.yunhe.cargomanagement.entity.SalesOrderHistory">
+        select <include refid="Sql"/> from sales_order_history where so_order_num=#{soOrderNum}
     </select>
 </mapper>

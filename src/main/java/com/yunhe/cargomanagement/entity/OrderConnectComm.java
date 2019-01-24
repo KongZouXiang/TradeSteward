@@ -43,7 +43,7 @@ public class OrderConnectComm implements Serializable {
     private int clId;
 
     @TableField("order_count")
-    private String orderCount;
+    private int orderCount;
     private CommodityList commodityList;
     public static long getSerialVersionUID() {
         return serialVersionUID;

@@ -15,6 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -22,18 +24,13 @@ import java.util.Map;
 @SpringBootTest
 public class cargomanagement {
 
-    /*    @Resource
-        private SalesOrderHistoryMapper salesOrderHistoryMapper;*/
-
-    @Resource
-    CommodityListMapper commodityListMapper;
 
     @Test
     public void text() {
-        List<CommodityList> commodityLists = commodityListMapper.selectComclassList1();
-        for (CommodityList commodityList : commodityLists) {
-            System.out.println(commodityList);
-        }
+        Date date = new Date();
+        SimpleDateFormat yyyyMMdd = new SimpleDateFormat("yyyyMMddHHmm");
+        String hehe = yyyyMMdd.format( date );
+        System.out.println(hehe);
     }
 
 
