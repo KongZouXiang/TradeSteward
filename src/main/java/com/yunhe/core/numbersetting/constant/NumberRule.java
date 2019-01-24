@@ -8,7 +8,7 @@ import com.yunhe.core.numbersetting.factory.NumberFactory;
  * @author 孔邹祥
  * @date 2016/10/31
  */
-public class NumberRule extends Number {
+public class  NumberRule extends Number {
 
     /**
      * <per>

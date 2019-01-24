@@ -110,5 +110,4 @@ public class CommodityList implements Serializable {
      */
     @TableField("cl_minlingprice")
      private String clMinLingPrice;
-
 }

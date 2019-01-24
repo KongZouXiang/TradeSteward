@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
-    <script type="text/javascript" src="/layui/layui.js"></script>
+    <link rel="stylesheet" href="/lib/layui/css/layui.css"  media="all">
+    <script type="text/javascript" src="/lib/layui/layui.js"></script>
     <title>编辑管理员 - 管理员管理 - H-ui.admin v3.1</title>
 </head>
 <body>
@@ -64,27 +64,19 @@
         <div class="layui-input-inline">
             <select name="quiz1">
                 <option value="">请选择省</option>
-                <option value="浙江" selected="">浙江省</option>
-                <option value="你的工号">江西省</option>
-                <option value="你最喜欢的老师">福建省</option>
+
             </select>
         </div>
         <div class="layui-input-inline">
             <select name="quiz2">
                 <option value="">请选择市</option>
-                <option value="杭州">杭州</option>
-                <option value="宁波" disabled="">宁波</option>
-                <option value="温州">温州</option>
-                <option value="温州">台州</option>
-                <option value="温州">绍兴</option>
+
             </select>
         </div>
         <div class="layui-input-inline">
             <select name="quiz3">
                 <option value="">请选择县/区</option>
-                <option value="西湖区">西湖区</option>
-                <option value="余杭区">余杭区</option>
-                <option value="拱墅区">临安市</option>
+
             </select>
         </div>
     </div>
@@ -98,11 +90,10 @@
         <label class="layui-form-label">角色</label>
         <div class="layui-input-block">
             <input type="text" id="check" th:value="${session.employ.emRole}" hidden="hidden">
-            <input type="checkbox" name="like1" lay-skin="primary"  value="管理员" title="管理员">
-            <input type="checkbox" name="like1" lay-skin="primary"   value="销售员" title="销售员">
-            <input type="checkbox" name="like1" lay-skin="primary"   value="仓管员" title="仓管员" >
-            <input type="checkbox" name="like1" lay-skin="primary"   value="财务员"title="财务员" >
-            <input type="checkbox" name="like1" lay-skin="primary"   value="采购员"title="采购员" >
+            <input type="radio" name="like1" lay-skin="primary"  value="管理员" title="管理员">
+            <input type="radio" name="like1" lay-skin="primary"   value="财务员" title="财务员">
+            <input type="radio" name="like1" lay-skin="primary"   value="仓管员" title="仓管员" >
+            <input type="radio" name="like1" lay-skin="primary"   value="销售员"title="销售员" >
         </div>
     </div>
     <div class="layui-form-item">
@@ -126,7 +117,7 @@
 
         var selectrole =function(){
             var str =$("#check").val();
-            var arr =str.split(',');
+       /*     var arr =str.split(',');
             for (var c=0;c<arr.length;c++){
                 var unitTypeCheckbox = $("input[name='like1']");
                 for (var i =0;i<unitTypeCheckbox.length;i++){
@@ -137,7 +128,13 @@
                     }
                 }
 
-            }
+            }*/
+            $("input[name=like1][value='管理员']").attr("checked", str == '管理员' ? true: false)
+            $("input[name=like1][value='财务员']").attr("checked", str == '财务员' ? true: false)
+            $("input[name=like1][value='仓管员']").attr("checked", str == '仓管员' ? true: false)
+            $("input[name=like1][value='销售员']").attr("checked", str == '销售员' ? true: false)
+
+
         }
         selectrole();
         var flag =$("#sysData").val();
@@ -203,7 +200,7 @@
                     id:sid,
                     emUsername: $("#empname").val(),
                     emRealname:$("#emprelname").val(),
-                    emRole:data.field.like1,
+                    emRole:$("input[name='like1']:checked").val(),
                     emSex:$("input[name='sex']:checked").val(),
                     emPhone:$("#phone").val(),
                     emEmail:$("#email").val(),
@@ -213,7 +210,7 @@
                 },
                 success:function (rest) {
                     if (rest==1){
-                        parent.layer.msg('添加成功',{time:2000,icon:1});
+                        parent.layer.msg('修改成功',{time:2000,icon:1});
                     }else {
                         parent.layer.msg("服务器繁忙请稍后再试",{time:2000,icon:2});
                     }

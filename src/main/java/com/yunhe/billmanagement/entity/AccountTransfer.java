@@ -75,13 +75,13 @@ public class AccountTransfer implements Serializable {
     private String atChargePerson;
 
     /**
-     * 备注
+     * 经手人
      */
     @TableField(value = "at_person")
     private String atPerson;
 
     /**
-     * 经手人
+     *备注
      */
     @TableField(value = "at_remark")
     private String atRemark;

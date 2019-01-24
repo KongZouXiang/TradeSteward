@@ -1,11 +1,12 @@
 <!--_meta 作为公共模版分离出去-->
 <!DOCTYPE HTML>
-<html lang="en">
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <link rel="Bookmark" href="/favicon.ico">
     <link rel="Shortcut Icon" href="/favicon.ico"/>
@@ -19,7 +20,7 @@
     <script type="text/javascript" src="/js/vue/vue.min.js"></script>
     <script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
-    <title>新增销售订单历史</title>
+    <title>新增进货订单</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 </head>
@@ -27,14 +28,14 @@
 <div id="app">
 
     <article class="page-container">
-        <h1 style="text-align: center">商品销售订单</h1>
+        <h1 style="text-align: center">商品进货订单</h1>
         <form class="form form-horizontal" id="form-article-add">
             <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>客户</label>
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>供应商</label>
                 <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
 				<select name="articlecolumn" class="select">
-				    <option value="0">请选择</option>
-					<option value="index+1" v-for="(item,index) in result">{{item.cusName}}</option>
+					<option value="0"></option>
+					<option value="index+1" v-for="(item,index) in result">{{item.supCompname}}</option>
 				</select>
 				</span>
                 </div>
@@ -60,7 +61,7 @@
                 </div>
             </div>
             <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2">评论开始日期：</label>
+                <label class="form-label col-xs-4 col-sm-2">业务日期：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <input type="text"
                            onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'commentdatemax\')||\'%y-%M-%d\'}' })"
@@ -75,7 +76,9 @@
                            id="commentdatemax" name="commentdatemax" class="input-text Wdate">
                 </div>
             </div>
-
+            <a id="addxx"
+               class="btn btn-primary radius">
+                <i class="Hui-iconfont">&#xe600;</i> 添加商品选择</a>
             <table class="table table-border table-bordered table-bg">
                 <thead>
                 <tr>
@@ -93,23 +96,27 @@
                     <th width="200">备注</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr class="text-c" v-for="(item,index) in result">
-                    <td>1</td>
-                    <td>
+                <tbody id="addTr">
+                <tr class="text-c" id="addx0">
+                    <td><a title='删除' href='javascript:;' onclick="deleteRow(this)" class='ml-5' style='text-decoration:none'><i
+                            class='Hui-iconfont'>&#xe6e2;</i></a>
 
-                        <select name="articlecolumn" class="select" >
+                    </td>
+                    <td>
+                        <select name="clName" class="select" id="clName">
                             <option value="0">请选择</option>
-                            <option  v-for="(item,index) in resulttwo" :value="index+1">{{item.clName}}</option>
+                            <option v-for="(item,index) in resulttwo" :value="index+1">{{item.clName}}</option>
                         </select>
                     </td>
-                    <td>商品标号</td>
-                    <td>属性</td>
+                    <td id="clNumber" name="clNumber">商品标号</td>
+                    <td></td>
                     <td><input type="text" class="input-text" value="1" placeholder="" id="poQuantityOfPurchase"
                                name="poQuantityOfPurchase"></td>
-                    <td>单位</td>
-                    <td><input type="text" class="input-text" value="" placeholder="" id="danjia" name="danjia"></td>
-                    <td><input type="text" class="input-text" value="" placeholder="" id="jine" name="jine"></td>
+                    <td id="usId"></td>
+                    <td><input type="text" class="input-text" value="" placeholder="" id="clWhoPrice" name="clWhoPrice">
+                    </td>
+                    <td><input type="text" class="input-text" value="" placeholder="" id="poYingMoney"
+                               name="poYingMoney"></td>
                     <td><input type="text" class="input-text" value="默认无备注" placeholder="" id="poRemarks"
                                name="poRemarks">
                     </td>
@@ -143,8 +150,8 @@
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
-<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer /作为公共模版分离出去-->
+<script type="text/javascript" src="/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer /作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
@@ -163,7 +170,7 @@
         el: '#app',
         data: {
             result: [],
-            resulttwo:[]
+            resulttwo: []
         }
     });
     //查询
@@ -174,7 +181,7 @@
             url: '/cargomanagement/sales-order-history/asdfdgh',
             data: {},
             success: function (msg) {
-                app.result = msg;
+                app.result = msg.list;
             }
         });
     };
@@ -194,7 +201,28 @@
     getCommodityList();
 
 
+    var m=0;
+    $("#addxx").on("click", function () {
+
+        console.log($("#addTr"));
+        var clName = $("#clName").val();
+        if (clName == "请选择") {
+        } else {
+            m++;
+            var html = "<tr id='addx"+m+"' class='text-c'><td><a title='删除' href='javascript:;' onclick='deleteRow(this)'  class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6e2;</i></a></td><td><select name='clName' class='select' id='clName'><option value='0'>请选择</option>";
+            for (var i = 1; i < app.resulttwo.length; i++) {
+                html = html + "<option value='" + app.resulttwo[i].isOnline + "'>" + app.resulttwo[i].clName + "</option>";
+            }
+            html = html + "</select></td><td id='clNumber' name='clNumber'>商品标号</td><td></td><td><input type='text' class='input-text' value='1' placeholder='' id='poQuantityOfPurchase'name='poQuantityOfPurchase'></td><td id='usId'></td><td><input type='text' class='input-text' value='' placeholder='' id='clWhoPrice' name='clWhoPrice'></td><td><input type='text' class='input-text' value='' placeholder='' id='poYingMoney' name='poYingMoney'></td><td><input type='text' class='input-text' value='默认无备注' placeholder='' id='poRemarks'name='poRemarks'></td></tr>\n";
+            m--;
+            document.getElementById("addx"+m).insertAdjacentHTML('afterend', html);
+            m++;
+        }
+    });
+
+    function deleteRow(obj) {
+            $(obj).parents("tr").remove();
+    }
 </script>
-<!--/请在上方写此页面业务相关的脚本-->
 </body>
 </html>

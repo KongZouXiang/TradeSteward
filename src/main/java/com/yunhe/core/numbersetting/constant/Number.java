@@ -27,6 +27,7 @@ public class Number {
      * 进货订单编号
      */
     static Integer JDD = 0;
+
     /**
      * 销售订单编号
      */

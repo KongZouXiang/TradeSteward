@@ -80,36 +80,36 @@
     });
 */
 
-    var updateAccount = function () {
-       if (!check().form()) {
-            return;
-        }
-        $.ajax({
+   var updateAccount = function () {
+       /*if (!check().form()) {
+           return;
+       }*/
+       $.ajax({
             type: 'POST',
-            dataType: 'json',
-            url: "/customermanagement/customer/updateCustomer",
-            data: {
-                id:$("#inp").val(),
-                cusNumber: $("#cus_number").val(),
-                cusCompname: $("#cus_compname").val(),
-                cusMoney: $("#cus_money").val(),
-                cusTele: $("#cus_tele").val(),
-                cusName: $("#cus_name").val(),
-                cusFlag: $("#cus_flag").val(),
-                cusConnname: $("#cus_connname").val(),
-                cusAddress: $("#cus_address").val(),
-                cusEmail: $("#cus_email").val(),
-                cus_Qq: $("#cus_qq").val(),
-                cusRemarks: $("#cus_remarks").val()
-            },
-            success:function (data) {
-                alert(data);
+           dataType: 'json',
+           url: "/customermanagement/customer/updateCustomer",
+           data: {
+               id: $("#inp").val(),
+               cusNumber: $("#cus_number").val(),
+               cusCompname: $("#cus_compname").val(),
+               cusMoney: $("#cus_money").val(),
+               cusTele: $("#cus_tele").val(),
+               cusName: $("#cus_name").val(),
+               cusFlag: $("#cus_flag").val(),
+               cusConnname: $("#cus_connname").val(),
+               cusAddress: $("#cus_address").val(),
+               cusEmail: $("#cus_email").val(),
+               cus_Qq: $("#cus_qq").val(),
+               cusRemarks: $("#cus_remarks").val()
+           },
+           success: function (data) {
 
-                $("#cancelBtn").click();
-            }
-        });
 
-    }
+               $("#cancelBtn").click();
+           }
+       })
+
+   };
 
 
     $("#updateBtn").click(function () {
@@ -122,45 +122,45 @@
     });
 
 
- function check() {
-        return $("#updateAccountForm").validate({
-            rules: {
-                cusNumber: {
-                    required: true
-                },
-                cusCompname: {
-                    required: true
-                },
-                cusMoney: {
-                    required: true
-                },
-                cusTele: {
-                    required: true
-                },
-                cusName: {
-                    required: true
-                },
-                cusFlag: {
-                    required: true
-                },
-                cusConnname: {
-                    required: true
-                },
-                cusAddress: {
-                    required: true
-                },
-                cusEmail: {
-                    required: true
-                },
-                cus_Qq: {
-                    required: true
-                },
-                cusRemarks: {
-                    required: true
-                }
-            }
-        });
-    }
+   /*function check() {
+       return $("#updateAccountForm").validate({
+           rules: {
+               cusNumber: {
+                   required: true
+               },
+               cusCompname: {
+                   required: true
+               },
+               cusMoney: {
+                   required: true
+               },
+               cusTele: {
+                   required: true
+               },
+               cusName: {
+                   required: true
+               },
+               cusFlag: {
+                   required: true
+               },
+               cusConnname: {
+                   required: true
+               },
+               cusAddress: {
+                   required: true
+               },
+               cusEmail: {
+                   required: true
+               },
+               cus_Qq: {
+                   required: true
+               },
+               cusRemarks: {
+                   required: true
+               }
+           }
+       });
+   }*/
 </script>
 </body>
 </html>

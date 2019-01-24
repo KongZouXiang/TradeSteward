@@ -1,6 +1,8 @@
-package com.yunhe.config.shiro;
+package com.yunhe.core.shiro;
 
 import com.yunhe.core.common.login.service.ILoginService;
+import com.yunhe.core.redis.RedisService;
+import com.yunhe.systemsetup.dao.EmployMapper;
 import com.yunhe.systemsetup.entity.Employ;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -11,6 +13,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -25,6 +28,12 @@ public class UserRealm extends AuthorizingRealm {
 
     @Resource
     ILoginService loginService;
+
+    @Resource
+    EmployMapper employMapper;
+
+    @Resource
+    RedisService redisService;
 
     /**
      * <p>
@@ -48,10 +57,13 @@ public class UserRealm extends AuthorizingRealm {
 //        得到数据库查询当前登录用户的授权字符串
         Subject subject = SecurityUtils.getSubject();
         Employ employ = (Employ) subject.getPrincipal();
-        Employ dbEmploy = loginService.selectOneEmploy(employ.getEmUsername());
 
-        info.addStringPermission(dbEmploy.getEmUsername());
+//        根据ID查找出员工对应的板块
+        List<String> list = employMapper.selectEmployPlate(employ.getId());
 
+        for (String string : list) {
+            info.addStringPermission(string);
+        }
 
         return info;
     }
@@ -68,13 +80,14 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 
-
+        System.out.println("认证");
 //        编写Shiro判断处理逻辑，判断用户名和密码
 //        1.判断用户名
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
 //            查询数据库的用户名和密码
         Employ employ = loginService.selectOneEmploy(token.getUsername());
-        if (employ == null){
+        SecurityUtils.getSubject().getSession().setAttribute("employ", employ);
+        if (employ == null) {
 //            用户名不存在
 //            底层会抛出UnKnowAccountException
             return null;

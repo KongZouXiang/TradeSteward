@@ -128,10 +128,6 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
         return commodityListMapper.selectComclassAndCommdity(id);
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public Map selectComclassList1() {
         List<CommodityList> list = commodityListMapper.selectComclassList1();

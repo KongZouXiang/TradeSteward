@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,16 +21,14 @@ import java.util.Map;
 public class SettlementAccountController {
     @Resource
     SettlementAccountServiceImpl settlementAccountService;
-
     /**
      * 查询账户的信息 分页
-     *
      * @param current           当前页
      * @param size              每页的条数
      * @param settlementAccount 实体类信息
      * @return 所有账户的信息
      */
-    @RequestMapping(value = "/getrAccounlist", method = RequestMethod.GET)
+    @RequestMapping(value = "/getrAccounlist", method = RequestMethod.POST)
     @ResponseBody
     public Map selectAccountPage(int current, int size, SettlementAccount settlementAccount) {
         return settlementAccountService.selectAllAcountList(current, size, settlementAccount);
@@ -54,10 +53,10 @@ public class SettlementAccountController {
      * @param sabanknumber 开户银行
      * @return 无返回
      */
-    @RequestMapping(value = "/insertaccount", method = RequestMethod.POST)
+    @RequestMapping(value = "/insertaccount", method = RequestMethod.GET)
     public int insertAccountinfo(@RequestParam("zhanghu") String zhanghu, @RequestParam("sabank") String sabank,
                                     @RequestParam("sabanknumber") String sabanknumber ,@RequestParam("beginbalance") String beginbalance ,
-                                    @RequestParam("zhangbalance") double zhangbalance,@RequestParam("zhangstate")int zhangstate) {
+                                    @RequestParam("zhangbalance") double zhangbalance,@RequestParam("zhangstate") String zhangstate) {
         SettlementAccount settlementAccount = new SettlementAccount();
         System.out.println("taiozahung");
         settlementAccount.setSaName(zhanghu);
@@ -81,7 +80,6 @@ public class SettlementAccountController {
         mv.setViewName("basicdata/editaccount");
         return mv;
     }
-
     /**
      * 账户详情
      * @param id 传过来的id
@@ -110,7 +108,7 @@ public class SettlementAccountController {
     @ResponseBody
     public int  updateAccountInfo(@RequestParam("zhanghu") String zhanghu, @RequestParam("sabank") String sabank,
                                           @RequestParam("sabanknumber") String sabanknumber, @RequestParam("beginbalance") String beginbalance,
-                                          @RequestParam("zhangbalance") double zhangbalance, @RequestParam("zhangstate") int  zhangstate,
+                                          @RequestParam("zhangbalance") double zhangbalance, @RequestParam("zhangstate") String zhangstate,
                                           @RequestParam("id") int id) {
         SettlementAccount settlementAccount = new SettlementAccount();
         settlementAccount.setSaName(zhanghu);
@@ -134,6 +132,28 @@ public class SettlementAccountController {
         System.out.println(id);
         settlementAccount.setId(id);
         return  settlementAccountService.deleteAccount(settlementAccount);
+    }
+
+    /**
+     * 检查银行账号是否存在
+     * @param sabanknumber
+     * @return
+     * @throws IOException
+     */
+    @PostMapping("/checkaccount")
+    @ResponseBody
+    public String  checkAccountnum(@RequestParam("sabanknumber") String sabanknumber){
+        SettlementAccount seetlement=new SettlementAccount();
+        seetlement.setSaBankNumber(sabanknumber);
+      List<Map<String,String>> list=  settlementAccountService.checkAccount(seetlement);
+      String accoungNumber;
+      if(list.size()>0){
+          //银行账号存在
+          return "success";
+      }else {
+          //银行账号不存在
+          return "error";
+      }
     }
     @RequestMapping("/addacounthtml")
     public ModelAndView AddAcount(){

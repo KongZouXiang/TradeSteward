@@ -1,0 +1,230 @@
+﻿<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport"
+		  content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+	<meta http-equiv="Cache-Control" content="no-siteapp"/>
+	<link rel="Bookmark" href="/favicon.ico">
+	<link rel="Shortcut Icon" href="/favicon.ico"/>
+	<script type="text/javascript" src="/lib/html5shiv.js"></script>
+	<script type="text/javascript" src="/lib/respond.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css"/>
+	<link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+	<link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin"/>
+	<link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css"/>
+	<script type="text/javascript" src="/js/vue/vue.min.js"></script>
+	<script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js"></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<link rel="stylesheet" href="/lib/layui/css/layui.css"  media="all">
+	<title>新增付款</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+</head>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> <a href="/billManagement/fund_provider_debt/toFpd">供应商应付欠款</a> <span class="c-gray en">&gt;</span> <a href="/billManagement/fund_provider_debt/toAdd">新增付款</a> <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container" data-validator-option="{theme:'simple_right'}">
+	<form class="layui-form" action="">
+		<div class="layui-form-item">
+			<h2 style="text-align: center">付款单</h2>
+			<div class="layui-inline" style="float: left;width: 20%">
+				<label class="layui-form-label"><span class="c-red">*</span>供应商</label>
+				<div class="layui-input-inline">
+					<input type="text" id="fcddFcdName" lay-verify="fcddFcdName" autocomplete="off" class="layui-input"  >
+				</div>
+			</div>
+			<input type="hidden" th:value="${session.maxId}" id="maxId">
+			<div class="layui-inline" style="float: right;width: 20%">
+				<label class="layui-form-label"><span class="c-red">*</span>单据编号</label>
+				<div class="layui-input-inline">
+					<input type="text" id="fcddNumList" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item" style="border-top: 3px solid #b2b2b2;height: 30px;margin-top: -20px;padding-top: 25px;margin-bottom: -10px">
+			<div class="layui-inline">
+				<label class="layui-form-label"><span class="c-red">*</span>经手人</label>
+				<div class="layui-input-inline">
+					<select id="fcddPerson"><option>老板</option>
+						<option>财务</option>
+						<option>仓管或采购</option>
+						<option>销售</option></select>
+				</div>
+			</div>
+			<div class="layui-inline"  style="float: right">
+				<label class="layui-form-label"><span class="c-red">*</span>收款日期</label>
+				<div class="layui-input-inline">
+					<input type="date" id="fcddDate" lay-verify="fcddDate" autocomplete="off" class="layui-input" style="float: right">
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item" style="margin-top: 20px">
+			<table class="table table-border table-bordered table-bg">
+				<thead>
+				<tr class="text-c">
+					<th width="40">序号</th>
+					<th width="150">结算账户</th>
+					<th width="150">应付金额(元)</th>
+					<th width="150">本次付款(元)</th>
+					<th width="150">优惠金额(元)</th>
+					<th></th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr class="text-c" v-for="(item,index) in result">
+					<td>1</td>
+					<td>
+						<select name="articlecolumn" class="select" id="fcddAccount">
+							<option  v-for="(item,index) in resulttwo" :value="index+1" selected="selected">现金</option>
+							<option  v-for="(item,index) in resulttwo" :value="index+1">建设银行</option>
+						</select>
+					</td>
+					<td><input type="text" class="input-text" readonly="readonly"  placeholder="" id="fcddReceivable" ></td>
+					<td><input type="text" class="input-text" value="0" lay-verify="fcddBackDebt" id="fcddBackDebt"></td>
+					<td><input type="text" class="input-text" value="0" lay-verify="fcddDiscount" id="fcddDiscount"></td>
+					<td></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="layui-form-item" style="float: right">
+			<div class="layui-input-block">
+				<button class="layui-btn" id="saveBtn" lay-submit="" lay-filter="demo1">提交</button>
+				<button id="historyBtn" href="/billManagement/fund-client-debt/toFcd" class="layui-btn layui-btn-primary">历史单据</button>
+			</div>
+		</div>
+	</form>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/lib/webuploader/0.1.5/webuploader.min.js"></script>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/ueditor.all.min.js"></script>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+<script src="/lib/layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+        //自定义验证规则
+        form.verify({
+            fcddBackDebt:function(value){
+                var check='';
+                if(value.length < 1){
+                    check= '金额不能为空啊';
+                };
+                if(value.length>=1) {
+                    var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+                    var BackDebt = $('#fcddBackDebt').val();
+                    if (!reg.test(BackDebt)){
+                        check = '金额格式不对！'
+                    }
+                }
+                return check;
+            },
+            fcddDiscount:function (value) {
+                var check='';
+                if(value.length < 1){
+                    check= '金额不能为空啊';
+                };
+                if(value.length>=1) {
+                    var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+                    var Discount = $('#fcddDiscount').val();
+                    if (!reg.test(Discount)){
+                        check = '金额格式不对！'
+                    }
+                }
+                return check;
+            },
+            fcddDate:function (value) {
+                if(value.length < 1){
+                    return '收款日期不能为空啊';
+                };
+            }
+
+        });
+
+        function f() {
+            /*alert("进入")*/
+            var numList = "FKD";
+            /*alert(numList);*/
+            //获取当前时间
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            if (month < 10) {
+                month = "0" + month;
+            }
+            if (day < 10) {
+                day = "0" + day;
+            }
+            var nowDate = year  + month  + day;
+            /*alert(nowDate);*/
+            var maxid =$("#maxId").val();
+            /*alert(maxid);*/
+            numList += nowDate;
+            numList += '00';
+            numList += maxid;
+            /*alert(numList);*/
+            $("#fcddNumList").val(numList);
+        }
+        f();
+        form.render();
+
+        //监听提交
+        form.on('submit(demo1)', function(){
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "/billManagement/fund_provider_debt/insertFcdd",
+                data: {
+                    fcddFcdName:$("#fcddFcdName").val(),
+                    fcddDate:$("#fcddDate").val(),
+                    fcddNumList:$("#fcddNumList").val(),
+                    fcddPerson:$("#fcddPerson").val(),
+                    fcddType:'进货商品',
+                    fcddReceivable:0-$("#fcddBackDebt").val()-$("#fcddDiscount").val(),
+                    fcddBackDebt:$("#fcddBackDebt").val(),
+                    fcddDiscount:$("#fcddDiscount").val(),
+                    fcddAccount:$("#fcddAccount").val()
+                },
+                success: function(msg){
+                    window.location.href="/billManagement/fund_provider_debt/toFpd";
+                }
+            });
+            return false;
+        });
+    });
+
+    $("#fcddFcdName").click(function () {
+        layer.open({
+            type:2,
+            title:'选择供应商',
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['800px','650px'],
+            content:'/billManagement/fund_provider_debt/selectSupplier',
+            end:function(index) {
+            }
+        });
+    });
+</script>
+</body>
+</html>

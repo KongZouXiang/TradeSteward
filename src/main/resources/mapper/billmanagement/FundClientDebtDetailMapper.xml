@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunhe.billmanagement.dao.FundClientDebtDetailMapper">
+
+    <!--自动显示编码的SQL语句-->
+    <select id="maxId" resultType="int">
+        select max(id) from fund_client_debt_detail
+    </select>
+    <select id="selectFcddPage" resultType="com.yunhe.billmanagement.entity.FundClientDebtDetail">
+        select * from fund_client_debt_detail
+        where (fcdd_fcd_name like concat('%',#{fundClientDebtDetail.fcddFcdName},'%'))
+    </select>
+</mapper>

@@ -28,13 +28,13 @@
         class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" style="margin: 0px;padding: 0px">
     <div class="cl pd-5 bg-1 bk-gray mt-20">
-        <a href="javascript:;" id="addUserBtn" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>新增员工</a>
+        <a href="javascript:;" id="addUserBtn" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>新增角色</a>
         <span class="r">共有数据：<strong id="strong"></strong> 条</span></div>
     <div id="app" >
         <table class="table table-border table-bordered table-bg">
             <thead>
             <tr>
-                <th scope="col" colspan="9">员工列表</th>
+                <th scope="col" colspan="9">分组列表</th>
             </tr>
             <tr class="text-c">
 
@@ -49,7 +49,7 @@
             <tr class="text-c" v-for="(item,index) in result">
                 <td>{{index+1}}</td>
                 <td class="td-manage">
-                    <a style="text-decoration:none" class="ml-5" @click="updateemp(item.id)"  title="编辑">
+                    <a style="text-decoration:none" class="ml-5" @click="updaterole(item.id)"  title="编辑">
                         <i class="Hui-iconfont">&#xe6df;</i>
                     </a>
                     <a id="del" title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none">
@@ -138,7 +138,7 @@
     $("#addUserBtn").click(function () {
         layer.open({
             type:2,
-            title:'新增员工',
+            title:'新增角色',
             fix:false,
             maxmin:true,
             shadeClose:true,
@@ -149,6 +149,23 @@
             }
         });
     });
+
+    //修改员工
+    var updaterole =function (id) {
+        alert('nihao')
+        layer.open({
+            type:2,
+            title:'修改角色',
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['600px','400px'],
+            content:'/systemsetup/chara-manger/chara_edit?id='+id,
+            end:function() {
+                getUserPageList();
+            }
+        });
+    }
 
 </script>
 </body>

@@ -1,7 +1,8 @@
-package com.yunhe.config.shiro;
+package com.yunhe.core.shiro;
 
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,6 +26,7 @@ import java.util.Map;
 public class ShiroConfig {
 
     /**
+     * 安全管理器
      * 创建ShrioFilterFactoryBean
      */
     @Bean
@@ -49,6 +51,15 @@ public class ShiroConfig {
 
 //        授权过滤器 注意: 当签授权拦截后，Shiro会自动跳转到未授权页面
         filterMap.put("/add", "perms[user:add]");
+
+//        增加用户的板块
+        filterMap.put("/ad", "perms[activitymanagement]");
+        filterMap.put("/add", "perms[basicdata]");
+        filterMap.put("/add", "perms[billmanagement]");
+        filterMap.put("/add", "perms[cargomanagement]");
+        filterMap.put("/add", "perms[customermanagement]");
+        filterMap.put("/add", "perms[reportanalysis]");
+        filterMap.put("/add", "perms[systemsetup]");
 
 //        Shiro拦截的页面
         /*  filterMap.put("/*", "authc");*/
@@ -87,9 +98,11 @@ public class ShiroConfig {
      * 用于thymeleaf模板使用shiro标签
      * </p>
      */
-
     @Bean
     public ShiroDialect shiroDialect() {
         return new ShiroDialect();
     }
+
+
+
 }

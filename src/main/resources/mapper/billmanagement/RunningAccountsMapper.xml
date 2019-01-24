@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yunhe.billmanagement.dao.RunningAccountsMapper">
 
+    <sql id="caCols">
+        id,ra_num_list,ra_time,ra_company_name,ra_project_name,ra_account,ra_person,ra_income,ra_outcome,ra_current_balance
+    </sql>
+
+    <select id="selectRaPage" resultType="com.yunhe.billmanagement.entity.RunningAccounts">
+        select <include refid="caCols"/> from running_accounts where (ra_num_list like concat('%',#{runningAccounts.raNumList},'%')) or (ra_company_name like concat('%',#{runningAccounts.raNumList},'%')) order by id desc
+    </select>
+
 
     <!--史江浩 2019-01-24 12：17 查询最大id的剩余金额-->
     <select id="selectRunningMaxIdMoney" resultType="com.yunhe.billmanagement.entity.RunningAccounts">
