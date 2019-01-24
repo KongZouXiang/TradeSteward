@@ -1,6 +1,8 @@
 
 package com.yunhe.core.aop.weblog;
 
+import com.yunhe.core.aop.webexception.ExceptionEnum;
+import com.yunhe.core.aop.webexception.GlobalException;
 import com.yunhe.core.common.annotion.WebLog;
 import com.yunhe.core.util.DateUtil;
 import com.yunhe.systemsetup.entity.Employ;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
@@ -34,6 +37,9 @@ import java.lang.reflect.Method;
 public class WebLogAspect {
 
     private final static Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
+
+    @Resource
+    SystemLogMapper systemLogMapper;
 
     @Pointcut(value = "execution(public * com.yunhe.core.common.login.controller.LoginController.login(..))")
     public void webLogin() {
@@ -68,7 +74,7 @@ public class WebLogAspect {
         Employ employ = (Employ) session.getAttribute("employ");
 
 //        获取员工的登录账号
-        log.setId(employ.getEmUsername());
+        log.setAccount(employ.getEmUsername());
 
 //         员工姓名
         log.setUsername(employ.getEmRealname());
@@ -112,7 +118,9 @@ public class WebLogAspect {
 //        HTTP请求方法
         logger.info("HTTP_Method", request.getMethod());
         logger.info("<--**********************日志结束**************************-->");
-
+        if (systemLogMapper.insert(log)>1){
+            throw new GlobalException(ExceptionEnum.LOG_ERROR);
+        }
         System.out.println(log);
     }
 

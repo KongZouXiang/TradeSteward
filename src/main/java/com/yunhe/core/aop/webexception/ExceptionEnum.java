@@ -28,8 +28,12 @@ public enum ExceptionEnum {
     /**
      * 自己抛出的异常
      */
-    SELF_ERROR(103, "自己抛出的异常")
+    SELF_ERROR(103, "自己抛出的异常"),
 
+    /**
+     * 业务异常
+     */
+    LOG_ERROR(99, "日志出现了异常!"),
     ;
 
     /**

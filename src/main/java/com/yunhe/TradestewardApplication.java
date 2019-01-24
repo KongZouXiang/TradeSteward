@@ -15,7 +15,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @date 2016/10/31
  */
 @SpringBootApplication
-@MapperScan("com.yunhe.*.dao")
+@MapperScan("com.yunhe./**")
 @EnableAutoConfiguration(exclude = { FreeMarkerAutoConfiguration.class })
 @EnableScheduling
 public class TradestewardApplication {

@@ -2,7 +2,6 @@ package com.yunhe.core.shiro;
 
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,6 +34,7 @@ public class ShiroConfig {
 //            设置安全管理器
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 //        添加Shiro内置过滤器
+
         /**
          * Shior内置过滤器，可以实现权限相关的拦截器
          *      常用拦截器
@@ -62,7 +62,7 @@ public class ShiroConfig {
         filterMap.put("/add", "perms[systemsetup]");
 
 //        Shiro拦截的页面
-        /*  filterMap.put("/*", "authc");*/
+          filterMap.put("/*", "authc");
 
 //        修改调整的登录页面
         shiroFilterFactoryBean.setLoginUrl("toLogin");
