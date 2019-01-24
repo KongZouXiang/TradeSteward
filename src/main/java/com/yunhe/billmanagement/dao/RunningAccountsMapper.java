@@ -38,6 +38,7 @@ public interface RunningAccountsMapper extends BaseMapper<RunningAccounts> {
      */
     @Select("select SUM(ra_income) as incomes,SUM(ra_outcome) AS outcomes from running_accounts")
     Map<String,Object> selectCountMap();
+
     /**
      * @author 史江浩
      * @since 2019-01-24 12:18

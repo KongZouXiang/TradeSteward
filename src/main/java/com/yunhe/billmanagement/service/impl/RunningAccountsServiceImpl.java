@@ -34,8 +34,6 @@ public class RunningAccountsServiceImpl extends ServiceImpl<RunningAccountsMappe
     public RunningAccounts selectRunningMaxIdMoney() {
         return runningAccountsMapper.selectRunningMaxIdMoney();
     }
-//    @Resource
-//    private RunningAccountsMapper runningAccountsMapper;
 
     @Override
     public Map selectRaPage(int current, int size,RunningAccounts runningAccounts) {
