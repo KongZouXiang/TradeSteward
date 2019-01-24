@@ -43,17 +43,6 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
 
 
     @Override
-    public Map selectAllCustomer(int current, int size, Customer customer) {
-        Page page = new Page(current, size);
-        List<Customer> customerList = customerMapper.selectAllCustomer(page, customer);
-        Map map = new HashMap();
-        map.put("total", page.getTotal());
-        map.put("pages", page.getPages());
-        map.put("customerList", customerList);
-        return map;
-    }
-
-    @Override
     public int deleteCustomer(int id) {
         return customerMapper.deleteById(id);
     }
@@ -79,11 +68,16 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
 
     @Override
     public IPage<Customer> selectPage(int current, int size, Customer customer) {
-
+        System.out.println(customer);
         return customerMapper.selectPage(new Page<>(current, size),
                 new QueryWrapper<Customer>().like("cus_compname", customer.getCusCompname())
-                        .or().like("cus_tele", customer.getCusTele()));
+                        .or().like("cus_tele", customer.getCusCompname()).or().like("cus_number",customer.getCusCompname()));
 
+    }
+
+    @Override
+    public List<Customer> selectCustomer() {
+        return customerMapper.selectList(null);
     }
 
 

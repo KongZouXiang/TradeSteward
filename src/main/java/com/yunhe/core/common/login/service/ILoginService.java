@@ -17,8 +17,8 @@ public interface ILoginService {
      * 员工登录方法
      * </p>
      *
-     * @param employ 根据员工的账号密码判断是否能登录
-     * @return 如果返回0表示不能等于，1表示可以登录
+     * @param name 根据员工的账号查询出员工
+     * @return 返回员工信息
      */
-    Employ login(Employ employ);
+    Employ selectOneEmploy(String name);
 }

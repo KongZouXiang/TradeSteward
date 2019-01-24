@@ -10,7 +10,6 @@ import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -49,7 +48,6 @@ public class CustomerController {
 
     @RequestMapping("/addCustomer")
     public String insertCustomer(Customer customer, Model model) {
-
         model.addAttribute("customer", customer);
         return "customermanagement/addCustomer";
     }
@@ -104,7 +102,7 @@ public class CustomerController {
     @RequestMapping("/deleteCustomer")
     @ResponseBody
     public Integer deleteCustomer(int id) {
-        System.out.println("要删除的id:"+id);
+
         return customerService.deleteCustomer(id);
 
     }

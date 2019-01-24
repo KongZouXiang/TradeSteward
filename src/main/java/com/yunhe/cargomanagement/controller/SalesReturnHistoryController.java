@@ -7,6 +7,7 @@ import com.yunhe.cargomanagement.service.impl.SalesReturnHistoryServiceImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.Map;
@@ -41,8 +42,19 @@ public class SalesReturnHistoryController {
         return salesReturnHistoryService.updateSalesReturnHistory(salesReturnHistory);
     }
 
+    @RequestMapping("/tiao")
+    public ModelAndView tiao(){
+        return new ModelAndView("cargomanagement/salesReturnHistory");
+    }
+    /**
+     * 分页查询
+     * @param pageNum
+     * @param pageSize
+     * @param salesReturnHistory
+     * @return
+     */
     @RequestMapping("/queryLikeSalesReturnHistory")
-    public Map queryLikeSalesReturnHistory(int pageNum, int pageSize, SalesReturnHistory salesReturnHistory){
-        return  salesReturnHistoryService.queryLikeSalesReturnHistory(pageNum,pageSize,salesReturnHistory);
+    public Map queryLikeSalesReturnHistory(int pageSize, int pageNum, SalesReturnHistory salesReturnHistory){
+        return  salesReturnHistoryService.queryLikeSalesReturnHistory(pageSize,pageNum,salesReturnHistory);
     }
 }

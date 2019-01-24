@@ -7,5 +7,7 @@
     </sql>
     <select id="QueryLikeSalesReturnHistory" resultType="com.yunhe.cargomanagement.entity.SalesReturnHistory">
         select <include refid="Cols"/>from sales_return_history
+        where srh_client like concat('%',#{salesReturnHistory.srhClient},'%')
+        and srh_number like concat('%',#{salesReturnHistory.srhNumber},'%')
     </select>
 </mapper>

@@ -23,17 +23,13 @@ public enum ExceptionEnum {
     /**
      * 业务异常
      */
-    SERVICE_ERROR(100, "出现也无异常"),
+    SERVICE_ERROR(100, "业务出现了异常"),
 
     /**
      * 自己抛出的异常
      */
     SELF_ERROR(103, "自己抛出的异常")
 
-    /**
-     * 自定义错误码，-101表示用户不存在
-     */
-//    USER_NOT_FIND(-101, "用户不存在"),
     ;
 
     /**

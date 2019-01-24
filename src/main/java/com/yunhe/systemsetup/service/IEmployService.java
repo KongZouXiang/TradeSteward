@@ -26,4 +26,6 @@ public interface IEmployService extends IService<Employ> {
     public  int updatePassword(Employ employ);
 
     public int updateMessage(Employ employ);
+
+    public void createSmsCod(String phone);
 }

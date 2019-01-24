@@ -33,7 +33,7 @@
         <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax"
                class="input-text Wdate" style="width:120px;">-->
         <!--<input type="text" class="input-text" style="width:250px" placeholder="输入手机号" id="poNumber" name="">-->
-        <input type="text" class="input-text" style="width:250px" placeholder="输入客户或手机号" id="poSupName" name="">
+        <input type="text" class="input-text" style="width:250px" placeholder="输入公司编号或公司名或手机号" id="poSupName" name="">
         <button type="button" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜索
         </button>
     </div>
@@ -49,7 +49,7 @@
         <i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
     </span>
 
-        <span class="r">共有数据：<strong>54</strong> 条</span></div>
+        <span class="r">共有数据：<strong id="strong"></strong> 条</span></div>
     <div id="app" style="overflow: scroll;height: 500px">
         <table class="table table-border table-bordered table-bg">
             <thead>
@@ -137,13 +137,15 @@
                 /*每页大小*/
                 size: 3,
                 cusCompname:$("#poSupName").val(),
-                cusTele:$("#poSupName").val()
+                cusTele:$("#poSupName").val(),
+                cusNumber:$("#poSupName").val()
             },
             success: function (msg) {
+                $("#strong").html(msg.total);
                 app.result = msg.records;
                 laypage({
                     cont: 'pagenav',//容器  值支持id名、原生dom对象，jquery对象,
-                    pages: msg.total,//总页数
+                    pages: msg.pages,//总页数
                     first: '首页',
                     last: '尾页',
                     curr: curr || 1,//初始化页数

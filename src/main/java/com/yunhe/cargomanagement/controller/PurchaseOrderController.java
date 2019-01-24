@@ -1,6 +1,7 @@
 package com.yunhe.cargomanagement.controller;
 
 
+import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
 import com.yunhe.cargomanagement.entity.PurchaseHistory;
 import com.yunhe.cargomanagement.entity.PurchaseOrder;
@@ -10,6 +11,7 @@ import com.yunhe.core.util.DateUtil;
 import com.yunhe.customermanagement.service.ISupplierService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -103,10 +105,10 @@ public class PurchaseOrderController {
      * 查询商品
      * @return 商品列表
      */
-   /* @RequestMapping("/getCommodadd")
+    @RequestMapping("/getCommodadd")
     public Map getCommodadd(){
-        return commodityListService.selectList();
-    }*/
+        return commodityListService.selectComclassList1();
+    }
     /**
      * 进货订单历史分页
      * @param pageNum 前台传当前页
@@ -180,6 +182,21 @@ public class PurchaseOrderController {
     }
 
     /**
+     * 根据商品名称查询
+     * @param commodityList 查询条件
+     * @return 商品列表单条数据
+     */
+    @RequestMapping("/selectListByClName")
+    public Map selectListByClName(CommodityList commodityList){
+        List<CommodityList> list = commodityListService.selectListByClName(commodityList);
+        Map map = new HashMap();
+        map.put("list",list);
+        System.out.println("*********////////"+list);
+        return map;
+    }
+
+
+    /**
      * 审核进货订单 并增加进货历史
      * @param purchaseOrder 进货订单
      * @return int
@@ -211,6 +228,7 @@ public class PurchaseOrderController {
         return 1;
     }
 
+
     /**
      * <P>
      *      Excel导出
@@ -219,7 +237,7 @@ public class PurchaseOrderController {
      * @return  Excel导出到本地
      * @throws IOException
      */
-    @PostMapping("/puchaseOrderExcel")
+    @GetMapping("/puchaseOrderExcel")
     public String createExcel(HttpServletResponse response) throws IOException {
         //获取查询结果的数据,只要对其进行封装就行了
         List<PurchaseOrder> newlist = purchaseOrderService.selectPurchaseOrder();
@@ -253,7 +271,7 @@ public class PurchaseOrderController {
         //在sheet里创建第一行，参数为行索引(excel的行)，可以是0～65535之间的任何一个
         HSSFRow row1=sheet.createRow(0);
         //创建单元格（excel的单元格，参数为列11索 引，可以是0～255之间的任何一个
-      /*  System.out.println(1);*/
+        /*  System.out.println(1);*/
         HSSFCell cell=row1.createCell(0);
 
 

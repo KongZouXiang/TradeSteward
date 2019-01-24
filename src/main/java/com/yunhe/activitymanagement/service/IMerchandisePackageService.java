@@ -1,5 +1,7 @@
 package com.yunhe.activitymanagement.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.yunhe.activitymanagement.entity.MerchandisePackage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -18,22 +20,10 @@ import java.util.Map;
 public interface IMerchandisePackageService extends IService<MerchandisePackage> {
 
 
-
-    /**
-     * <P>
-     *     商品模板表
-     * </P>
-     * @param current 当前页
-     * @param size 每页条数
-     * @param merchandisePackage 查询条件放在对象里
-     * @return 商品模板表：分页的结果集
-     */
-    Map queryLikeList(int current, int size, MerchandisePackage merchandisePackage);
+    IPage selectLikePage(int current, int size, MerchandisePackage merchandisePackage);
 
 
-
-
-
+    List<MerchandisePackage> selectAll();
     /**
      * <P>
      *     删除数据

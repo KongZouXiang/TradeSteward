@@ -33,6 +33,14 @@
         select em_username from employ where em_username =#{emUsername}
     </select>
 
+    <!--
+    查询出员工对应的板块
+    author 孔邹祥
+    -->
+    <select id="selectEmployPlate" resultType="java.lang.String">
+        SELECT p.`pe_name` FROM employ e,chara_manger c,permission p WHERE e.`id`=#{value} AND e.ch_id = c.`id` AND c.`id`=p.`ch_id`
+    </select>
+
     <update id="updatePass" parameterType="com.yunhe.systemsetup.entity.Employ">
         update employ set em_password = #{emPassword} where id =#{id}
     </update>
