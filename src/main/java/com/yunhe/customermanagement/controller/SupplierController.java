@@ -80,8 +80,6 @@ public class SupplierController {
     @RequestMapping("/updateSupplier")
     @ResponseBody
     public Integer updateSupplier(Supplier supplier) {
-
-
         return supplierService.updateSupplier(supplier);
     }
 
@@ -96,7 +94,6 @@ public class SupplierController {
     @ResponseBody
     public Integer insertSupplier(Supplier supplier){
         return  supplierService.insertSupplier(supplier);
-
     }
 
     /**
@@ -111,7 +108,6 @@ public class SupplierController {
     @ResponseBody
     public Integer deleteSupplier(int id) {
         return  supplierService.deleteSupplier(id);
-
     }
 
 

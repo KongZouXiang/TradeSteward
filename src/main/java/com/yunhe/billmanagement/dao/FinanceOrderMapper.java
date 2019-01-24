@@ -67,6 +67,23 @@ public interface FinanceOrderMapper extends BaseMapper<FinanceOrder> {
     @Select("select SUM(fo_money) as moneyzhi from finance_order where fo_flag='支出'")
     Map<String,Object> selectMoneyMapByZhi();
 
-    @Select("select fo.id as oid,fo.fo_num_list as foNumList,fo.fo_time as foTime,fo.fo_money as foMoney,fo.fo_account as foAccount,fo.fo_remark as foRemark,fo.fo_flag as foFlag,fc.fc_type as fcType from finance_order fo,finance_classify fc where fc.id = fo.fc_id")
+    /**
+     * <p>
+     * 日常收支表
+     * </p>
+     * @param  flag 支出或收入的类别
+     * @return 查询支出总金额
+     */
+    @Select("select fo.id as oid,fo.fo_num_list as foNumList,fo.fo_time as foTime,fo.fo_money as foMoney,fo.fo_account as foAccount,fo.fo_remark as foRemark,fo.fo_flag as foFlag,fc.fc_type as fcType from finance_order fo,finance_classify fc where fc.id = fo.fc_id and fo.fo_flag = #{flag}")
     List<Map<String,Object>> selectFoByFlag(String flag);
+
+    /**
+     * <p>
+     * 日常收支表
+     * </p>
+     * @param  id 要查询的数据的id
+     * @return 通过id查询详细信息
+     */
+    @Select("select fo.id as oid,fo.fo_num_list as foNumList,fo.fo_time as foTime,fo.fo_money as foMoney,fo.fo_account as foAccount,fo.fo_remark as foRemark,fo.fo_flag as foFlag,fc.fc_type as fcType from finance_order fo,finance_classify fc where fc.id = fo.fc_id and fo.id = #{id}")
+    List<Map<String,Object>> selectDetailById(int id);
 }

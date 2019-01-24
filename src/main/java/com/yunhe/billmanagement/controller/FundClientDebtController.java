@@ -1,6 +1,4 @@
 package com.yunhe.billmanagement.controller;
-
-import com.yunhe.billmanagement.entity.FinanceOrder;
 import com.yunhe.billmanagement.entity.FundClientDebt;
 import com.yunhe.billmanagement.entity.FundClientDebtDetail;
 import com.yunhe.billmanagement.service.IFundClientDebtDetailService;
@@ -44,9 +42,7 @@ public class FundClientDebtController {
      */
     @GetMapping("/toFcd")
     public ModelAndView toFcd(HttpSession session){
-        System.out.println("toFcd进入controller");
         Map<String,Object> countList = fundClientDebtService.selectFcdMap();
-        System.out.println("总和："+countList);
         session.setAttribute("countList",countList);
         return new ModelAndView("billmanagement/bill-FundClientDebt");
     }
@@ -70,12 +66,9 @@ public class FundClientDebtController {
      */
     @RequestMapping("/toAdd")
     public ModelAndView toAdd(HttpSession session){
-        System.out.println("toadd进入controller");
         int id = fundClientDebtDetailService.maxId();
-        System.out.println("id:"+id);
         int maxId = id+1;
         session.setAttribute("maxId",maxId);
-        System.out.println(maxId);
         return new ModelAndView("billmanagement/bill-FCD-add");
     }
 
@@ -87,7 +80,6 @@ public class FundClientDebtController {
      */
     @RequestMapping("/selectCustomer")
     public ModelAndView selectCustomer(){
-        System.out.println("selectCustomer进入controller");
         return new ModelAndView("billmanagement/bill-FCD-add-customer");
     }
     /**
@@ -113,7 +105,6 @@ public class FundClientDebtController {
         if (i==true){
             Map<String,Object> map = fundClientDebtDetailService.selectMoneyMapByName(fundClientDebtDetail.getFcddFcdName());
             FundClientDebt fundClientDebt = new FundClientDebt();
-            System.out.println("开始了："+map);
             fundClientDebt.setFcdBackDebt((Double)map.get("backDebt"));
             fundClientDebt.setFcdBeginDebt((Double)map.get("beginDebt"));
             fundClientDebt.setFcdDiscount((Double)map.get("discount"));
@@ -136,17 +127,7 @@ public class FundClientDebtController {
     public int insertFcd(FundClientDebt fundClientDebt){
         return fundClientDebtService.insertFcd(fundClientDebt);
     }
-    /**
-     * <P>
-     *     修改数据
-     * </P>
-     * @param fundClientDebt 修改数据的参数存在一个对象里
-     * @return  客户应收欠款表：增加是否成功
-     */
-    @PostMapping("/updateFcd")
-    public int updateFcd(FundClientDebt fundClientDebt){
-        return fundClientDebtService.updateFcd(fundClientDebt);
-    }
+
     /**
      * <P>
      *    进入客户欠款详情页面
@@ -155,10 +136,8 @@ public class FundClientDebtController {
      */
     @RequestMapping("/fcdDetail")
     public ModelAndView fcdDetail(String fcddFcdName,HttpSession session){
-        System.out.println("fcdDetail进入controller");
         session.setAttribute("fcddFcdName",fcddFcdName);
         Map<String,Object> countList = fundClientDebtDetailService.selectMoneyMapByName(fcddFcdName);
-        System.out.println("全是钱："+countList);
         session.setAttribute("countList",countList);
         return new ModelAndView("billmanagement/bill-FCD-detail");
     }
@@ -175,12 +154,10 @@ public class FundClientDebtController {
     public String createExcel(HttpServletResponse response) throws IOException {
         //获取查询结果的数据,只要对其进行封装就行了
         List<FundClientDebt> newlist = fundClientDebtService.selectFcd();
-        System.out.println("数据行数："+newlist.size());
         //数据封装，这里的map之所以敢这样add是因为这里的add顺序和hql中的select字段顺序是一样的，总共就查询那么多字段
         List<Map<String,Object>> solist = new ArrayList();
         for(FundClientDebt obj:newlist){
             //每次循环都要重新new一个map，表示不同对象
-            System.out.println("FundClientDebt的第一个字段"+obj.getId());
             Map<String,Object> map = new HashMap();
             map.put("id", obj.getId());
             map.put("fcdNumList",obj.getFcdNumList());

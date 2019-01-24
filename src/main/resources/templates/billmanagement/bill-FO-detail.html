@@ -14,12 +14,11 @@
 	<script type="text/javascript" src="/js/vue/vue.min.js"></script>
 	<link rel="stylesheet" href="/js/laypage/skin/laypage.css">
 	<script type="text/javascript" src="/js/laypage/laypage.js"></script>
-	<title>添加收支项目</title>
+	<title>日常收支详情</title>
 </head>
 <body>
 <table style="width: 400px;height: 300px;margin: auto" data-validator-option="{theme:'simple_right'}">
-	<tr><td colspan="3"><h3 style="text-align: center">日常收入</h3></td></tr>
-	<tr><td style="padding-right: 60px" align="right">账目类型：</td><td colspan="2" th:text="${session.financeOrder.fcId}"></td></tr>
+	<tr><td colspan="3"><h3 style="text-align: center">日常收支</h3></td></tr>
 	<tr><td style="padding-right: 60px" align="right">金额(元)：</td><td colspan="2" th:text="${session.financeOrder.foMoney}"></td></tr>
 	<tr><td style="padding-right: 60px" align="right">单据编号：</td><td colspan="2" th:text="${session.financeOrder.foNumList}"></td></tr>
 	<tr><td style="padding-right: 60px" align="right">业务日期：</td><td colspan="2" th:text="${session.financeOrder.foTime}"></td></tr>

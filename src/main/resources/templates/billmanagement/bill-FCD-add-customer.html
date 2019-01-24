@@ -102,6 +102,24 @@
     $("#findempl").click(function () {
         getPurchasePageList();
     });
+
+    var editEvent = function (cusCompname) {
+        $.ajax({
+            type: 'get',
+            dataType: 'json',
+            url:'/billManagement/fund-client-debt/selectIdFcdExit',
+            data:{
+                fcdName:cusCompname
+            },
+            success: function (msg) {
+                parent.$("#fcddFcdName").val(msg.fcdName);
+                parent.$("#fcddReceivable").val(msg.fcdReceivable);
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+
+            }
+        });
+    }
 </script>
 </body>
 </html>
