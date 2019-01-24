@@ -31,7 +31,7 @@
     <meta name="keywords" content="H-ui.admin v3.1,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
     <meta name="description" content="H-ui.admin v3.1，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
     <style type="text/css">
-        .cl{
+        .cl {
             margin-right: 30px;
         }
     </style>
@@ -66,14 +66,15 @@
                 <ul class="cl">
                     <li th:text="${session.employ.emRole}">超级管理员</li>
                     <li class="dropDown dropDown_hover">
-                        <a href="#" class="dropDown_A" >
+                        <a href="#" class="dropDown_A">
                             <span th:text="${session.employ.emRealname}">员工姓名</span>
                             <i class="Hui-iconfont">&#xe6d5;</i>
                         </a>
 
                         <ul class="dropDown-menu menu radius box-shadow">
                             <!--<li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>-->
-                            <li><a data-href="/systemsetup/employ/list" data-title="员工管理" href="javascript:void(0)">查看员工</a></li>
+                            <li><a data-href="/systemsetup/employ/list" data-title="员工管理"
+                                   href="javascript:void(0)">查看员工</a></li>
                             <li><a href="/tologin">切换账户</a></li>
                             <li><a href="/tologin">安全退出</a></li>
                         </ul>
@@ -126,12 +127,18 @@
             <dt><i class="Hui-iconfont">&#xe60c;</i> 云管账<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="/billManagement/finance-order/toFo" data-title="日常收支" href="javascript:void(0)">日常收支</a></li>
-                    <li><a data-href="/billManagement/finance-classify/toFc" data-title="收支项目管理" href="javascript:void(0)">收支项目管理</a></li>
-                    <li><a data-href="/billManagement/fund-client-debt/toFcd" data-title="客户应收欠款" href="javascript:void(0)">客户应收欠款</a></li>
-                    <li><a data-href="/billManagement/fund_provider_debt/toFpd" data-title="供应商应付欠款" href="javascript:void(0)">供应商应付欠款</a></li>
-                    <li><a data-href="/billManagement/running-accounts/toRa" data-title="资金流水" href="javascript:void(0)">资金流水</a></li>
-                    <li><a data-href="/billManagement/account-transfer/toAt" data-title="账户转账" href="javascript:void(0)">账户转账</a></li>
+                    <li><a data-href="/billManagement/finance-order/toFo" data-title="日常收支" href="javascript:void(0)">日常收支</a>
+                    </li>
+                    <li><a data-href="/billManagement/finance-classify/toFc" data-title="收支项目管理"
+                           href="javascript:void(0)">收支项目管理</a></li>
+                    <li><a data-href="/billManagement/fund-client-debt/toFcd" data-title="客户应收欠款"
+                           href="javascript:void(0)">客户应收欠款</a></li>
+                    <li><a data-href="/billManagement/fund_provider_debt/toFpd" data-title="供应商应付欠款"
+                           href="javascript:void(0)">供应商应付欠款</a></li>
+                    <li><a data-href="/billManagement/running-accounts/toRa" data-title="资金流水"
+                           href="javascript:void(0)">资金流水</a></li>
+                    <li><a data-href="/billManagement/account-transfer/toAt" data-title="账户转账"
+                           href="javascript:void(0)">账户转账</a></li>
                 </ul>
             </dd>
         </dl>
@@ -140,9 +147,12 @@
             <dt><i class="Hui-iconfont">&#xe60d;</i> 云管客<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="/customermanagement/customer/cust" data-title="客户管理" href="javascript:void(0)">客户管理</a></li>
-                    <li><a data-href="/customermanagement/customer-level/custLevel" data-title="客户等级价" href="javascript:void(0)">客户等级价</a></li>
-                    <li><a data-href="/customermanagement/supplier/supp" data-title="供应商管理" href="javascript:void(0)">供应商管理</a></li>
+                    <li><a data-href="/customermanagement/customer/cust" data-title="客户管理" href="javascript:void(0)">客户管理</a>
+                    </li>
+                    <li><a data-href="/customermanagement/customer-level/custLevel" data-title="客户等级价"
+                           href="javascript:void(0)">客户等级价</a></li>
+                    <li><a data-href="/customermanagement/supplier/supp" data-title="供应商管理" href="javascript:void(0)">供应商管理</a>
+                    </li>
                 </ul>
             </dd>
         </dl>
@@ -173,11 +183,12 @@
             <dt><i class="Hui-iconfont">&#xe6b5;</i> 基础资料<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="/basicdata/commodity-list/getcommdityfenye"    商品列表
+                    <li><a data-href="/basicdata/commodity-list/getcommdityfenye" data-title="商品列表"
                            href="javascript:void(0)">商品列表</a></li>
                     <li><a data-href="article-list.html" data-title="商品分类" href="javascript:void(0)">商品分类</a></li>
                     <li><a data-href="article-list.html" data-title="属性设置" href="javascript:void(0)">属性设置</a></li>
-                    <li><a data-href="/basicdata/settlement-account/jumpaccount"  "结算账户" href="javascript:void(0)">结算账户</a></li>
+                    <li><a data-href="/basicdata/settlement-account/jumpaccount" data-title="结算账户"
+                        href="javascript:void(0)">结算账户</a></li>
                     <li><a data-href="article-list.html" data-title="仓库管理" href="javascript:void(0)">仓库管理</a></li>
                 </ul>
             </dd>
@@ -206,7 +217,7 @@
         <div class="Hui-tabNav-wp">
             <ul id="min_title_list" class="acrossTab cl">
                 <li class="active">
-                   <span title="我的桌面" data-href="/welcome">我的桌面</span> <!--<a data-href="/welcome"></a>-->
+                    <span title="我的桌面" data-href="/welcome">我的桌面</span> <!--<a data-href="/welcome"></a>-->
                     <em></em></li>
             </ul>
         </div>
