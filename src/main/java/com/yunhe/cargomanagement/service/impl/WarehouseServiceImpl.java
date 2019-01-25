@@ -82,5 +82,15 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, Warehouse
         return warehouseIPage;
     }
 
+    @Override
+    public Warehouse selectWarehouseByWaSpName(String waSpName) {
+        return warehouseMapper.selectWarehouseByWaSpName(waSpName);
+    }
+
+    @Override
+    public int updateWarehouseByWaSpName(int waSpCurrentInventory, double waTotalSum, String waSpName) {
+        return warehouseMapper.updateWarehouseByWaSpName(waSpCurrentInventory,waTotalSum,waSpName);
+    }
+
 
 }

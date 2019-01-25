@@ -37,6 +37,13 @@
         from purchase_return_history where id=#{id}
     </select>
 
+    <select id="selectPurchaseReturnHistory" resultType="com.yunhe.cargomanagement.entity.PurchaseReturnHistory">
+        select
+        <include refid="purchase_return_history"/>
+        from purchase_return_history
+    </select>
+
+
     <resultMap id="selectReturnHistZhong" type="com.yunhe.cargomanagement.entity.PurComm">
         <id column="id" property="id"/>
         <result column="pc_geshu" property="pcGeshu"/>

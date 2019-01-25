@@ -15,6 +15,7 @@ import com.yunhe.customermanagement.service.ISupplierService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -200,16 +201,6 @@ public class PurchaseOrderController {
         return mv;
     }
 
-    /* *//**
-     * 根据id查询进货订单历史 单条数据
-     * @param id 进货订单历史表id  前台传的
-     * @return
-     *//*
-    @RequestMapping("/getPuById")
-    public List<PurchaseOrder> getPurchaseById(int id){
-        List<PurchaseOrder> list = purchaseOrderService.getPurchaseById(id);
-        return list;
-    }*/
 
     /**
      * 根据id删除进货订单历史
@@ -269,13 +260,11 @@ public class PurchaseOrderController {
      */
     @RequestMapping("/updateHistState")
     public int updateHistState(PurchaseOrder purchaseOrder) {
-        System.out.println("/*/*/*/*/*/*" + purchaseOrder.getId());
         purchaseOrder.setPoState("已审核");
         purchaseOrderService.updateHistStateByid(purchaseOrder);
-        System.out.println("aaaaaaaaaaaaaaaaaaa");
         PurchaseHistory purchaseHistory = new PurchaseHistory();
         purchaseHistory.setPhDate(purchaseOrder.getPoDate());
-        purchaseHistory.setPhNumber("Y" + purchaseOrder.getPoNumber());
+        purchaseHistory.setPhNumber(purchaseOrder.getPoNumber());
         purchaseHistory.setPhSupname(purchaseOrder.getPoSupName());
         purchaseHistory.setPhClname(purchaseOrder.getPoClName());
         purchaseHistory.setPhQuantity(purchaseOrder.getPoQuantityOfPurchase());
@@ -291,6 +280,11 @@ public class PurchaseOrderController {
         purchaseHistory.setPhWarehousingStatus("未入库");
         purchaseHistory.setPhRemarks(purchaseOrder.getPoRemarks());
         purchaseHistoryService.insertPurchaseHistory(purchaseHistory);
+        PurchaseHistory purchaseHistory1 = purchaseHistoryService.selectPurchaseHistoryByNumber(purchaseOrder.getPoNumber());
+        PurComm purComm = new PurComm();
+        int puhId=purchaseHistory1.getId();
+        int puId=purchaseOrder.getId();
+        purCommService.updatePurCommByPuId(puhId,puId);
         return 1;
     }
 

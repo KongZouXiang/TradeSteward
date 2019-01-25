@@ -90,7 +90,7 @@
             <table class="table table-border table-bordered table-bg">
                 <thead>
                 <tr>
-                    <th scope="col" colspan="6">新增进货商品列表</th>
+                    <th scope="col" colspan="5">新增进货商品列表</th>
                 </tr>
                 <tr class="text-c">
                     <th width="40">序号</th>
@@ -98,7 +98,6 @@
                     <th width="170">商品编号</th>
                     <th width="170">属性</th>
                     <th width="100">数量</th>
-                    <th width="100">其他费用</th>
                 </tr>
                 </thead>
                 <tbody id="addTr">
@@ -116,10 +115,6 @@
                     <td></td>
                     <td><input type="text" class="input-text" placeholder="" id="QuantityOfPurchase"
                                name="QuantityOfPurchase" required="required"></td>
-                    <td>
-                        <input type="text" class="input-text"
-                               name="phOtherExpenses">
-                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -136,7 +131,7 @@
                 <thead>
                 <tr class="text-c">
                     <th>
-                       备注
+                        备注
                     </th>
                     <th></th>
                 </tr>
@@ -240,7 +235,7 @@
             }
             html = html + "</select></td><td>" +
                 "商品标号</td><td></td><td><input type='text' class='input-text' value='1' placeholder='' id='QuantityOfPurchase' name='QuantityOfPurchase'>" +
-                "</td><td><input type='text' class='input-text' name='phOtherExpenses' ></td></tr>\n";
+                "</td></tr>\n";
             m--;
             document.getElementById("addx" + m).insertAdjacentHTML('afterend', html);
             m++;

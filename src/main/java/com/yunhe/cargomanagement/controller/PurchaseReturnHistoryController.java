@@ -427,11 +427,11 @@ public class PurchaseReturnHistoryController {
 
             HSSFCell cell05=rowx.createCell(5);
             cell05.setCellStyle(style);
-            cell05.setCellValue((Integer) map.get("prhReturnsup"));
+            cell05.setCellValue((String) map.get("prhReturnsup"));
 
             HSSFCell cell06=rowx.createCell(6);
             cell06.setCellStyle(style);
-            cell06.setCellValue((double) map.get("prhTotalAmount"));
+            cell06.setCellValue((String) map.get("prhTotalAmount"));
 
             HSSFCell cell07=rowx.createCell(7);
             cell07.setCellStyle(style);
@@ -463,11 +463,11 @@ public class PurchaseReturnHistoryController {
 
             HSSFCell cell014=rowx.createCell(14);
             cell014.setCellStyle(style);
-            cell014.setCellValue((String) map.get("prhOtherExpenses"));
+            cell014.setCellValue((double) map.get("prhOtherExpenses"));
 
             HSSFCell cell015=rowx.createCell(15);
             cell015.setCellStyle(style);
-            cell015.setCellValue((String) map.get("prhOtherExpenses"));
+            cell015.setCellValue((double) map.get("prhOtherExpenses"));
 
             HSSFCell cell016=rowx.createCell(16);
             cell016.setCellStyle(style);

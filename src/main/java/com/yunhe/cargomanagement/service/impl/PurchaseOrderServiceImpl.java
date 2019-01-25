@@ -81,19 +81,17 @@ public class PurchaseOrderServiceImpl extends ServiceImpl<PurchaseOrderMapper, P
 
     @Override
     public List<PurchaseOrder> selectPurchaseOrder() {
-        return purchaseOrderMapper.selectList(null);
+        return purchaseOrderMapper.selectPurchaseOrder();
     }
 
     @Override
     public List<PurComm> selectPuOrder(PurchaseOrder purchaseOrder) {
         List<PurComm> array = null;
         List<PurchaseOrder> list = purchaseOrderMapper.selectPuOrder(purchaseOrder);
-        System.out.println(list+"kl;;4*/*/**********/**");
         for (PurchaseOrder order : list) {
             List<PurComm> purComms = order.getPurComm();
-        array = purComms;
+            array = purComms;
         }
-        System.out.println(array+"/*-*=/*-=/*-=/*-/=*-/=*");
         return array;
     }
 

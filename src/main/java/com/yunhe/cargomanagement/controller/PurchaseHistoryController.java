@@ -9,8 +9,10 @@ import com.yunhe.billmanagement.entity.RunningAccounts;
 import com.yunhe.billmanagement.service.IRunningAccountsService;
 import com.yunhe.cargomanagement.entity.PurComm;
 import com.yunhe.cargomanagement.entity.PurchaseHistory;
+import com.yunhe.cargomanagement.entity.WarehouseReceipt;
 import com.yunhe.cargomanagement.service.IPurCommService;
 import com.yunhe.cargomanagement.service.IPurchaseHistoryService;
+import com.yunhe.cargomanagement.service.IWarehouseReceiptService;
 import com.yunhe.core.util.DateUtil;
 import com.yunhe.customermanagement.service.ISupplierService;
 import org.apache.poi.hssf.usermodel.*;
@@ -74,6 +76,12 @@ public class PurchaseHistoryController {
     @Resource
     private IRunningAccountsService runningAccountsService;
 
+    /**
+     * 入库单
+     */
+    @Resource
+    private IWarehouseReceiptService warehouseReceiptService;
+
 
 
     @RequestMapping("/purchasehistoryList")
@@ -127,7 +135,9 @@ public class PurchaseHistoryController {
         purchaseHistory.setPhQuantity(a);
         purchaseHistory.setPhManeyHu("现金");
         purchaseHistory.setPhSinglePerson("老板");
-        purchaseHistory.setPhWarehousingStatus("正在入库");
+        purchaseHistory.setPhOtherExpenses(0);
+        purchaseHistory.setPhBill("无");
+        purchaseHistory.setPhWarehousingStatus("未入库");
         purchaseHistoryService.insertPurchaseHistory(purchaseHistory);
 
         RunningAccounts runningAccounts1 = runningAccountsService.selectRunningMaxIdMoney();
@@ -156,6 +166,8 @@ public class PurchaseHistoryController {
         mv.setViewName("/cargomanagement/purhistory-list");
         return mv;
     }
+
+
 
 
     /**
@@ -251,6 +263,35 @@ public class PurchaseHistoryController {
     public List<PurComm> selectComHistZhong(PurchaseHistory purchaseHistory){
         return purchaseHistoryService.selectComHistZhong(purchaseHistory.getId());
     }
+
+    @RequestMapping("/updateHistoryState")
+    public int updateHistoryState(PurchaseHistory purchaseHistory){
+        String phWarehousingStatus = "等待入库";
+        int id = purchaseHistory.getId();
+        purchaseHistoryService.updateHistoryState(phWarehousingStatus,id);
+        WarehouseReceipt warehouseReceipt = new WarehouseReceipt();
+        warehouseReceipt.setWreDate(purchaseHistory.getPhDate());
+        warehouseReceipt.setWreNumber(purchaseHistory.getPhNumber());
+        warehouseReceipt.setWreType("进货");
+        warehouseReceipt.setWreCurrentUnit(purchaseHistory.getPhSupname());
+        warehouseReceipt.setWreWarehostName(purchaseHistory.getPhWarehouse());
+        warehouseReceipt.setWreStorage(purchaseHistory.getPhClname());
+        warehouseReceipt.setWreScheduledReceipt(purchaseHistory.getPhQuantity());
+        warehouseReceipt.setWreDateOrder(DateUtil.curr());
+        warehouseReceipt.setWreSinglePerson("老板");
+        warehouseReceipt.setWreExperiencedPerson("老板");
+        warehouseReceipt.setWreState("未入库");
+        warehouseReceiptService.insertWarHouseByHistory(warehouseReceipt);
+        WarehouseReceipt warehouseReceipt1 = warehouseReceiptService.selectWarhouseByNumber(purchaseHistory.getPhNumber());
+        PurComm purComm = new PurComm();
+        int warhoureId= warehouseReceipt1.getId();
+        int puhId= purchaseHistory.getId();
+        purCommService.updatePurCommByPuhId(warhoureId,puhId);
+        return 1;
+    }
+
+
+
 
     /**
      * <P>
@@ -478,7 +519,7 @@ public class PurchaseHistoryController {
 
             HSSFCell cell014=rowx.createCell(14);
             cell014.setCellStyle(style);
-            cell014.setCellValue((String) map.get("phOtherExpenses"));
+            cell014.setCellValue((double) map.get("phOtherExpenses"));
 
             HSSFCell cell015=rowx.createCell(15);
             cell015.setCellStyle(style);

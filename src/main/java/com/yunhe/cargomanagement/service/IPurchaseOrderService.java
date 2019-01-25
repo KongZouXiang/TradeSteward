@@ -76,6 +76,10 @@ public interface IPurchaseOrderService extends IService<PurchaseOrder> {
 
     int updateHistStateByid(PurchaseOrder purchaseOrder);
 
+    /**
+     * 查询所有
+     * @return
+     */
     List<PurchaseOrder> selectPurchaseOrder();
 
     /**

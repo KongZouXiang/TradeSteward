@@ -23,4 +23,24 @@ public class PurCommServiceImpl extends ServiceImpl<PurCommMapper,PurComm> imple
     public int insertPurComm(PurComm purComm) {
         return purCommMapper.insert(purComm);
     }
+
+    @Override
+    public int updatePurCommByPuId(int puhId,int puId) {
+        return purCommMapper.updatePurCommByPuId(puhId,puId);
+    }
+
+    @Override
+    public int updatePurCommByPuhId(int warhoureId, int puhId) {
+        return purCommMapper.updatePurCommByPuhId(warhoureId,puhId);
+    }
+
+    @Override
+    public int[] selectPcGeshuByWId(int id) {
+        return purCommMapper.selectPcGeshuByWId(id);
+    }
+
+    @Override
+    public int[] selectComIdByWId(int id) {
+        return purCommMapper.selectComIdByWId(id);
+    }
 }

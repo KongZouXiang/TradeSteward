@@ -62,4 +62,17 @@ public interface PurchaseHistoryMapper extends BaseMapper<PurchaseHistory> {
      * @return 进货历史信息
      */
     PurchaseHistory selectPurchaseHistoryByNumber(String phNumber);
+
+    /**
+     * 查询所有进货历史
+     * @return 所有进货历史数据
+     */
+    List<PurchaseHistory> selectpurchaseHistory();
+
+    /**
+     * 修改进货历史的入库状态
+     * @param phWarehousingStatus 进货历史编号
+     * @return int
+     */
+    int updateHistoryState(String phWarehousingStatus ,int id);
 }

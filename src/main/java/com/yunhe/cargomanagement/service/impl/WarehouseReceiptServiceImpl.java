@@ -73,4 +73,19 @@ public class WarehouseReceiptServiceImpl extends ServiceImpl<WarehouseReceiptMap
     public List<PurComm> selectWarHouseZhong(int id) {
         return warehouseReceiptMapper.selectWarHouseZhong(id);
     }
+
+    @Override
+    public int insertWarHouseByHistory(WarehouseReceipt warehouseReceipt) {
+        return warehouseReceiptMapper.insert(warehouseReceipt);
+    }
+
+    @Override
+    public WarehouseReceipt selectWarhouseByNumber(String wreNumber) {
+        return warehouseReceiptMapper.selectWarhouseByNumber(wreNumber);
+    }
+
+    @Override
+    public int updateWareHouseById(String wreState, int id) {
+        return warehouseReceiptMapper.updateWareHouseById(wreState,id);
+    }
 }

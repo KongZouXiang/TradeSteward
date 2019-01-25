@@ -104,8 +104,19 @@
         WHERE pc.com_id = co.id and puh_id=#{id}
     </select>
 
+    <select id="selectpurchaseHistory" resultType="com.yunhe.cargomanagement.entity.PurchaseHistory">
+        select <include refid="purchase_history"/>
+        from purchase_history
+    </select>
+
     <select id="selectPurchaseHistoryByNumber" resultType="com.yunhe.cargomanagement.entity.PurchaseHistory" parameterType="String">
        select <include refid="purchase_history"/>
        from purchase_history where ph_number=#{phNumber}
     </select>
+
+    <update id="updateHistoryState" parameterType="Object">
+        update purchase_history
+        set ph_warehousing_status= #{phWarehousingStatus}
+        where id = #{id}
+    </update>
 </mapper>

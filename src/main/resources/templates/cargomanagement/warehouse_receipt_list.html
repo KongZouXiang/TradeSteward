@@ -74,7 +74,9 @@
                 <tr class="text-c" v-for="(item,index) in result">
                     <td>{{index+1}}</td>
                     <td class="td-manage">
-                        <a title="入库" href="#" class="ml-5" style="text-decoration:none">
+                        <a title="入库" href="javascript:;"
+                           @Click="updateWare(item.id)"
+                           class="ml-5" style="text-decoration:none">
                             <i class="icon Hui-iconfont" id="sta">&#xe627;</i>
                         </a>
                         <a title="详情" href="#"
@@ -370,6 +372,28 @@
         });
         layer.full(index);
     }
+
+
+    var updateWare = function (id){
+        layer.confirm('你确定要入库吗？', {
+            btn: ['是', '否']
+        }, function () {
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '/cargomanagement/warehouse-receipt/updateWareHouseById',
+                data: {
+                    id: id
+                },
+                success: function (msg) {
+                    getWarehouseReceiptList();
+                    layer.msg('成功入库', {icon: 1});
+                }
+            })
+        }, function () {
+
+        });
+    };
 
 </script>
 </body>

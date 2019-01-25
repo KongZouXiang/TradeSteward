@@ -47,6 +47,10 @@ public interface IPurchaseReturnHistoryService extends IService<PurchaseReturnHi
       */
      int deletePurchaseReturnHistory(Serializable id);
 
+     /**
+      * 查询所有
+      * @return 所有
+      */
      List<PurchaseReturnHistory> selectPurchaseReturnHistory();
 
      /**

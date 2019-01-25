@@ -59,7 +59,7 @@ public class PurchaseReturnHistoryServiceImpl extends ServiceImpl<PurchaseReturn
 
     @Override
     public List<PurchaseReturnHistory> selectPurchaseReturnHistory() {
-        return purchaseReturnHistoryMapper.selectList(null);
+        return purchaseReturnHistoryMapper.selectPurchaseReturnHistory();
     }
 
     @Override
