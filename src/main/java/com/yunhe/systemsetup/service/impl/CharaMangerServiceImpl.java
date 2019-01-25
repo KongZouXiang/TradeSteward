@@ -20,8 +20,10 @@ import java.util.List;
  */
 @Service
 public class CharaMangerServiceImpl extends ServiceImpl<CharaMangerMapper, CharaManger> implements ICharaMangerService {
+
     @Autowired
     public CharaMangerMapper charaMangerMapper;
+
     @Override
     public List<CharaManger> selectAll(Page page) {
         return charaMangerMapper.selectAll(page);

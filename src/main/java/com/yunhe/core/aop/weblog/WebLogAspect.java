@@ -3,9 +3,9 @@ package com.yunhe.core.aop.weblog;
 
 import com.yunhe.core.common.annotion.WebLog;
 import com.yunhe.core.util.DateUtil;
-import com.yunhe.systemsetup.entity.SystemLog;
 import com.yunhe.systemsetup.dao.SystemLogMapper;
 import com.yunhe.systemsetup.entity.Employ;
+import com.yunhe.systemsetup.entity.SystemLog;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -71,7 +71,7 @@ public class WebLogAspect {
 //        Session请求
         HttpSession session = request.getSession();
 
-        Employ employ = (Employ) session.getAttribute("employ");
+       Employ employ = (Employ) session.getAttribute("employ");
 
 //        获取员工的登录账号
         log.setAccount(employ.getEmUsername());

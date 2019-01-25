@@ -5,20 +5,25 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
 /**
  * 日志实体类
+ *
  * @author 孔邹祥
  * @date 2019年1月24日1
  */
 
 @Data
 @TableName("system_log")
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class SystemLog implements Serializable {
 
-    @TableId(value = "id",type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     @TableField("account")
