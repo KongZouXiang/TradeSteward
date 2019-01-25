@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns:v-if="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -60,8 +60,8 @@
 
             </tr>
             </thead>
-            <tbody>
-            <tr class="text-c" v-for="(item,index) in result">
+            <tbody v-for="(item,index) in result">
+            <tr class="text-c" >
                 <td><input type="checkbox" :value=item.id  name="aid"></td>
                 <td>{{index+1}}</td>
                 <td class="td-manage">
@@ -71,7 +71,7 @@
                     <a id="del" title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none">
                         <i class="Hui-iconfont">&#xe6e2;</i>
                     </a>
-                    <a title="详情" href="#" class="ml-5" style="text-decoration:none">
+                    <a title="详情" href="#" class="ml-5" @click="detail(index)"style="text-decoration:none">
                         <i class="icon Hui-iconfont">&#xe627;</i>
                     </a>
                 </td>
@@ -85,6 +85,65 @@
                 <td>{{item.emAddress}}</td>
 
             </tr>
+            <tr class="row0_detail" style="display: none"  ><td colspan="20" align="left">
+                <table style="padding:0 0 0px 0px;margin: 0px 0px 10px 0px;" border="0" cellspacing="0" cellpadding="0" class="noborderTable" >
+                    <tbody>
+                    <tr>
+                        <td style="border-bottom:1px solid #d7d7d7" colspan="">
+                            <template v-if="item.emRole=='管理员'">
+                            <h4 class="fl" style="line-height:20px;">管理组</h4>&nbsp;&nbsp;
+                            </template>
+                            <template v-if="item.emRole=='仓管员'">
+                                <h4 class="fl" style="line-height:20px;">仓管组</h4>&nbsp;&nbsp;
+                            </template>
+                            <template v-if="item.emRole=='财务员'">
+                                <h4 class="fl" style="line-height:20px;">财管组</h4>&nbsp;&nbsp;
+                            </template>
+                            <template v-if="item.emRole=='销售员'">
+                                <h4 class="fl" style="line-height:20px;">销售组</h4>&nbsp;&nbsp;
+                            </template>
+
+
+                            <span style="line-height:35px;" class="font999">用户名:</span>{{item.emUsername}}&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:15px 30px 0px 0;">
+                            <span class="font999">角色:</span>{{item.emRole}}
+                        </td>
+                        <td style="padding:15px 30px 0px 0;">
+                            <span class="font999">地址:</span> {{item.emAddress}}
+                        </td>
+                        <td style="padding:15px 30px 0px 0;">
+                            <span class="font999">性别:</span>{{item.emSex}}
+                        </td>
+                        <td style="padding:15px 30px 0px 0;">
+                            <span class="font999">关联仓库:</span>默认仓库</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:15px 30px 0px 0;">
+                            <span class="font999">价格权限:</span>{{item.emShiro}}</td>
+                        <td style="padding:15px 30px 0px 0;">
+                            <span class="font999">状态:</span>{{item.emStatus}}</td>
+                        <td style="padding:15px 30px 0px 0;">
+                            <span class="font999">手机号:</span> {{item.emPhone}} </td>
+                        <td style="padding:15px 30px 0px 0;">
+                            <span class="font999">查看他人单据:</span>{{item.emSelInvoice}}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:15px 30px 0px 0;">
+                            <span class="font999">作废他人单据:</span>{{item.emDelInvoice}}</td>
+                        <td style="padding:15px 30px 0px 0;">
+                            <span class="font999">查看他人客户:</span>{{item.emSelUser}}</td>
+                        <td style="padding:15px 30px 0px 0;">
+                            <span class="font999">邮箱:</span> {{item.emEmail}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+            </tr>
+
             </tbody>
         </table>
     </div>
@@ -105,6 +164,14 @@
         }
 
     });
+    var detail =function (as) {
+        var a=$(".row0_detail")
+        if (a[as].style.display=="none"){
+            a[as].style.display="";
+        } else {
+            a[as].style.display="none";
+        }
+    }
 
     var getUserPageList = function(curr) {
         $.ajax({
