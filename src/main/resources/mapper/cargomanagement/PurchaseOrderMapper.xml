@@ -60,6 +60,12 @@
         from purchase_order where id = #{purchaseOrder.id}
     </select>
 
+    <select id="selectPurchaseOrder" resultType="com.yunhe.cargomanagement.entity.PurchaseOrder">
+        select
+        <include refid="getPurchaseOrderByNumber"/>
+        from purchase_order
+    </select>
+
     <update id="updateHistState" parameterType="com.yunhe.cargomanagement.entity.PurchaseOrder">
         update purchase_order
         set po_state= #{purchaseOrder.po_state}
@@ -152,10 +158,12 @@
         FROM
             pur_comm pc,
             commodity_list co
-        WHERE pc.com_id = co.id and pu_id=#{id}
+        WHERE pc.com_id = co.id
+          and pu_id = #{id}
     </select>
 
-    <select id="selectPurOrderByPoNumber" parameterType="String" resultType="com.yunhe.cargomanagement.entity.PurchaseOrder">
+    <select id="selectPurOrderByPoNumber" parameterType="String"
+            resultType="com.yunhe.cargomanagement.entity.PurchaseOrder">
         select
         <include refid="getPurchaseOrderByNumber"/>
         from purchase_order where po_number=#{poNumber}

@@ -69,4 +69,15 @@
             commodity_list co
         WHERE pc.com_id = co.id and warhoure_id=#{id}
     </select>
+
+    <select id="selectWarhouseByNumber" parameterType="String" resultType="com.yunhe.cargomanagement.entity.WarehouseReceipt">
+        select  <include refid="warehouse_receipt"/>
+        from warehouse_receipt where wre_number=#{wreNumber}
+    </select>
+
+    <update id="updateWareHouseById" parameterType="Object">
+        UPDATE warehouse_receipt
+        SET wre_state=#{wreState}
+        WHERE id= #{id}
+    </update>
 </mapper>

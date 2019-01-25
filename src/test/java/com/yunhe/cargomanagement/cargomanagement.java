@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yunhe.basicdata.dao.CommodityListMapper;
 import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
+import com.yunhe.cargomanagement.dao.PurCommMapper;
 import com.yunhe.cargomanagement.dao.PurchaseOrderMapper;
 import com.yunhe.cargomanagement.dao.SalesOrderHistoryMapper;
 import com.yunhe.cargomanagement.dao.WarehouseReceiptMapper;
@@ -44,10 +45,18 @@ public class cargomanagement {
 
     @Resource
     private IPurchaseOrderService purchaseOrderService;
+
+    @Resource
+    private PurCommMapper purCommMapper;
+
     @Test
     public void text() {
-        PurchaseOrder purchaseOrder1 = purchaseOrderService.selectPurOrderByPoNumber("ADD20190123194420");
-        System.out.println(purchaseOrder1.getId());
+        PurComm purComm = new PurComm();
+        purComm.setPuId(3);
+        purComm.setPuhId(6);
+        int puhId=6;
+        int puId=3;
+        purCommMapper.updatePurCommByPuId(puhId,puId);
     }
 
 }

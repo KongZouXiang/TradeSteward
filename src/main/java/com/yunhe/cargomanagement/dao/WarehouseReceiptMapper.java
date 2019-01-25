@@ -64,4 +64,19 @@ public interface WarehouseReceiptMapper extends BaseMapper<WarehouseReceipt> {
      * @return 商品信息
      */
     List<PurComm> selectWarHouseZhong(int id);
+
+    /**
+     * 根据订单号查询待入库单详情
+     * @param wreNumber
+     * @return
+     */
+    WarehouseReceipt selectWarhouseByNumber(String wreNumber);
+
+    /**
+     * 根据id修改入库状态
+     * @param wreState 入库状态
+     * @param id id
+     * @return int
+     */
+    int updateWareHouseById(String wreState,int id);
 }

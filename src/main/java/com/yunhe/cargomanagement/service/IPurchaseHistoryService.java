@@ -75,4 +75,11 @@ public interface IPurchaseHistoryService extends IService<PurchaseHistory> {
      * @return 进货历史信息
      */
     PurchaseHistory selectPurchaseHistoryByNumber(String phNumber);
+
+    /**
+     * 修改进货历史的入库状态
+     * @param phWarehousingStatus 进货历史编号
+     * @return int
+     */
+    int updateHistoryState(String phWarehousingStatus ,int id);
 }

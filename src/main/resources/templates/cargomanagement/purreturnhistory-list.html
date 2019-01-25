@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE HTML>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -21,20 +21,15 @@
     <script type="text/javascript" src="/lib/respond.min.js"></script>
     <script type="text/javascript" src="/lib/layui/layui.all.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
-    <title>管理员列表</title>
+    <title>进货订单历史</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 管理员管理 <span
-        class="c-gray en">&gt;</span> 管理员列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 进货订单历史 <span
+        class="c-gray en">&gt;</span> 进货订单历史 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
                                                href="javascript:location.replace(location.href);" title="刷新"><i
         class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-    <div class="text-c"> <!--日期范围：
-        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin"
-               class="input-text Wdate" style="width:120px;">
-        -
-        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax"
-               class="input-text Wdate" style="width:120px;">-->
+    <div class="text-c">
         <input type="text" class="input-text" style="width:250px" placeholder="输入单号" id="prhNumber" name="">
         <input type="text" class="input-text" style="width:250px" placeholder="输入供应商" id="prhSupname" name="">
         <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜订单</button>
@@ -42,7 +37,7 @@
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
             <a href="javascript:;" id="datadel" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
-        <a href="/cargomanagement/purchase-order/addPurchase" id="addpurOrder"
+        <a href="/cargomanagement/purchase-return-history/addPurchaseReturnHist"
             class="btn btn-primary radius">
         <i class="Hui-iconfont">&#xe600;</i> 添加进货退货历史</a>
         <a href="/cargomanagement/purchase-return-history/puchaseReturnHistoryExcel"
@@ -50,12 +45,12 @@
         <i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
     </span>
 
-        <span class="r">共有数据：<strong>54</strong> 条</span></div>
+        <span class="r">共有数据：<strong th:text="${session.total}"></strong> 条</span></div>
     <div id="app" style="overflow: scroll;height: 500px"  >
         <table class="table table-border table-bordered table-bg">
             <thead>
             <tr>
-                <th scope="col" colspan="9">进货退货历史</th>
+                <th scope="col" colspan="18">进货退货历史</th>
             </tr>
             <tr class="text-c">
                 <th width="25"><input type="checkbox" name="" value=""></th>
@@ -63,7 +58,6 @@
                 <th width="130">操作</th>
                 <th width="130">业务日期</th>
                 <th width="130">单据编号</th>
-                <th width="130">关联进货单号</th>
                 <th width="110">供应商名称</th>
                 <th width="130">退货商品</th>
                 <th width="80">总计金额</th>
@@ -98,7 +92,6 @@
                 </td>
                 <td>{{item.prhDate}}</td>
                 <td>{{item.prhNumber}}</td>
-                <td>{{item.prhPurOrder}}</td>
                 <td>{{item.prhSupname}}</td>
                 <td>{{item.prhReturnsup}}</td>
                 <td>{{item.prhTotalAmount}}</td>

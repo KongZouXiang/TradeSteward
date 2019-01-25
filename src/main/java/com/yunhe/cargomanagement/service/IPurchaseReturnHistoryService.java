@@ -47,6 +47,10 @@ public interface IPurchaseReturnHistoryService extends IService<PurchaseReturnHi
       */
      int deletePurchaseReturnHistory(Serializable id);
 
+     /**
+      * 查询所有
+      * @return 所有
+      */
      List<PurchaseReturnHistory> selectPurchaseReturnHistory();
 
      /**
@@ -61,4 +65,11 @@ public interface IPurchaseReturnHistoryService extends IService<PurchaseReturnHi
       * @return 商品信息
       */
      List<PurComm> selectOrderHistZhong(int id);
+
+     /**
+      * 根据退货订单号查询
+      * @param prhNumber 退货订单号
+      * @return 退货订单详情
+      */
+     PurchaseReturnHistory selectRurchaseReturnHistByNum(String prhNumber);
 }

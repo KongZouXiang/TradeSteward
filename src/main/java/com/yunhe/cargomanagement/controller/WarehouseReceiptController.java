@@ -1,8 +1,13 @@
 package com.yunhe.cargomanagement.controller;
 
+import com.yunhe.basicdata.entity.CommodityList;
+import com.yunhe.basicdata.service.ICommodityListService;
 import com.yunhe.cargomanagement.entity.PurComm;
+import com.yunhe.cargomanagement.entity.Warehouse;
 import com.yunhe.cargomanagement.entity.WarehouseReceipt;
+import com.yunhe.cargomanagement.service.IPurCommService;
 import com.yunhe.cargomanagement.service.IWarehouseReceiptService;
+import com.yunhe.cargomanagement.service.IWarehouseService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,6 +31,24 @@ public class WarehouseReceiptController {
     @Resource
     private IWarehouseReceiptService warehouseReceiptService;
 
+    /**
+     * 商品详情中间表
+     */
+    @Resource
+    private IPurCommService purCommService;
+
+    /**
+     * 商品详情
+     */
+    @Resource
+    private ICommodityListService commodityListService;
+
+    /**
+     * 库存
+     */
+    @Resource
+    private IWarehouseService warehouseService;
+
 
     /**
      * 跳转待入库单详情页面并通过session传值
@@ -44,7 +67,7 @@ public class WarehouseReceiptController {
         }
         session.setAttribute("poId", id);
         session.setAttribute("walist", warehouseReceipt);
-        session.setAttribute("shuliang",zongshu);
+        session.setAttribute("shuliang", zongshu);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("/cargomanagement/warehose_select_xiangOne");
         return mv;
@@ -65,7 +88,7 @@ public class WarehouseReceiptController {
         for (PurComm purComm : purComms) {
             zongshu += purComm.getPcGeshu();
         }
-        session.setAttribute("shuliang",zongshu);
+        session.setAttribute("shuliang", zongshu);
         session.setAttribute("poId", id);
         session.setAttribute("walist", warehouseReceipt);
         ModelAndView mv = new ModelAndView();
@@ -148,6 +171,23 @@ public class WarehouseReceiptController {
     @RequestMapping("/selectWarHouseReZhongTwo")
     public List<PurComm> selectWarHouseZhongTwo(WarehouseReceipt warehouseReceipt) {
         return warehouseReceiptService.selectWarHouseZhong(warehouseReceipt.getId());
+    }
+
+    @RequestMapping("/updateWareHouseById")
+    public int updateWareHouseById(int id) {
+        String wreState = "全部入库";
+        warehouseReceiptService.updateWareHouseById(wreState, id);
+        int[] ints = purCommService.selectPcGeshuByWId(id);
+        int[] ints1 = purCommService.selectComIdByWId(id);
+        for (int i = 0; i < ints.length; i++) {
+            CommodityList commodityList = commodityListService.selectCommById(ints1[i]);
+            Warehouse warehouses = warehouseService.selectWarehouseByWaSpName(commodityList.getClName());
+            int waSpCurrentInventory = warehouses.getWaSpCurrentInventory() + ints[i];
+            double waTotalSum = warehouses.getWaTotalSum() + (Integer.parseInt(commodityList.getClWhoPrice())*ints[i]);
+            String waSpName = commodityList.getClName();
+            warehouseService.updateWarehouseByWaSpName(waSpCurrentInventory, waTotalSum, waSpName);
+        }
+        return 1;
     }
 
 }

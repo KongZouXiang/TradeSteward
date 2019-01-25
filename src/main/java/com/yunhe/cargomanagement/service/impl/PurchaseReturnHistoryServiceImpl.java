@@ -59,7 +59,7 @@ public class PurchaseReturnHistoryServiceImpl extends ServiceImpl<PurchaseReturn
 
     @Override
     public List<PurchaseReturnHistory> selectPurchaseReturnHistory() {
-        return purchaseReturnHistoryMapper.selectList(null);
+        return purchaseReturnHistoryMapper.selectPurchaseReturnHistory();
     }
 
     @Override
@@ -70,6 +70,11 @@ public class PurchaseReturnHistoryServiceImpl extends ServiceImpl<PurchaseReturn
     @Override
     public List<PurComm> selectOrderHistZhong(int id) {
         return purchaseReturnHistoryMapper.selectOrderHistZhong(id);
+    }
+
+    @Override
+    public PurchaseReturnHistory selectRurchaseReturnHistByNum(String prhNumber) {
+        return purchaseReturnHistoryMapper.selectRurchaseReturnHistByNum(prhNumber);
     }
 
     public PurchaseReturnHistoryMapper getPurchaseReturnHistoryMapper() {

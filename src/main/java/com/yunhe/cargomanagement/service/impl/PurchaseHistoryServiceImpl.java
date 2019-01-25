@@ -60,7 +60,7 @@ public class PurchaseHistoryServiceImpl extends ServiceImpl<PurchaseHistoryMappe
 
     @Override
     public List<PurchaseHistory> selectpurchaseHistory() {
-        return purchaseHistoryMapper.selectList(null);
+        return purchaseHistoryMapper.selectpurchaseHistory();
     }
 
     @Override
@@ -76,6 +76,11 @@ public class PurchaseHistoryServiceImpl extends ServiceImpl<PurchaseHistoryMappe
     @Override
     public PurchaseHistory selectPurchaseHistoryByNumber(String phNumber) {
         return purchaseHistoryMapper.selectPurchaseHistoryByNumber(phNumber);
+    }
+
+    @Override
+    public int updateHistoryState(String phWarehousingStatus ,int id) {
+        return purchaseHistoryMapper.updateHistoryState(phWarehousingStatus,id);
     }
 
     public PurchaseHistoryMapper getPurchaseHistoryMapper() {

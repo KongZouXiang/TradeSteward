@@ -33,7 +33,7 @@
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>供应商</label>
                 <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select  class="select" name="phSupname">
+				<select  class="select" name="phSupname" required="required">
 					<option value="默认"></option>
 					<option :value="item.supCompname" v-for="(item,index) in result">{{item.supCompname}}</option>
 				</select>
@@ -43,7 +43,7 @@
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>入库仓库</label>
                 <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select  class="select" name="phWarehouse">
+				<select  class="select" name="phWarehouse" required="required">
 					<option value="默认仓库"></option>
 					<option :value="item.wmName" v-for="(item,index) in resultThreeOne">{{item.wmName}}</option>
 				</select>
@@ -54,14 +54,14 @@
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>单据编号</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <input type="text" class="input-text" th:value="${session.curr}" placeholder="" id="poNumber"
-                           name="phNumber">
+                           name="phNumber" required="required">
                 </div>
             </div>
 
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>经手人</label>
                 <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select  class="select" name="phExperiencedPerson">
+				<select  class="select" name="phExperiencedPerson" required="required">
 					<option value="老板">老板</option>
 					<option value="财务">财务</option>
 					<option value="仓库">仓库</option>
@@ -75,7 +75,7 @@
                 <div class="formControls col-xs-8 col-sm-9">
                     <input type="text"
                            onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'commentdatemax\')||\'%y-%M-%d\'}' })"
-                           id="phDate" name="phDate" class="input-text Wdate">
+                           id="phDate" name="phDate" class="input-text Wdate" required="required">
                 </div>
             </div>
             <div class="row cl">
@@ -90,7 +90,7 @@
             <table class="table table-border table-bordered table-bg">
                 <thead>
                 <tr>
-                    <th scope="col" colspan="6">新增进货商品列表</th>
+                    <th scope="col" colspan="5">新增进货商品列表</th>
                 </tr>
                 <tr class="text-c">
                     <th width="40">序号</th>
@@ -98,16 +98,15 @@
                     <th width="170">商品编号</th>
                     <th width="170">属性</th>
                     <th width="100">数量</th>
-                    <th width="100">其他费用</th>
                 </tr>
                 </thead>
                 <tbody id="addTr">
                 <tr class="text-c" id="addx0">
-                    <td><a title='删除' href='javascript:;' onclick="deleteRow(this)" class='ml-5' style='text-decoration:none'><i
-                            class='Hui-iconfont'>&#xe6e2;</i></a>
+                    <td><a title='删除' href='javascript:;'  class='ml-5' style='text-decoration:none'><i
+                            class='Hui-iconfont'>&#xe6a6;</i></a>
                     </td>
                     <td>
-                        <select name="phClname" class="select" id="phClname" >
+                        <select name="phClname" class="select" id="phClname" required="required">
                             <option value="0">请选择</option>
                             <option v-for="(item,index) in resulttwo" :value="item.clName">{{item.clName}}</option>
                         </select>
@@ -115,12 +114,7 @@
                     <td id="clNumber" name="clNumber">商品编号</td>
                     <td></td>
                     <td><input type="text" class="input-text" placeholder="" id="QuantityOfPurchase"
-                               name="QuantityOfPurchase"></td>
-                    <td id="usId"></td>
-                    <td>
-                        <input type="text" class="input-text"
-                               name="phOtherExpenses" >
-                    </td>
+                               name="QuantityOfPurchase" required="required"></td>
                 </tr>
                 </tbody>
             </table>
@@ -137,7 +131,7 @@
                 <thead>
                 <tr class="text-c">
                     <th>
-                       备注
+                        备注
                     </th>
                     <th></th>
                 </tr>
@@ -145,7 +139,7 @@
                 <tbody>
                 <tr>
                     <td width="1500">
-                        <textarea type="text" class="textarea radius" name="phRemarks"></textarea>
+                        <textarea type="text" class="textarea radius" name="phRemarks" required="required"></textarea>
                     </td>
                     <td><input class="btn btn-primary size-XL radius" type="submit" value="提交并入库"></td>
                 </tr>
@@ -234,14 +228,14 @@
         } else {
             m++;
             var html = "<tr id='addx" + m + "' class='text-c'><td>" +
-                "<a title='删除' href='javascript:;' onclick='deleteRow(this)' class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6e2;</i></a></td><td>" +
-                "<select name='poClName' class='select' id='poClName'><option value='0'>请选择</option>";
+                "<a title='删除' href='javascript:;' onclick='deleteRow(this)' class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6a6;</i></a></td><td>" +
+                "<select name='phClname' class='select' id='phClname'><option value='0'>请选择</option>";
             for (var i = 1; i < app.resulttwo.length; i++) {
                 html = html + "<option value='" + app.resulttwo[i].clName + "'>" + app.resulttwo[i].clName + "</option>";
             }
-            html = html + "</select></td><td id='clNumber' name='clNumber'>" +
-                "商品标号</td><td></td><td><input type='text' class='input-text' value='1' placeholder='' id='poQuantityOfPurchase'name='poQuantityOfPurchase'>" +
-                "</td><td id='usId'></td></tr>\n";
+            html = html + "</select></td><td>" +
+                "商品标号</td><td></td><td><input type='text' class='input-text' value='1' placeholder='' id='QuantityOfPurchase' name='QuantityOfPurchase'>" +
+                "</td></tr>\n";
             m--;
             document.getElementById("addx" + m).insertAdjacentHTML('afterend', html);
             m++;

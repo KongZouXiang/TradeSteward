@@ -48,6 +48,12 @@ public interface PurchaseOrderMapper extends BaseMapper<PurchaseOrder> {
      */
     PurchaseOrder getPurchaseById(Integer id);
 
+    /**
+     * 查询所有
+     * @return
+     */
+    List<PurchaseOrder> selectPurchaseOrder();
+
 
     /**
      * 修改进货订单历史
