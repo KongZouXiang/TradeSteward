@@ -1,4 +1,4 @@
-package com.yunhe.core.aop.webexception;
+package com.yunhe.core.common.exception;
 
 import lombok.Data;
 

@@ -1,5 +1,6 @@
-package com.yunhe.core.aop.webexception;
+package com.yunhe.core.common.exception;
 
+import com.yunhe.core.common.state.ExceptionEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

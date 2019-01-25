@@ -2,6 +2,8 @@
 package com.yunhe.core.aop.weblog;
 
 import com.yunhe.core.common.annotion.WebLog;
+import com.yunhe.core.common.exception.GlobalException;
+import com.yunhe.core.common.state.ExceptionEnum;
 import com.yunhe.core.util.DateUtil;
 import com.yunhe.systemsetup.dao.SystemLogMapper;
 import com.yunhe.systemsetup.entity.Employ;
@@ -58,9 +60,9 @@ public class WebLogAspect {
      */
     @Before(value = "webLog()")
     public void beBefore(JoinPoint joinPoint) {
+
         SystemLog log = new SystemLog();
 
-        logger.info("<--**********************日志开始**************************-->");
         // 接收到请求，记录请求内容
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         assert attributes != null;
@@ -71,7 +73,11 @@ public class WebLogAspect {
 //        Session请求
         HttpSession session = request.getSession();
 
+
        Employ employ = (Employ) session.getAttribute("employ");
+        if(employ == null){
+            throw new GlobalException(ExceptionEnum.ACCOUNT_UNKNOWN);
+        }
 
 //        获取员工的登录账号
         log.setAccount(employ.getEmUsername());
@@ -97,7 +103,10 @@ public class WebLogAspect {
 //        获取操作时间
         log.setCreateDate(DateUtil.curr());
 
-        systemLogMapper.insert(log);
+        if (systemLogMapper.insert(log) < 1){
+            throw new GlobalException(ExceptionEnum.LOG_ERROR);
+        }
+
         System.out.println(log);
     }
 

@@ -10,10 +10,8 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 
 /**
  * <p>
@@ -47,6 +45,7 @@ public class LoginController {
 
     @GetMapping("/toindex")
     public String index() {
+
 //        退出登录
         Subject subject = SecurityUtils.getSubject();
         if (subject != null) {
@@ -55,8 +54,8 @@ public class LoginController {
         return "index";
     }
 
-    @PostMapping("/login")
-    public String login(Employ employ, Model model, HttpSession session) {
+    @GetMapping("/login")
+    public String login(Employ employ, Model model) {
 
 
         /**

@@ -1,4 +1,4 @@
-package com.yunhe.core.aop.webexception;
+package com.yunhe.core.common.state;
 
 /**
  * <p>
@@ -33,7 +33,12 @@ public enum ExceptionEnum {
     /**
      * 日志异常
      */
-    LOG_ERROR(99, "日志出现了异常!"),
+    LOG_ERROR(500, "日志出现了异常!"),
+
+    /**
+     * 未登录账号
+     */
+    ACCOUNT_UNKNOWN(500, "未登录账号!"),
     ;
 
     /**
