@@ -34,12 +34,10 @@ public class FinanceOrderServiceImpl extends ServiceImpl<FinanceOrderMapper, Fin
         map.put("total",page.getTotal());
         map.put("pages",page.getPages());
         map.put("list",list);
-        List<FinanceOrder> countListshou = financeOrderMapper.selectMoneyMapByShou();
-        List<FinanceOrder> countListzhi = financeOrderMapper.selectMoneyMapByZhi();
-        System.out.println(countListshou);
-        System.out.println(countListshou);
-        map.put("countListshou",countListshou);
-        map.put("countListzhi",countListzhi);
+        List<Map<String,Object>> countListshou = financeOrderMapper.selectMoneyMapByShou();
+        map.put("countListshou",countListshou.get(0));
+        List<Map<String,Object>> countListzhi = financeOrderMapper.selectMoneyMapByZhi();
+        map.put("countListzhi",countListzhi.get(0));
         return map;
     }
 
@@ -76,16 +74,6 @@ public class FinanceOrderServiceImpl extends ServiceImpl<FinanceOrderMapper, Fin
     @Override
     public int gaiFo(Map<String, Object> map) {
         return financeOrderMapper.gaiFo(map);
-    }
-
-    @Override
-    public List<FinanceOrder> selectMoneyMapByShou() {
-        return financeOrderMapper.selectMoneyMapByShou();
-    }
-
-    @Override
-    public List<FinanceOrder> selectMoneyMapByZhi() {
-        return financeOrderMapper.selectMoneyMapByZhi();
     }
 
 

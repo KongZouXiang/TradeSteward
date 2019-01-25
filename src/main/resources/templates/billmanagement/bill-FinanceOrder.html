@@ -80,7 +80,7 @@
                 <th width="150"></th>
                 <th width="150"></th>
                 <th width="150"></th>
-                <th width="150"><span style="color: red;font-size: 20px" id="moneyshou"></span></th>
+                <th width="150"><span style="color: red;font-size: 14px" id="moneyshou"></span></th>
                 <th width="150"></th>
                 <th width="150"></th>
                 <th></th>
@@ -135,7 +135,7 @@
                 <th width="150"></th>
                 <th width="150"></th>
                 <th width="150"></th>
-                <th width="150"><span style="color: red;font-size: 20px" id="moneyzhi"></span></th>
+                <th width="150"><span style="color: red;font-size: 14px" id="moneyzhi"></span></th>
                 <th width="150"></th>
                 <th width="150"></th>
                 <th></th>
@@ -203,8 +203,8 @@
             },
             success:function(msg){
                 $("#strongShou").html(msg.total);
-                $("#moneyzhi").html(msg.countListzhi.moneyzhi);
                 $("#moneyshou").html(msg.countListshou.moneyshou);
+                $("#moneyzhi").html(msg.countListzhi.moneyzhi);
                 appShou.result = msg.list;
                 laypage({
                     cont:'pagenavShou',

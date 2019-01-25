@@ -89,19 +89,4 @@ public interface IFinanceOrderService extends IService<FinanceOrder> {
      */
     int gaiFo(Map<String, Object> map);
 
-    /**
-     * <p>
-     * 日常收支表
-     * </p>
-     * @return 查询收入总金额
-     */
-    List<FinanceOrder> selectMoneyMapByShou();
-
-    /**
-     * <p>
-     * 日常收支表
-     * </p>
-     * @return 查询支出总金额
-     */
-    List<FinanceOrder> selectMoneyMapByZhi();
 }
