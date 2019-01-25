@@ -25,14 +25,6 @@ spring:
       maximum-pool-size: 15
       #最小连接
       minimum-idle: 5
-
-  #出现错误时直接抛出异常
-#  mvc:
-#    throw-exception-if-no-handler-found: true
-  #关闭工程中的资源文件建立映射
-#  resources:
-#    add-mappings: false
-
 #配置日志
 logging:
 #配置日志文件路径
