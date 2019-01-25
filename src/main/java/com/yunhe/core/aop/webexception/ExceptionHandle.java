@@ -25,7 +25,7 @@ public class ExceptionHandle {
             modelAndView.addObject("code", globalException.getCode());
             modelAndView.addObject("msg", globalException.getMessage());
         } else {
-            logger.info("【系统异常】={}", e);
+            logger.info("系统异常={}", e);
             e.getClass().getName();
             modelAndView.addObject("code", ExceptionEnum.UNKNOW_ERROR.getCode());
             modelAndView.addObject("msg", ExceptionEnum.UNKNOW_ERROR.getMsg());

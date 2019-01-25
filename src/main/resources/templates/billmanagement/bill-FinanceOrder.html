@@ -36,7 +36,7 @@
     </div>
     <div style="display: block" id="shou">
         <div class="text-c">
-            <input type="hidden" class="input-text" style="width:250px" id="foFlagShou" value="收入">
+            <input type="hidden" class="input-text" style="width:250px" id="foFlagShou" value="日常收入">
             <input type="text" class="input-text" style="width:250px" placeholder="输入单据编号" id="foNumListShou">
             <button type="submit" class="btn btn-success" id="findFoShou" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索单据</button>
         </div>
@@ -59,10 +59,10 @@
                 <th>备注</th>
             </tr>
             </thead>
-            <tbody>
-            <tr class="text-c" v-for="(item,index) in result">
+            <tbody v-for="(item,index) in result">
+            <tr class="text-c">
                 <td>{{index+1}}</td>
-                <td class="td-manage"><a title="详情" href="javascript:;" @click="editEventShou(item.oid)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
+                <td class="td-manage"><a title="详情" href="javascript:;" @click="editEventShou(index)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
                     <a title="删除" href="javascript:;" @click="delEventShou(item.oid)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
                 <td>{{item.foNumList}}</td>
                 <td>{{item.foTime}}</td>
@@ -71,6 +71,21 @@
                 <td>{{item.foAccount}}</td>
                 <td>{{item.foFlag}}</td>
                 <td>{{item.foRemark}}</td>
+            </tr>
+            <tr class='infoshou' style="display: none">
+                <td height='75px' colspan='11'>
+                    <div style="border-bottom:1px solid #b2b2b2;height: 25px">转账金额:<span>{{item.foMoney}}</span></div>
+                    <div style="height: 25px ">
+                        <div style="width: 33%;float: left">单据编号:<span>{{item.foNumList}}</span></div>
+                        <div style="width: 33%;float: left">业务日期:<span>{{item.foTime}}</span></div>
+                        <div style="width: 33%;float: left"></div>
+                    </div>
+                    <div style="height: 25px">
+                        <div style="width: 33%;float: left">收入账户:<span>{{item.foAccount}}</span></div>
+                        <div style="width: 33%;float: left">经手人:<span>{{item.foPerson}}</span></div>
+                        <div style="width: 33%;float: left">备注:<span>{{item.foRemark}}</span></div>
+                    </div>
+                </td>
             </tr>
             </tbody>
             <tbody data-validator-option="{theme:'simple_right'}">
@@ -91,7 +106,7 @@
     </div>
     <div style="display: none" id="zhi">
         <div class="text-c">
-            <input type="hidden" class="input-text" style="width:250px" id="foFlag" name="foFlag" value="支出">
+            <input type="hidden" class="input-text" style="width:250px" id="foFlag" name="foFlag" value="日常支出">
             <input type="text" class="input-text" style="width:250px" placeholder="输入单据编号" id="foNumList" name="foNumList">
             <button type="submit" class="btn btn-success" id="findFo" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索单据</button>
         </div>
@@ -114,10 +129,10 @@
                 <th>备注</th>
             </tr>
             </thead>
-            <tbody>
-            <tr class="text-c" v-for="(item,index) in result">
+            <tbody  v-for="(item,index) in result">
+            <tr class="text-c">
                 <td>{{index+1}}</td>
-                <td class="td-manage"><a title="详情" href="javascript:;" @click="editEvent(item.oid)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
+                <td class="td-manage"><a title="详情" href="javascript:;" @click="editEvent(index)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
                     <a title="删除" href="javascript:;" @click="delEvent(item.oid)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
                 <td>{{item.foNumList}}</td>
                 <td>{{item.foTime}}</td>
@@ -126,6 +141,21 @@
                 <td>{{item.foAccount}}</td>
                 <td>{{item.foFlag}}</td>
                 <td>{{item.foRemark}}</td>
+            </tr>
+            <tr class='infozhi' style="display: none">
+                <td height='75px' colspan='11'>
+                    <div style="border-bottom:1px solid #b2b2b2;height: 25px">转账金额:<span>{{item.foMoney}}</span></div>
+                    <div style="height: 25px ">
+                        <div style="width: 33%;float: left">单据编号:<span>{{item.foNumList}}</span></div>
+                        <div style="width: 33%;float: left">业务日期:<span>{{item.foTime}}</span></div>
+                        <div style="width: 33%;float: left"></div>
+                    </div>
+                    <div style="height: 25px">
+                        <div style="width: 33%;float: left">收入账户:<span>{{item.foAccount}}</span></div>
+                        <div style="width: 33%;float: left">经手人:<span>{{item.foPerson}}</span></div>
+                        <div style="width: 33%;float: left">备注:<span>{{item.foRemark}}</span></div>
+                    </div>
+                </td>
             </tr>
             </tbody>
             <tbody data-validator-option="{theme:'simple_right'}">
@@ -247,19 +277,13 @@
     });
 
     /*收支详情*/
-    var editEventShou = function (id) {
-        layer.open({
-            type:2,
-            title: '收支详情',
-            fix:false,
-            maxmin:true,
-            shadeClose:true,
-            area:['450px','350px'],
-            content:'/billManagement/finance-order/toDetail?id='+id,
-            end:function() {
-                getFoPageListShou();
-            }
-        });
+    var editEventShou = function (as) {
+        var a=$(".infoshou");
+        if (a[as].style.display=="none"){
+            a[as].style.display="";
+        } else {
+            a[as].style.display="none";
+        }
     }
 
     /*删除订单*/
@@ -350,20 +374,13 @@
     });
 
     /*收支详情*/
-    var editEvent = function (id) {
-        //alert(id);
-        layer.open({
-            type:2,
-            title: '收支详情',
-            fix:false,
-            maxmin:true,
-            shadeClose:true,
-            area:['450px','350px'],
-            content:'/billManagement/finance-order/toDetail?id='+id,
-            end:function() {
-                getFoPageList();
-            }
-        });
+    var editEvent = function (as) {
+        var a=$(".infozhi");
+        if (a[as].style.display=="none"){
+            a[as].style.display="";
+        } else {
+            a[as].style.display="none";
+        }
     }
 
     /*删除订单*/
@@ -378,7 +395,7 @@
                 data:{id:id},
                 success:function (msg) {
                     getFoPageList();
-                    layer.msg('成功删除订单' + id,{icon:5});
+                    layer.msg('成功删除订单',{icon:5});
                 }
             })
         },function () {

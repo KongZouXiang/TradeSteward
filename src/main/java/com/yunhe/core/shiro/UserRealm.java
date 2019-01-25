@@ -1,7 +1,6 @@
 package com.yunhe.core.shiro;
 
 import com.yunhe.core.common.login.service.ILoginService;
-import com.yunhe.core.redis.RedisService;
 import com.yunhe.systemsetup.dao.EmployMapper;
 import com.yunhe.systemsetup.entity.Employ;
 import org.apache.shiro.SecurityUtils;
@@ -32,8 +31,6 @@ public class UserRealm extends AuthorizingRealm {
     @Resource
     EmployMapper employMapper;
 
-    @Resource
-    RedisService redisService;
 
     /**
      * <p>

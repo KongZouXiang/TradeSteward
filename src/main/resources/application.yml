@@ -45,4 +45,7 @@ spring:
     mode: HTML5
     servlet:
       content-type: text/html
-
+    #配置redis
+  redis:
+    host: 47.106.37.123
+    port: 6379

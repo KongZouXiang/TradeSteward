@@ -29,7 +29,7 @@ public interface FinanceOrderMapper extends BaseMapper<FinanceOrder> {
      * @param financeOrder 模糊查询的参数存在financeOrder中
      * @return 日常收支表：分页的结果集
      */
-    @Select("select fo.id as oid,fo.fo_num_list as foNumList,fo.fo_time as foTime,fo.fo_money as foMoney,fo.fo_account as foAccount,fo.fo_remark as foRemark,fo.fo_flag as foFlag,fc.fc_type as fcType from finance_order fo,finance_classify fc where fc.id = fo.fc_id and (fo.fo_flag like concat('%',#{financeOrder.foFlag},'%')) and(fo.fo_num_list like concat('%',#{financeOrder.foNumList},'%')) order by fo.id desc")
+    @Select("select fo.id as oid,fo.fo_num_list as foNumList,fo.fo_time as foTime,fo.fo_money as foMoney,fo.fo_account as foAccount,fo.fo_remark as foRemark,fo.fo_person as foPerson,fo.fo_flag as foFlag,fc.fc_type as fcType from finance_order fo,finance_classify fc where fc.id = fo.fc_id and (fo.fo_flag like concat('%',#{financeOrder.foFlag},'%')) and(fo.fo_num_list like concat('%',#{financeOrder.foNumList},'%')) order by fo.id desc")
     List<Map<String,Object>> selectFoPage(Page page, FinanceOrder financeOrder);
 
     /**
@@ -74,7 +74,7 @@ public interface FinanceOrderMapper extends BaseMapper<FinanceOrder> {
      * @param  flag 支出或收入的类别
      * @return 查询支出总金额
      */
-    @Select("select fo.id as oid,fo.fo_num_list as foNumList,fo.fo_time as foTime,fo.fo_money as foMoney,fo.fo_account as foAccount,fo.fo_remark as foRemark,fo.fo_flag as foFlag,fc.fc_type as fcType from finance_order fo,finance_classify fc where fc.id = fo.fc_id and fo.fo_flag = #{flag}")
+    @Select("select fo.id as oid,fo.fo_num_list as foNumList,fo.fo_time as foTime,fo.fo_money as foMoney,fo.fo_account as foAccount,fo.fo_person as foPerson,fo.fo_remark as foRemark,fo.fo_flag as foFlag,fc.fc_type as fcType from finance_order fo,finance_classify fc where fc.id = fo.fc_id and fo.fo_flag = #{foFlag}")
     List<Map<String,Object>> selectFoByFlag(String flag);
 
     /**
@@ -84,6 +84,6 @@ public interface FinanceOrderMapper extends BaseMapper<FinanceOrder> {
      * @param  id 要查询的数据的id
      * @return 通过id查询详细信息
      */
-    @Select("select fo.id as oid,fo.fo_num_list as foNumList,fo.fo_time as foTime,fo.fo_money as foMoney,fo.fo_account as foAccount,fo.fo_remark as foRemark,fo.fo_flag as foFlag,fc.fc_type as fcType from finance_order fo,finance_classify fc where fc.id = fo.fc_id and fo.id = #{id}")
+    @Select("select fo.id as oid,fo.fo_num_list as foNumList,fo.fo_time as foTime,fo.fo_money as foMoney,fo.fo_account as foAccount,fo.fo_person as foPerson,fo.fo_remark as foRemark,fo.fo_flag as foFlag,fc.fc_type as fcType from finance_order fo,finance_classify fc where fc.id = fo.fc_id and fo.id = #{id}")
     List<Map<String,Object>> selectDetailById(int id);
 }

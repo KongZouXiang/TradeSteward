@@ -5,6 +5,7 @@ import com.yunhe.billmanagement.entity.AccountTransfer;
 import com.yunhe.billmanagement.entity.RunningAccounts;
 import com.yunhe.billmanagement.service.IAccountTransferService;
 import com.yunhe.billmanagement.service.IRunningAccountsService;
+import com.yunhe.core.common.annotion.WebLog;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -42,6 +43,7 @@ public class AccountTransferController {
      * </P>
      * @return 进入bill-AccountTransfer.html
      */
+    @WebLog("进入账户转账页面")
     @RequestMapping("/toAt")
     public ModelAndView toAt(){
         return new ModelAndView("billmanagement/bill-AccountTransfer");
@@ -54,6 +56,7 @@ public class AccountTransferController {
      * @param size 每页条数
      * @return  账户转账表：分页的结果集
      */
+    @WebLog("查看账户转账")
     @RequestMapping(value = "/selectAtPage",method = RequestMethod.GET)
     public Map selectAtPage(int current, int size, AccountTransfer accountTransfer){
         return accountTransferService.selectAtPage(current,size,accountTransfer);
@@ -65,6 +68,7 @@ public class AccountTransferController {
      * </P>
      * @return 账户转账表：查询的结果集
      */
+    @WebLog("查看账户转账表所有信息")
     public List<AccountTransfer> selectAt() {
         return accountTransferService.selectAt();
     }
@@ -75,6 +79,7 @@ public class AccountTransferController {
      * </P>
      * @return 进入FC_add.html
      */
+    @WebLog("进入账户转账增加页面")
     @RequestMapping("/toAdd")
     public ModelAndView toAdd(){
         return new ModelAndView("billmanagement/bill-AT-add");
@@ -86,6 +91,7 @@ public class AccountTransferController {
      * @param accountTransfer 查询条件放在对象里
      * @return  账户转账表：增加是否成功
      */
+    @WebLog("增加账户转账")
     @RequestMapping("/insertAt")
     public int insertAt(AccountTransfer accountTransfer) {
         int i= accountTransferService.insertAt(accountTransfer);
@@ -114,6 +120,7 @@ public class AccountTransferController {
      * @param id 查询详情的id
      * @return 进入FO_detail.html
      */
+    @WebLog("进入账户转账详情页面")
     @RequestMapping("/toDetail")
     public AccountTransfer toDetail(int id){
         return accountTransferService.detailById(id);
@@ -126,6 +133,7 @@ public class AccountTransferController {
      * @param accountTransfer 查询条件放在对象里
      * @return  账户转账表：删除是否成功
      */
+    @WebLog("删除账户转账记录")
     @RequestMapping("/deleteAt")
     public int deleteAt(AccountTransfer accountTransfer) {
         int i = accountTransferService.deleteAt(accountTransfer);
