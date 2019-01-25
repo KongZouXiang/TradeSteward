@@ -20,21 +20,26 @@ public class ExceptionHandle {
     private final static Logger logger = LoggerFactory.getLogger(ExceptionHandle.class);
 
     @ExceptionHandler(value = Exception.class)
-    public ModelAndView handle(Exception e ) {
+    public ModelAndView handle(Exception e) {
         ModelAndView modelAndView = new ModelAndView();
 
         if (e instanceof GlobalException) {
             GlobalException globalException = (GlobalException) e;
             modelAndView.addObject("code", globalException.getCode());
             modelAndView.addObject("msg", globalException.getMessage());
-        }if (e instanceof SpelEvaluationException) {
-
+        }
+        if (e instanceof SpelEvaluationException) {
             GlobalException globalException = (GlobalException) e;
+            modelAndView.addObject("code", ExceptionEnum.THFIELD_UNKNOWN.getCode());
+            modelAndView.addObject("msg", ExceptionEnum.THFIELD_UNKNOWN.getMsg());
 
-            modelAndView.addObject("code", globalException.getCode());
-            modelAndView.addObject("msg", globalException.getMessage());
+        }
+       /* if (e instanceof HttpRequestMethodNotSupportedException) {
+            GlobalException globalException = (GlobalException) e;
+            modelAndView.addObject("code", ExceptionEnum.REQUEST_ERROR.getCode());
+            modelAndView.addObject("msg", ExceptionEnum.REQUEST_ERROR.getMsg());
 
-        } else {
+        }*/ else {
             logger.info("系统异常={}", e);
             e.getClass().getName();
             modelAndView.addObject("code", ExceptionEnum.UNKNOW_ERROR.getCode());

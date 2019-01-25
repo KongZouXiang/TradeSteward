@@ -39,7 +39,19 @@ public enum ExceptionEnum {
      * 未登录账号
      */
     ACCOUNT_UNKNOWN(500, "未登录账号!"),
+
+    /**
+     * 没有找到变量
+     */
+    THFIELD_UNKNOWN(500, "没有找到变量!"),
+
+    /**
+     * Request请求异常
+     */
+    REQUEST_ERROR(500,"请求异常!"),
     ;
+
+
 
     /**
      * 显示错误码
