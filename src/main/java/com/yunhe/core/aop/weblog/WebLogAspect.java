@@ -1,10 +1,10 @@
 
 package com.yunhe.core.aop.weblog;
 
-import com.yunhe.core.aop.webexception.ExceptionEnum;
-import com.yunhe.core.aop.webexception.GlobalException;
 import com.yunhe.core.common.annotion.WebLog;
 import com.yunhe.core.util.DateUtil;
+import com.yunhe.systemsetup.entity.SystemLog;
+import com.yunhe.systemsetup.dao.SystemLogMapper;
 import com.yunhe.systemsetup.entity.Employ;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -32,14 +32,14 @@ import java.lang.reflect.Method;
  * @date 2019年1月10日
  */
 
-//@Aspect
-//@Component
+@Aspect
+@Component
 public class WebLogAspect {
-
-    private final static Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
 
     @Resource
     SystemLogMapper systemLogMapper;
+
+    private final static Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
 
     @Pointcut(value = "execution(public * com.yunhe.core.common.login.controller.LoginController.login(..))")
     public void webLogin() {
@@ -91,36 +91,13 @@ public class WebLogAspect {
             log.setOperation(value);
         }
 
-        //请求的参数
-        Object[] args = joinPoint.getArgs();
-        /*//将参数所在的数组转换成json
-        String params = J;
-        sysLog.setParams(params);*/
-
 //        IP地址
         log.setIp(request.getRemoteAddr());
 
 //        获取操作时间
         log.setCreateDate(DateUtil.curr());
 
-
-//        URL
-        logger.info("URL={}", request.getRequestURL());
-//        Method
-        logger.info("Method={}", request.getMethod());
-//        IP
-        logger.info("IP={}", request.getRemoteAddr());
-//        类方法
-        logger.info("Class_Method={}", joinPoint.getSignature().getDeclaringTypeName() + "." +
-                joinPoint.getSignature().getName());
-//        参数
-        logger.info("args={}", joinPoint.getArgs());
-//        HTTP请求方法
-        logger.info("HTTP_Method", request.getMethod());
-        logger.info("<--**********************日志结束**************************-->");
-        if (systemLogMapper.insert(log)>1){
-            throw new GlobalException(ExceptionEnum.LOG_ERROR);
-        }
+        systemLogMapper.insert(log);
         System.out.println(log);
     }
 
