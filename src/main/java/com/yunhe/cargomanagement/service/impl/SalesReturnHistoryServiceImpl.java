@@ -3,6 +3,7 @@ package com.yunhe.cargomanagement.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yunhe.cargomanagement.dao.SalesReturnHistoryMapper;
+import com.yunhe.cargomanagement.entity.OrderConnectComm;
 import com.yunhe.cargomanagement.entity.SalesReturnHistory;
 
 import com.yunhe.cargomanagement.service.ISalesReturnHistoryService;
@@ -56,5 +57,19 @@ public class SalesReturnHistoryServiceImpl extends ServiceImpl<SalesReturnHistor
         map.put("pages",page.getPages());
         map.put("list",list);
         return map;
+    }
+
+    @Override
+    public SalesReturnHistory selectById(int id) {
+
+        return salesReturnHistoryMapper.selectById(id);
+
+
+    }
+
+    @Override
+    public List<OrderConnectComm> detailList(int id) {
+        List<OrderConnectComm> arr=null;
+        return null;
     }
 }

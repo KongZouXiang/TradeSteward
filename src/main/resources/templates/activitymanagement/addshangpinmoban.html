@@ -45,17 +45,24 @@
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
 
-        <a href="javascript:;" onclick="c()"
+        <a href="javascript:;" onclick="add()"
            class="btn btn-primary radius">
 
         <i class="Hui-iconfont" style="cursor: move;" >&#xe600;</i> 添加商品</a>
          <a href="javascript:;" onclick="Excel_out()"
             class="btn btn-primary radius">
         <i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
+
               </span>
+
+        <select  id="index"></select>
+        <select  id="sid" ></select>
+        <select  id="shopname"></select>
+        <select  id="shopnuber"></select>
+        <select  id="shopguige"></select>
+        <select  id="shopsize"></select>
+        <select  id="shopjiage"></select>
     </div>
-
-
     <div id="app" style="overflow: scroll;height: 500px">
         <table class="table table-border table-bordered table-bg">
             <thead>
@@ -73,35 +80,19 @@
                 <th width="130">操作</th>
                 <th width="130">商品名称/规格</th>
                 <th width="150">商品编号</th>
-                <th width="150">属性</th>
+                <th width="150">规格</th>
                 <th width="150">数量</th>
-                <th width="150">单位</th>
+                <th width="150">价格</th>
             </tr>
             </thead>
-
-
-            <tbody>
-            <!--*********************-->
-            <tr class="text-c">
-                <td id="id">1</td>
-                <td>
-                    <i class="layui-icon layui-icon-close-fill" style="font-size: 30px; color: #ff0a1e;"></i>
-                </td>
-                <td>
-                    <button class="layui-btn layui-btn-sm" onclick="c(1)">选择商品</button>
-                </td>
-                <td></td>
-                <td></td>
-                <td><input type="text" class="input-text" style="width:200px;" id="number" name=""></td>
-                <td></td>
-            </tr>
-
-
-            </tbody>
+            <tbody id="shuju" ></tbody>
         </table>
+    </div>
+    <div><button class="layui-btn" style="margin-top: 60px;margin-left:450px " onclick="baocun()">保存</button>
     </div>
     <div id="pagenav" style="text-align: center"></div>
 </div>
+</body>
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
 <script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
@@ -110,13 +101,29 @@
 <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
+
+
     var app = new Vue({
         el: '#app',
         data: {
             result: []
+
         }
     });
+
+   /* var t1=window.setInterval(refreshCount, 1000000);*/
+
+   /* function refreshCount() {
+
+    }*/
+
+
+
     $(function () {
+
+
+
+
         $("#checkAl").click(function () {
             $("input[id^='box_']").attr("checked", this.checked);
         })
@@ -127,6 +134,37 @@
             $("#checkAll").attr("checked", boxs.filter(":checked").length == 4);
         });
     });
+   var selectList= function(){
+       var teid =$("#index").text();
+       var text = $("#sid").text()
+       var arr=text.split(',')
+       var text1=$("#shopname").text()
+       var arr1 =text1.split(',');
+       var text2 =$("#shopnuber").text();
+       var arr2 =text2.split(',');
+       var text3 =$("#shopguige").text();
+       var arr3 =text3.split(',');
+       var text4 =$("#shopsize").text();
+       var arr4 =text4.split(',');
+       var text5 =$("#shopjiage").text();
+       var arr5 =text5.split(',');
+       var text6 =new Array();
+     for(var a =0;a<text.length;a++){
+        text6[a]=[arr[a],arr1[a],arr2[a],arr3[a],arr4[a],arr5[a]
+        ];
+     }
+
+               alert(text6[0]);
+
+
+     app.result=text6;
+   };
+
+
+    function baocun(){
+
+        selectList();
+    }
 
     $("#deleteAl").click(function () {
         /**获取下面选中的checkbox*/
@@ -167,7 +205,7 @@
             },
             success: function (msg) {
                 console.log(msg);
-                app.result = msg.records;
+                //app.result = msg.records;
                 $("#strong").html(msg.total);
                 laypage({
                     cont: 'pagenav',//容器  值支持id名、原生dom对象，jquery对象,
@@ -191,7 +229,7 @@
 
 
     /*添加*/
-    var c = function () {
+    var add = function () {
         layer.open({
             type: 2,
             title: "选择商品",
@@ -207,11 +245,14 @@
         });
     };
 
+
+
+
     var Excel_out = function () {
         window.location.href = "/activitymanagement/commodi-tytemplate/export1";
     }
 
 
 </script>
-</body>
+
 </html>

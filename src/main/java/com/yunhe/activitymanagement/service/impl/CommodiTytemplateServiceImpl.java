@@ -9,6 +9,7 @@ import com.yunhe.activitymanagement.dao.CommodiTytemplateMapper;
 import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import com.yunhe.billmanagement.entity.FinanceOrder;
 import com.yunhe.cargomanagement.entity.SalesOrderHistory;
 import org.springframework.stereotype.Service;
 
@@ -93,6 +94,13 @@ public class CommodiTytemplateServiceImpl extends ServiceImpl<CommodiTytemplateM
     public List<CommodiTytemplate> selectAllCt() {
         return commodiTytemplateMapper.selectAllCt();
     }*/
+
+
+    /**
+     * 根据模板的id查询出来模板的详情
+     * @param id
+     * @return
+     */
     @Override
     public CommodiTytemplate selectById(int id) {
         CommodiTytemplate moban = commodiTytemplateMapper.selectById(id);

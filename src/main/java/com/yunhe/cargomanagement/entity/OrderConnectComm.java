@@ -39,6 +39,9 @@ public class OrderConnectComm implements Serializable {
     @TableField("sell_order_num")
     private int sellOrderNum;
 
+    @TableField("returnNum")
+    private int returnNum;
+
     @TableField("cl_id")
     private int clId;
 

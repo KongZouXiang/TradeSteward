@@ -147,4 +147,5 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
         CommodityList list = commodityListMapper.selectListByClName(clName);
         return list;
     }
+
 }

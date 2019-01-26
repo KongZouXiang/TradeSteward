@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -37,20 +37,20 @@
 </nav>
 <div id="app" class="page-container">
     <div class="text-c"> 日期范围：
-        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin"
+        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="beginTime"
                class="input-text Wdate" style="width:120px;">
 
-        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax"
+        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="endTime"
                class="input-text Wdate" style="width:120px;">
 
-        <input type="text" name="" placeholder="日志名称" style="width:250px" class="input-text">
-        <button class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜日志</button>
+        <input type="text" name="" id="account" placeholder="员工账号" style="width:250px" class="input-text">
+        <button class="btn btn-success" type="button" onclick="selectAllSystemLog()"><i class="Hui-iconfont">&#xe665;</i> 搜日志</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
           <span class="l">
           <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
           </span>
-        <span class="r">共有数据：<strong>54</strong> 条</span>
+        <span class="r">共有数据：<strong id="strong"></strong> 条</span>
     </div>
     <table class="table table-border table-bordered table-bg table-hover table-sort">
         <thead>
@@ -68,15 +68,13 @@
 
         <tr class="text-c" v-for="(item,index) in result">
             <td><input type="checkbox" value="" name=""></td>
-
-            <td>{{item.account}}</td>
+            <td>{{item.account}} </td>
             <td>{{item.operation}}</td>
             <td>{{item.username}}</td>
             <td>{{item.ip}}</td>
             <td>{{item.createDate}}</td>
-            <td><a title="详情" href="javascript:;" onclick="system_log_show(this,'10001')" class="ml-5"
-                   style="text-decoration:none"><i class="Hui-iconfont">&#xe665;</i></a>
-                <a title="删除" href="javascript:;" onclick="system_log_del(this,'10001')" class="ml-5"
+            <td id="{{item.id}}">
+                <a title="删除" href="javascript:;" onclick="system_log_del(this,123)" class="ml-5"
                    style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
         </tr>
         </tbody>
@@ -111,9 +109,10 @@
                 /*当前页*/
                 current: curr || 1,
                 /*每页大小*/
-                size: 10
+                size: 10,
             },
             success: function (msg) {
+                $("#strong").html(msg.total);
                 app.result = msg.records;
                 laypage({
                     cont: 'pageNav',//容器  值支持id名、原生dom对象，jquery对象,
@@ -132,9 +131,27 @@
         });
 
     };
-
+    /*日志-查看*/
     selectAllSystemLog();
 
+    /*日志-删除*/
+    function system_log_del(obj,id){
+        layer.confirm('确认要删除吗？',function(index){
+            $.ajax({
+                type: 'POST',
+                url: '',
+                dataType: 'json',
+                success: function(data){
+                    $(obj).parents("tr").remove();
+                    layer.msg('已删除!',{icon:1,time:1000});
+                    selectAllSystemLog();
+                },
+                error:function(data) {
+                    console.log(data.msg);
+                },
+            });
+        });
+    }
 </script>
 </body>
 </html>

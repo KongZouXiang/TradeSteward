@@ -89,13 +89,6 @@ public class WebLogAspect {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
 
-        //获取操作
-        WebLog webLog = method.getAnnotation(WebLog.class);
-        if (webLog != null) {
-            String value = webLog.value();
-            //保存获取的操作
-            log.setOperation(value);
-        }
 
 //        IP地址
         log.setIp(request.getRemoteAddr());
@@ -103,8 +96,17 @@ public class WebLogAspect {
 //        获取操作时间
         log.setCreateDate(DateUtil.curr());
 
-        if (systemLogMapper.insert(log) < 1) {
-            throw new GlobalException(ExceptionEnum.LOG_ERROR);
+
+        //获取操作
+        WebLog webLog = method.getAnnotation(WebLog.class);
+        if (webLog != null) {
+            String value = webLog.value();
+            //保存获取的操作
+            log.setOperation(value);
+
+            if (systemLogMapper.insert(log) < 1) {
+                throw new GlobalException(ExceptionEnum.LOG_ERROR);
+            }
         }
 
         System.out.println(log);

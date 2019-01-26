@@ -43,11 +43,11 @@
             </thead>
             <tbody>
             <tr class="text-c" >
-                <td th:text="${session.sales.soClient}"></td>
-                <td th:text="${session.sales.soStatus}"></td>
-                <td th:text="${session.sales.soOrderNum}"></td>
-                <td th:text="${session.sales.soHander}"></td>
-                <td th:text="${session.sales.soDate}"></td>
+                <td th:text="${session.sales.srhClient}" id="soClient" ></td>
+                <td th:text="${session.sales.srhStatus}" id="soStatus"></td>
+                <td th:text="${session.sales.srhNumber}" id="soOrderNum"></td>
+                <td th:text="${session.sales.srhHander}" id="soHander"></td>
+                <td th:text="${session.sales.srhDate}" id="soDate"></td>
                 <input type="text" hidden="hidden" th:value="${session.sales.id}" id="idCloud">
             </tr>
             </tbody>
@@ -101,10 +101,10 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td width="300"><span style="text-align: right"><h3>总计金额：</h3><span style="color: red"><span
-                            style="color: #8e8e99">¥</span> 0.00</span></span></td>
-
-                    <td th:text="${session.sales.soMoney}"></td>
+                    <td width="300"><span style="text-align: right"><h3>总计金额：</h3><span style="color: red"></span></span></td>
+                    <td th:text="${session.sales.srhMoney}" id="soMoney"></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 </tbody>
             </table>
@@ -136,35 +136,13 @@
             result: []
         }
     });
-
-    /*var zoubaba =function() {
-        var table = document.getElementById("testTable");//获取table对象
-        var rows = table.rows;//获取行对象
-        var cells = table.cells;//获取列对象
-        var colums = table.rows[1].cells.length;//获取列数
-        $("#count").empty();//每次加载时清空最后一列，防止二次加载数据时出现多行合计
-        $("#count").append("<td>合计</td>");
-        //这里从列开始遍历，得到的就是每一列的数据
-        //如果从行开始遍历，得到的就是每行的数据
-        for (var j = 4; j < colums; j++) {
-            var sum = 0;
-            console.log(sum);
-            for (var i = 1; i < rows.length - 1; i++) {//从i=1第二行开始去掉表头，rows.length-1结束，去掉合计行
-                var a = rows[i].cells[j].innerHTML;//获取每一列的值
-                console.log(a);
-                sum = sum + a; //计算
-
-            }
-            $("#count").append("<td>" + sum + "</td>");//给最后一行添加计算结果列
-        }
-    };*/
     /*遍历订单所有的商品*/
     var getCommodityList = function (curr) {
         var id =$("#idCloud").val();
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: '/cargomanagement/sales-order-history/detailList',
+            url: '/cargomanagement/sales-return-history/detailList',
             data: {id:id},
             success: function (msg) {
                 app.result = msg;
@@ -173,20 +151,30 @@
 
     };
     getCommodityList();
-     var fuzhi =function () {
-         var listCount = new Array();
-         $("#listCount").each(function (i) {
-             listCount[i]=$(this).text();
 
-         })
-         var zong =0;
-         for (var s =0;s<listCount.length;s++){
-             zong=zong+1;
-         }
-         $("#counte").html(zong);
+    var submitAdd =function () {
+        var aid =$("#idCloud").val();
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/cargomanagement/sales-order-history/changeToSale',
+            data: {
+                shClient: $("#soClient").html(),
+                shStatus: $("#soStatus").html(),
+                shConnect:$("#soOrderNum").html(),
+                shHander:$("#soHander").html(),
+                shDate: $("#soDate").html(),
+                shMoney:$("#soMoney").html(),
+                aid:aid
+            },
+            success: function (msg) {
+                if (msg){
+                    layer.msg('成功',{icon:1});
+                }
+            }
+        });
+    };
 
-     }
-     fuzhi();
 
 </script>
 <!--/请在上方写此页面业务相关的脚本-->

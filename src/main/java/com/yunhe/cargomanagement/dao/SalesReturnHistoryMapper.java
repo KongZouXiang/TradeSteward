@@ -17,4 +17,6 @@ import java.util.List;
 public interface SalesReturnHistoryMapper extends BaseMapper<SalesReturnHistory> {
 
     List<SalesReturnHistory> QueryLikeSalesReturnHistory(Page page,SalesReturnHistory salesReturnHistory);
+
+    SalesReturnHistory selectById(int id);
 }

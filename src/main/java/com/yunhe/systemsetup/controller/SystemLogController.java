@@ -3,6 +3,8 @@ package com.yunhe.systemsetup.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yunhe.core.common.annotion.WebLog;
+import com.yunhe.core.util.RUDResult;
+import com.yunhe.core.util.ResultRule;
 import com.yunhe.systemsetup.entity.SystemLog;
 import com.yunhe.systemsetup.service.ISystemLogService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +40,7 @@ public class SystemLogController {
      * @param modelAndView
      * @return
      */
-    @WebLog("查看系统日志")
+    @WebLog("进入系统日志")
     @GetMapping("/toSystemLog")
     public ModelAndView toSystemLog(ModelAndView modelAndView) {
         modelAndView.setViewName("SystemLog");
@@ -52,10 +54,24 @@ public class SystemLogController {
      *
      * @return 所有的系统日志
      */
+    @WebLog("查看系统日志")
     @GetMapping("/selectAllSystemLog")
-    public IPage<SystemLog> selectAllSystemLog(Integer current, Integer size) {
+    public IPage<SystemLog> selectAllSystemLog(Integer current, Integer size, SystemLog systemLog) {
         System.out.println(size);
-        return systemLogService.selectAllSystemLog(current, size);
+        return systemLogService.selectAllSystemLog(current, size, systemLog);
     }
 
+
+    /**
+     * <p>
+     * 根据ID删除日志
+     * </p>
+     *
+     * @return 删除日志的数量
+     */
+    @WebLog("删除了一条日志")
+    @GetMapping("/selectAllSystemLog")
+    public String deleteByIdSystemLog(Integer id) {
+        return RUDResult.ConvertString(systemLogService.deleteByIdSystemLog(id), ResultRule.DELETE);
+    }
 }

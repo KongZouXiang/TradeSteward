@@ -76,5 +76,11 @@ public class SalesHistoryServiceImpl extends ServiceImpl<SalesHistoryMapper, Sal
         return arr;
     }
 
+    @Override
+    public SalesHistory selectByNumber(SalesHistory salesHistory) {
+
+        return salesHistoryMapper.selectByNumber(salesHistory);
+    }
+
 
 }

@@ -46,6 +46,9 @@
             c.cl_number
         from sales_history a,order_connect_comm b ,commodity_list c where a.id =b.sell_order_num and b.cl_id =c.id and a.id=#{id}
     </select>
+    <select id="selectByNumber" resultType="com.yunhe.cargomanagement.entity.SalesHistory">
+        select <include refid="Cols"/> from sales_history where sh_number=#{shNumber}
+    </select>
 
 
 </mapper>

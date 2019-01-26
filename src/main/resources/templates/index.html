@@ -100,30 +100,35 @@
 </header>
 <aside class="Hui-aside">
     <div class="menu_dropdown bk_2">
+
+        <!--********************云管货********************-->
         <dl shiro:haspermission="cargomanagement" id="menu-article">
             <dt><i class="Hui-iconfont">&#xe669;</i> 云管货<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-
             <dd>
                 <ul>
                     <li><a data-href="/cargomanagement/sales-order-history/index1" data-title="销售订单历史"
                            href="javascript:void(0)">销售订单历史</a></li>
-                    <li><a data-href="article-list.html" data-title="销售历史" href="javascript:void(0)">销售历史</a></li>
-                    <li><a data-href="article-list.html" data-title="销售退货历史" href="javascript:void(0)">销售退货历史</a></li>
+                    <li><a data-href="/cargomanagement/sales-history/tiao" data-title="销售历史" href="javascript:void(0)">销售历史</a>
+                    </li>
+                    <li><a data-href="/cargomanagement/sales-return-history/tiao" data-title="销售退货历史"
+                           href="javascript:void(0)">销售退货历史</a></li>
                     <li><a data-href="/cargomanagement/purchase-order/Purlist" data-title="进货订单历史"
                            href="javascript:void(0)">进货订单历史</a></li>
                     <li><a data-href="/cargomanagement/purchase-history/purchasehistoryList" data-title="进货历史"
                            href="javascript:void(0)">进货历史</a></li>
                     <li><a data-href="/cargomanagement/purchase-return-history/purchaseReturnHistoryList"
                            data-title="进货退货历史" href="javascript:void(0)">进货退货历史</a></li>
-                    <li><a data-href="article-list.html" data-title="出库历史" href="javascript:void(0)">出库历史</a></li>
+                    <li><a data-href="cargomanagement/wait-out-warehouse/tiao" data-title="出库历史"
+                           href="javascript:void(0)">出库历史</a></li>
                     <li><a data-href="/cargomanagement/warehouse-receipt/warehouse_receipt" data-title="入库历史"
                            href="javascript:void(0)">入库历史</a></li>
-                    <li><a data-href="#" data-title="库存查询"
-                           href="javascript:void(0)">库存查询</a></li>
+                    <li><a data-href="/cargomanagement/warehouse/getPages" data-title="库存查询" href="javascript:void(0)">库存查询</a>
+                    </li>
                 </ul>
             </dd>
         </dl>
 
+        <!--********************云管账********************-->
         <dl shiro:haspermission="billmanagement" id="menu-article">
             <dt><i class="Hui-iconfont">&#xe60c;</i> 云管账<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
@@ -144,6 +149,7 @@
             </dd>
         </dl>
 
+        <!--********************云管客********************-->
         <dl shiro:haspermission="customermanagement" id="menu-article">
             <dt><i class="Hui-iconfont">&#xe60d;</i> 云管客<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
@@ -157,6 +163,8 @@
                 </ul>
             </dd>
         </dl>
+
+        <!--********************云分析********************-->
         <dl shiro:haspermission="reportanalysis" id="menu-article">
             <dt><i class="Hui-iconfont">&#xe618;</i> 云分析<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
@@ -168,6 +176,7 @@
             </dd>
         </dl>
 
+        <!--********************云营销********************-->
         <dl shiro:haspermission="activitymanagement" id="menu-article">
             <dt><i class="Hui-iconfont">&#xe6bb;</i> 云营销<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
@@ -180,6 +189,7 @@
             </dd>
         </dl>
 
+        <!--********************基础资料********************-->
         <dl shiro:haspermission="basicdata" id="menu-article">
             <dt><i class="Hui-iconfont">&#xe6b5;</i> 基础资料<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
@@ -198,6 +208,7 @@
             </dd>
         </dl>
 
+        <!--********************系统设置********************-->
         <dl shiro:haspermission="systemsetup" id="menu-system">
             <dt><i class="Hui-iconfont">&#xe62e;</i>系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
@@ -207,12 +218,12 @@
                     </li>
                     <li><a data-href="/systemsetup/chara-manger/chara" data-title="角色管理"
                            href="javascript:void(0)">角色管理</a></li>
-                    <li><a data-href="system-shielding.html" data-title="屏蔽词" href="javascript:void(0)">屏蔽词</a></li>
                     <li><a data-href="/systemsetup/system-log/toSystemLog" data-title="系统日志" href="javascript:void(0)">系统日志</a>
                     </li>
                 </ul>
             </dd>
         </dl>
+
     </div>
 </aside>
 <div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a>

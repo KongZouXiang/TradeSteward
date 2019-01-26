@@ -22,4 +22,6 @@ public interface SalesHistoryMapper extends BaseMapper<SalesHistory> {
     SalesHistory selectSaleById(int id);
 
     List<SalesHistory> selectAbc(int id);
+
+    SalesHistory selectByNumber(SalesHistory salesHistory);
 }
