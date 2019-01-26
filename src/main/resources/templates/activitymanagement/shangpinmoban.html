@@ -69,8 +69,8 @@
             <tr class="text-c" v-for="(item,index) in result">
 
          <td><input type="checkbox" id="box_" :value="item.id"></td>
-                <td>{{item.id}}</td>
-               <!-- <td>{{index+1}}</td>-->
+           <!--  <td>{{item.id}}</td>-->
+             <td>{{index+1}}</td>
                 <td class="td-manage">
                     <a style="text-decoration:none" class="ml-5" @click="article_edit('编辑')" href="javascript:;" title="编辑">
                         <i class="Hui-iconfont">&#xe6df;</i>
@@ -182,7 +182,7 @@
     });
 
 
-    /*删除账目*/
+    /*删除*/
     var delEvent = function (id) {
         layer.confirm('你确定要删除吗？',{
             btn:['是','否']
@@ -205,14 +205,16 @@
     };
     /*模板详情*/
   function detail(id) {
+
+      alert("nihao");
         var index = layer.open({
             type: 2,
             title: '模板详细',
-            content: '/activitymanagement/commodi-tytemplate/toDetail?id='+id,
+            content: ''+id,
         });
        layer.full(index);
     };
-
+/*/activitymanagement/commodi-tytemplate/toDetail?id=*/
     /*编辑修改*/
     function b(title,url){
         var index = layer.open({
