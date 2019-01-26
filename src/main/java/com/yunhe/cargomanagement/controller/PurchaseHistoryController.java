@@ -2,7 +2,6 @@ package com.yunhe.cargomanagement.controller;
 
 
 import com.yunhe.basicdata.entity.CommodityList;
-import com.yunhe.basicdata.entity.WarehouseManagement;
 import com.yunhe.basicdata.service.IWarehouseManagementService;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
 import com.yunhe.billmanagement.entity.RunningAccounts;
@@ -170,14 +169,14 @@ public class PurchaseHistoryController {
 
 
 
-    /**
+  /*  *//**
      * 仓库信息
      * @return 仓库信息
-     */
+     *//*
     @RequestMapping("/selectquanWarList")
     public List<WarehouseManagement> selectquanWarList(){
         return warehouseManagementService.selectquanWarList();
-    }
+    }*/
 
 
     /**
