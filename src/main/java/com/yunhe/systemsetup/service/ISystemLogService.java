@@ -20,6 +20,15 @@ public interface ISystemLogService extends IService<SystemLog> {
      *
      * @return 日志结果
      */
-    IPage<SystemLog> selectAllSystemLog(Integer current, Integer size);
+    IPage<SystemLog> selectAllSystemLog(Integer current, Integer size,SystemLog systemLog);
+
+    /**
+     * <p>
+     * 根据ID删除日志
+     * </p>
+     *
+     * @return 删除日志的数量
+     */
+    Integer deleteByIdSystemLog(Integer id);
 
 }

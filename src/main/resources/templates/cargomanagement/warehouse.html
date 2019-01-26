@@ -125,7 +125,7 @@
                 /*当前页*/
                 pageNum: curr || 1,
                 /*每页大小*/
-                pageSize: 1,
+                pageSize: 10,
                 waNumber:$("#poSupName").val(),
                 waSpName:$("#poSupName").val(),
             },
@@ -134,7 +134,7 @@
                 app.result = msg.records;
                 laypage({
                     cont: 'pagenav',//容器  值支持id名、原生dom对象，jquery对象,
-                    pages: msg.total,//总页数
+                    pages: msg.pages,//总页数
                     first: '首页',
                     last: '尾页',
                     skin: '#00A0E9',

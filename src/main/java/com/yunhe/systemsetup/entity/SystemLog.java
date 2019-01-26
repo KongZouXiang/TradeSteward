@@ -26,6 +26,9 @@ public class SystemLog implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    /**
+     * 账号
+     */
     @TableField("account")
     private String account;
 
@@ -64,5 +67,18 @@ public class SystemLog implements Serializable {
      */
     @TableField("create_date")
     private String createDate;
+
+    /**
+     * 日志查询开始时间
+     */
+    @TableField(exist = false)
+    private String beginTime;
+
+    /**
+     * 日志查询结束时间
+     */
+    @TableField(exist = false)
+    private String endTime;
+
 
 }
