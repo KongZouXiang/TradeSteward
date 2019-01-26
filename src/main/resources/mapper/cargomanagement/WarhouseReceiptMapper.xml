@@ -23,4 +23,50 @@
         <include refid="warehouse_receipt"/>
         from warehouse_receipt where wre_number like concat('%', #{warehouseReceipt.wreNumber}, '%') AND wre_current_unit like concat('%', #{warehouseReceipt.wreCurrentUnit}, '%') and wre_state = '未入库' order by id desc
     </select>
+
+    <select id="selectwarehouseReceiptTwoByState" parameterType="com.yunhe.cargomanagement.entity.WarehouseReceipt"
+            resultType="com.yunhe.cargomanagement.entity.WarehouseReceipt">
+        select
+        <include refid="warehouse_receipt"/>
+        from warehouse_receipt where wre_number like concat('%', #{warehouseReceipt.wreNumber}, '%') AND wre_current_unit like concat('%', #{warehouseReceipt.wreCurrentUnit}, '%') and wre_state = '全部入库' order by id desc
+    </select>
+
+    <select id="selectWarhouseXiangList" parameterType="Integer" resultType="com.yunhe.cargomanagement.entity.WarehouseReceipt">
+        select
+        <include refid="warehouse_receipt"/>
+        from warehouse_receipt where wre_state = '未入库' and id=#{id}
+    </select>
+
+    <select id="selectWarhouseXiangTwoList" parameterType="Integer" resultType="com.yunhe.cargomanagement.entity.WarehouseReceipt">
+        select
+        <include refid="warehouse_receipt"/>
+        from warehouse_receipt where wre_state = '全部入库' and id=#{id}
+    </select>
+
+
+
+    <resultMap id="selectWarHouseZhongOne" type="com.yunhe.cargomanagement.entity.PurComm">
+        <id column="id" property="id"/>
+        <result column="pc_geshu" property="pcGeshu"/>
+        <association property="commodityList" javaType="com.yunhe.basicdata.entity.CommodityList">
+            <id column="id" property="id"/>
+            <result column="cl_name" property="clName"/>
+            <result column="cl_number" property="clNumber"/>
+            <result column="cl_unit" property="clUnit"/>
+            <result column="cl_pur_price" property="clPurPrice"/>
+        </association>
+    </resultMap>
+
+    <select id="selectWarHouseZhong" resultMap="selectWarHouseZhongOne">
+        SELECT
+            co.cl_name,
+            co.cl_number,
+            pc.pc_geshu,
+            co.cl_unit,
+            co.cl_pur_price
+        FROM
+            pur_comm pc,
+            commodity_list co
+        WHERE pc.com_id = co.id and warhoure_id=#{id}
+    </select>
 </mapper>

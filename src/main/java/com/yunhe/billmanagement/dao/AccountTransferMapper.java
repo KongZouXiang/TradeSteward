@@ -4,9 +4,11 @@ package com.yunhe.billmanagement.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.billmanagement.entity.AccountTransfer;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -27,4 +29,13 @@ public interface AccountTransferMapper extends BaseMapper<AccountTransfer> {
      * @return 账户转账表：分页的结果集
      */
     List<AccountTransfer> selectAtPage(Page page, AccountTransfer accountTransfer);
+
+    /**
+     * <p>
+     *     账户转账表
+     * </p>
+     * @return 查询总金额和总手续费
+     */
+    @Select("select SUM(at_money) as money,SUM(at_charge) AS charge from account_transfer")
+    Map<String,Object> selectAtCountMap();
 }

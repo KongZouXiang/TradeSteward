@@ -66,6 +66,12 @@ public interface CommodiTytemplateMapper extends BaseMapper<CommodiTytemplate> {
      * @param commodiTytemplate
      * @return
      */
+    /**
+     * 通过模板名称获取id
+     * @param commodiTytemplate
+     * @return
+     */
+    public int huoquid(CommodiTytemplate commodiTytemplate);
 
 
 

@@ -33,17 +33,6 @@ public interface ICustomerService extends IService<Customer> {
 
     int updateCustomer(Customer customer);
 
-    /**
-     * <p>
-     * 查询并分页
-     * </p>
-     *
-     * @param current  当前页
-     * @param size     每页显示的条数
-     * @param customer 客户对象
-     * @return
-     */
-    Map selectAllCustomer(int current, int size, Customer customer);
 
     /**
      * <p>
@@ -94,5 +83,14 @@ public interface ICustomerService extends IService<Customer> {
      * @return 模糊查询分页list
      */
     IPage<Customer> selectPage(int current, int size, Customer customer);
+
+    /**
+     * <p>
+     *      查询所有客户
+     * </p>
+     *
+     * @return 客户列表
+     */
+    List<Customer> selectCustomer();
 }
 

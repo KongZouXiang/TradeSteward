@@ -42,7 +42,14 @@ public class MerchandisePackageServiceImpl extends ServiceImpl<MerchandisePackag
                         .like("mp_package_name", merchandisePackage.getMpPackageName()));
     }
 
+    /**
+     * 增加商品套餐
+     */
 
+    @Override
+    public int insertCt(MerchandisePackage merchandisePackage) {
+        return merchandisePackageMapper.insert(merchandisePackage);
+    }
 
     @Override
     public List<MerchandisePackage> selectAll() {
@@ -54,6 +61,29 @@ public class MerchandisePackageServiceImpl extends ServiceImpl<MerchandisePackag
     @Override
     public int deleteById(Serializable id) {
         return merchandisePackageMapper.deleteById(id);
+    }
+
+
+    /**
+     * 获取模板id
+     * @param merchandisePackage
+     * @return
+     */
+    @Override
+    public int huoquid(MerchandisePackage merchandisePackage) {
+        return merchandisePackageMapper.huoquid(merchandisePackage);
+    }
+
+
+    /**
+     * 根据模板的id查询出来模板的详情
+     * @param id
+     * @return
+     */
+    @Override
+    public MerchandisePackage selectById(int id) {
+        MerchandisePackage taocan = merchandisePackageMapper.selectById(id);
+        return taocan;
     }
 
 }

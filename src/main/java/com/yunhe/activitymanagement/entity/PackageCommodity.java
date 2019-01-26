@@ -1,6 +1,9 @@
 package com.yunhe.activitymanagement.entity;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -18,17 +21,36 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class PackageCommodity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    @TableId(value ="id",type = IdType.AUTO)
+    private Integer id;
+    /**
+     * 商品名称
+     */
+    private String pcName;
 
     /**
-     * 商品套餐ID
+     * 商品编号
      */
-    private Integer mpId;
+    private String pcNumber;
 
     /**
-     * 商品列表ID
+     * 商品属性
      */
-    private Integer clId;
+    private String pcProperty;
 
+    /**
+     * 数量
+     */
+    private Integer pcSum;
+
+    /**
+     * 单位
+     */
+    private String pcCompany;
+
+    /**
+     * 商品套餐id
+     */
+    private Integer pcId;
 
 }

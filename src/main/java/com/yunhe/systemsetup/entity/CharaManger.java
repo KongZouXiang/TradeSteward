@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  * 角色管理
  * </p>
  *
- * @author 刘延奇,heyuji
+ * @author heyuji
  * @since 2019-01-02
  */
 @Data

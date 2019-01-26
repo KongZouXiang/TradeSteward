@@ -12,7 +12,11 @@
 
     <!--查询的是商品模板里面的所有已存在的模板-->
     <select id="selectAll" resultType="com.yunhe.activitymanagement.entity.CommodiTytemplate">
-        select <include refid="ctCols"/> from trades_teward.commodi_tytemplate
+        select <include refid="ctCols"/> from trades_teward.commodi_tytemplate order by id desc
+    </select>
+
+    <select id="huoquid" parameterType="com.yunhe.activitymanagement.entity.CommodiTytemplate" resultType="int">
+        select id from commodi_tytemplate where ct_tytemplate_name=#{ctTytemplateName}
     </select>
 
 </mapper>

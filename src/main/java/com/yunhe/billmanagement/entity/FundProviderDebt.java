@@ -36,6 +36,11 @@ public class FundProviderDebt implements Serializable {
     private String fpdLinkman;
 
     /**
+     * 联系电话
+     */
+    private String fpdTelephone;
+
+    /**
      * 期初欠款
      */
     private Double fpdBeginDebt;

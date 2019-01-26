@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 @RequestMapping("/systemsetup/enterprise")
 public class EnterpriseController {
+
     @RequestMapping("/toEnterprise")
     public ModelAndView toEnterprise(){
         return new ModelAndView("/systemsetup/qiyeziliao");

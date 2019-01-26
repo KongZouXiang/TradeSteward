@@ -6,4 +6,5 @@
 *.iws
 *.iml
 *.ipr
+log/spring.log
 

@@ -1,6 +1,7 @@
 package com.yunhe.cargomanagement.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yunhe.cargomanagement.entity.PurComm;
 import com.yunhe.cargomanagement.entity.PurchaseOrder;
 import com.yunhe.cargomanagement.dao.PurchaseOrderMapper;
 import com.yunhe.cargomanagement.service.IPurchaseOrderService;
@@ -64,7 +65,7 @@ public class PurchaseOrderServiceImpl extends ServiceImpl<PurchaseOrderMapper, P
     }
 
     @Override
-    public List<PurchaseOrder> getPurchaseById(Integer id) {
+    public PurchaseOrder getPurchaseById(Integer id) {
         return purchaseOrderMapper.getPurchaseById(id);
     }
 
@@ -81,6 +82,24 @@ public class PurchaseOrderServiceImpl extends ServiceImpl<PurchaseOrderMapper, P
     @Override
     public List<PurchaseOrder> selectPurchaseOrder() {
         return purchaseOrderMapper.selectList(null);
+    }
+
+    @Override
+    public List<PurComm> selectPuOrder(PurchaseOrder purchaseOrder) {
+        List<PurComm> array = null;
+        List<PurchaseOrder> list = purchaseOrderMapper.selectPuOrder(purchaseOrder);
+        System.out.println(list+"kl;;4*/*/**********/**");
+        for (PurchaseOrder order : list) {
+            List<PurComm> purComms = order.getPurComm();
+        array = purComms;
+        }
+        System.out.println(array+"/*-*=/*-=/*-=/*-/=*-/=*");
+        return array;
+    }
+
+    @Override
+    public List<PurComm> selectComZhong(int id) {
+        return purchaseOrderMapper.selectComZhong(id);
     }
 
     public PurchaseOrderMapper getPurchaseOrderMapper() {

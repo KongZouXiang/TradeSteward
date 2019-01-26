@@ -1,6 +1,7 @@
 package com.yunhe.cargomanagement.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.yunhe.cargomanagement.entity.PurComm;
 import com.yunhe.cargomanagement.entity.PurchaseHistory;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -54,4 +55,17 @@ public interface IPurchaseHistoryService extends IService<PurchaseHistory> {
      * @return 所有进货历史数据
      */
     List<PurchaseHistory> selectpurchaseHistory();
+
+    /**
+     * 进货历史详情
+     * @param id 根据id查询
+     * @return 进货历史详情
+     */
+    PurchaseHistory selectXiangList(int id);
+
+    /**
+     * 一对一查询进货历史关联商品
+     * @return 商品信息
+     */
+    List<PurComm> selectComHistZhong(int id);
 }

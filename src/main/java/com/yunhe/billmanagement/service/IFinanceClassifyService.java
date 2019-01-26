@@ -3,6 +3,7 @@ package com.yunhe.billmanagement.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yunhe.billmanagement.entity.FinanceClassify;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -36,12 +37,30 @@ public interface IFinanceClassifyService extends IService<FinanceClassify> {
 
     /**
      * <P>
+     *     通过条件查询数据
+     * </P>
+     * @param financeClassify 查询条件放在对象里
+     * @return 收支分类管理表：查询的结果集
+     */
+    List<FinanceClassify> selectFcBySort(FinanceClassify financeClassify);
+
+    /**
+     * <P>
      *     增加数据
      * </P>
      * @param financeClassify 查询条件放在对象里
      * @return  收支分类管理表：增加是否成功true or false
      */
     int insertFc(FinanceClassify financeClassify);
+
+    /**
+     * <P>
+     *     增加数据之前检查账目名是否已存在
+     * </P>
+     * @param financeClassify 查询条件
+     * @return
+     */
+    boolean checkFcExit(FinanceClassify financeClassify);
 
     /**
      * <P>
@@ -65,8 +84,9 @@ public interface IFinanceClassifyService extends IService<FinanceClassify> {
      * <P>
      *     删除数据
      * </P>
-     * @param financeClassify 查询条件放在对象里
+     * @param id 通过id进行删除
      * @return  收支分类管理表：删除是否成功true or false
      */
-    int deleteFc(FinanceClassify financeClassify);
+    int deleteFc(int id);
+
 }

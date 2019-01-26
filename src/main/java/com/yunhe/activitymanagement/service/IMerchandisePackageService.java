@@ -29,9 +29,36 @@ public interface IMerchandisePackageService extends IService<MerchandisePackage>
      *     删除数据
      * </P>
      * @param
-     * @return  商品套餐表：删除是否成功
+     * @return  商品模板表：删除是否成功
      */
     int deleteById(Serializable id);
 
+    /**
+     * 获取id（通过套餐名字）
+     * @param merchandisePackage
+     * @return
+     */
+    public int huoquid(MerchandisePackage merchandisePackage);
+
+
+    /**
+     * <P>
+     *     增加数据
+     * </P>
+     * @param merchandisePackage 查询条件放在对象里
+     * @return  商品模板表：增加是否成功
+     */
+    int insertCt(MerchandisePackage merchandisePackage);
+
+
+
+    /**
+     * <P>
+     *     通过id查找数据，显示详情
+     * </P>
+     * @param id  查询数据的条件
+     * @return FinanceOrder对象
+     */
+    MerchandisePackage selectById(int id);
 
 }

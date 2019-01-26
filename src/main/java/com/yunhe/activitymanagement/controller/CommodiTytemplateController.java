@@ -45,6 +45,13 @@ public class CommodiTytemplateController {
     }
 
 
+    /**
+     * 点击提交所有选择商品之后，跳转一个刷新之后的商品模板页面
+     * @return
+     */
+
+
+
 
 
     @RequestMapping("/xinzeng")
@@ -105,7 +112,7 @@ public class CommodiTytemplateController {
      *     通过id查找数据，显示详情
      * </P>
      * @param id  查询数据的条件
-     * @return C对象
+     * @return 对象
      */
     @GetMapping(value = "/selectById")
     public CommodiTytemplate selectById(int id) {

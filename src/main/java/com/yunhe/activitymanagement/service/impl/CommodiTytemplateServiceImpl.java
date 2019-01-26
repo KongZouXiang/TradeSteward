@@ -8,17 +8,11 @@ import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.yunhe.activitymanagement.dao.CommodiTytemplateMapper;
 import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
-import com.yunhe.billmanagement.entity.FinanceOrder;
-import com.yunhe.cargomanagement.entity.SalesOrderHistory;
 import org.springframework.stereotype.Service;
-
-
 import javax.annotation.Resource;
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * <p>
@@ -46,12 +40,6 @@ public class CommodiTytemplateServiceImpl extends ServiceImpl<CommodiTytemplateM
                         .like("ct_tytemplate_name", commodiTytemplate.getCtTytemplateName()));
     }
 
-
-
-
-
-
-
     @Override
     public List<CommodiTytemplate> selectAll() {
         return commodiTytemplateMapper.selectAll();
@@ -71,6 +59,16 @@ public class CommodiTytemplateServiceImpl extends ServiceImpl<CommodiTytemplateM
     @Override
     public int deleteById(Serializable id) {
         return commodiTytemplateMapper.deleteById(id);
+    }
+
+    /**
+     * 获取模板id
+     * @param commodiTytemplate
+     * @return
+     */
+    @Override
+    public int huoquid(CommodiTytemplate commodiTytemplate) {
+        return commodiTytemplateMapper.huoquid(commodiTytemplate);
     }
 
 

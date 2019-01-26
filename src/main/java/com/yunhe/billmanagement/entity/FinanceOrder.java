@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.annotation.Resource;
 import java.io.Serializable;
 
 /**
@@ -86,5 +87,8 @@ public class FinanceOrder implements Serializable {
      */
     @TableField(value = "fo_flag")
     private String foFlag;
+
+   /* @Resource
+    private FinanceClassify financeClassify;*/
 
 }

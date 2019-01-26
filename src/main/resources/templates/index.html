@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -22,15 +22,26 @@
     <script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
+
+    <!--LayUI-->
+    <script src="/lib/layui/layui.all.js"></script>
+    <link rel="stylesheet" href="/lib/layui/css/layui.css">
+
     <title>贸易管家</title>
     <meta name="keywords" content="H-ui.admin v3.1,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
     <meta name="description" content="H-ui.admin v3.1，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
+    <style type="text/css">
+        .cl{
+            margin-right: 30px;
+        }
+    </style>
 </head>
 
 <body>
 <header class="navbar-wrapper">
     <div class="navbar navbar-fixed-top">
-        <div class="container-fluid cl"><a class="logo navbar-logo f-l mr-10 hidden-xs" href="/aboutHui.shtml">贸易管家</a>
+        <div class="container-fluid cl">
+            <a class="logo navbar-logo f-l mr-10 hidden-xs" href="/aboutHui.shtml">贸易管家</a>
             <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/aboutHui.shtml">H-ui</a>
             <span class="logo navbar-slogan f-l mr-10 hidden-xs">v3.1</span>
             <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
@@ -40,7 +51,7 @@
                             class="Hui-iconfont">&#xe600;</i> 新增 <i class="Hui-iconfont">&#xe6d5;</i></a>
                         <ul class="dropDown-menu menu radius box-shadow">
                             <li><a href="javascript:;" onclick="article_add('添加资讯','article-add.html')"><i
-                                    class="Hui-iconfont">&#xe616;</i> 资讯</a></li>
+                                    class="Hui-iconfont">&#xe616;</i> 销售订单</a></li>
                             <li><a href="javascript:;" onclick="picture_add('添加资讯','picture-add.html')"><i
                                     class="Hui-iconfont">&#xe613;</i> 图片</a></li>
                             <li><a href="javascript:;" onclick="product_add('添加资讯','product-add.html')"><i
@@ -53,13 +64,18 @@
             </nav>
             <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
                 <ul class="cl">
-                    <li>超级管理员</li>
+                    <li th:text="${session.employ.emRole}">超级管理员</li>
                     <li class="dropDown dropDown_hover">
-                        <a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+                        <a href="#" class="dropDown_A" >
+                            <span th:text="${session.employ.emRealname}">员工姓名</span>
+                            <i class="Hui-iconfont">&#xe6d5;</i>
+                        </a>
+
                         <ul class="dropDown-menu menu radius box-shadow">
-                            <li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
-                            <li><a href="#">切换账户</a></li>
-                            <li><a href="#">退出</a></li>
+                            <!--<li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>-->
+                            <li><a data-href="/systemsetup/employ/list" data-title="员工管理" href="javascript:void(0)">查看员工</a></li>
+                            <li><a href="/tologin">切换账户</a></li>
+                            <li><a href="/tologin">安全退出</a></li>
                         </ul>
                     </li>
                     <li id="Hui-msg"><a href="#" title="消息"><span class="badge badge-danger">1</span><i
@@ -83,8 +99,8 @@
 </header>
 <aside class="Hui-aside">
     <div class="menu_dropdown bk_2">
-        <dl id="menu-article">
-            <dt><i class="Hui-iconfont">&#xe616;</i> 云管货<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+        <dl shiro:haspermission="cargomanagement" id="menu-article">
+            <dt><i class="Hui-iconfont">&#xe669;</i> 云管货<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
                     <li><a data-href="/cargomanagement/sales-order-history/index1" data-title="销售订单历史"
@@ -98,38 +114,40 @@
                     <li><a data-href="/cargomanagement/purchase-return-history/purchaseReturnHistoryList"
                            data-title="进货退货历史" href="javascript:void(0)">进货退货历史</a></li>
                     <li><a data-href="article-list.html" data-title="出库历史" href="javascript:void(0)">出库历史</a></li>
-                    <li><a data-href="article-list.html" data-title="入库历史" href="javascript:void(0)">待入库单</a></li>
-                    <li><a data-href="article-list.html" data-title="库存查询" href="javascript:void(0)">入库单</a></li>
-                </ul>
-            </dd>
-        </dl>
-        <dl id="menu-article">
-            <dt><i class="Hui-iconfont">&#xe616;</i> 云管账<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-            <dd>
-                <ul>
-                    <li><a data-href="article-list.html" data-title="日常收支" href="javascript:void(0)">日常收支</a></li>
-                    <li><a data-href="article-list.html" data-title="收支项目管理" href="javascript:void(0)">收支项目管理</a></li>
-                    <li><a data-href="article-list.html" data-title="客户应收欠款" href="javascript:void(0)">客户应收欠款</a></li>
-                    <li><a data-href="article-list.html" data-title="供应商应付欠款" href="javascript:void(0)">供应商应付欠款</a></li>
-                    <li><a data-href="article-list.html" data-title="资金流水" href="javascript:void(0)">资金流水</a></li>
-                    <li><a data-href="article-list.html" data-title="账户转账" href="javascript:void(0)">账户转账</a></li>
+                    <li><a data-href="/cargomanagement/warehouse-receipt/warehouse_receipt" data-title="入库历史"
+                           href="javascript:void(0)">入库历史</a></li>
+                    <li><a data-href="/cargomanagement/warehouse-receipt/warehouse_receipt" data-title="库存查询"
+                           href="javascript:void(0)">库存查询</a></li>
                 </ul>
             </dd>
         </dl>
 
-        <dl id="menu-article">
-            <dt><i class="Hui-iconfont">&#xe616;</i> 云管客<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+        <dl shiro:haspermission="billmanagement" id="menu-article">
+            <dt><i class="Hui-iconfont">&#xe60c;</i> 云管账<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="sale-list.html" data-title="客户管理"
-                           href="javascript:void(0)">客户管理</a></li>
-                    <li><a data-href="article-list.html" data-title="客户等级价" href="javascript:void(0)">客户等级价</a></li>
-                    <li><a data-href="article-list.html" data-title="供应商管理" href="javascript:void(0)">供应商管理</a></li>
+                    <li><a data-href="/billManagement/finance-order/toFo" data-title="日常收支" href="javascript:void(0)">日常收支</a></li>
+                    <li><a data-href="/billManagement/finance-classify/toFc" data-title="收支项目管理" href="javascript:void(0)">收支项目管理</a></li>
+                    <li><a data-href="/billManagement/fund-client-debt/toFcd" data-title="客户应收欠款" href="javascript:void(0)">客户应收欠款</a></li>
+                    <li><a data-href="/billManagement/fund_provider_debt/toFpd" data-title="供应商应付欠款" href="javascript:void(0)">供应商应付欠款</a></li>
+                    <li><a data-href="/billManagement/running-accounts/toRa" data-title="资金流水" href="javascript:void(0)">资金流水</a></li>
+                    <li><a data-href="/billManagement/account-transfer/toAt" data-title="账户转账" href="javascript:void(0)">账户转账</a></li>
                 </ul>
             </dd>
         </dl>
-        <dl id="menu-article">
-            <dt><i class="Hui-iconfont">&#xe616;</i> 云分析<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+
+        <dl shiro:haspermission="customermanagement" id="menu-article">
+            <dt><i class="Hui-iconfont">&#xe60d;</i> 云管客<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a data-href="/customermanagement/customer/cust" data-title="客户管理" href="javascript:void(0)">客户管理</a></li>
+                    <li><a data-href="/customermanagement/customer-level/custLevel" data-title="客户等级价" href="javascript:void(0)">客户等级价</a></li>
+                    <li><a data-href="/customermanagement/supplier/supp" data-title="供应商管理" href="javascript:void(0)">供应商管理</a></li>
+                </ul>
+            </dd>
+        </dl>
+        <dl shiro:haspermission="reportanalysis" id="menu-article">
+            <dt><i class="Hui-iconfont">&#xe618;</i> 云分析<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
                     <li><a data-href="sale-list.html" data-title="进货报表"
@@ -139,18 +157,20 @@
             </dd>
         </dl>
 
-        <dl id="menu-article">
-            <dt><i class="Hui-iconfont">&#xe616;</i> 云营销<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+        <dl shiro:haspermission="activitymanagement" id="menu-article">
+            <dt><i class="Hui-iconfont">&#xe6bb;</i> 云营销<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="/activitymanagement/merchandise-package/shangpintaocan" data-title="商品套餐" href="javascript:void(0)">商品套餐</a></li>
-                    <li><a data-href="/activitymanagement/commodi-tytemplate/shangpinmoban" data-title="商品模板" href="javascript:void(0)">商品模板</a></li>
+                    <li><a data-href="/activitymanagement/merchandise-package/shangpintaocan" data-title="商品套餐"
+                           href="javascript:void(0)">商品套餐</a></li>
+                    <li><a data-href="/activitymanagement/commodi-tytemplate/shangpinmoban" data-title="商品模板"
+                           href="javascript:void(0)">商品模板</a></li>
                 </ul>
             </dd>
         </dl>
 
-        <dl id="menu-article">
-            <dt><i class="Hui-iconfont">&#xe616;</i> 基础资料<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+        <dl shiro:haspermission="basicdata" id="menu-article">
+            <dt><i class="Hui-iconfont">&#xe6b5;</i> 基础资料<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
                     <li><a data-href="sale-list.html" data-title="商品列表"
@@ -163,13 +183,15 @@
             </dd>
         </dl>
 
-        <dl id="menu-system">
+        <dl shiro:haspermission="systemsetup" id="menu-system">
             <dt><i class="Hui-iconfont">&#xe62e;</i>系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
                     <li><a data-href="system-base.html" data-title="系统设置" href="javascript:void(0)">系统设置</a></li>
-                    <li><a data-href="system-category.html" data-title="栏目管理" href="javascript:void(0)">栏目管理</a></li>
-                    <li><a data-href="system-data.html" data-title="数据字典" href="javascript:void(0)">数据字典</a></li>
+                    <li><a data-href="/systemsetup/employ/list" data-title="员工管理" href="javascript:void(0)">员工管理</a>
+                    </li>
+                    <li><a data-href="/systemsetup/chara-manger/chara" data-title="角色管理"
+                           href="javascript:void(0)">角色管理</a></li>
                     <li><a data-href="system-shielding.html" data-title="屏蔽词" href="javascript:void(0)">屏蔽词</a></li>
                     <li><a data-href="system-log.html" data-title="系统日志" href="javascript:void(0)">系统日志</a></li>
                 </ul>
@@ -184,7 +206,7 @@
         <div class="Hui-tabNav-wp">
             <ul id="min_title_list" class="acrossTab cl">
                 <li class="active">
-                    <span title="我的桌面" data-href="welcome.html">我的桌面</span>
+                   <span title="我的桌面" data-href="/welcome">我的桌面</span> <!--<a data-href="/welcome"></a>-->
                     <em></em></li>
             </ul>
         </div>
@@ -196,7 +218,7 @@
     <div id="iframe_box" class="Hui-article">
         <div class="show_iframe">
             <div style="display:none" class="loading"></div>
-            <iframe scrolling="yes" frameborder="0" src="welcome.html"></iframe>
+            <iframe scrolling="yes" frameborder="0" src="/welcome"></iframe>
         </div>
     </div>
 </section>

@@ -19,13 +19,12 @@
     <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
     <script type="text/javascript" src="/lib/respond.min.js"></script>
 
-    <title>商品模板</title>
+    <title>模板详情</title>
 </head>
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 云管货 <span
-        class="c-gray en">&gt;</span> 商品模板 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
-                                              href="javascript:location.replace(location.href);" title="刷新"><i
-        class="Hui-iconfont">&#xe68f;</i></a></nav>
+        class="c-gray en">&gt;</span> 商品模板 <span
+        class="c-gray en">&gt;</span> 模板详情</nav>
 <div class="page-container">
     <div class="text-c"> <!--日期范围：
         <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin"
@@ -44,11 +43,11 @@
     </span>
 
 
-    <div id="app" style="overflow: scroll;height: 500px"  >
+    <div id=spap" style="overflow: scroll;height: 500px"  >
         <table class="table table-border table-bordered table-bg">
             <thead>
             <tr>
-                <th scope="col" colspan="9">商品模板</th>
+                <th scope="col" colspan="9">模板详情</th>
             </tr>
             <tr class="text-c">
 
@@ -92,18 +91,6 @@
             result:[]
         }
     });
-    $(function () {
-        $("#checkAl").click(function () {
-            $("input[id^='box_']").attr("checked",this.checked);
-        })
-        $("input[id^='box_']").click(function(){//点击每一个子checkbox，都会触发这个事件
-            /**获取到下面所有checkbox*/
-            var boxs = $("input[id^='box_']");
-
-            $("#checkAll").attr("checked",boxs.filter(":checked").length == 4);
-        });
-    });
-
 
 
     getPurchasePageList();
@@ -112,59 +99,7 @@
     });
 
 
-    /*删除账目*/
-    var delEvent = function (id) {
-        layer.confirm('你确定要删除吗？',{
-            btn:['是','否']
-        },function () {
-            $.ajax({
-                type:'GET',
-                dataType:'json',
-                url: '/activitymanagement/commodi-tytemplate/delete',
-                data:{
-                    id:id
-                },
-                success:function (msg) {
-                    getPurchasePageList();
-                    layer.msg('成功删除' + id,{icon:5});
-                }
-            })
-        },function () {
 
-        });
-    };
-    function detail(id) {
-        var index = layer.open({
-            type: 2,
-            title: '详细',
-            content: '/activitymanagement/commodi-tytemplate/edit?id='+id,
-        });
-        layer.full(index);
-    };
-    /*编辑修改*/
-     function b(title,url){
-        var index = layer.open({
-            type: 2,
-            title: title,
-            content: url
-        });
-        layer.full(index);
-    };
-    /*添加*/
-    var c =function (title,url,h,w) {
-        layer.open({
-            type:2,
-            title:title,
-            fix:false,
-            maxmin:true,
-            shadeClose:true,
-            area:['1000px','800px'],
-            content:url,
-            end:function() {
-                getUserPageList();
-            }
-        });
-    }
 
     var Excel_out =function () {
         window.location.href="/activitymanagement/commodi-tytemplate/export1";
@@ -172,5 +107,6 @@
 
 
 </script>
+</div>
 </body>
 </html>

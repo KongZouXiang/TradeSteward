@@ -3,6 +3,7 @@ package com.yunhe.activitymanagement.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
+import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.yunhe.activitymanagement.entity.MerchandisePackage;
 import com.yunhe.activitymanagement.service.IMerchandisePackageService;
 import org.apache.poi.hssf.usermodel.*;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -38,6 +40,64 @@ public class MerchandisePackageController {
     @Resource
     private IMerchandisePackageService merchandisePackageService;
 
+
+
+
+    @GetMapping("MBcommodity")
+    public ModelAndView MBcommodity(ModelAndView modelAndView) {
+        modelAndView.setViewName("/activitymanagement/MBcommodity-list");
+        return modelAndView;
+    }
+
+
+    /**
+     * 点击提交所有选择商品之后，跳转一个刷新之后的商品模板页面
+     * @return
+     */
+
+
+
+
+
+    @RequestMapping("/xinzeng")
+    public ModelAndView xinzeng() {
+        return new ModelAndView("activitymanagement/addshangpintaocan");
+    }
+
+    /**
+     * 查询模板详情
+     * @param id
+     * @param session
+     * @return
+     */
+    @RequestMapping("/toDetail")
+    public ModelAndView toDetail(int id, HttpSession session){
+        System.out.println("toDetail进入controller");
+        MerchandisePackage mp = merchandisePackageService.selectById(id);
+        session.setAttribute("merchandisepackage",mp);
+        return new ModelAndView("activitymanagement/mobanxiangqing");
+    }
+
+
+
+
+
+    public int insertCt(MerchandisePackage sa) {
+        return merchandisePackageService.insertCt(sa);
+    }
+
+
+    /**
+     * <P>
+     *     通过id查找数据，显示详情
+     * </P>
+     * @param id  查询数据的条件
+     * @return 对象
+     */
+    @GetMapping(value = "/selectById")
+    public MerchandisePackage selectById(int id) {
+        return merchandisePackageService.selectById(id);
+    }
 
     @RequestMapping("/shangpintaocan")
     public ModelAndView shangpintaocan () {

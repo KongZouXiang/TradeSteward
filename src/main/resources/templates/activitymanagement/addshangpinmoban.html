@@ -55,13 +55,13 @@
 
               </span>
 
-        <select  id="index"></select>
-        <select  id="sid" ></select>
-        <select  id="shopname"></select>
-        <select  id="shopnuber"></select>
-        <select  id="shopguige"></select>
-        <select  id="shopsize"></select>
-        <select  id="shopjiage"></select>
+        <select  id="index" style="display: none"></select>
+        <select  id="sid" style="display: none"></select>
+        <select  id="shopname" style="display: none"></select>
+        <select  id="shopnuber" style="display: none"></select>
+        <select  id="shopguige" style="display: none"></select>
+        <select  id="shopsize" style="display: none"></select>
+        <select  id="shopjiage" style="display: none"></select>
     </div>
     <div id="app" style="overflow: scroll;height: 500px">
         <table class="table table-border table-bordered table-bg">
@@ -77,7 +77,7 @@
             </tr>
             <tr class="text-c">
                 <th width="25"><i class="Hui-iconfont">&#xe667;</i></th>
-                <th width="130">操作</th>
+               <!-- <th width="130">操作</th>-->
                 <th width="130">商品名称/规格</th>
                 <th width="150">商品编号</th>
                 <th width="150">规格</th>
@@ -87,8 +87,9 @@
             </thead>
             <tbody id="shuju" ></tbody>
         </table>
+        <div><button class="layui-btn" style="margin-top: 60px;margin-left:600px " onclick="baocun()">保存</button>
     </div>
-    <div><button class="layui-btn" style="margin-top: 60px;margin-left:450px " onclick="baocun()">保存</button>
+
     </div>
     <div id="pagenav" style="text-align: center"></div>
 </div>
@@ -111,19 +112,8 @@
         }
     });
 
-   /* var t1=window.setInterval(refreshCount, 1000000);*/
-
-   /* function refreshCount() {
-
-    }*/
-
-
 
     $(function () {
-
-
-
-
         $("#checkAl").click(function () {
             $("input[id^='box_']").attr("checked", this.checked);
         })
@@ -134,8 +124,10 @@
             $("#checkAll").attr("checked", boxs.filter(":checked").length == 4);
         });
     });
+    var text6 =new Array();
+
    var selectList= function(){
-       var teid =$("#index").text();
+       //var teid =$("#index").text();
        var text = $("#sid").text()
        var arr=text.split(',')
        var text1=$("#shopname").text()
@@ -148,23 +140,41 @@
        var arr4 =text4.split(',');
        var text5 =$("#shopjiage").text();
        var arr5 =text5.split(',');
-       var text6 =new Array();
-     for(var a =0;a<text.length;a++){
-        text6[a]=[arr[a],arr1[a],arr2[a],arr3[a],arr4[a],arr5[a]
-        ];
+
+     for(var a =0;a<arr.length-1;a++){
+        text6[a]=[arr[a],arr1[a],arr2[a],arr3[a],arr4[a],arr5[a]];
      }
+     //app.result=text6;
 
-               alert(text6[0]);
-
-
-     app.result=text6;
    };
 
-
     function baocun(){
-
+     /*   alert(shopname);*/
         selectList();
+          /*  alert(text6.length)*/
+            $.ajax({
+                url:'/activitymanagement/template-details/savemoban',
+                type:'GET',
+                traditional: true,
+                data:{
+                    ctTytemplateName :$("#input_mobanname").val(),
+                    ctTemplateNumber :$("#input_mobannum").val(),
+                      list:text6,
+                    ctTemplategoods:$("#shopname").text(),
+                },success:function (msg) {
+                    if(msg==true){
+                       layer.msg('添加模板成功',{time:2000,icon:1});
+                        window.location.href="/activitymanagement/commodi-tytemplate/shangpinmoban";
+                    }else {
+                        layer.msg("服务器繁忙请稍后再试",{time:2000,icon:2});
+                    }
+
+                }
+            })
+
+
     }
+
 
     $("#deleteAl").click(function () {
         /**获取下面选中的checkbox*/

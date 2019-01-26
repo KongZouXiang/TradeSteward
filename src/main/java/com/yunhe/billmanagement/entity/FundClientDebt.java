@@ -92,5 +92,6 @@ public class FundClientDebt implements Serializable {
     @TableField(value = "fcd_receivable")
     private Double fcdReceivable;
 
-
+    public FundClientDebt() {
+    }
 }

@@ -1,6 +1,9 @@
 package com.yunhe.activitymanagement.entity;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -20,6 +23,7 @@ public class TemplateDetails implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value ="id",type = IdType.AUTO)
     private Integer id;
     /**
      * 商品名称
@@ -50,4 +54,5 @@ public class TemplateDetails implements Serializable {
      * 商品模板id
      */
     private Integer ctId;
+
 }

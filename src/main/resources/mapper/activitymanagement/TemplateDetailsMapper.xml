@@ -2,4 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yunhe.activitymanagement.dao.TemplateDetailsMapper">
 
+    <sql id="ctCols">
+        id,
+        td_name,
+        td_number,
+        td_property,
+        td_sum,
+        td_company,
+        ct_id
+    </sql>
+
+
 </mapper>

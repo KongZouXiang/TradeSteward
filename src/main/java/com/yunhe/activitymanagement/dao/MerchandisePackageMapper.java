@@ -20,4 +20,18 @@ public interface MerchandisePackageMapper extends BaseMapper<MerchandisePackage>
 
 
     List<MerchandisePackage> selectAll();
+
+
+
+
+    /**
+     * 通过模板名称获取id
+     * @param merchandisePackage
+     * @return
+     */
+    public int huoquid(MerchandisePackage merchandisePackage);
+
+
 }
+
+

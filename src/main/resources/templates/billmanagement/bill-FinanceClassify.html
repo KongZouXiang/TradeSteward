@@ -18,12 +18,13 @@
 <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
 <!--[if IE 6]>
-<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
-<script>DD_belatedPNG.fix('*');</script>
-<![endif]-->
-<script type="text/javascript" src="/js/vue/vue.min.js"></script>
-<link rel="stylesheet" href="/js/laypage/skin/laypage.css">
-<script type="text/javascript" src="/js/laypage/laypage.js"></script>
+	<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<![endif]-->
+	<script type="text/javascript" src="/js/vue/vue.min.js"></script>
+	<link rel="stylesheet" href="/js/laypage/skin/laypage.css">
+	<script type="text/javascript" src="/js/laypage/laypage.js"></script>
+	<link rel="stylesheet" href="/lib/layui/css/layui.css"  media="all">
 	<title>收支项目管理</title>
 </head>
 <body>
@@ -33,10 +34,11 @@
 		<input type="text" class="input-text" style="width:250px" placeholder="输入账目类型" id="fcType" name="fcType">
 		<button type="submit" class="btn btn-success" id="findFc" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索账目类型</button>
 	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-20" data-validator-option="{theme:'simple_right'}">
-		<span class="l"><a href="javascript:;" id="daoFc" class="btn btn-success radius"><i class="Hui-iconfont">&#xe644;</i> Excel导出</a></span>
+	<div class="cl pd-5 bg-1 bk-gray mt-20" data-validator-option="{theme:'simple_right'}" v-for="(item,index) in result">
+		<a href="javascript:;" id="deleteAll" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+		&nbsp;&nbsp;<a href="javascript:;" id="daoFc" class="btn btn-success radius"><i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
 		&nbsp;&nbsp;<a href="javascript:;" id="addFcBtn" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增账目</a>
-		<span class="r">共有数据：<strong th:text="${session.total}"></strong> 条</span>
+		<span class="r">共有数据：<strong id="strong"></strong> 条</span>
 	</div>
 	<table class="table table-border table-bordered table-bg" id="app">
 		<thead>
@@ -44,7 +46,7 @@
 				<th scope="col" colspan="9">收支分类列表</th>
 			</tr>
 			<tr class="text-c">
-				<th width="25"><input type="checkbox" name="" value=""></th>
+				<th width="25"><input type="checkbox" id="checkAll" value=""></th>
 				<th width="100">操作</th>
 				<th width="40">ID</th>
 				<th width="150">账目类型</th>
@@ -54,9 +56,10 @@
 		</thead>
 		<tbody>
 			<tr class="text-c" v-for="(item,index) in result">
-				<td><input type="checkbox" value="1" name=""></td>
+				<td><input type="checkbox" id="box" :value="item.id"></td>
 				<td class="td-manage"><a title="编辑" href="javascript:;" @click="editEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-					<a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+					<a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+				</td>
 				<td>{{index+1}}</td>
 				<td>{{item.fcType}}</td>
 				<td>{{item.fcSort}}</td>
@@ -64,7 +67,7 @@
 			</tr>
 		</tbody>
 	</table>
-	<div id="pagenav" style="text-align: center;position:fixed;bottom:100px;left:0;right:0"></div>
+	<div id="pagenav" style="text-align: center;position:fixed;margin-top:150px;left:0;right:0"></div>
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
@@ -76,6 +79,7 @@
 <script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+<script src="/lib/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript">
     var app = new Vue({
         el:'#app',
@@ -95,6 +99,7 @@
                 fcType:$("#fcType").val()
             },
             success:function(msg){
+                $("#strong").html(msg.total);
                 app.result = msg.list;
                 laypage({
                     cont:'pagenav',
@@ -132,13 +137,13 @@
             content:'/billManagement/finance-classify/toAdd',
             end:function() {
                 getFcPageList();
+                layer.msg('新增成功', {icon: 1});
             }
         });
     });
 
     /*修改账目*/
     var editEvent = function (id) {
-        //alert(id);
         layer.open({
             type:2,
             title: '修改账目',
@@ -149,9 +154,10 @@
             content:'/billManagement/finance-classify/toUpdate?id='+id,
             end:function() {
                 getFcPageList();
+                layer.msg('修改成功', {icon: 1});
             }
         });
-    }
+    };
 
     /*删除账目*/
     var delEvent = function (id) {
@@ -163,38 +169,61 @@
                 dataType:'json',
                 url: '/billManagement/finance-classify/deleteFc',
                 data:{id:id},
-                success:function (msg) {
-                    getFcPageList();
-                    layer.msg('成功删除账目' + id,{icon:5});
+                success: function (msg) {
+                    console.log(msg);
+                    if (msg==0) {
+                        layer.msg('成功删除', {icon: 1});
+                        getFcPageList();
+                    }
+                    if (msg==1){
+                        layer.msg('该分类下有订单，不能删除！',{time:2000,icon:2});
+                        getFcPageList()
+                    }
                 }
-            })
+            });
         },function () {
-
+            getFcPageList();
         });
     };
 
-    function delAll (argument) {
-
-        var data = tableCheck.getData();
-        alert(data);
-        layer.confirm('确认要将它们都删除吗？',function(index){
-            //捉到所有被选中的，发异步进行删除
-            for(var i =0;i<data.length;i++){
-                $.ajax({
-                    url:"/billManagement/finance-classify/deleteFc",
-                    data:{"id":data[i]},
-
-                })
-                alert(data[i]);
-            }
-            // $(".layui-form-checked").not('.header').parents('tr').remove();
-            window.location.href="/billManagement/finance-classify/selectFcPage";
-            layer.msg('删除成功', {icon: 1});
-
-
+    /*批量删除*/
+    $("#deleteAll").click(function(){
+        var arr = new Array();
+        $("input:checkbox[id='box']:checked").each(function (i) {
+            arr[i]=$(this).val();
         });
-
-    }
+        if (arr[0]==null){
+            layer.msg("请选择要删除的账目！",{time:2000,icon:2})
+        }else{
+			layer.confirm('你确定要删除它们吗？',{
+				btn:['是','否']
+			},function () {
+                for (var i =0;i<arr.length;i++ ){
+                    $.ajax({
+                        type:'GET',
+                        dataType:'json',
+                        url: '/billManagement/finance-classify/deleteFc',
+                        data: {
+                            id: arr[i],
+						},
+                        success: function (msg) {
+                            if (msg==0) {
+                                layer.msg('成功删除', {icon: 1});
+                                getFcPageList();
+                            };
+                            if (msg==1){
+                                layer.msg('该分类下有订单，不能删除！！',{time:2000,icon:2});
+                                getFcPageList()
+							}
+                        }
+                    });
+				}
+            },function () {
+                getFcPageList();
+            });
+            $("input:checkbox[id='box']:checked").attr("checked",false);
+        };
+    });
 
     /*Excel导出*/
     $("#daoFc").click(function () {

@@ -127,4 +127,28 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
     public Commclass selectclassAndComm(int id) {
         return commodityListMapper.selectComclassAndCommdity(id);
     }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public Map selectComclassList1() {
+        List<CommodityList> list = commodityListMapper.selectComclassList1();
+        Map<String, Object> map = new HashMap<>();
+        map.put("list",list);
+        return map;
+    }
+
+    /**
+     * 根据商品名查询
+     * @author 史江浩
+     * @param clName 查询的条件
+     * @return
+     */
+    @Override
+    public CommodityList selectListByClName(String clName) {
+        CommodityList list = commodityListMapper.selectListByClName(clName);
+        return list;
+    }
 }

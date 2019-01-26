@@ -86,4 +86,19 @@ public interface ICommodityListService extends IService<CommodityList> {
      * @return
      */
     Commclass selectclassAndComm(int id);
+
+    /**
+     * @author 史江浩
+     * @since 2019-01-14
+     * @return 查询商品
+     */
+    Map selectComclassList1();
+
+    /**
+     * @author 史江浩
+     * @since 2019-01-21
+     * @param clName 查询的条件
+     * @return 根据商id查询的结果
+     */
+    CommodityList selectListByClName(String clName);
 }

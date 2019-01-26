@@ -7,17 +7,7 @@
  </sql>
 
 
-    <!--模糊查询-->
-    <select id="selectAllCustomer" parameterType="com.yunhe.customermanagement.entity.Customer" resultType="com.yunhe.customermanagement.entity.Customer">
-        select
-        <include refid="all"/>
-        from trades_teward.customer where cus_compname like
-        concat('%',#{customer.cusCompname},'%') or concat('%',#{customer.cusName},'%')
-    </select>
 
-   <select id="sellectAll" resultType="com.yunhe.customermanagement.entity.Customer">
-       select <include refid="all"/> from trades_teward.customer
-   </select>
 
     <select id="sellectAllExcel" resultType="com.yunhe.customermanagement.entity.Customer">
         select <include refid="all"/> from trades_teward.customer

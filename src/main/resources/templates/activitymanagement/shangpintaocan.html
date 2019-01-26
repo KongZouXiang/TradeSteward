@@ -40,7 +40,7 @@
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
             <a href="javascript:;" id="deleteAl"  class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
-        <a href="/activitymanagement/commodi-tytemplate/xinzeng" class="btn btn-primary radius">
+        <a href="/activitymanagement/merchandise-package/xinzeng" class="btn btn-primary radius">
         <i class="Hui-iconfont">&#xe600;</i> 添加商品套餐</a>
         <a href="javascript:;" onclick="Excel_out()"
            class="btn btn-primary radius">
@@ -70,8 +70,8 @@
             <tr class="text-c" v-for="(item,index) in result">
 
          <td><input type="checkbox" id="box_" :value="item.id"></td>
-                <td>{{item.id}}</td>
-               <!-- <td>{{index+1}}</td>-->
+               <!-- <td>{{item.id}}</td>-->
+               <td>{{index+1}}</td>
                 <td class="td-manage">
                     <a style="text-decoration:none" class="ml-5" @click="article_edit('编辑')" href="javascript:;" title="编辑">
                         <i class="Hui-iconfont">&#xe6df;</i>
@@ -204,14 +204,7 @@
 
         });
     };
-    function detail(id) {
-        var index = layer.open({
-            type: 2,
-            title: '详细',
-            content: '/activitymanagement/commodi-tytemplate/edit?id='+id,
-        });
-        layer.full(index);
-    };
+
     /*编辑修改*/
     function b(title,url){
         var index = layer.open({
@@ -221,21 +214,6 @@
         });
         layer.full(index);
     };
-    /*添加*/
-    var c =function (title,url,h,w) {
-        layer.open({
-            type:2,
-            title:title,
-            fix:false,
-            maxmin:true,
-            shadeClose:true,
-            area:['1000px','800px'],
-            content:url,
-            end:function() {
-                getUserPageList();
-            }
-        });
-    }
 
     var Excel_out =function () {
         window.location.href="/activitymanagement/merchandise-package/export2";

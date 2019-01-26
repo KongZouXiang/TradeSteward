@@ -1,0 +1,268 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="Bookmark" href="/favicon.ico">
+    <link rel="Shortcut Icon" href="/favicon.ico"/>
+    <script type="text/javascript" src="/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <script type="text/javascript" src="/js/vue/vue.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css"/>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <script src="/lib/layui/layui.all.js"></script>
+    <link rel="stylesheet" href="/lib/layui/css/layui.css">
+    <title>新增商品套餐</title>
+
+
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 云管货 <span
+        class="c-gray en">&gt;</span> 商品套餐 &gt;</span> 新增商品套餐<a class="btn btn-success radius r"
+                                                                style="line-height:1.6em;margin-top:3px"
+                                                                href="javascript:location.replace(location.href);"
+                                                                title="刷新">
+    <i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<!-- <i class="Hui-iconfont">&#xe667;</i></a></nav>-->
+<div class="page-container">
+    <div class="text-c"> <!--日期范围：
+        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin"
+               class="input-text Wdate" style="width:120px;">
+        -
+        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax"
+               class="input-text Wdate" style="width:120px;">-->
+        <a style="font-family: '微软雅黑';font-size: 35px">商品套餐</a>
+        <hr width="97%" color=#C0C0C0 SIZE=3 style="margin: auto"/>
+    </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+
+        <a href="javascript:;" onclick="add()"
+           class="btn btn-primary radius">
+
+        <i class="Hui-iconfont" style="cursor: move;" >&#xe600;</i> 添加商品</a>
+         <a href="javascript:;" onclick="Excel_out()"
+            class="btn btn-primary radius">
+        <i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
+
+              </span>
+
+        <select  id="index" style="display: none"></select>
+        <select  id="sid" style="display: none"></select>
+        <select  id="shopname" style="display: none"></select>
+        <select  id="shopnuber" style="display: none"></select>
+        <select  id="shopguige" style="display: none"></select>
+        <select  id="shopsize" style="display: none"></select>
+        <select  id="shopjiage" style="display: none"></select>
+    </div>
+    <div id="app" style="overflow: scroll;height: 500px">
+        <table class="table table-border table-bordered table-bg">
+            <thead>
+            <tr>
+                <th scope="col" colspan="9">
+                    <label for="input_taocanname">套餐名称</label>
+                    <input type="text" class="input-text" style="width:200px;" id="input_taocanname" name="">
+
+                    <label for="input_taocannum">套餐编号</label>
+                    <input type="text" class="input-text" style="width:200px;" id="input_taocannum" name="">
+                </th>
+            </tr>
+            <tr class="text-c">
+                <th width="25"><i class="Hui-iconfont">&#xe667;</i></th>
+               <!-- <th width="130">操作</th>-->
+                <th width="130">商品名称/规格</th>
+                <th width="150">商品编号</th>
+                <th width="150">规格</th>
+                <th width="150">数量</th>
+                <th width="150">价格</th>
+            </tr>
+            </thead>
+            <tbody id="shuju" ></tbody>
+        </table>
+        <div><button class="layui-btn" style="margin-top: 60px;margin-left:600px " onclick="baocun()">保存</button>
+    </div>
+
+    </div>
+    <div id="pagenav" style="text-align: center"></div>
+</div>
+</body>
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            result: []
+
+        }
+    });
+
+
+    $(function () {
+        $("#checkAl").click(function () {
+            $("input[id^='box_']").attr("checked", this.checked);
+        })
+        $("input[id^='box_']").click(function () {//点击每一个子checkbox，都会触发这个事件
+            /**获取到下面所有checkbox*/
+            var boxs = $("input[id^='box_']");
+
+            $("#checkAll").attr("checked", boxs.filter(":checked").length == 4);
+        });
+    });
+    var text6 =new Array();
+
+   var selectList= function(){
+       //var teid =$("#index").text();
+       var text = $("#sid").text()
+       var arr=text.split(',')
+       var text1=$("#shopname").text()
+       var arr1 =text1.split(',');
+       var text2 =$("#shopnuber").text();
+       var arr2 =text2.split(',');
+       var text3 =$("#shopguige").text();
+       var arr3 =text3.split(',');
+       var text4 =$("#shopsize").text();
+       var arr4 =text4.split(',');
+       var text5 =$("#shopjiage").text();
+       var arr5 =text5.split(',');
+
+     for(var a =0;a<arr.length-1;a++){
+        text6[a]=[arr[a],arr1[a],arr2[a],arr3[a],arr4[a],arr5[a]];
+     }
+     //app.result=text6;
+
+   };
+
+    function baocun(){
+       alert(shopname);
+        selectList();
+           alert(text6.length)
+            $.ajax({
+                url:'/activitymanagement/package-commodity/savemoban',
+                type:'GET',
+                traditional: true,
+                data:{
+                    mpPackageName :$("#input_taocanname").val(),
+                    mpPackageNumber :$("#input_taocannum").val(),
+                      list:text6,
+                    mpPackageCommodity:$("#shopname").text(),
+                },success:function (msg) {
+                    if(msg==true){
+                       layer.msg('添加模板成功',{time:2000,icon:1});
+                        window.location.href="/activitymanagement/merchandise-package/shangpintaocan";
+                    }else {
+                        layer.msg("服务器繁忙请稍后再试",{time:2000,icon:2});
+                    }
+
+                }
+            })
+
+
+    }
+
+
+    $("#deleteAl").click(function () {
+        /**获取下面选中的checkbox*/
+        var checkedbox = $("input[id^='box_']:checked");
+        if (checkedbox.length == 0) {
+            alert("请选择要删除的部门！！！");
+        } else {
+            if (confirm("你确定要删除吗？？？")) {
+                var ids = new Array();
+                checkedbox.each(function () {
+                    ids.push(this.value);
+                });
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '',
+                    data: JSON.stringify(ids),
+                    success: function (msg) {
+                        console.log(msg);
+                        if (msg) {
+                            layer.msg('成功删除', {icon: 5});
+                        }
+                    }
+                })
+            }
+        }
+    });
+    var getPurchasePageList = function (curr) {
+        $.ajax({
+            type: 'Get',
+            dataType: 'json',
+            url: '',
+            data: {
+                current: curr || 1,
+                size: 2
+
+            },
+            success: function (msg) {
+                console.log(msg);
+                //app.result = msg.records;
+                $("#strong").html(msg.total);
+                laypage({
+                    cont: 'pagenav',//容器  值支持id名、原生dom对象，jquery对象,
+                    pages: msg.pages,//总页数
+                    first: '首页',
+                    last: '尾页',
+                    curr: curr || 1,//初始化页数
+                    jump: function (obj, first) { //触发分页后的回调
+                        if (!first) {     //点击跳页触发函数自身，并传递当前页：obj.curr
+                            getPurchasePageList(obj.curr);
+                        }
+                    }
+                });
+            }
+        });
+    };
+    getPurchasePageList();
+    $("#findempl").on('click', function () {
+        getPurchasePageList();
+    });
+
+
+    /*添加*/
+    var add = function () {
+        layer.open({
+            type: 2,
+            title: "选择商品",
+            fix: true,
+            maxmin: true,
+            scrollbar: false,
+            shadeClose: true,
+            area: ['1000px', '800px'],
+            content: "/activitymanagement/merchandise-package/MBcommodity",
+            end: function () {
+                getUserPageList();
+            }
+        });
+    };
+
+
+
+
+    var Excel_out = function () {
+        window.location.href = "/activitymanagement/merchandise-package/export2";
+    }
+
+
+</script>
+
+</html>

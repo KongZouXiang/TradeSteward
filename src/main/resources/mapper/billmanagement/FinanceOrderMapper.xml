@@ -1,13 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yunhe.billmanagement.dao.FinanceOrderMapper">
-
     <sql id="foCols">
         id,fo_num_list,fo_time,fo_money,fo_account,fo_person,fo_remark,fo_image,fc_id,fo_flag
     </sql>
-    <select id="selectFoPage" resultType="com.yunhe.billmanagement.entity.FinanceOrder">
-        select <include refid="foCols"/> from finance_order where (fo_flag like concat('%',#{financeOrder.foFlag},'%')) and (fo_num_list like concat('%',#{financeOrder.foNumList},'%')) order by id desc
-    </select>
+    <!--<select id="selectFoPage" resultType="com.yunhe.billmanagement.entity.FinanceOrder">
+        select <include refid="foCols"/> from finance_order
+        where (fo_flag like concat('%',#{financeOrder.foFlag},'%')) and (fo_num_list like concat('%',#{financeOrder.foNumList},'%')) order by id desc
+    </select>-->
+    <!--<select id="selectFoPage" resultType="com.yunhe.billmanagement.entity.FinanceOrder">
+        select
+            fo.id oid,
+            fo.fc_id,
+            fo.fo_num_list,
+            fo.fo_time,
+            fo.fo_money,
+            fo.fo_account,
+            fo.fo_remark,
+            fo.fo_flag,
+            fc.fc_type,
+            fc.id
+        from finance_order fo,finance_classify fc
+        where fc.id = fo.fc_id and (fo.fo_flag like concat('%',#{financeOrder.foFlag},'%')) and(fo.fo_num_list like concat('%',#{financeOrder.foNumList},'%')) order by fo.id desc
+    </select>-->
+
+    <!--<resultMap id="selectFoPage" type="com.yunhe.billmanagement.entity.FinanceOrder">
+        <id property="id" column="id" />
+        <result property="foNumList" column="fo_num_list" />
+        <result property="fcId" column="fc_id" />
+        <result property="foTime" column="fo_time" />
+        <result property="foMoney" column="fo_money" />
+        <result property="foAccount" column="fo_account" />
+        <result property="foRemark" column="fo_remark" />
+        <result property="foFlag" column="fo_flag" />
+        <association property="financeClassify" javaType="com.yunhe.billmanagement.entity.FinanceClassify">
+            <id property="id" column="id" />
+            <result property="fcType" column="fc_type" />
+        </association>
+    </resultMap>
+    <select id="selectFoPage" parameterType="com.yunhe.billmanagement.entity.FinanceOrder" resultType="java.util.List" resultMap="selectFoPage">
+        select
+               fo.id oid,
+               fo.fc_id,
+               fo.fo_num_list,
+               fo.fo_time,
+               fo.fo_money,
+               fo.fo_account,
+               fo.fo_remark,
+               fo.fo_flag,
+               fc.fc_type,
+               fc.id
+         from finance_order fo,finance_classify fc
+        where fc.id = fo.fc_id and (fo.fo_flag like concat('%',#{financeOrder.foFlag},'%')) and(fo.fo_num_list like concat('%',#{financeOrder.foNumList},'%')) order by fo.id desc
+    </select>-->
 
     <!--自动显示编码的SQL语句-->
     <select id="maxId" resultType="int">

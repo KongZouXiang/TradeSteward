@@ -101,5 +101,12 @@ public interface ICommodiTytemplateService extends IService<CommodiTytemplate> {
      */
     int deleteById(Serializable id);
 
+    /**
+     * 获取id（通过模板名字）
+     * @param commodiTytemplate
+     * @return
+     */
+    public int huoquid(CommodiTytemplate commodiTytemplate);
+
 
 }

@@ -6,8 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
-    <script type="text/javascript" src="/layui/layui.js"></script>
+    <link rel="stylesheet" href="/lib/layui/css/layui.css"  media="all">
+    <script type="text/javascript" src="/lib/layui/layui.js"></script>
+    <script src="/js/jquery/jquery.min.js"></script>
+    <script src="/js/area.js"></script>
     <title>添加用户</title>
 
 </head>
@@ -18,11 +20,11 @@
 
 <form class="layui-form" action="">
     <div class="layui-form-item">
-    <label class="layui-form-label">用户名</label>
-    <div class="layui-input-block" style="width: 250px;height: 30px">
-        <input type="text" id="empname" name="title" lay-verify="username" autocomplete="off" placeholder="用户名" class="layui-input">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-block" style="width: 250px;height: 30px">
+            <input type="text" id="empname" name="title" lay-verify="username" autocomplete="off" placeholder="用户名" class="layui-input">
+        </div>
     </div>
-</div>
     <div class="layui-form-item">
         <label class="layui-form-label">员工姓名</label>
         <div class="layui-input-block" style="width: 250px;height: 30px">
@@ -56,8 +58,17 @@
         <div class="layui-inline">
             <label class="layui-form-label">手机号</label>
             <div class="layui-input-inline">
-                <input type="tel" name="phone" id="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
+                <input type="tel" name="phone" id="phone" lay-verify="required" autocomplete="off" class="layui-input">
             </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">验证码</label>
+        <div class="layui-input-inline">
+            <input type="text" name="code"  lay-verify="yanzhengma" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+        </div>
+        <div class="">
+            <button class="layui-btn layui-btn-normal" type="button" onclick="send(this)">发送验证码</button>
         </div>
     </div>
     <div class="layui-form-item">
@@ -71,32 +82,23 @@
     <div class="layui-form-item">
         <label class="layui-form-label">地址</label>
         <div class="layui-input-inline">
-            <select name="quiz1">
+            <select id="province" name="province" lay-filter="province">
                 <option value="">请选择省</option>
-                <option value="浙江" selected="">浙江省</option>
-                <option value="你的工号">江西省</option>
-                <option value="你最喜欢的老师">福建省</option>
             </select>
+
         </div>
         <div class="layui-input-inline">
-            <select name="quiz2">
+            <select id="city" name="city" lay-filter="city">
                 <option value="">请选择市</option>
-                <option value="杭州">杭州</option>
-                <option value="宁波" disabled="">宁波</option>
-                <option value="温州">温州</option>
-                <option value="温州">台州</option>
-                <option value="温州">绍兴</option>
             </select>
         </div>
         <div class="layui-input-inline">
-            <select name="quiz3">
+            <select id="area" name="area" lay-filter="area">
                 <option value="">请选择县/区</option>
-                <option value="西湖区">西湖区</option>
-                <option value="余杭区">余杭区</option>
-                <option value="拱墅区">临安市</option>
             </select>
+
         </div>
-        <div class="layui-form-mid layui-word-aux">此处只是演示联动排版，并未做联动交互</div>
+
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">状态</label>
@@ -107,11 +109,10 @@
     <div class="layui-form-item" pane="">
         <label class="layui-form-label">角色</label>
         <div class="layui-input-block">
-            <input type="checkbox" name="like1" lay-skin="primary"  value="管理员" title="管理员">
-            <input type="checkbox" name="like1" lay-skin="primary"   value="销售员" title="销售员">
-            <input type="checkbox" name="like1" lay-skin="primary"   value="仓管员" title="仓管员" >
-            <input type="checkbox" name="like1" lay-skin="primary"   value="财务员"title="财务员" >
-            <input type="checkbox" name="like1" lay-skin="primary"   value="采购员"title="采购员" >
+            <input type="radio" name="like1" lay-skin="primary"  value="管理员" title="管理员">
+            <input type="radio" name="like1" lay-skin="primary"   value="财务员" title="财务员">
+            <input type="radio" name="like1" lay-skin="primary"   value="仓管员" title="仓管员" >
+            <input type="radio" name="like1" lay-skin="primary"   value="销售员"title="销售员" >
         </div>
     </div>
     <div class="layui-form-item">
@@ -121,12 +122,60 @@
         </div>
     </div>
 </form>
+<script>
+    time =60;
+    function send(obj) {
+        if ($(obj).hasClass('layui-btn-disabled')) {
+            return false;
+        }
+        var timer = setInterval(function () {
+            time--;
+            $(obj).text(time + 's秒之后再试');
+            $(obj).removeClass('layui-btn-normal');
+            $(obj).addClass('layui-btn-disabled');
+            if (time == 0) {
+                clearInterval(timer);
+                $(obj).removeClass('layui-btn-disabled');
+                $(obj).addClass('layui-btn-normal');
+                $(obj).text('发送验证码');
+                time = 60;
+            }
+        }, 1000);
+        $.ajax({
+            url: "/systemsetup/employ/smsSend",
+            type: 'get',
+            data: {
+                phone: $("#phone").val()
+            }
+
+        })
+    }
+
+    function getSelectValue() {   //获取省市县/区在area.js配置的地区编码
+        var province = document.getElementById("province").value;
+        var city = document.getElementById("city").value;
+        var area = document.getElementById("area").value;
+
+
+        alert(province.split('_', 1));
+        alert(city.split('_', 1));
+        alert(area);
+    }
+
+
+</script>
+
 
 <script type="text/javascript">
+    var areaData = Area;
+    var $form;
+    var form ;
+    var $
     layui.use(['form','jquery'],function () {
-        var $ = layui.jquery;
-        var form = layui.form;
-        form.render();
+        $ = layui.jquery;
+        form = layui.form;
+        $form =$('form');
+        loadProvince();
         form.verify({
             username: function (value) {
                 if (value.trim() == "") {
@@ -168,17 +217,44 @@
                     return '两次密码不一致';
                 }
 
-            }
+            },
+           /* yanzhengma:function (value) {
+                if (value==""){
+                    return "请输入验证码"
+                }
+                var checkyan ="";
+                $.ajax({
+                    url:"/systemsetup/employ/checkSend",
+                    type:"GET",
+                    async:false,
+                    data:{
+                        phone:$("#phone").val(),
+                        num:value,
+
+                    },success:function (msg) {
+
+                        if(msg == false){
+                           checkyan= "验证码错误，请重新输入！"
+                        }
+                    }
+                })
+                return checkyan;
+            },
+*/
         });
+            form.render();
         form.on('submit(add)',function (data) {
             console.log(data.elem)
             console.log(data.form)
             console.log(data.field)
-            var arr = new Array();
+            var text1=$("#province").find("option:selected").text()
+            var text2=$("#city").find("option:selected").text()
+            var text3=$("#area").find("option:selected").text()
+            /*var arr = new Array();
             $("input:checkbox[name='like1']:checked").each(function (i) {
                 arr[i]=$(this).val();
             });
-                data.field.like1=arr.join(",");
+            data.field.like1=arr.join(",");*/
             $.ajax({
                 type:'get',
                 url:'/systemsetup/employ/insertempl',
@@ -186,20 +262,21 @@
                     emUsername: $("#empname").val(),
                     emPassword:$("#pwd").val(),
                     emRealname:$("#emprelname").val(),
-                    emRole:data.field.like1,
+                    emRole:$("input[name='like1']:checked").val(),
                     emSex:$("input[name='sex']:checked").val(),
                     emPhone:$("#phone").val(),
                     emEmail:$("#email").val(),
+                    emAddress:text1+text2+text3,
                     emStatus:$("input:checkbox[name='sysData']:checked").val()==1 ? '正常':'禁用',
 
 
                 },
                 success:function (rest) {
-                     if (rest==1){
-                         parent.layer.msg('添加成功',{time:2000,icon:1});
-                     }else {
-                         parent.layer.msg("服务器繁忙请稍后再试",{time:2000,icon:2});
-                     }
+                    if (rest==1){
+                        parent.layer.msg('添加成功',{time:2000,icon:1});
+                    }else {
+                        parent.layer.msg("服务器繁忙请稍后再试",{time:2000,icon:2});
+                    }
                     var index = parent.layer.getFrameIndex(window.name);
                     parent.getUserPageList();
                     parent.layer.close(index);
@@ -209,6 +286,64 @@
             return false;
         })
     });
+    //加载省数据   '_' + areaData[i].mallCityList.length + '_' + i +
+    function loadProvince() {
+        var proHtml = '';
+        for (var i = 0; i < areaData.length; i++) {
+            proHtml += '<option value="' + areaData[i].provinceCode + '_' + areaData[i].mallCityList.length + '_' + i +'">' + areaData[i].provinceName + '</option>';
+        }
+        //初始化省数据
+        $form.find('select[name=province]').append(proHtml);
+        form.render();
+        form.on('select(province)', function(data) {
+            $form.find('select[name=area]').html('<option value="">请选择县/区</option>').parent().hide();
+            var value = data.value;
+            var d = value.split('_');
+            var code = d[0];
+            var count = d[1];
+            var index = d[2];
+            if (count > 0) {
+                loadCity(areaData[index].mallCityList);
+            } else {
+                $form.find('select[name=city]').parent().hide();
+            }
+        });
+    }
+    //加载市数据   '_' + citys[i].mallAreaList.length + '_' + i +
+    function loadCity(citys) {
+        var cityHtml = '';
+        for (var i = 0; i < citys.length; i++) {
+            cityHtml += '<option value="' + citys[i].cityCode + '_' + citys[i].mallAreaList.length + '_' + i +'">' + citys[i].cityName + '</option>';
+        }
+        $form.find('select[name=city]').html(cityHtml).parent().show();
+        form.render();
+        form.on('select(city)', function(data) {
+            var value = data.value;
+            var d = value.split('_');
+            var code = d[0];
+            var count = d[1];
+            var index = d[2];
+            if (count > 0) {
+                loadArea(citys[index].mallAreaList);
+            } else {
+                $form.find('select[name=area]').parent().hide();
+
+            }
+        });
+    }
+    //加载县/区数据
+    function loadArea(areas) {
+        var areaHtml = '';
+        for (var i = 0; i < areas.length; i++) {
+            areaHtml += '<option value="' + areas[i].areaCode + '">' + areas[i].areaName + '</option>';
+        }
+        $form.find('select[name=area]').html(areaHtml).parent().show();
+        form.render();
+        form.on('select(area)', function(data) {
+        });
+    }
+
+
 
 </script>
 </body>

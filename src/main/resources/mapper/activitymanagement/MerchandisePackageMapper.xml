@@ -8,6 +8,10 @@
 
     <!--查询的是商品套餐里面的所有已存在的模板-->
     <select id="selectAll" resultType="com.yunhe.activitymanagement.entity.MerchandisePackage">
-        select <include refid="mpCols"/> from trades_teward.merchandise_package
+        select <include refid="mpCols"/> from trades_teward.merchandise_package order by id desc
+    </select>
+
+    <select id="huoquid" parameterType="com.yunhe.activitymanagement.entity.MerchandisePackage" resultType="int">
+        select id from merchandise_package where mp_package_name=#{mpPackageName}
     </select>
 </mapper>

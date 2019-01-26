@@ -60,7 +60,7 @@ public interface CommodityListMapper extends BaseMapper<CommodityList> {
      * 导出excel文件
      * @return
      */
-   List<CommodityList > selectExcel();
+   List<CommodityList> selectExcel();
 
     /**
      * 查询仓库名
@@ -75,4 +75,18 @@ public interface CommodityListMapper extends BaseMapper<CommodityList> {
      * @return
      */
    Commclass selectComclassAndCommdity(int id);
+
+    /**
+     * @author 史江浩
+     * @since 2019-01-21
+     * @return 查询商品
+     */
+    List<CommodityList> selectComclassList1();
+
+    /**
+     * @author 史江浩
+     * @since 2019-01-21
+     * @return 根据商品名查询商品
+     */
+    CommodityList selectListByClName(String clName);
 }

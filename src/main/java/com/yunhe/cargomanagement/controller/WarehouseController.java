@@ -7,6 +7,7 @@ import com.yunhe.cargomanagement.entity.Warehouse;
 import com.yunhe.cargomanagement.service.IWarehouseService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -95,6 +96,25 @@ public class WarehouseController {
 
         return warehouseService.selectPage(pageNum,pageSize,warehouse);
     }
+
+    /**
+     * <p>
+     *     仓库详情
+     * </p>
+     *
+     * @param id 前台传过来的ID
+     * @param modelAndView 传到前台的数据
+     * @return ModelAndView
+     */
+    @RequestMapping("selEvent")
+    public ModelAndView selEvent(Integer id, Model model){
+        Warehouse warehouse = warehouseService.getById(id);
+        System.out.println(warehouse);
+        model.addAttribute("warehouse",warehouse);
+        return new ModelAndView("cargomanagement/selEvent");
+    }
+
+
 
     /**
      * <p>

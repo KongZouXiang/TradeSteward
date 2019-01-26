@@ -1,0 +1,160 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="Bookmark" href="/favicon.ico">
+    <link rel="Shortcut Icon" href="/favicon.ico"/>
+    <script type="text/javascript" src="/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css"/>
+    <script type="text/javascript" src="/js/vue/vue.min.js"></script>
+    <link rel="stylesheet" href="/js/laypage/skin/laypage.css">
+    <script type="text/javascript" src="/js/laypage/laypage.js"></script>
+    <script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <link rel="stylesheet" href="/lib/layui/css/layui.css"  media="all">
+    <title>客户欠款详细</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 客户应收欠款 <span class="c-gray en">&gt;</span> 客户欠款详细 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container" data-validator-option="{theme:'simple_right'}">
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <div class="layui-inline" style="float: left;width: 20%">
+                <label class="layui-form-label"><span class="c-red">*</span>应付欠款:</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="fcddReceivable" readonly="readonly" autocomplete="off" class="layui-input" th:value="${session.countList.receivable}">
+                </div>
+            </div>
+            <div class="layui-inline" style="float: right;width: 20%">
+                <label class="layui-form-label"><span class="c-red">*</span>客户名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" lay-verify="fcddFcdName" id="fcddFcdName" readonly="readonly" autocomplete="off" class="layui-input" th:value="${session.fcddFcdName}">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item" style="border-top: 3px solid #b2b2b2;height: 30px;margin-top: -20px;padding-top: 25px;margin-bottom: -10px">
+        </div>
+        <div class="layui-form-item" style="margin-top: 20px">
+            <table class="table table-border table-bordered table-bg" id="app">
+                <thead>
+                <tr class="text-c">
+                    <th width="40">序号</th>
+                    <th width="40">操作</th>
+                    <th width="150">业务日期</th>
+                    <th width="150">单据编号</th>
+                    <th width="150">经手人</th>
+                    <th width="150">业务类型</th>
+                    <th width="150">原单欠款(元)</th>
+                    <th width="150">收款(元)</th>
+                    <th width="150">优惠(元)</th>
+                    <th width="150">结算账户</th>
+                    <th width="150">应收欠款(元)</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="text-c" data-validator-option="{theme:'simple_right'}" v-for="(item,index) in result">
+                    <td>{{index+1}}</td>
+                    <td class="td-manage">
+                        <a title="详情" href="" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
+                    </td>
+                    <td>{{item.fcddDate}}</td>
+                    <td>{{item.fcddNumList}}</td>
+                    <td>{{item.fcddPerson}}</td>
+                    <td>{{item.fcddType}}</td>
+                    <td>{{item.fcddBeginDebt}}</td>
+                    <td>{{item.fcddBackDebt}}</td>
+                    <td>{{item.fcddDiscount}}</td>
+                    <td>{{item.fcddAccount}}</td>
+                    <td>{{item.fcddReceivable}}</td>
+                    <td></td>
+                </tr>
+                </tbody>
+                <tbody data-validator-option="{theme:'simple_right'}">
+                <tr class="text-c">
+                    <th width="40"></th>
+                    <th width="40">合计</th>
+                    <th width="150"></th>
+                    <th width="150"></th>
+                    <th width="150"></th>
+                    <th width="150"></th>
+                    <th width="150"><span style="color: red;font-size: 20px" th:text="${session.countList.beginDebt}"></span></th>
+                    <th width="150"><span style="color: red;font-size: 20px" th:text="${session.countList.backDebt}"></span></th>
+                    <th width="150"><span style="color: red;font-size: 20px" th:text="${session.countList.discount}"></span></th>
+                    <th width="150"></th>
+                    <th width="150"><span style="color: red;font-size: 20px" th:text="${session.countList.receivable}"></span></th>
+                    <th></th>
+                </tr>
+                </tbody>
+            </table>
+            <div id="pagenav" style="text-align: center;position:absolute;margin-top:150px;left:0;right:0" hidden="hidden"></div>
+        </div>
+    </form>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+<script src="/lib/layui/layui.js" charset="utf-8"></script>
+<script>
+    var app = new Vue({
+        el:'#app',
+        data:{
+            result:[]
+        }
+    });
+
+    var getFcddPageList = function(curr) {
+        $.ajax({
+            type:'GET',
+            dataType:'json',
+            url:'/billmanagement/fund-client-debt-detail/selectFcddPage',
+            data:{
+                current: curr || 1,
+                size:10,
+                fcddFcdName:$("#fcddFcdName").val()
+            },
+            success:function(msg){
+                app.result = msg.list;
+                laypage({
+                    cont:'pagenav',
+                    pages:msg.pages,
+                    first:'首页',
+                    last:'尾页',
+                    skin: '#00A0E9',
+                    curr: curr || 1,
+                    jump: function (obj, first) {
+                        if (!first) {
+                            getFcddPageList(obj.curr);
+                        }
+                    }
+                });
+            }
+        });
+    };
+    getFcddPageList();
+
+</script>
+</body>
+</html>

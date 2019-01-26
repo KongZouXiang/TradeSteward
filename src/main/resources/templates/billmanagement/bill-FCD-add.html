@@ -1,6 +1,6 @@
 ﻿<!--_meta 作为公共模版分离出去-->
 <!DOCTYPE HTML>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -20,173 +20,90 @@
 	<script type="text/javascript" src="/js/vue/vue.min.js"></script>
 	<script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js"></script>
 	<script>DD_belatedPNG.fix('*');</script>
+	<link rel="stylesheet" href="/lib/layui/css/layui.css"  media="all">
 	<title>新增进货订单</title>
 	<meta name="keywords" content="">
 	<meta name="description" content="">
 </head>
 <body>
-<div id="app">
-	<article class="page-container">
-		<!--<h1 style="text-align: center">收款单</h1>-->
-		<table class="title xclass" border="0" cellpadding="5" cellspacing="0" width="100%">
-			<tbody><tr>
-				<td height="50" width="35%">
-					<div class="fl mb5" style="position: relative;" id="">
-						<span class="fl lh30">客户&nbsp;&nbsp;</span>
-						<div class="fl mb5" style="position: relative;" id="">
-							<input spellcheck="false" maxlength="50" name="txbCr" id="txbCr" class="inputText" autocomplete="off" type="text">
-							<!--<div style="left: 0px; top: 14px; width: 300px; max-height: 264px; margin-top: 10px; z-index: 1000; overflow-x: auto; display: none;" id="autoComplete_Group_0.1741270269096219" class="autoCompleteBox">
-								<div></div>
-								<table cellpadding="5" cellspacing="0"></table>
-							</div>-->
-							<!--<span id="crinputmore" class="inputMore" onclick="selectClient()"></span>
-							<input spellcheck="false" id="crvalue" type="hidden">-->
-						</div>
-					</div>
-				</td>
-				<td class="text" align="center" valign="top" width="30%"><h2>收款单</h2></td>
-				<td class="font999" style="padding-bottom: 20px;" align="right" valign="bottom" width="35%">
-					单据编号：
-					<input value="SKD20190114003" spellcheck="false" class="codeEdit" name="receiveno" id="receiveno" onchange="valBillCode(this)" maxlength="30" type="text">
-					<input spellcheck="false" id="setid" value="" type="hidden">
-				</td>
-			</tr>
-			</tbody>
-		</table>
-		<table style="padding: 10px 0;" border="0" cellpadding="0" cellspacing="0" width="100%">
-			<tbody><tr>
-				<td>
-					<div class="button fl mr5">
-						<input spellcheck="false" name="print" id="print" type="checkbox">
-						<label for="print">&nbsp;&nbsp;保存后打印</label>
-					</div>
-				</td>
-				<td align="right" valign="middle">
-					<div class="fr mr10">
-						<span class="fl lh30">收款日期&nbsp;&nbsp;</span>
-						<input value="2019-01-14" spellcheck="false" name="busidate" id="busidate" class="inputText date fl" onfocus="var date1=randomDateMin();WdatePicker({dateFmt:'yyyy-MM-dd',minDate:date1})" onclick="removeRed(this)" type="text">
-					</div>
-					<div class="fr mr10">
-						<span class="fl lh30">经手人&nbsp;&nbsp;</span>
-						<span class="levelSelect mr10" id="levelSelect-user">
-								<input value="老板" spellcheck="false" id="levelSelect-user-input" class="ls-input" readonly="readonly" name="levelSelect-user-input" onclick="levelSelect.show('user');" type="text">
-								<!--<input beforelevelselectchoose="FAC61412-C7CA-451C-AC2C-99DCE03B9970" spellcheck="false" class="ls-input-val" id="choose-user-val" value="FAC61412-C7CA-451C-AC2C-99DCE03B9970" onchange="validateBusinessUser()" type="hidden">-->
-								<div id="levelSelect-user-list" class="ls ls1" style="display: none;">
-									<div class="firstList">
-										<ul id="ls-ul1-user">
-											<input class="ls-input-init-text" value="老板" type="hidden">
-											<input class="ls-input-init-val" value="FAC61412-C7CA-451C-AC2C-99DCE03B9970" type="hidden">
-											<input class="ls-input-init-parentval" value="61FA8EA4-3394-46CA-9BAB-CB7ADF1627D2" type="hidden">
-											<input class="ls-input-init-parenttext" value="" type="hidden">
-											<input class="ls-input-init-remark" value="null" type="hidden">
-											<li class="normal" tabindex="0" id="ls-li-user-FAC61412-C7CA-451C-AC2C-99DCE03B9970" onclick="levelSelect.choose('user', '老板', 'FAC61412-C7CA-451C-AC2C-99DCE03B9970','61FA8EA4-3394-46CA-9BAB-CB7ADF1627D2',null,0,'null');"><span title="老板">老板</span></li>
-											<li class="normal" tabindex="0" id="ls-li-user-5D881629-11CA-4068-ADA2-56903CE2B4DC" onclick="levelSelect.choose('user', '财务', '5D881629-11CA-4068-ADA2-56903CE2B4DC','61FA8EA4-3394-46CA-9BAB-CB7ADF1627D2',null,0,'null');"><span title="财务">财务</span></li>
-											<li class="normal" tabindex="0" id="ls-li-user-050C54B1-E409-44C6-828C-5CAD6EB2F666" onclick="levelSelect.choose('user', '仓管或采购', '050C54B1-E409-44C6-828C-5CAD6EB2F666','61FA8EA4-3394-46CA-9BAB-CB7ADF1627D2',null,0,'null');"><span title="仓管或采购">仓管或采购</span></li>
-											<li class="normal" tabindex="0" id="ls-li-user-393502DE-713C-413D-8A6D-72FEA9E1A9B3" onclick="levelSelect.choose('user', '销售', '393502DE-713C-413D-8A6D-72FEA9E1A9B3','61FA8EA4-3394-46CA-9BAB-CB7ADF1627D2',null,0,'null');"><span title="销售">销售</span></li>
-										</ul>
-									</div>
-								</div>
-						</span></div>
-				</td>
-			</tr>
-			</tbody></table>
-
-		<!--<form class="form form-horizontal" id="addFcdForm">-->
-
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 客户应收欠款 <span class="c-gray en">&gt;</span> 增加欠款 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container" data-validator-option="{theme:'simple_right'}">
+	<form class="layui-form" action="">
+		<div class="layui-form-item">
+			<h2 style="text-align: center">收款单</h2>
+			<div class="layui-inline" style="float: left;width: 20%">
+				<label class="layui-form-label"><span class="c-red">*</span>客户</label>
+				<div class="layui-input-inline">
+					<input type="text" id="fcddFcdName" lay-verify="fcddFcdName" autocomplete="off" class="layui-input"  >
+				</div>
+			</div>
+			<input type="hidden" th:value="${session.maxId}" id="maxId">
+			<div class="layui-inline" style="float: right;width: 20%">
+				<label class="layui-form-label"><span class="c-red">*</span>单据编号</label>
+				<div class="layui-input-inline">
+					<input type="text" id="fcddNumList" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item" style="border-top: 3px solid #b2b2b2;height: 30px;margin-top: -20px;padding-top: 25px;margin-bottom: -10px">
+			<div class="layui-inline">
+				<label class="layui-form-label"><span class="c-red">*</span>经手人</label>
+				<div class="layui-input-inline">
+					<select id="fcddPerson"><option>老板</option>
+						<option>财务</option>
+						<option>仓管或采购</option>
+						<option>销售</option></select>
+				</div>
+			</div>
+			<div class="layui-inline"  style="float: right">
+				<label class="layui-form-label"><span class="c-red">*</span>收款日期</label>
+				<div class="layui-input-inline">
+					<input type="date" id="fcddDate" lay-verify="fcddDate" autocomplete="off" class="layui-input" style="float: right">
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item" style="margin-top: 20px">
 			<table class="table table-border table-bordered table-bg">
-				<!--<thead>
-				<tr>
-					<th scope="col" colspan="9">新增收款</th>
+				<thead>
+				<tr class="text-c">
+					<th width="40">序号</th>
+					<th width="150">结算账户</th>
+					<th width="150">应收金额(元)</th>
+					<th width="150">本次收款(元)</th>
+					<th width="150">优惠金额(元)</th>
+					<th></th>
 				</tr>
-				<tr class="text-c" style="background-color: #bbbbbb">
-					<th width="40">ID</th>
-					<th width="150">客户编号</th>
-					<th width="150">客户名称</th>
-					<th width="150">联系人</th>
-					<th width="150">联系电话</th>
-					<th width="150">期初欠款(元)</th>
-					<th width="150">增加应收欠款(元)</th>
-					<th width="150">收回欠款(元)</th>
-					<th width="150">优惠(元)</th>
-					<th width="150">抵消欠款(元)</th>
-					<th width="150">应收欠款(元)</th>
-				</tr>
-				</thead>-->
-				<tr>
-					<th class="normal" align="center" height="40" valign="middle" width="40">序号</th>
-					<th class="normal" valign="middle">结算账户</th>
-					<th class="normal" align="center" valign="middle" width="180">应收金额(元)</th>
-					<th class="normal" align="center" valign="middle" width="180">本次收款(元)</th>
-					<th class="normal" align="center" valign="middle" width="180">优惠金额(元)</th>
-					<th class="normal" align="center" valign="middle" width="180">合计(元)</th>
-					<th class="normal" align="center" valign="middle" width="180">备注</th>
-				</tr>
+				</thead>
 				<tbody>
-				<!--<tr class="text-c" v-for="(item,index) in result">
-					<td>{{index+1}}</td>
-					<td>{{item.fcdNumList}}</td>
-					<td>{{item.fcdName}}</td>
-					<td>{{item.fcdLinkman}}</td>
-					<td>{{item.fcdTelephone}}</td>
-					<td>{{item.fcdBeginDebt}}</td>
-					<td>{{item.fcdAddDebt}}</td>
-					<td>{{item.fcdBackDebt}}</td>
-					<td>{{item.fcdDiscount}}</td>
-					<td>{{item.fcdOffsetDeb}}</td>
-					<td>{{item.fcdReceivable}}</td>
-				</tr>-->
-				<td align="center" bgcolor="#FFFFFF" valign="middle">1</td>
-				<td align="center" bgcolor="#FFFFFF" valign="middle">
-						<span class="levelSelect mr10" id="levelSelect-account">
-							<input value="现金" spellcheck="false" id="levelSelect-account-input" class="ls-input " readonly="readonly" name="levelSelect-account-input" onclick="levelSelect.show('account');" type="text">
-							<input beforelevelselectchoose="5FA83F41-DFE0-41A0-B524-22BD7B646988" spellcheck="false" class="ls-input-val" id="choose-account-val" value="5FA83F41-DFE0-41A0-B524-22BD7B646988" onchange="businessuserchange()" type="hidden">
-							<input value="61FA8EA4-3394-46CA-9BAB-CB7ADF1627D2" spellcheck="false" class="ls-input-parentval" id="choose-account-parentval" onchange="" type="hidden">
-							<div id="levelSelect-account-list" class="ls ls1" style="display: none;"><div class="firstList"><ul id="ls-ul1-account"><input class="ls-input-init-text" value="现金" type="hidden"><input class="ls-input-init-val" value="5FA83F41-DFE0-41A0-B524-22BD7B646988" type="hidden"><input class="ls-input-init-parentval" value="61FA8EA4-3394-46CA-9BAB-CB7ADF1627D2" type="hidden"><input class="ls-input-init-parenttext" value="" type="hidden"><input class="ls-input-init-remark" value="null" type="hidden"><li class="normal" tabindex="0" id="ls-li-account-5FA83F41-DFE0-41A0-B524-22BD7B646988" onclick="levelSelect.choose('account', '现金', '5FA83F41-DFE0-41A0-B524-22BD7B646988','61FA8EA4-3394-46CA-9BAB-CB7ADF1627D2',null,null,'null');"><span title="现金">现金</span></li><li class="normal" tabindex="0" id="ls-li-account-6A747DC4-E2B8-448B-AC0D-010991C67DF5" onclick="levelSelect.choose('account', '建设银行', '6A747DC4-E2B8-448B-AC0D-010991C67DF5','61FA8EA4-3394-46CA-9BAB-CB7ADF1627D2',null,null,'null');"><span title="建设银行">建设银行</span></li></ul></div></div>
-					</span></td>
-				<td align="center" bgcolor="#FFFFFF" valign="middle">
-					<input spellcheck="false" style="text-align: center" id="amtreceivables" class="receiptsInputText money" value="0" maxlength="50" readonly="readonly" type="text">0.00
-				</td>
-				<td align="center" bgcolor="#FFFFFF" valign="middle">
-					<input spellcheck="false" id="amtcurreceive" class="receiptsInputText " maxlength="18" onkeyup="decimal(this)" onafterpaste="decimal(this)" type="text">
-				</td>
-				<td align="center" bgcolor="#FFFFFF" valign="middle">
-					<input spellcheck="false" id="favamt" class="receiptsInputText " maxlength="18" onkeyup="decimal(this)" onafterpaste="decimal(this)" type="text">
-				</td>
-				<td align="left" bgcolor="#FFFFFF" valign="middle">
-					<input spellcheck="false" style="text-align: center" id="totalamt" class="receiptsInputText" maxlength="50" readonly="readonly" type="text">
-				</td>
-				<td align="left" bgcolor="#FFFFFF" valign="middle">
-					<input spellcheck="false" id="receiveremark" class="receiptsInputText " placeholder="收款备注信息" maxlength="500" type="text">
-				</td>
+				<tr class="text-c" v-for="(item,index) in result">
+					<td>1</td>
+					<td>
+						<select name="articlecolumn" class="select" id="fcddAccount">
+							<option  v-for="(item,index) in resulttwo" :value="index+1" selected="selected">现金</option>
+							<option  v-for="(item,index) in resulttwo" :value="index+1">建设银行</option>
+						</select>
+					</td>
+					<td><input type="text" class="input-text" readonly="readonly"  placeholder="" id="fcddReceivable" ></td>
+					<td><input type="text" class="input-text" value="0" lay-verify="fcddBackDebt" id="fcddBackDebt"></td>
+					<td><input type="text" class="input-text" value="0" lay-verify="fcddDiscount" id="fcddDiscount"></td>
+					<td></td>
+				</tr>
 				</tbody>
 			</table>
-		<div class=" mt40" style=" margin-top: 20px;">
-			<span class="font12 fontDark fl">图片附件：</span>
-			<div id="ossfile"></div>
-			<div id="container" style="position: relative;margin-left: 80px;">
-				<ul id="productImageUl" class="shopImgList" style="display: none;">
-					<li id="each_image_demo" style="width: 85px;height: 85px;">
-						<div id="uploadimageing" class="matte loading uploadimageingclass"></div>
-					</li>
-				</ul>
-				<a style="position: relative; z-index: 1;" id="selectfiles" href="javascript:void(0);" class="dhj_xzsr_content"></a>
-
-				<div id="flash_1adq765be6v91spg1r5q7a1168e3_container" class="moxie-shim moxie-shim-flash" style="display:none;position: absolute; top: 0px; left: 0px; width: 82px; height: 34px; overflow: hidden;display: one;">
-					<object id="flash_1adq765be6v91spg1r5q7a1168e3" type="application/x-shockwave-flash" data="%E6%96%B0%E5%A2%9E%E6%94%B6%E6%AC%BE_files/Moxie.swf" style="outline:0" height="100%" width="100%">
-						<param name="movie" value="lib/plupload-2.1.2/js/Moxie.swf">
-						<param name="flashvars" value="uid=flash_1adq765be6v91spg1r5q7a1168e3&amp;target=moxie.core.EventTarget.instance.dispatchEvent">
-						<param name="wmode" value="transparent"><param name="allowscriptaccess" value="always"></object>
-				</div>
-				<div style="position: absolute; top: 0px; left: 0px; width: 87px; height: 87px; overflow: hidden; z-index: 0;" class="moxie-shim moxie-shim-html5" id="html5_1d15vl6co4f1a551gi1efn1ccf3_container"><input id="html5_1d15vl6co4f1a551gi1efn1ccf3" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" accept="image/jpeg,image/png" type="file"></div></div>
 		</div>
-		<!--</form>-->
-	</article>
+		<div class="layui-form-item" style="float: right">
+			<div class="layui-input-block">
+				<button class="layui-btn" id="saveBtn" lay-submit="" lay-filter="demo1">提交</button>
+				<button id="historyBtn" href="/billManagement/fund-client-debt/toFcd" class="layui-btn layui-btn-primary">历史单据</button>
+			</div>
+		</div>
+	</form>
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="/static/h-ui/js/H-ui.min.js"></script>
-<script type="text/javascript" src="/static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer /作为公共模版分离出去-->
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer /作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
@@ -197,10 +114,118 @@
 <script type="text/javascript" src="/lib/ueditor/1.4.3/ueditor.config.js"></script>
 <script type="text/javascript" src="/lib/ueditor/1.4.3/ueditor.all.min.js"></script>
 <script type="text/javascript" src="/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+<script src="/lib/layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
 
-<script type="text/javascript">
+        //自定义验证规则
+        form.verify({
+            fcddBackDebt:function(value){
+                var check='';
+                if(value.length < 1){
+                    check= '金额不能为空啊';
+                };
+                if(value.length>=1) {
+                    var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+                    var BackDebt = $('#fcddBackDebt').val();
+                    if (!reg.test(BackDebt)){
+                        check = '金额格式不对！'
+                    }
+                }
+                return check;
+            },
+            fcddDiscount:function (value) {
+                var check='';
+                if(value.length < 1){
+                    check= '金额不能为空啊';
+                };
+                if(value.length>=1) {
+                    var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+                    var Discount = $('#fcddDiscount').val();
+                    if (!reg.test(Discount)){
+                        check = '金额格式不对！'
+                    }
+                }
+                return check;
+            },
+            fcddDate:function (value) {
+                if(value.length < 1){
+                    return '收款日期不能为空啊';
+                };
+            }
 
+        });
 
+        function f() {
+            /*alert("进入")*/
+            var numList = "SKD";
+            /*alert(numList);*/
+            //获取当前时间
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            if (month < 10) {
+                month = "0" + month;
+            }
+            if (day < 10) {
+                day = "0" + day;
+            }
+            var nowDate = year  + month  + day;
+            /*alert(nowDate);*/
+            var maxid =$("#maxId").val();
+            /*alert(maxid);*/
+            numList += nowDate;
+            numList += '00';
+            numList += maxid;
+            /*alert(numList);*/
+            $("#fcddNumList").val(numList);
+        }
+        f();
+        form.render();
+
+        //监听提交
+        form.on('submit(demo1)', function(){
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "/billManagement/fund-client-debt/insertFcdd",
+                data: {
+                    fcddFcdName:$("#fcddFcdName").val(),
+                    fcddDate:$("#fcddDate").val(),
+                    fcddNumList:$("#fcddNumList").val(),
+                    fcddPerson:$("#fcddPerson").val(),
+                    fcddType:'收回欠款',
+                    fcddReceivable:0-$("#fcddBackDebt").val()-$("#fcddDiscount").val(),
+                    fcddBackDebt:$("#fcddBackDebt").val(),
+                    fcddDiscount:$("#fcddDiscount").val(),
+                    fcddAccount:$("#fcddAccount").val()
+                },
+                success: function(msg){
+                    window.location.href="/billManagement/fund-client-debt/toFcd";
+                }
+            });
+            return false;
+        });
+    });
+
+    $("#fcddFcdName").click(function () {
+        layer.open({
+            type:2,
+            title:'选择客户',
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['800px','650px'],
+            content:'/billManagement/fund-client-debt/selectCustomer',
+            end:function(index) {
+            }
+        });
+    });
 </script>
 </body>
 </html>

@@ -30,9 +30,8 @@ public class CommodiTytemplate implements Serializable {
     /**
      * 模板id
      */
-
-    @TableId(value = "id",type = IdType.AUTO)
-   private int id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private int id;
 
 
     /**
