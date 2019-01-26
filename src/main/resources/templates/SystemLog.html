@@ -48,14 +48,14 @@
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
           <span class="l">
-          <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+          <a href="javascript:;" id="deleteAll" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
           </span>
         <span class="r">共有数据：<strong id="strong"></strong> 条</span>
     </div>
     <table class="table table-border table-bordered table-bg table-hover table-sort">
         <thead>
         <tr class="text-c">
-            <th width="25"><input type="checkbox" name="" value=""></th>
+            <th width="25"><input type="checkbox" id="checkAll" value=""></th>
             <th width="80">ID</th>
             <th width="240">内容</th>
             <th width="17%">用户名</th>
@@ -67,14 +67,14 @@
         <tbody>
 
         <tr class="text-c" v-for="(item,index) in result">
-            <td><input type="checkbox" value="" name=""></td>
+            <td><input type="checkbox" id="box" :value="item.id"></td>
             <td>{{item.account}} </td>
             <td>{{item.operation}}</td>
             <td>{{item.username}}</td>
             <td>{{item.ip}}</td>
             <td>{{item.createDate}}</td>
-            <td id="{{item.id}}">
-                <a title="删除" href="javascript:;" onclick="system_log_del(this,123)" class="ml-5"
+            <td>
+                <a title="删除" href="javascript:;"  @click="system_log_del(item.id)" class="ml-5"
                    style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
         </tr>
         </tbody>
@@ -88,7 +88,6 @@
 <script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
-
 <script type="text/javascript">
 
     var app = new Vue({
@@ -98,9 +97,7 @@
         }
     });
 
-
     var selectAllSystemLog = function (curr) {
-
         $.ajax({
             type: 'GET',
             dataType: 'json',
@@ -135,23 +132,56 @@
     selectAllSystemLog();
 
     /*日志-删除*/
-    function system_log_del(obj,id){
-        layer.confirm('确认要删除吗？',function(index){
+    var system_log_del = function (id) {
+        layer.confirm('你确定要删除吗？',{
+            btn:['是','否']
+        },function () {
             $.ajax({
-                type: 'POST',
-                url: '',
-                dataType: 'json',
-                success: function(data){
-                    $(obj).parents("tr").remove();
-                    layer.msg('已删除!',{icon:1,time:1000});
+                type:'GET',
+                dataType:"text",
+                url: '/systemsetup/system-log/deleteByIdSystemLog',
+                data:{id:id},
+                success: function (msg) {
+                    layer.msg(msg, {icon: 1});
                     selectAllSystemLog();
-                },
-                error:function(data) {
-                    console.log(data.msg);
-                },
+                }
             });
+        },function () {
+            selectAllSystemLog();
         });
-    }
+    };
+    /*批量删除*/
+    $("#deleteAll").click(function(){
+        var arr = new Array();
+        $("input:checkbox[id='box']:checked").each(function (i) {
+            arr[i]=$(this).val();
+        });
+        if (arr[0]==null){
+            layer.msg("请选择要删除的账目！",{time:2000,icon:2})
+        }else{
+            layer.confirm('你确定要删除它们吗？',{
+                btn:['是','否']
+            },function () {
+                for (var i =0;i<arr.length;i++ ){
+                    $.ajax({
+                        type:'GET',
+                        dataType:"text",
+                        url: '/systemsetup/system-log/deleteByIdSystemLog',
+                        data:{
+                            id: arr[i],
+                        },
+                        success: function (msg) {
+                            layer.msg(msg, {icon: 1});
+                            selectAllSystemLog();
+                        }
+                    });
+                }
+            },function () {
+                selectAllSystemLog();
+            });
+            $("input:checkbox[id='box']:checked").attr("checked",false);
+        };
+    });
 </script>
 </body>
 </html>

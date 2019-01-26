@@ -170,7 +170,6 @@
                 url: '/billManagement/finance-classify/deleteFc',
                 data:{id:id},
                 success: function (msg) {
-                    console.log(msg);
                     if (msg==0) {
                         layer.msg('成功删除', {icon: 1});
                         getFcPageList();
@@ -185,7 +184,6 @@
             getFcPageList();
         });
     };
-
     /*批量删除*/
     $("#deleteAll").click(function(){
         var arr = new Array();
@@ -195,9 +193,9 @@
         if (arr[0]==null){
             layer.msg("请选择要删除的账目！",{time:2000,icon:2})
         }else{
-			layer.confirm('你确定要删除它们吗？',{
-				btn:['是','否']
-			},function () {
+            layer.confirm('你确定要删除它们吗？',{
+                btn:['是','否']
+            },function () {
                 for (var i =0;i<arr.length;i++ ){
                     $.ajax({
                         type:'GET',
@@ -205,25 +203,26 @@
                         url: '/billManagement/finance-classify/deleteFc',
                         data: {
                             id: arr[i],
-						},
+                        },
                         success: function (msg) {
                             if (msg==0) {
-                                layer.msg('成功删除', {icon: 1});
+                                layer.msg(msg, {icon: 1});
                                 getFcPageList();
                             };
                             if (msg==1){
                                 layer.msg('该分类下有订单，不能删除！！',{time:2000,icon:2});
                                 getFcPageList()
-							}
+                            }
                         }
                     });
-				}
+                }
             },function () {
                 getFcPageList();
             });
             $("input:checkbox[id='box']:checked").attr("checked",false);
         };
     });
+
 
     /*Excel导出*/
     $("#daoFc").click(function () {

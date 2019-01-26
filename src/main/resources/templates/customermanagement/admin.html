@@ -64,15 +64,15 @@
             </th>
             <th width="40">ID</th>
             <th width="130">操作</th>
-            <th width="150">编号</th>
-            <th width="150">公司名</th>
-            <th width="90">应收欠款</th>
+            <th width="150">客户编号</th>
+            <th width="150">客户名称</th>
+            <th width="90">应收客户欠款</th>
             <th width="90">联系方式</th>
             <th width="130">联系人</th>
             <th width="150">客户状态</th>
             <th width="100">关联人员</th>
-            <th width="100">公司地址</th>
-            <th width="70">公司邮箱</th>
+            <th width="100">地址</th>
+            <th width="70">邮箱</th>
             <th width="150">联系人qq</th>
             <th width="150">备注</th>
         </tr>
@@ -125,7 +125,6 @@
         }
     });
 
-
     var getPurchasePageList = function (curr) {
         $.ajax({
             type: 'POST',
@@ -135,7 +134,7 @@
                 /*当前页*/
                 current: curr || 1,
                 /*每页大小*/
-                size: 3,
+                size: 5,
                 cusCompname: $("#poSupName").val(),
                 cusTele: $("#poSupName").val(),
                 cusNumber: $("#poSupName").val()
@@ -178,8 +177,14 @@
                     id: id
                 },
                 success: function (msg) {
-                    getPurchasePageList();
-                    layer.msg('成功删除' + id, {icon: 5});
+                    if (msg==0) {
+                        layer.msg('成功删除', {icon: 1});
+                        getPurchasePageList();
+                    }
+                    if (msg==1){
+                        layer.msg('该客户与我们还有金钱交易，不能删除！',{time:2000,icon:2});
+                        getPurchasePageList();
+                    }
                 }
             })
         });
@@ -206,9 +211,12 @@
                             id: arr[i],
                         },
                         success: function (msg) {
-                            console.log(msg);
-                            if (msg) {
+                            if (msg==0) {
                                 layer.msg('成功删除', {icon: 1});
+                                getPurchasePageList();
+                            }
+                            if (msg==1){
+                                layer.msg('该客户与我们还有金钱交易，不能删除！',{time:2000,icon:2});
                                 getPurchasePageList();
                             }
                         }
@@ -231,7 +239,7 @@
             fix: false,
             maxmin: true,
             shadeClose: true,
-            area: ['1100px', '600px'],
+            area: ['800px','600px'],
             content: '/customermanagement/customer/editCustomer?id=' + id,
 
             end: function () {
@@ -251,7 +259,7 @@
             fix: false,
             maxmin: true,
             shadeClose: true,
-            area: ['1100px', '600px'],
+            area: ['800px','600px'],
             content: '/customermanagement/customer/addCustomer?',
             end: function () {
                 getPurchasePageList();

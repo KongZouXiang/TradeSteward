@@ -58,14 +58,14 @@
                 <input type="checkbox" id="checkAll"></th>
             <th width="40">ID</th>
             <th width="130">操作</th>
-            <th width="150">公司名</th>
-            <th width="150">编号</th>
-            <th width="90">应收欠款</th>
+            <th width="150">供应商编号</th>
+            <th width="150">供应商名称</th>
+            <th width="90">应付供应商欠款</th>
             <th width="90">联系方式</th>
-            <th width="130">客户状态</th>
+            <th width="130">供应商状态</th>
             <th width="150">联系人</th>
             <th width="100">关联人员</th>
-            <th width="100">公司邮箱</th>
+            <th width="100">邮箱</th>
             <th width="150">备注</th>
         </tr>
         </thead>
@@ -82,11 +82,11 @@
                     <i class="Hui-iconfont">&#xe6e2;</i>
                 </a>
             </td>
-            <td>{{item.supCompname}}</td>
             <td>{{item.supNumber}}</td>
+            <td>{{item.supCompname}}</td>
             <td>{{item.supMoney}}</td>
             <td>{{item.supTele}}</td>
-            <td>{{item.supFlag}}</td>
+            <td>{{item.supFlag==1?"正常":"禁用"}}</td>
             <td>{{item.supLinkman}}</td>
             <td>{{item.supConn}}</td>
             <td>{{item.supEmail}}</td>
@@ -118,7 +118,7 @@
             url: '/customermanagement/supplier/selectPage',
             data: {
                 current: curr || 1,
-                size: 1,
+                size: 5,
                 supCompname:$("#poSupName").val(),
                 supTele:$("#poSupName").val(),
                 supNumber:$("#poSupName").val()
@@ -155,13 +155,19 @@
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: '/customermanagement/supplier/deleteSuppler',
+                url: '/customermanagement/supplier/deleteSupplier',
                 data: {
                     id: id
                 },
                 success: function (msg) {
-                    getPurchasePageList();
-                    layer.msg('成功删除' + id, {icon: 5});
+                    if (msg==0) {
+                        layer.msg('成功删除', {icon: 1});
+                        getPurchasePageList();
+                    }
+                    if (msg==1){
+                        layer.msg('该供应商与我们还有金钱交易，不能删除！',{time:2000,icon:2});
+                        getPurchasePageList();
+                    }
                 }
             })
         });
@@ -188,9 +194,12 @@
                             id: arr[i],
                         },
                         success: function (msg) {
-                            console.log(msg);
-                            if (msg) {
+                            if (msg==0) {
                                 layer.msg('成功删除', {icon: 1});
+                                getPurchasePageList();
+                            }
+                            if (msg==1){
+                                layer.msg('该供应商与我们还有金钱交易，不能删除！',{time:2000,icon:2});
                                 getPurchasePageList();
                             }
                         }
@@ -211,7 +220,7 @@
             fix: false,
             maxmin: true,
             shadeClose: true,
-            area: ['1100px', '600px'],
+            area: ['800px','600px'],
             content: '/customermanagement/supplier/editSupplier?id='+id,
             end: function () {
                 getPurchasePageList();
@@ -230,7 +239,7 @@
             fix: false,
             maxmin: true,
             shadeClose: true,
-            area: ['1100px', '600px'],
+            area: ['800px','600px'],
             content: '/customermanagement/supplier/addSupplier',
             end: function () {
                 getPurchasePageList();

@@ -108,7 +108,6 @@ public class WebLogAspect {
                 throw new GlobalException(ExceptionEnum.LOG_ERROR);
             }
         }
-
         System.out.println(log);
     }
 

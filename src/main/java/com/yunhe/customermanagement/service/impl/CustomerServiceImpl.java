@@ -80,5 +80,10 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         return customerMapper.selectList(null);
     }
 
+    @Override
+    public int maxId() {
+        return customerMapper.maxId();
+    }
+
 
 }

@@ -6,11 +6,12 @@
      cus_qq,cus_remarks
  </sql>
 
-
-
-
     <select id="sellectAllExcel" resultType="com.yunhe.customermanagement.entity.Customer">
         select <include refid="all"/> from trades_teward.customer
+    </select>
+
+    <select id="maxId" resultType="java.lang.Integer">
+        select MAX(id) FROM  trades_teward.customer
     </select>
 
 </mapper>

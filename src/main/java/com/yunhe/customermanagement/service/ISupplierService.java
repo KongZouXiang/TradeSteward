@@ -87,4 +87,13 @@ public interface ISupplierService extends IService<Supplier> {
      * @return 查询所有供应商信息
      */
     Map selectList();
+
+    /**
+     * <p>
+     *      查询最大ID
+     * </p>
+     *@author 杨明月
+     * @return zuidaID
+     */
+    int maxId();
 }
