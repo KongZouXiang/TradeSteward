@@ -44,6 +44,8 @@ public class CharaMangerServiceImpl extends ServiceImpl<CharaMangerMapper, Chara
         return b;
     }
 
+
+
     public CharaMangerMapper getCharaMangerMapper() {
         return charaMangerMapper;
     }
