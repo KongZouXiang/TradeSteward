@@ -1,11 +1,15 @@
 package com.yunhe.billmanagement.controller;
 
 import com.yunhe.billmanagement.entity.FinanceOrder;
+import com.yunhe.billmanagement.entity.RunningAccounts;
 import com.yunhe.billmanagement.service.IFinanceOrderService;
+import com.yunhe.billmanagement.service.IRunningAccountsService;
+import com.yunhe.core.common.annotion.WebLog;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,10 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * <p>
@@ -35,19 +37,21 @@ public class FinanceOrderController {
     @Resource
     private IFinanceOrderService financeOrderService;
 
+    @Resource
+    IRunningAccountsService runningAccountsService;
+
     /**
      * <P>
      *    进入日常收支页面
      * </P>
-     * @return 进入FinanceOrder.html
+     * @return 进入bill-FinanceOrder.html
      */
+    @WebLog("进入日常收支页面")
     @GetMapping("/toFo")
     public ModelAndView toFo(HttpSession session){
-        System.out.println("toFo进入controller");
-        List<FinanceOrder> li = financeOrderService.selectFo();
-        session.setAttribute("total",li.size());
         return new ModelAndView("billmanagement/bill-FinanceOrder");
     }
+
     /**
      * <P>
      *     日常收支表
@@ -57,9 +61,9 @@ public class FinanceOrderController {
      * @param financeOrder 日常收支的参数存在一个对象里
      * @return 日常收支表：分页的结果集
      */
+    @WebLog("查看日常收支")
     @GetMapping(value = "/selectFoPage")
     public Map selectFoPage(int current, int size,FinanceOrder financeOrder){
-        System.out.println("进入分页的controller");
         return financeOrderService.selectFoPage(current,size,financeOrder);
     }
 
@@ -69,20 +73,34 @@ public class FinanceOrderController {
      * </P>
      * @return 日常收支表：查询的结果集
      */
+    @WebLog("查询日常收支表所有数据")
     @GetMapping(value = "/selectFo")
     public List<FinanceOrder> selectFo() {
         return financeOrderService.selectFo();
     }
+
     /**
      * <P>
-     *    进入增加页面
+     *    进入收入增加页面
      * </P>
      * @return 进入FC_add.html
      */
-    @RequestMapping("/toAdd")
-    public ModelAndView toAdd(){
-        System.out.println("toadd进入controller");
-        return new ModelAndView("billmanagement/bill-FO-add");
+    @WebLog("进入日常收入增加页面")
+    @RequestMapping("/toAddShou")
+    public ModelAndView toAddShou(){
+        return new ModelAndView("billmanagement/bill-FO-addShou");
+    }
+
+    /**
+     * <P>
+     *    进入支出增加页面
+     * </P>
+     * @return 进入bill-FO-addZhi.html
+     */
+    @WebLog("进入日常支出增加页面")
+    @RequestMapping("/toAddZhi")
+    public ModelAndView toAddZhi(){
+        return new ModelAndView("billmanagement/bill-FO-addZhi");
     }
     /**
      * <P>
@@ -91,58 +109,50 @@ public class FinanceOrderController {
      * @param financeOrder 将添加的信息存入对象
      * @return  日常收支表：增加是否成功
      */
+    @WebLog("增加日常收支")
     @GetMapping("/insertFo")
     public int insertFo(FinanceOrder financeOrder) {
-        System.out.println("要添加的数据："+financeOrder);
         Map map = new HashMap();
         map.put("financeOrder",financeOrder);
         int i = financeOrderService.insertFo(financeOrder);
-        System.out.println("是否添加成功："+i);
         int maxId = financeOrderService.maxId();
-        System.out.println("要修改的最大ID："+maxId);
         map.put("maxId",maxId);
-        System.out.println("是否修改成功："+financeOrderService.gaiFo(map));
-        return financeOrderService.gaiFo(map);
-    }
-
-    /**
-     * <P>
-     *    进入详情页面
-     * </P>
-     * @param id 查询详情的id
-     * @param session 将传输到前台的数据存在session里
-     * @return 进入FO_detail.html
-     */
-    @RequestMapping("/toDetail")
-    public ModelAndView toDetail(int id, HttpSession session){
-        System.out.println("toDetail进入controller");
-        FinanceOrder fo = financeOrderService.detailById(id);
-        session.setAttribute("financeOrder",fo);
-        return new ModelAndView("billmanagement/bill-FO-detail");
-    }
-
-    /**
-     * <P>
-     *     通过id查找数据，显示详情
-     * </P>
-     * @param id  查询数据的条件
-     * @return FinanceOrder对象
-     */
-    @GetMapping(value = "/detailById")
-    public FinanceOrder detailById(int id) {
-        return financeOrderService.detailById(id);
+        int j = financeOrderService.gaiFo(map);
+        if(j==1){
+            RunningAccounts runningAccounts = new RunningAccounts();
+            runningAccounts.setRaCompanyName(financeOrder.getFoFlag());//公司名称
+            runningAccounts.setRaAccount(financeOrder.getFoAccount());//转出账户
+            if (financeOrder.getFoFlag().equals("日常支出")){
+                runningAccounts.setRaOutcome(financeOrder.getFoMoney());//转出金额
+                runningAccounts.setRaIncome(0.0);//转入金额
+            }else if(financeOrder.getFoFlag().equals("日常收入")){
+                runningAccounts.setRaOutcome(0.0);//转出金额
+                runningAccounts.setRaIncome(financeOrder.getFoMoney());//转入金额
+            }
+            runningAccounts.setRaTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));//业务日期
+            SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
+            System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
+            int maxid = runningAccountsService.selectRunningMaxIdMoney().getId();
+            runningAccounts.setRaNumList("SZ"+df.format(new Date())+"00"+maxid);//单据编号
+            runningAccounts.setRaPerson(financeOrder.getFoPerson());//经手人
+            runningAccounts.setRaProjectName(financeOrder.getFoFlag());//收支项目名称
+            runningAccounts.setRaCurrentBalance(runningAccountsService.selectRunningMaxIdMoney().getRaCurrentBalance()-financeOrder.getFoMoney());//当前余额
+            runningAccountsService.insertRunningAccountsOne(runningAccounts);
+        }
+        return j;
     }
 
     /**
      * <P>
      *     删除数据
      * </P>
-     * @param financeOrder 将删除的信息存入对象
+     * @param id 通过id删除数据
      * @return  日常收支表：删除是否成功
      */
+    @WebLog("删除日常收支")
     @GetMapping(value = "/deleteFo")
-    public int deleteFo(FinanceOrder financeOrder) {
-        return financeOrderService.deleteFo(financeOrder);
+    public int deleteFo(int id) {
+        return financeOrderService.deleteFo(id);
     }
 
     /**
@@ -153,27 +163,26 @@ public class FinanceOrderController {
      * @return  Excel导出到本地
      * @throws IOException
      */
+    @WebLog("Excel导出日常收支")
     @RequestMapping("/export")
-    public String createExcel(HttpServletResponse response) throws IOException {
+    public String createExcel(HttpServletResponse response,String foFlag) throws IOException {
         //获取查询结果的数据,只要对其进行封装就行了
-        List<FinanceOrder> newlist = financeOrderService.selectFo();
-        System.out.println("数据行数："+newlist.size());
+        List<Map<String,Object>> newlist = financeOrderService.selectFoByFlag(foFlag);
+        System.out.println(newlist.get(0));
         //数据封装，这里的map之所以敢这样add是因为这里的add顺序和hql中的select字段顺序是一样的，总共就查询那么多字段
         List<Map<String,Object>> solist = new ArrayList();
-        for(FinanceOrder obj:newlist){
+        for(Map<String,Object> obj:newlist){
             //每次循环都要重新new一个map，表示不同对象
-            System.out.println("FinanceClassify的第一个字段"+obj.getId());
             Map<String,Object> map = new HashMap();
-            map.put("id", obj.getId());
-            map.put("foNumList",obj.getFoNumList());
-            map.put("foTime",obj.getFoTime());
-            map.put("fcId",obj.getFcId());
-            map.put("foMoney",obj.getFoMoney());
-            map.put("foAccount",obj.getFoAccount());
-            map.put("foPerson",obj.getFoPerson());
-            map.put("foRemark",obj.getFoRemark());
-            map.put("foImage",obj.getFoImage());
-            map.put("foFlag",obj.getFoFlag());
+            map.put("id", obj.get("oid"));
+            map.put("foNumList",obj.get("foNumList"));
+            map.put("foTime",obj.get("foTime"));
+            map.put("fcType",obj.get("fcType"));
+            map.put("foMoney",obj.get("foMoney"));
+            map.put("foAccount",obj.get("foAccount"));
+            map.put("foPerson",obj.get("foPerson"));
+            map.put("foRemark",obj.get("foRemark"));
+            map.put("foFlag",obj.get("foFlag"));
             solist.add(map);
         }
         //创建HSSFWorkbook对象(excel的文档对象)
@@ -193,7 +202,7 @@ public class FinanceOrderController {
         // 2.生成样式对象，这里的设置居中样式和版本有关，我用的poi用HSSFCellStyle.ALIGN_CENTER会报错，所以用下面的
         HSSFCellStyle style = wb.createCellStyle();
         //设置居中样式
-        /*style.setAlignment(HSSFCellStyle.ALIGN_CENTER);*/
+       /* style.setAlignment(HSSFCellStyle.ALIGN_CENTER);*/
         // 调用字体样式对象
         style.setFont(font);
         style.setWrapText(true);
@@ -244,11 +253,7 @@ public class FinanceOrderController {
 
         HSSFCell cell8=row2.createCell(8);
         cell8.setCellStyle(style);
-        cell8.setCellValue("图片描述");
-
-        HSSFCell cell9=row2.createCell(9);
-        cell9.setCellStyle(style);
-        cell9.setCellValue("收支");
+        cell8.setCellValue("收支");
         //单元格宽度自适应
         sheet.autoSizeColumn((short)3);
         sheet.autoSizeColumn((short)4);
@@ -281,7 +286,7 @@ public class FinanceOrderController {
 
             HSSFCell cell03=rowx.createCell(3);
             cell03.setCellStyle(style);
-            cell03.setCellValue((Integer) map.get("fcId"));
+            cell03.setCellValue((String) map.get("fcType"));
 
             HSSFCell cell04=rowx.createCell(4);
             cell04.setCellStyle(style);
@@ -301,11 +306,7 @@ public class FinanceOrderController {
 
             HSSFCell cell08=rowx.createCell(8);
             cell08.setCellStyle(style);
-            cell08.setCellValue((String) map.get("foImage"));
-
-            HSSFCell cell09=rowx.createCell(9);
-            cell09.setCellStyle(style);
-            cell09.setCellValue((String) map.get("foFlag"));
+            cell08.setCellValue((String) map.get("foFlag"));
         }
         //输出Excel文件
         OutputStream output=response.getOutputStream();
@@ -315,6 +316,6 @@ public class FinanceOrderController {
         response.setContentType("application/msexcel");
         wb.write(output);
         output.close();
-        return null;
+        return "SUCCESS";
     }
 }

@@ -1,10 +1,16 @@
 package com.yunhe.billmanagement.service.impl;
 
-import com.yunhe.billmanagement.entity.RunningAccounts;
-import com.yunhe.billmanagement.dao.RunningAccountsMapper;
-import com.yunhe.billmanagement.service.IRunningAccountsService;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yunhe.billmanagement.dao.RunningAccountsMapper;
+import com.yunhe.billmanagement.entity.RunningAccounts;
+import com.yunhe.billmanagement.service.IRunningAccountsService;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -16,5 +22,38 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RunningAccountsServiceImpl extends ServiceImpl<RunningAccountsMapper, RunningAccounts> implements IRunningAccountsService {
+
+    @Resource RunningAccountsMapper runningAccountsMapper;
+
+    @Override
+    public int insertRunningAccountsOne(RunningAccounts runningAccounts) {
+        return runningAccountsMapper.insert(runningAccounts);
+    }
+
+    @Override
+    public RunningAccounts selectRunningMaxIdMoney() {
+        return runningAccountsMapper.selectRunningMaxIdMoney();
+    }
+
+    @Override
+    public Map selectRaPage(int current, int size,RunningAccounts runningAccounts) {
+        Map map = new HashMap();
+        Page page = new Page(current,size);
+        List<RunningAccounts> list = runningAccountsMapper.selectRaPage(page,runningAccounts);
+        map.put("list",list);
+        map.put("pages",page.getPages());
+        map.put("total",page.getTotal());
+        return map;
+    }
+
+    @Override
+    public List<RunningAccounts> selectRa() {
+        return runningAccountsMapper.selectList(null);
+    }
+
+    @Override
+    public Map<String,Object> selectCountMap() {
+        return runningAccountsMapper.selectCountMap();
+    }
 
 }

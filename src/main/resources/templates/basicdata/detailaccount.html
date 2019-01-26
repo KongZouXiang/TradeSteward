@@ -43,28 +43,13 @@
         </tr>
     </form>
 </div>
-<!--<script>
-    var selectAccountList = function(id) {
-        $.ajax({
-            type:'POST',
-            dataType:'json',
-            url:'/basicdata/settlement-account/selectAccountByid？id='+id,
-            data:{
-            },
-            success:function(msg){
-                app.result = msg.settlementAccountid;
-
-            }
-        });
-    }
-
-    $("#cancelBtn").click(function () {
+<script>
+    $("#cancelBtn").click(function (msg) {
         var index = parent.layer.getFrameIndex(window.name);
         parent.getAccountPageList ();
         parent.layer.close(index);
-
     })
     }
-</script>-->
+</script>
 </body>
 </html>

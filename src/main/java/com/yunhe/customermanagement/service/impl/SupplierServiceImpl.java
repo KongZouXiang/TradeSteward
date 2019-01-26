@@ -1,14 +1,18 @@
 package com.yunhe.customermanagement.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yunhe.customermanagement.dao.SupplierMapper;
+
 import com.yunhe.customermanagement.entity.Supplier;
+import com.yunhe.customermanagement.dao.SupplierMapper;
 import com.yunhe.customermanagement.service.ISupplierService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +44,11 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier> i
     }
 
     @Override
+    public int deleteBatchIds(Collection<? extends Serializable> idList) {
+        return supplierMapper.deleteBatchIds(idList);
+    }
+
+    @Override
     public int insertSupplier(Supplier supplier) {
         return supplierMapper.insert(supplier);
     }
@@ -49,18 +58,13 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier> i
         return supplierMapper.selectAllExcel();
     }
 
+
+
     @Override
-    public Map selectAll(int current, int size) {
-        Map map = new HashMap();
-        Page<Supplier> page = new Page(current,size);
-        List<Supplier> list = supplierMapper.selectAll(page);
-
-        map.put("list",list);
-        map.put("current",current);
-        map.put("size",size);
-        map.put("totalPage", page.getPages());
-
-        return map;
+    public IPage<Supplier> selectPage(int current, int size, Supplier supplier) {
+        return supplierMapper.selectPage(new Page<>(current, size),
+                new QueryWrapper<Supplier>().like("sup_compname", supplier.getSupCompname())
+                        .or().like("sup_tele", supplier.getSupTele()).or().like("sup_number",supplier.getSupNumber()));
     }
 
     @Override

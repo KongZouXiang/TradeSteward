@@ -58,4 +58,6 @@ public interface SalesOrderHistoryMapper extends BaseMapper<SalesOrderHistory> {
         List<SalesOrderHistory> selectAbc(int id);
 
         SalesOrderHistory selectSaleById(int id);
+
+        SalesOrderHistory selectByNumber(SalesOrderHistory salesOrderHistory);
 }

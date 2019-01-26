@@ -1,8 +1,8 @@
 package com.yunhe.customermanagement.dao;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import com.yunhe.customermanagement.entity.Supplier;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import java.util.List;
 
@@ -16,15 +16,6 @@ import java.util.List;
  */
 public interface SupplierMapper extends BaseMapper<Supplier> {
 
-    /**
-     *<p>
-     *     查询并分页的dao接口
-     *</p>
-     * @param page 分页
-     * @param supplier 客户
-     * @return 供应商列表
-     */
-    List<Supplier> selectAllSupplier(Page page, Supplier supplier);
 
 
     /**
@@ -35,14 +26,6 @@ public interface SupplierMapper extends BaseMapper<Supplier> {
      */
     List<Supplier> selectAllExcel();
 
-    /**
-     * <p>
-     *     查询并分页
-     * </p>
-     * @param page
-     * @return 供应商列表
-     */
-    List<Supplier> selectAll(Page page);
 
 
 }

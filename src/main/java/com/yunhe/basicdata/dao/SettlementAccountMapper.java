@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -58,4 +59,11 @@ public interface SettlementAccountMapper extends BaseMapper<SettlementAccount> {
      * @return 无返回
      */
     int deleteAccount(SettlementAccount settlementAccount);
+
+    /**
+     * 检查银行账号是否已存在
+     * @param settlementAccount 实体类
+     * @return
+     */
+    List<Map<String,String>> checkAccount(SettlementAccount settlementAccount);
 }

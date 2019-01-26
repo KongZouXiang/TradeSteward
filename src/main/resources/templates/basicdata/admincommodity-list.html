@@ -1,7 +1,7 @@
-﻿<!DOCTYPE HTML>
+﻿
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -12,6 +12,11 @@
     <script type="text/javascript" src="/lib/html5shiv.js"></script>
     <script type="text/javascript" src="/lib/respond.min.js"></script>
     <script type="text/javascript" src="/js/vue/vue.min.js"></script>
+    <script type="text/javascript" src="/jquery/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.js"></script>
+    <script type="text/css" src="/css/bootstrap.min.css"></script>
+    <script type="text/javascript" src="/lib/lightbox2/2.8.1/js/lightbox-plus-jquery.js"></script>
+    <script type="text/javascript" src="/lib/ueditor/1.4.3/third-party/jquery-1.10.2.js"></script>
     <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css" />
     <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css" />
     <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
@@ -26,7 +31,10 @@
         class="c-gray en">&gt;</span> 商品列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
                                                href="javascript:location.replace(location.href);" title="刷新"><i
         class="Hui-iconfont">&#xe68f;</i></a></nav>
-<div class="page-container">
+<div style="width: 18%;height: 100%;float: left;border: red solid 1px">
+<div><span style="font-size: 18px">商品分类</span></div>
+</div>
+<div class="page-container" style="float: left;border: #1e97f7 1px solid;width: 78%;height: 96%">
     <div class="text-c">
         <input type="text" class="input-text" style="width:250px;margin-left: 1000px" placeholder="输入编号、名称、规格、属性" id="poKeyword" name="poKeyword">
         <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜索</button>
@@ -34,12 +42,13 @@
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
                  <button  id="deleteall" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</button>
-           <button id="addcommditybtn" onclick="addcommdity()" class="btn btn-primary radius"> <i class="Hui-iconfont">&#xe600;</i> 添加商品</button>
-            <!--<a href="javascript:;"  class="btn btn-danger radius"><i class="Hui-iconfont">&#xe600;</i> 添加商品</a>-->
-        <a href="#" onclick="exportexcel()" class="btn btn-danger radius">
-        <i class="Hui-iconfont">&#xe600;</i> Excel导出</a>
+           <button id="addcommditybtn" class="btn btn-primary radius"> <i class="Hui-iconfont">&#xe600;</i> 添加商品</button>
+        <a href="javascript:;" onclick="exportexcel()" class="btn btn-danger radius" >
+        <i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
     </span>
-        <span class="r">共有数据：<strong>54</strong> 条</span></div>
+        <span class="r">共有数据：<strong id="strong"></strong> 条</span></div>
+      <div><span>所属分类:</span><span style="color: #0e90d2"> 商品分类></span><span style="color: #9a6a00">默认分类</span></div>
+    <hr>
     <div id="app" style="overflow: scroll;height: 500px"  >
         <table class="table table-border table-bordered table-bg">
             <thead>
@@ -49,19 +58,25 @@
             <tr class="text-c">
                 <th width="25"><input type="checkbox" name="" value="" id="checkAll"></th>
                 <th width="40">序号</th>
+                <th width="130">移动</th>
                 <th width="130">操作</th>
-                <th width="150">编号</th>
-                <th width="90">名称</th>
-                <th width="90">基本单位</th>
-                <th width="130">零售价(元)</th>
-                <th width="150">属性</th>
-                <th width="100">规格</th>
+                <th width="100">编号</th>
+                <th width="80">名称</th>
+                <th width="80">基本单位</th>Q
+                <th width="80">零售价(元)</th>
+                <th width="80">规格</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody  class="tbody tb1">
             <tr class="text-c" v-for="(item,index) in result">
                 <td><input type="checkbox"   id="box_" :value="item.id"></td>
                 <td>{{index+1}}</td>
+                <td width="150">
+                    <button class="btn btn-primary Btn top"  id ="btntop" name="saveBtn"> <i class="icon Hui-iconfont">&#xe679;</i></a></button>
+                 <button  class="btn btn-primary Btn up" id="btnup" name="saveBtn"><i class="icon Hui-iconfont">&#xe6d6;</i></a></button>
+                   <button  class="btn btn-primary Btn down"  id="btndown" name="saveBtn" > <i class="icon Hui-iconfont">&#xe6d5;</i></a></button>
+                  <button   class="btn btn-primary Btn stick"  id="btnstick"><i class="icon Hui-iconfont">&#xe674;</i></a></button>
+                </td>
                 <td class="td-manage">
                     <a title="详情" href="javascript:;" @click="xiangEventcommdity(item.id)" class="ml-5" style="text-decoration:none"> <i class="icon Hui-iconfont">&#xe627;</i></a>
                     <a title="编辑" href="javascript:;" @click="editEventcommdity(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
@@ -69,10 +84,9 @@
                 </td>
                 <td>{{item.clNumber}}</td>
                 <td>{{item.clName}}</td>
-                <td>{{item.usId}}</td>
+                <td>{{item.clUnit}}</td>
                 <td>{{item.clTagPrise}}</td>
                 <td>{{item.clSpec}}</td>
-                <td>{{item.prId}}</td>
             </tr>
             </tbody>
         </table>
@@ -101,9 +115,10 @@
                 url : "/basicdata/commodity-list/getpage",
                 data : {
                     current:curr || 1,
-                    size:2,
+                    size:4,
                 },
                 success : function(msg) {
+                    $("#strong").html(msg.total);
                     app.result=msg.comlist;
                     laypage({
                         cont : 'pagenav', //容器。值支持id名、原生dom对象，jquery对象,
@@ -136,16 +151,34 @@
         });
     })
     /*增加商品*/
-    var  addcommdity=function () {
-        window.location.href="/basicdata/commodity-list/addcommlist";
-    }
+   $("#addcommditybtn").click(function () {
+       layer.open({
+           type:2,
+           title:'添加商品',
+           fix:false,
+           maxmin:true,
+           shadeClose:true,
+           area:['1500px','900px'],
+           content:'/basicdata/commodity-list/addcommlist',
+           end:function() {
+               getCommdityPageList();
+           }
+       });
+   });
     //编辑商品事件
     var editEventcommdity=function (id) {
-        $.ajax({
-            type:"post",
-            dataType:"json",
-        })
-        window.location.href='/basicdata/commodity-list/selectcommditybyid?id='+id;
+        layer.open({
+            type : 2,
+            title : '编辑商品',
+            fix : false,
+            maxmin : true,
+            shadeClose : true,
+            area : [ '1500px', '900px' ],
+            content : '/basicdata/commodity-list/selectcommditybyid?id='+id,
+            end : function() {
+                getCommdityPageList();
+            }
+        });
     };
     /*商品详情*/
   var xiangEventcommdity =function (id) {
@@ -190,7 +223,7 @@
                     url:'/basicdata/commodity-list/deletall',
                     data:JSON.stringify(ids),
                     success: function (msg){
-                        console.log(msg);
+                        getCommdityPageList();
                         if (msg){
                             layer.msg('成功删除',{icon:5});
                         }
@@ -224,6 +257,45 @@
             //否
         });
     }
+    $(function() {
+        //上移
+        var $up = $(".up");
+        $up .click(function () {
+            var $tr = $(this).parents('#app .table-bg> tbody > tr');
+            if ($tr.index() != 0) {
+                $tr.fadeOut().fadeIn();
+                $tr.prev().before($tr);
+            }
+        });
+        //下移
+      var $down = $(".down");
+        var len = $down.length;
+        $down.click(function () {
+            var $tr = $(this).parents('#app .table-bg> tbody > tr');
+            if ($tr.index() != len - 1) {
+                $tr.fadeOut().fadeIn();
+                $tr.next().after($tr);
+            }
+        });
+        //置顶
+     var $top = $(".top");
+        $top.click(function () {
+            var $tr = $(this).parents('#app .table-bg> tbody > tr');
+            $tr.fadeOut().fadeIn();
+            $(".tb1").prepend($tr);
+            $tr.css("color", "#f60");
+        });
+        //置底
+       var $stick= $(".stick");
+        $stick.click(function () {
+            var $tr = $(this).parents('#app .table-bg> tbody > tr');
+            $tr.fadeOut().fadeIn();
+            $(".tb1").append($tr);
+            $tr.css("color", "#f60");
+        });
+    });
+
+
 </script>
 </body>
 </html>

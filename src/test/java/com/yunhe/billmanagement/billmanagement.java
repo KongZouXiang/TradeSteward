@@ -1,7 +1,9 @@
 package com.yunhe.billmanagement;
 
 import com.yunhe.billmanagement.dao.FinanceOrderMapper;
+import com.yunhe.billmanagement.dao.RunningAccountsMapper;
 import com.yunhe.billmanagement.entity.FinanceClassify;
+import com.yunhe.billmanagement.entity.RunningAccounts;
 import com.yunhe.billmanagement.service.IFinanceClassifyService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +29,9 @@ public class billmanagement {
     IFinanceClassifyService financeClassifyService;
     @Resource
     FinanceOrderMapper financeOrderMapper;
+
+    @Resource
+    RunningAccountsMapper runningAccountsMapper;
 
    
 
@@ -78,6 +83,11 @@ public class billmanagement {
             System.out.println(financeClassifies);
         }
     }*/
+
+    @Test
+    public void test6(){
+        System.out.println(runningAccountsMapper.selectCountMap());
+    }
 
 }
 

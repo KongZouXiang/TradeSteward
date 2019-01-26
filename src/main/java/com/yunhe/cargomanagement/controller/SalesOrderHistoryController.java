@@ -1,25 +1,38 @@
 package com.yunhe.cargomanagement.controller;
 
 
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yunhe.basicdata.entity.CommodityList;
+import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
+import com.yunhe.cargomanagement.dao.OrderConnectCommMapper;
 import com.yunhe.cargomanagement.entity.OrderConnectComm;
 import com.yunhe.cargomanagement.entity.SalesOrderHistory;
+import com.yunhe.cargomanagement.service.IOrderConnectCommService;
+import com.yunhe.cargomanagement.service.impl.OrderConnectCommServiceImpl;
 import com.yunhe.cargomanagement.service.impl.SalesOrderHistoryServiceImpl;
+import com.yunhe.cargomanagement.util.DateUtil;
 import com.yunhe.customermanagement.entity.Customer;
 import com.yunhe.customermanagement.service.ICustomerService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.web.bind.annotation.*;
+
 import org.springframework.web.servlet.ModelAndView;
+import springfox.documentation.spring.web.json.Json;
 
 import javax.annotation.Resource;
+import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,34 +54,76 @@ public class SalesOrderHistoryController {
     private SalesOrderHistoryServiceImpl salesOrderHistoryService;
 
     @Resource
-    ICustomerService customerService;
+    private ICustomerService customerService;
 
+    @Resource
+    private CommodityListServiceImpl commodityListService;
+
+    @Resource
+    private IOrderConnectCommService orderConnectCommService;
     /**
      * 新增页面的跳转
      * @return web页面
      */
-    @RequestMapping("/ceshi1")
-    public ModelAndView ceshi1(){
-        return new ModelAndView("cargomanagement/salesOrderHistory-add");
+    @RequestMapping("/addJump")
+    public ModelAndView addJump(){
+        ModelAndView mv = new ModelAndView();
+        String xsd = DateUtil.numberXSD();
+        mv.addObject("xsd",xsd);
+        mv.setViewName("cargomanagement/salesOrderHistory-add");
+        return mv;
     }
 
-/*    *//**
-     * 根据id看详情
-     * @param id
+    /**
+     * 增加一个订单详情
+     * @param clName 商品
+     * @param orderCount 数量
      * @return
-     *//*
-    @RequestMapping("/detailSale")
-    public SalesOrderHistory detailSale(int id){
-        return salesOrderHistoryService.selectById(id);
-    }*/
+     */
+    @RequestMapping("/addList")
+    public ModelAndView addList(SalesOrderHistory salesOrderHistory,int [] clName,int [] orderCount){
+        ModelAndView mv = new ModelAndView();
+        System.out.println(salesOrderHistory);
+        int count=0; double price=0; String arr="";
+        for (int i=0;i<=clName.length-1;i++) {
+            CommodityList commodityList = commodityListService.selectCommById(clName[i]);
+            String clName1 = commodityList.getClName();
+            arr=arr + "," + clName1;
+            int i1 = orderCount[i];
+            count =count +i1;
+            float clWhoPrice = Float.parseFloat((commodityList.getClWhoPrice()));
+            price = price +clWhoPrice*i1;
+        }
+        salesOrderHistory.setSoOrderComm(arr);
+        salesOrderHistory.setSoOrderCount(count);
+        salesOrderHistory.setSoMoney(price);
+        System.out.println(salesOrderHistory);
+        int x = salesOrderHistoryService.insertSale(salesOrderHistory);
+        SalesOrderHistory salesOrderHistory1 = salesOrderHistoryService.selectByNumber(salesOrderHistory);
+        Integer id = salesOrderHistory1.getId();
+        System.out.println(id);
+        for (int i=0;i<= clName.length-1;i++){
+            OrderConnectComm orderConnectComm = new OrderConnectComm();
+            orderConnectComm.setOrderNum(id);
+            orderConnectComm.setClId(clName[i]);
+            orderConnectComm.setOrderCount(orderCount[i]);
+            orderConnectCommService.insertConn(orderConnectComm);
+        }
+        mv.setViewName("/cargomanagement/salesOrderHistory");
+        return mv;
+    }
     /**
      * 查询所有客户
      * @return
      */
-    @RequestMapping("/asdfdgh")
-    public List<Customer> listCustomer(){
-        return customerService.sellectAllExcel();
+    @RequestMapping("/customerList")
+    public List<Customer> customerList(){
+
+        List<Customer> list = (List<Customer>)customerService.sellectAllExcel();
+        return list;
     }
+    
+
     public int insertSale(SalesOrderHistory sa){
         return salesOrderHistoryService.insertSale(sa);
     }
@@ -81,6 +136,14 @@ public class SalesOrderHistoryController {
         return salesOrderHistoryService.deleteById(id);
     }
 
+    /**
+     * 查询商品
+     * @return 商品列表
+     */
+    @RequestMapping("/getCommodadd")
+    public Map getCommodadd(){
+        return commodityListService.selectComclassList1();
+    }
     /**
      * 批量删除
      * @param request
@@ -95,26 +158,39 @@ public class SalesOrderHistoryController {
         return true;
     }
     /**
-     * 修改页面跳转--根据id获取当前订单的所有信息
+     * 页面跳转--根据id获取当前订单的所有信息
      * @param id 销售订单的id
      * @return int 是否成功
      */
     @RequestMapping("/edit")
     public ModelAndView edit(int id, HttpSession httpSessionsion){
-        System.out.println(id);
         SalesOrderHistory salesOrderHistory = salesOrderHistoryService.selectById(id);
         httpSessionsion.setAttribute("sales",salesOrderHistory);
         return new ModelAndView("/cargomanagement/salesOrderHistory-detail");
     }
+
+    /**
+     * 页面跳转--根据id获取当前订单的所有信息(可修改页面)
+     * @param id 销售订单的id
+     * @return  是否成功
+     */
+    @RequestMapping("/editor")
+    public ModelAndView editor(int id, HttpSession httpSessionsion){
+        SalesOrderHistory salesOrderHistory = salesOrderHistoryService.selectById(id);
+        httpSessionsion.setAttribute("sales",salesOrderHistory);
+        return new ModelAndView("/cargomanagement/salesOrderHistory-editor");
+    }
     /**
      * 修改销售订单信息
-     * @param salesOrderHistory 参数为要修改的订单详情
+     * @param
      * @return
      */
     @RequestMapping("/update")
-    public ModelAndView updateSale(SalesOrderHistory salesOrderHistory){
-        int i = salesOrderHistoryService.updateSale(salesOrderHistory);
-        return new ModelAndView("updateSale");
+    public String updateSale(SalesOrderHistory salesOrderHistory){
+        System.out.println(salesOrderHistory);
+       /* int i = salesOrderHistoryService.updateSale(salesOrderHistory);
+        new ModelAndView("updateSale");*/
+        return "true";
     }
 
     /**
@@ -126,10 +202,19 @@ public class SalesOrderHistoryController {
         return new ModelAndView("/cargomanagement/salesOrderHistory");
     }
 
-    @RequestMapping("/index")
+  @RequestMapping("/index")
     public ModelAndView index1(){
         return new ModelAndView("/index");
     }
+
+    @RequestMapping("/commList")
+    public ModelAndView commList(int id){
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("message", id);
+        mv.setViewName("/cargomanagement/commList");
+        return mv;
+    }
+
     /**
      * 分页模糊查询销售订单历史
      * @param pageNum
@@ -143,7 +228,6 @@ public class SalesOrderHistoryController {
         map.put("pageSize", pageSize);
         map.put("pageNum", pageNum);
         map.put("salesOrderHistory", salesOrderHistory);
-        System.out.println(salesOrderHistory.getSoClient());
         Page page=salesOrderHistoryService.queryLikeList(map);
         map.put("page", page.getRecords());
         map.put("totalPage",page.getPages());
@@ -151,14 +235,8 @@ public class SalesOrderHistoryController {
         return map;
     }
     @RequestMapping("/detailList")
-    public List<OrderConnectComm> detailList(){
-/*        ArrayList<CommodityList> commodityLists = new ArrayList<>();
-        List<OrderConnectComm> orderConnectComms = salesOrderHistoryService.detailList(1);
-        for (OrderConnectComm orderConnectComm : orderConnectComms) {
-            CommodityList commodityList = orderConnectComm.getCommodityList();
-            commodityLists.add(commodityList);
-        }*/
-        return salesOrderHistoryService.detailList(1);
+    public List<OrderConnectComm> detailList(int id){
+        return salesOrderHistoryService.detailList(id);
     }
     /**
      * excel导出

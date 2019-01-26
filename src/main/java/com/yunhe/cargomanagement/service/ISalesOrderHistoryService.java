@@ -55,6 +55,7 @@ public interface ISalesOrderHistoryService extends IService<SalesOrderHistory> {
      */
     SalesOrderHistory selectById(int id);
 
+    SalesOrderHistory selectByNumber(SalesOrderHistory salesOrderHistory);
     /**
      * 查询所有的
      * @return

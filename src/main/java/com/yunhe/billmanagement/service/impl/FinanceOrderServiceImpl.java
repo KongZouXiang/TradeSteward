@@ -1,6 +1,5 @@
 package com.yunhe.billmanagement.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yunhe.billmanagement.dao.FinanceOrderMapper;
@@ -29,24 +28,27 @@ public class FinanceOrderServiceImpl extends ServiceImpl<FinanceOrderMapper, Fin
 
     @Override
     public Map selectFoPage(int current,int size,  FinanceOrder financeOrder) {
-        System.out.println("模糊查询的内容："+financeOrder);
         Page page = new Page(current,size);
-        System.out.println("每页条数："+size);
-        System.out.println("当前页数："+current);
         Map map = new HashMap();
-        List<FinanceOrder> list = financeOrderMapper.selectFoPage(page,financeOrder);
-        System.out.println("模糊查询查出来的数据："+list);
+        List<Map<String,Object>> list = financeOrderMapper.selectFoPage(page,financeOrder);
         map.put("total",page.getTotal());
         map.put("pages",page.getPages());
         map.put("list",list);
-        System.out.println("总页数："+page.getPages());
-        System.out.println("总条数："+page.getTotal());
+        List<Map<String,Object>> countListshou = financeOrderMapper.selectMoneyMapByShou();
+        map.put("countListshou",countListshou.get(0));
+        List<Map<String,Object>> countListzhi = financeOrderMapper.selectMoneyMapByZhi();
+        map.put("countListzhi",countListzhi.get(0));
         return map;
     }
 
     @Override
     public List<FinanceOrder> selectFo() {
-        return financeOrderMapper.selectList(new QueryWrapper<>());
+        return financeOrderMapper.selectList(null);
+    }
+
+    @Override
+    public List<Map<String,Object>> selectFoByFlag(String foFlag) {
+        return financeOrderMapper.selectFoByFlag(foFlag);
     }
 
     @Override
@@ -60,16 +62,10 @@ public class FinanceOrderServiceImpl extends ServiceImpl<FinanceOrderMapper, Fin
     }
 
     @Override
-    public int updateFo(FinanceOrder financeOrder) {
-        return financeOrderMapper.updateById(financeOrder);
+    public int deleteFo(int id) {
+        return financeOrderMapper.deleteById(id);
     }
 
-    @Override
-    public int deleteFo(FinanceOrder financeOrder) {
-        return financeOrderMapper.deleteById(financeOrder);
-    }
-
-    /*自动显示编码的SQL语句*/
     @Override
     public int maxId() {
         return financeOrderMapper.maxId();
@@ -77,16 +73,7 @@ public class FinanceOrderServiceImpl extends ServiceImpl<FinanceOrderMapper, Fin
 
     @Override
     public int gaiFo(Map<String, Object> map) {
-        System.out.println("进入修改的service");
         return financeOrderMapper.gaiFo(map);
-    }
-
-    public FinanceOrderMapper getFinanceOrderMapper() {
-        return financeOrderMapper;
-    }
-
-    public void setFinanceOrderMapper(FinanceOrderMapper financeOrderMapper) {
-        this.financeOrderMapper = financeOrderMapper;
     }
 
 

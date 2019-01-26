@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,7 +25,7 @@ import java.util.Map;
  * 角色管理 前端控制器
  * </p>
  *
- * @author 刘延奇,heyuji
+ * @author heyuji
  * @since 2019-01-02
  */
 @RestController
@@ -47,6 +48,7 @@ public class CharaMangerController {
         page.setCurrent(pageNum);
         List<CharaManger> list= charaMangerService.selectAll(page);
         Map map = new HashMap();
+        map.put("total",page.getTotal());
         map.put("page",page);
         map.put("list",list);
         map.put("totalPage",page.getPages());
@@ -63,6 +65,16 @@ public class CharaMangerController {
     public ModelAndView toAdd(){
         return new ModelAndView("/systemsetup/chararole-add");
     }
+    /**
+     * 检查角色名称是否存在
+     *
+     */
+    @RequestMapping(value = "/checkchara")
+    public Boolean checkchara(CharaManger charaManger){
+        Boolean a=charaMangerService.checkRole(charaManger);
+        System.out.println(a);
+        return a;
+    }
 
     /**
      *
@@ -72,19 +84,39 @@ public class CharaMangerController {
      * 增加角色
      */
     @RequestMapping(value = "/addrole")
-    public void addRole(CharaManger charaManger){
-        charaMangerService.insertRole(charaManger);
+    public int addRole(CharaManger charaManger){
+       return charaMangerService.insertRole(charaManger);
     }
 
     //返回修改页面
     @RequestMapping("/chara_edit")
-    public ModelAndView toCharaEdit(int id, Model model){
+    public ModelAndView toCharaEdit(int id, HttpSession session){
         CharaManger charamanger = charaMangerService.getById(id);
         System.out.println(charamanger);
-        model.addAttribute("chara",charamanger);
-        return new ModelAndView("/systemsetup/cechara-edit");
+        session.setAttribute("chara",charamanger);
+        return new ModelAndView("/systemsetup/chararole-edit");
     }
-    //
+
+    /**
+     * 提交修改页面
+     * @param
+     * @param charaManger
+     * @return
+     */
+    @RequestMapping("/subchara")
+    public Boolean  subCharaEdit(CharaManger charaManger){
+        System.out.println("这是个charaManger");
+       // System.out.println(charaMangerService.subCharaMage(charaManger));
+        //return charaMangerService.updateById(charaManger);
+        return charaMangerService.updateById(charaManger);
+    }
+    //删除角色
+    @RequestMapping("/deleteRole")
+    public Boolean deleteRole(CharaManger charaManger){
+        Boolean a=charaMangerService.removeById(charaManger.getId());
+        System.out.println(a);
+        return a;
+    }
 
     public CharaMangerServiceImpl getCharaMangerService() {
         return charaMangerService;

@@ -7,7 +7,9 @@
     </sql>
     <select id="queryLikeWaitOutWarehouse" resultType="com.yunhe.cargomanagement.entity.WaitOutWarehouse">
         select <include refid="Cols"/>
-        from wait_out_warehouse;
+        from wait_out_warehouse
+        where wo_company like concat('%',#{waitOutWarehouse.woCompany},'%')
+        and   wo_number like concat('%',#{waitOutWarehouse.woNumber},'%')
     </select>
 
 </mapper>

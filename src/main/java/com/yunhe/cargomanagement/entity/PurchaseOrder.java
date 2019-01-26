@@ -1,15 +1,17 @@
 package com.yunhe.cargomanagement.entity;
 
+import java.io.Serializable;
+import java.util.List;
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.yunhe.customermanagement.entity.Supplier;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
 
 /**
  * <p>
@@ -113,6 +115,11 @@ public class PurchaseOrder implements Serializable {
      */
     @TableField(value = "po_date_order")
     private String poDateOrder;
+
+    /**
+     * 进货中间表实体类
+     */
+    private List<PurComm> purComm;
 
 
     public static long getSerialVersionUID() {

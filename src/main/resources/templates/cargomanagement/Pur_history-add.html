@@ -1,0 +1,252 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="Bookmark" href="/favicon.ico">
+    <link rel="Shortcut Icon" href="/favicon.ico"/>
+    <script type="text/javascript" src="/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css"/>
+    <script type="text/javascript" src="/js/vue/vue.min.js"></script>
+    <script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <title>新增进货历史</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+</head>
+<body>
+<div id="app">
+
+    <article class="page-container">
+        <h1 style="text-align: center">商品进货订单</h1>
+        <form class="form form-horizontal" id="form-article-add" action="/cargomanagement/purchase-history/addPurchaseGoTo">
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>供应商</label>
+                <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select  class="select" name="phSupname" required="required">
+					<option value="默认"></option>
+					<option :value="item.supCompname" v-for="(item,index) in result">{{item.supCompname}}</option>
+				</select>
+				</span>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>入库仓库</label>
+                <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select  class="select" name="phWarehouse" required="required">
+					<option value="默认仓库"></option>
+					<option :value="item.wmName" v-for="(item,index) in resultThreeOne">{{item.wmName}}</option>
+				</select>
+				</span>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>单据编号</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" th:value="${session.curr}" placeholder="" id="poNumber"
+                           name="phNumber" required="required">
+                </div>
+            </div>
+
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>经手人</label>
+                <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select  class="select" name="phExperiencedPerson" required="required">
+					<option value="老板">老板</option>
+					<option value="财务">财务</option>
+					<option value="仓库">仓库</option>
+					<option value="销售">销售</option>
+				</select>
+				</span>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">业务日期：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text"
+                           onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'commentdatemax\')||\'%y-%M-%d\'}' })"
+                           id="phDate" name="phDate" class="input-text Wdate" required="required">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2"></label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="hidden"
+                           onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'commentdatemin\')}' })"
+                           id="commentdatemax" name="commentdatemax" class="input-text Wdate">
+                </div>
+            </div>
+
+            <table class="table table-border table-bordered table-bg">
+                <thead>
+                <tr>
+                    <th scope="col" colspan="5">新增进货商品列表</th>
+                </tr>
+                <tr class="text-c">
+                    <th width="40">序号</th>
+                    <th width="170">商品名称/规格</th>
+                    <th width="170">商品编号</th>
+                    <th width="170">属性</th>
+                    <th width="100">数量</th>
+                </tr>
+                </thead>
+                <tbody id="addTr">
+                <tr class="text-c" id="addx0">
+                    <td><a title='删除' href='javascript:;'  class='ml-5' style='text-decoration:none'><i
+                            class='Hui-iconfont'>&#xe6a6;</i></a>
+                    </td>
+                    <td>
+                        <select name="phClname" class="select" id="phClname" required="required">
+                            <option value="0">请选择</option>
+                            <option v-for="(item,index) in resulttwo" :value="item.clName">{{item.clName}}</option>
+                        </select>
+                    </td>
+                    <td id="clNumber" name="clNumber">商品编号</td>
+                    <td></td>
+                    <td><input type="text" class="input-text" placeholder="" id="QuantityOfPurchase"
+                               name="QuantityOfPurchase" required="required"></td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table table-border table-bordered table-bg">
+                <thead>
+                <tr>
+                    <a href="#" id="addxx"
+                       class="btn btn-block radius">
+                        <i class="Hui-iconfont">&#xe600;</i>添加商品表格</a>
+                </tr>
+                </thead>
+            </table>
+            <table class="table table-border table-bordered table-bg">
+                <thead>
+                <tr class="text-c">
+                    <th>
+                        备注
+                    </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td width="1500">
+                        <textarea type="text" class="textarea radius" name="phRemarks" required="required"></textarea>
+                    </td>
+                    <td><input class="btn btn-primary size-XL radius" type="submit" value="提交并入库"></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </article>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/lib/webuploader/0.1.5/webuploader.min.js"></script>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/ueditor.all.min.js"></script>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+
+<script type="text/javascript">
+
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            result: [],
+            resulttwo: [],
+            resultThree: [],
+            resultThreeOne: []
+        }
+    });
+    //查询
+    var getsupplierList = function (curr) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/cargomanagement/purchase-order/getSupplieradd',
+            data: {},
+            success: function (msg) {
+                app.result = msg.list;
+            }
+        });
+    };
+    getsupplierList();
+
+    var getCommodityList = function (curr) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/cargomanagement/purchase-order/getCommodadd',
+            data: {},
+            success: function (msg) {
+                app.resulttwo = msg.list;
+            }
+        });
+    };
+    getCommodityList();
+
+    var getWarehouseManageList = function (curr) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/cargomanagement/purchase-history/selectquanWarList',
+            data: {},
+            success: function (msg) {
+                app.resultThreeOne = msg;
+            }
+        });
+    };
+    getWarehouseManageList();
+
+
+
+
+    var m = 0;
+    $("#addxx").on("click", function () {
+
+        console.log($("#addTr"));
+        var clName = $("#clName").val();
+        if (clName == "请选择") {
+        } else {
+            m++;
+            var html = "<tr id='addx" + m + "' class='text-c'><td>" +
+                "<a title='删除' href='javascript:;' onclick='deleteRow(this)' class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6a6;</i></a></td><td>" +
+                "<select name='phClname' class='select' id='phClname'><option value='0'>请选择</option>";
+            for (var i = 1; i < app.resulttwo.length; i++) {
+                html = html + "<option value='" + app.resulttwo[i].clName + "'>" + app.resulttwo[i].clName + "</option>";
+            }
+            html = html + "</select></td><td>" +
+                "商品标号</td><td></td><td><input type='text' class='input-text' value='1' placeholder='' id='QuantityOfPurchase' name='QuantityOfPurchase'>" +
+                "</td></tr>\n";
+            m--;
+            document.getElementById("addx" + m).insertAdjacentHTML('afterend', html);
+            m++;
+        }
+    });
+
+
+    function deleteRow(obj) {
+        $(obj).parents("tr").remove();
+    }
+
+</script>
+</body>
+</html>

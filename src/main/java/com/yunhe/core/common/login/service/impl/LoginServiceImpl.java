@@ -23,11 +23,10 @@ public class LoginServiceImpl implements ILoginService {
     EmployMapper employMapper;
 
     @Override
-    public Employ login(Employ employ) {
+    public Employ selectOneEmploy(String name) {
 
         return employMapper.selectOne(
-                new QueryWrapper<Employ>().eq("em_username", employ.getEmUsername())
-                        .and(i -> i.eq("em_password", employ.getEmPassword())));
+                new QueryWrapper<Employ>().eq("em_username",name));
 
     }
 }

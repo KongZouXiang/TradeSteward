@@ -1,10 +1,12 @@
 package com.yunhe.cargomanagement.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yunhe.cargomanagement.entity.Warehouse;
 import com.yunhe.cargomanagement.service.IWarehouseService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -59,12 +61,57 @@ public class WarehouseController {
         return new ModelAndView("cargomanagement/warehouse.html");
     }
 
-    @RequestMapping("/selectWareHouse")
-    @ResponseBody
-    public  Warehouse selectWareHousePage(Warehouse warehouse){
+    /**
+     * <p>
+     *  模糊查询
+     * </p>
+     *
+     * @param warehouse 实体对象
+     * @return list集合
+     */
 
-        return warehouse;
+    @RequestMapping("/getWareHouseLike")
+    @ResponseBody
+    public List<Warehouse> selectWareHouseLike(Warehouse warehouse){
+
+        return warehouseService.selectWareHouseLike(warehouse);
     }
+
+
+    /**
+     * <p>
+     *     分页加模糊查询
+     * </p>
+     *
+     * @param pageNum 当前页
+     * @param pageSize 每页数据条数
+     * @param warehouse 实体对象
+     * @return IPage
+     */
+    @RequestMapping("/selectPage")
+    @ResponseBody
+    public IPage<Warehouse> selectPage(int pageNum, int pageSize, Warehouse warehouse){
+
+        return warehouseService.selectPage(pageNum,pageSize,warehouse);
+    }
+
+    /**
+     * <p>
+     *     仓库详情
+     * </p>
+     *
+     * @param id 前台传过来的ID
+     * @param model 传到前台数据
+     * @return ModelAndView
+     */
+    @RequestMapping("selEvent")
+    public ModelAndView selEvent(Integer id, Model model){
+        Warehouse warehouse = warehouseService.getById(id);
+        model.addAttribute("warehouse",warehouse);
+        return new ModelAndView("cargomanagement/selEvent");
+    }
+
+
 
     /**
      * <p>

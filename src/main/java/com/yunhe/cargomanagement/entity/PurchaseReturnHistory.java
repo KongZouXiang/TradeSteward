@@ -45,11 +45,6 @@ public class PurchaseReturnHistory implements Serializable {
     @TableField(value = "prh_number")
     private String prhNumber;
 
-    /**
-     * 关联进货单号
-     */
-    @TableField(value = "prh_pur_order")
-    private String prhPurOrder;
 
     /**
      * 供应商名称

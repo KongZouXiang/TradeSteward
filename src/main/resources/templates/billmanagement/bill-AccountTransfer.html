@@ -1,0 +1,216 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="Bookmark" href="/favicon.ico" >
+    <link rel="Shortcut Icon" href="/favicon.ico" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
+    <!--[if IE 6]>
+    <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <script type="text/javascript" src="/js/vue/vue.min.js"></script>
+    <link rel="stylesheet" href="/js/laypage/skin/laypage.css">
+    <script type="text/javascript" src="/js/laypage/laypage.js"></script>
+    <title>账户转账</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> <a href="/billManagement/account-transfer/toAt">账户转账</a> <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div class="text-c">
+        <input type="text" class="input-text" style="width:250px" placeholder="输入账户名称" id="atOutAccount" name="atOutAccount">
+        <button type="submit" class="btn btn-success" id="findAt" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+    </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20" data-validator-option="{theme:'simple_right'}">
+        &nbsp;&nbsp;<a href="javascript:;" id="addAtBtn" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增转账</a>
+        <span class="r">共有数据：<strong id="strong"></strong> 条</span>
+    </div>
+    <table class="table table-border table-bordered table-bg" id="app">
+        <thead>
+        <tr class="text-c">
+            <th width="40">ID</th>
+            <th width="100">操作</th>
+            <th width="150">转出账户</th>
+            <th width="150">转出日期</th>
+            <th width="150">转入账户</th>
+            <th width="150">到账日期</th>
+            <th width="150">金额(元)</th>
+            <th width="150">手续费(元)</th>
+            <th width="150">手续费支付方</th>
+            <th width="150">经手人</th>
+            <th width="150">备注</th>
+        </tr>
+        </thead>
+        <tbody v-for="(item,index) in result">
+        <tr class="text-c">
+            <td>{{index+1}}</td>
+            <td class="td-manage"><a title="详情" href="javascript:;" @click="editEvent(index)" id="detail" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
+                <a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+            <td>{{item.atOutAccount}}</td>
+            <td>{{item.atOutTime}}</td>
+            <td>{{item.atIntoAccount}}</td>
+            <td>{{item.atIntoTime}}</td>
+            <td>{{item.atMoney}}</td>
+            <td>{{item.atCharge}}</td>
+            <td>{{item.atChargePerson}}</td>
+            <td>{{item.atPerson}}</td>
+            <td>{{item.atRemark}}</td>
+        </tr>
+        <tr class='info' style="display: none">
+            <td height='75px'colspan='11'>
+                <div style="border-bottom:1px solid #b2b2b2;height: 25px">转账金额:<span>{{item.atMoney}}</span></div>
+                <div style="height: 25px ">
+                    <div style="width: 25%;float: left">转出账户:<span>{{item.atOutAccount}}</span></div>
+                    <div style="width: 25%;float: left">转入账户:<span>{{item.atIntoAccount}}</span></div>
+                    <div style="width: 25%;float: left">手续费:<span>{{item.atCharge}}</span></div>
+                    <div style="width: 25%;float: left">备注:<span>{{item.atRemark}}</span></div></div>
+                <div style="height: 25px">
+                    <div style="width: 25%;float: left">转出日期:<span>{{item.atOutTime}}</span></div>
+                    <div style="width: 25%;float: left">到账日期:<span>{{item.atIntoTime}}</span></div>
+                    <div style="width: 25%;float: left">手续费支付方:<span>{{item.atChargePerson}}</span></div>
+                    <div style="width: 25%;float: left">经手人:<span>{{item.atPerson}}</span></div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+        <tbody data-validator-option="{theme:'simple_right'}">
+        <tr class="text-c">
+            <th width="40"></th>
+            <th width="150">合计</th>
+            <th width="150"></th>
+            <th width="150"></th>
+            <th width="150"></th>
+            <th width="150"></th>
+            <th width="150"><span style="color: red;font-size: 14px" id="money"></span></th>
+            <th width="150"><span style="color: red;font-size: 14px" id="charge"></span></th>
+            <th width="150"></th>
+            <th width="150"></th>
+            <th></th>
+        </tr>
+        </tbody>
+    </table>
+    <div id="pagenav" style="text-align: center;position:fixed;margin-top:150px;left:0;right:0"></div>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el:'#app',
+        data:{
+            result:[]
+        }
+    });
+
+    var getAtPageList = function(curr) {
+        $.ajax({
+            type:'get',
+            dataType:'json',
+            url:'/billManagement/account-transfer/selectAtPage',
+            data:{
+                current: curr || 1,
+                size:5,
+                atOutAccount:$("#atOutAccount").val()
+            },
+            success:function(msg){
+                $("#strong").html(msg.total);
+                $("#money").html(msg.ma.money);
+                $("#charge").html(msg.ma.charge);
+                app.result = msg.list;
+                laypage({
+                    cont:'pagenav',
+                    pages:msg.pages,
+                    first:'首页',
+                    last:'尾页',
+                    skin: '#00A0E9',
+                    curr: curr || 1,
+                    jump: function (obj, first) {
+                        if (!first) {
+                            getAtPageList(obj.curr);
+                        }
+                    }
+                });
+            }
+        });
+    };
+
+    getAtPageList();
+
+    /*搜索*/
+    $("#findAt").click(function () {
+        getAtPageList();
+    });
+
+    /*新增转账*/
+    $("#addAtBtn").click(function () {
+        layer.open({
+            type:2,
+            title:'新增转账',
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['800px','600px'],
+            content:'/billManagement/account-transfer/toAdd',
+            end:function() {
+                getAtPageList();
+                layer.msg('新增成功', {icon: 1});
+            }
+        });
+    });
+
+    /*收支详情*/
+    var editEvent = function (as){
+            var a=$(".info");
+            if (a[as].style.display=="none"){
+                a[as].style.display="";
+            } else {
+                a[as].style.display="none";
+            }
+    };
+
+    /*删除订单*/
+    var delEvent = function (id) {
+        layer.confirm('你确定要删除吗？',{
+            btn:['是','否']
+        },function () {
+            $.ajax({
+                type:'GET',
+                dataType:'json',
+                url: '/billManagement/account-transfer/deleteAt',
+                data:{id:id},
+                success:function (msg) {
+                    if(msg==1){
+                        layer.msg('删除成功',{icon:1});
+                    }
+                    if(msg!=1){
+                        layer.msg('删除失败',{icon:5});
+                    }
+                    getAtPageList();
+                }
+            })
+        },function () {
+            getAtPageList();
+        });
+    };
+</script>
+</body>
+</html>

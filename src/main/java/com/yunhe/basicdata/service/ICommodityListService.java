@@ -1,8 +1,11 @@
 package com.yunhe.basicdata.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.yunhe.basicdata.entity.Commclass;
 import com.yunhe.basicdata.entity.CommodityList;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.yunhe.basicdata.entity.WarehouseManagement;
 import org.springframework.stereotype.Repository;
+
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +27,7 @@ public interface ICommodityListService extends IService<CommodityList> {
      * @param commodityList 实体类
      * @return f返回商品的信息
      */
-    Map selectAllcommList(int current, int size,CommodityList commodityList);
+    Map selectAllcommList(int current, int size, CommodityList commodityList);
     /**
      * 新增商品列表
      * @param commodityList 新增商品的实体类
@@ -65,8 +68,37 @@ public interface ICommodityListService extends IService<CommodityList> {
     List<CommodityList> selectCommstlist(String data);
 
     /**
-     *
+     *导出excel
      * @return
      */
     List<CommodityList> ExportExcel();
+
+    /**
+     * 查询商品所在的仓库
+     * @param id
+     * @return
+     */
+    WarehouseManagement selectWmAndComm(int id);
+
+    /**
+     * 查询的是商品所在的分类
+     * @param id 商品的id
+     * @return
+     */
+    Commclass selectclassAndComm(int id);
+
+    /**
+     * @author 史江浩
+     * @since 2019-01-14
+     * @return 查询商品
+     */
+    Map selectComclassList1();
+
+    /**
+     * @author 史江浩
+     * @since 2019-01-21
+     * @param clName 查询的条件
+     * @return 根据商id查询的结果
+     */
+    CommodityList selectListByClName(String clName);
 }

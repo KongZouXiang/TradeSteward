@@ -19,11 +19,42 @@ spring:
 server:
   port: 8081
 
-
 ---
 #生产环境配置
 spring:
-  profiles: prd
+  profiles: pro
 
 server:
-  port: 8082
+  port: 80
+
+---
+
+mybatis-plus:
+  #mybatis对应的映射文件路径
+  mapper-locations: classpath*:mapper/*/*Mapper.xml
+  type-aliases-package: com.yunhe.*.entity
+
+spring:
+  #thymeleaf:
+  thymeleaf:
+    #不设置静态页面缓存
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    mode: HTML5
+    servlet:
+      content-type: text/html
+  #邮件服务功能
+  mail:
+    default-encoding: UTF-8
+    #QQ邮箱服务器
+    host: smtp.qq.com
+    #发送人邮箱
+    username:
+    #发送人邮箱的授权码
+    password:
+    #网易邮箱端口
+    port: 25
+    protocol: smtp
+

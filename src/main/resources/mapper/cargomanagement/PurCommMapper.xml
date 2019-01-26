@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunhe.cargomanagement.dao.PurCommMapper">
+    <update id="updatePurCommByPuId" parameterType="Integer">
+        UPDATE pur_comm
+        SET puh_id= #{puhId}
+        WHERE pu_id = #{puId}
+    </update>
+
+    <update id="updatePurCommByPuhId" parameterType="Integer">
+        UPDATE pur_comm
+        SET warhoure_id=#{warhoureId}
+        WHERE puh_id= #{puhId}
+    </update>
+
+    <select id="selectPcGeshuByWId" parameterType="Integer" resultType="Integer">
+        select pc_geshu from pur_comm where warhoure_id = #{id}
+    </select>
+
+    <select id="selectComIdByWId" parameterType="Integer" resultType="Integer">
+        select com_id from pur_comm where warhoure_id = #{id}
+    </select>
+
+</mapper>

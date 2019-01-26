@@ -1,8 +1,9 @@
 package com.yunhe.cargomanagement.service;
 
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.yunhe.cargomanagement.entity.PurComm;
 import com.yunhe.cargomanagement.entity.PurchaseOrder;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.io.Serializable;
 import java.util.List;
@@ -64,7 +65,7 @@ public interface IPurchaseOrderService extends IService<PurchaseOrder> {
      * @param id 进货订单历史表id
      * @return 单条数据
      */
-    List<PurchaseOrder> getPurchaseById(Integer id);
+    PurchaseOrder getPurchaseById(Integer id);
 
     /**
      * 审核进货订单历史
@@ -74,5 +75,31 @@ public interface IPurchaseOrderService extends IService<PurchaseOrder> {
     int updateHistState(PurchaseOrder purchaseOrder);
 
     int updateHistStateByid(PurchaseOrder purchaseOrder);
+
+    /**
+     * 查询所有
+     * @return
+     */
+    List<PurchaseOrder> selectPurchaseOrder();
+
+    /**
+     * 进货订单历史详情
+     * @param purchaseOrder 实体类数据
+     * @return 历史详情
+     */
+    List<PurComm> selectPuOrder(PurchaseOrder purchaseOrder);
+
+    /**
+     * 一对一
+     * @return 商品信息
+     */
+    List<PurComm> selectComZhong(int id);
+
+    /**
+     * 根据订单编号查询
+     * @param poNumber 订单编号
+     * @return 单条进货订单历史
+     */
+    PurchaseOrder selectPurOrderByPoNumber(String poNumber);
 
 }

@@ -41,31 +41,42 @@
             parameterType="com.yunhe.cargomanagement.entity.PurchaseOrder">
         select
         <include refid="getPurchaseOrderByNumber"/>
-        from purchase_order where po_number like concat('%', #{purchaseOrder.poNumber}, '%') AND po_sup_name like concat('%', #{purchaseOrder.poSupName}, '%') order by id desc
+        from purchase_order where po_number like concat('%', #{purchaseOrder.poNumber}, '%') AND po_sup_name like
+        concat('%', #{purchaseOrder.poSupName}, '%') order by id desc
     </select>
 
     <!--销售订单历史总条数-->
     <select id="getPoNumberCount" parameterType="com.yunhe.cargomanagement.entity.PurchaseOrder" resultType="int">
         select count(1)
         from purchase_order
-        where po_number like concat('%', #{purchaseOrder.poNumber}, '%') AND po_sup_name like concat('%', #{purchaseOrder.poSupName}, '%') order by id desc
+        where po_number like concat('%', #{purchaseOrder.poNumber}, '%')
+          AND po_sup_name like concat('%', #{purchaseOrder.poSupName}, '%')
+        order by id desc
     </select>
     <!--销售订单历史详情-->
     <select id="getPurchaseById" resultType="com.yunhe.cargomanagement.entity.PurchaseOrder" parameterType="Integer">
         select
         <include refid="getPurchaseOrderByNumber"/>
-        from purchase_order where id = {id}
+        from purchase_order where id = #{purchaseOrder.id}
     </select>
 
-    <update id="updateHistState" parameterType="com.yunhe.cargomanagement.entity.PurchaseOrder" >
-        update purchase_order set po_state= #{purchaseOrder.po_state} where id=#{purchaseOrder.id}
+    <select id="selectPurchaseOrder" resultType="com.yunhe.cargomanagement.entity.PurchaseOrder">
+        select
+        <include refid="getPurchaseOrderByNumber"/>
+        from purchase_order
+    </select>
+
+    <update id="updateHistState" parameterType="com.yunhe.cargomanagement.entity.PurchaseOrder">
+        update purchase_order
+        set po_state= #{purchaseOrder.po_state}
+        where id = #{purchaseOrder.id}
     </update>
 
     <!--更改销售订单历史-->
     <update id="updategetPurchaseById" parameterType="com.yunhe.cargomanagement.entity.PurchaseOrder">
         update purchase_order
-        set po_date = #{purchaseOrder.po_date},
-            po_number = #{purchaseOrder.po_number},
+        set po_date                = #{purchaseOrder.po_date},
+            po_number              = #{purchaseOrder.po_number},
             po_state= #{purchaseOrder.po_state},
             po_auditor= #{purchaseOrder.po_auditor},
             po_sup_name= #{purchaseOrder.po_sup_name},
@@ -76,9 +87,87 @@
             po_experienced_person= #{purchaseOrder.po_experienced_person},
             po_single_person= #{purchaseOrder.po_single_person},
             po_remarks= #{purchaseOrder.po_remarks},
-            po_date_order= #{purchaseOrder.po_date_order} where id=#{purchaseOrder.id}
+            po_date_order= #{purchaseOrder.po_date_order}
+        where id = #{purchaseOrder.id}
     </update>
 
+    <resultMap id="selectPuOrder" type="com.yunhe.cargomanagement.entity.PurchaseOrder">
+        <id column="id" property="id"/>
+        <result column="po_sup_name" property="poSupName"/>
+        <result column="po_number" property="poNumber"/>
+        <result column="po_auditor" property="poAuditor"/>
+        <result column="po_date" property="poDate"/>
+        <result column="po_bill" property="poBill"/>
+        <result column="po_remarks" property="poRemarks"/>
+        <collection property="purComm" ofType="com.yunhe.cargomanagement.entity.PurComm">
+            <id column="id" property="id"/>
+            <result column="pc_geshu" property="pcGeshu"/>
+            <association property="commodityList" javaType="com.yunhe.basicdata.entity.CommodityList">
+                <id column="id" property="id"/>
+                <result column="cl_name" property="clName"/>
+                <result column="cl_number" property="clNumber"/>
+                <result column="cl_unit" property="clUnit"/>
+                <result column="cl_pur_price" property="clPurPrice"/>
+            </association>
+        </collection>
+    </resultMap>
+
+    <select id="selectPuOrder" resultMap="selectPuOrder" parameterType="com.yunhe.cargomanagement.entity.PurchaseOrder">
+        SELECT
+            pu.id,
+            co.id,
+            pc.id,
+            pu.po_sup_name,
+            pu.po_number,
+            pu.po_auditor,
+            pu.po_date,
+            co.cl_name,
+            co.cl_number,
+            pc.pc_geshu,
+            co.cl_unit,
+            co.cl_pur_price,
+            pu.po_bill,
+            pu.po_remarks
+        FROM purchase_order pu,
+             pur_comm pc,
+             commodity_list co
+        WHERE pu.id = pc.pu_id
+          AND pc.com_id = co.id
+          AND pu.id = #{id}
+    </select>
+
+    <resultMap id="selectZhong" type="com.yunhe.cargomanagement.entity.PurComm">
+        <id column="id" property="id"/>
+        <result column="pc_geshu" property="pcGeshu"/>
+        <association property="commodityList" javaType="com.yunhe.basicdata.entity.CommodityList">
+            <id column="id" property="id"/>
+            <result column="cl_name" property="clName"/>
+            <result column="cl_number" property="clNumber"/>
+            <result column="cl_unit" property="clUnit"/>
+            <result column="cl_pur_price" property="clPurPrice"/>
+        </association>
+    </resultMap>
+
+    <select id="selectComZhong" resultMap="selectZhong">
+        SELECT
+            co.cl_name,
+            co.cl_number,
+            pc.pc_geshu,
+            co.cl_unit,
+            co.cl_pur_price
+        FROM
+            pur_comm pc,
+            commodity_list co
+        WHERE pc.com_id = co.id
+          and pu_id = #{id}
+    </select>
+
+    <select id="selectPurOrderByPoNumber" parameterType="String"
+            resultType="com.yunhe.cargomanagement.entity.PurchaseOrder">
+        select
+        <include refid="getPurchaseOrderByNumber"/>
+        from purchase_order where po_number=#{poNumber}
+    </select>
 
 
     <!--增加进货订单历史-->

@@ -9,10 +9,10 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
-/*@EnableSwagger2*/
-
+//@EnableSwagger2
 @Configuration
 public class Swagger2Config {
 
@@ -29,7 +29,7 @@ public class Swagger2Config {
                 .apiInfo(apiInfo())
                 .select()
                 //为当前包路径
-                .apis(RequestHandlerSelectors.basePackage("com.yunhe.basicdata.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.yunhe"))
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -42,13 +42,13 @@ public class Swagger2Config {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 //页面标题
-                .title("Spring Boot 测试使用 Swagger2 构建RESTful API")
+                .title("贸易管家后台API接口")
                 //创建人
-                .contact(new Contact("MarryFeng", "http://www.baidu.com", ""))
+                .contact(new Contact("南瞻部洲全员", "http://localhost:8080", ""))
                 //版本号
                 .version("1.0")
                 //描述
-                .description("API 描述")
+                .description("简单优雅的restfun风格")
                 .build();
     }
 }

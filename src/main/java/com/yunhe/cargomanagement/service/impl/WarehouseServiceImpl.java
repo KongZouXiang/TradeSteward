@@ -1,5 +1,7 @@
 package com.yunhe.cargomanagement.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yunhe.cargomanagement.dao.WarehouseMapper;
@@ -55,6 +57,7 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, Warehouse
 
     @Override
     public Map selectWareHousePage(int pageNum, int pageSize) {
+
         Map map=new HashMap();
         Page<Warehouse> page=new Page<>(pageNum,pageSize);
         List<Warehouse> list=warehouseMapper.selectAll(page);
@@ -63,6 +66,29 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, Warehouse
         map.put("pageSize",pageSize);
         map.put("totalPage",page.getPages());
         return map;
+    }
+
+    @Override
+    public List<Warehouse> selectWareHouseLike(Warehouse warehouse) {
+        List<Warehouse> list = warehouseMapper.selectList(new QueryWrapper<Warehouse>().like("wa_number", warehouse.getWaNumber()).or().like("wa_sp_name", warehouse.getWaSpName()));
+
+        return list;
+    }
+
+    @Override
+    public IPage<Warehouse> selectPage(int pageNum, int pageSize, Warehouse warehouse) {
+        IPage<Warehouse> warehouseIPage = warehouseMapper.selectPage(new Page<>(pageNum, pageSize), new QueryWrapper<Warehouse>().like("wa_number", warehouse.getWaNumber()).or().like("wa_sp_name", warehouse.getWaSpName()));
+        return warehouseIPage;
+    }
+
+    @Override
+    public Warehouse selectWarehouseByWaSpName(String waSpName) {
+        return warehouseMapper.selectWarehouseByWaSpName(waSpName);
+    }
+
+    @Override
+    public int updateWarehouseByWaSpName(int waSpCurrentInventory, double waTotalSum, String waSpName) {
+        return warehouseMapper.updateWarehouseByWaSpName(waSpCurrentInventory,waTotalSum,waSpName);
     }
 
 

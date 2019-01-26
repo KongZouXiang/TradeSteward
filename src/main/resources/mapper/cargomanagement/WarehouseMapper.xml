@@ -2,13 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yunhe.cargomanagement.dao.WarehouseMapper">
     <sql id="warehousecol">
-        id,wa_number,wa_sp_name,wa_sp_specifications,wa_sp_company,wa_sp_lnventory,wa_sp_current_inventory,
-        wa_sp_forout,wa_sp_forenter,wa_cost,wa_total_sum
+        id
+        ,
+        wa_number,
+        wa_sp_name,
+        wa_sp_specifications,
+        wa_sp_company,
+        wa_sp_lnventory,
+        wa_sp_current_inventory,
+        wa_sp_forout,
+        wa_sp_forenter,
+        wa_cost,
+        wa_total_sum
     </sql>
 
     <!--分页-->
     <select id="selectAll" resultType="com.yunhe.cargomanagement.entity.Warehouse">
-        select * from warehouse
+        select *
+        from warehouse
     </select>
 
     <!--<select id="count" resultType="int" parameterType="map">
@@ -25,9 +36,28 @@
 
 
     <!--模糊查询-->
-    <select id="selectWareHouseLike" parameterType="com.yunhe.cargomanagement.entity.Warehouse" resultType="com.yunhe.cargomanagement.entity.Warehouse">
+    <select id="selectWareHouseLike" parameterType="com.yunhe.cargomanagement.entity.Warehouse"
+            resultType="com.yunhe.cargomanagement.entity.Warehouse">
         select
         <include refid="warehousecol"/>
         from warehouse where wa_sp_name as waSpName like concat('%',#{waSpName},'%')
     </select>
+
+    <!--史江浩
+        2019-01-25
+        根据商品名查询商品库存数量 和 总金额
+    -->
+    <select id="selectWarehouseByWaSpName" parameterType="String"
+            resultType="com.yunhe.cargomanagement.entity.Warehouse">
+        select *
+        from warehouse
+        where wa_sp_name = #{waSpName}
+    </select>
+
+    <update id="updateWarehouseByWaSpName" parameterType="Object">
+        UPDATE warehouse
+        SET wa_sp_current_inventory=#{waSpCurrentInventory},
+            wa_total_sum=#{waTotalSum}
+        WHERE wa_sp_name = #{waSpName}
+    </update>
 </mapper>

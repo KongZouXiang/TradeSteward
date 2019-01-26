@@ -1,0 +1,33 @@
+spring:
+  #数据库连接配置
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    #连接账户
+    username: root
+    #连接密码
+    password: root
+    #连接地址
+    url: jdbc:mysql://47.106.37.123:3306/trades_teward?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+    #连接类型
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      #连接池名字
+      pool-name: DatebookHikariCP
+      #此属性控制从池返回的连接的默认自动提交行为,默认值:true
+      auto-commit: true
+      connection-test-query: SELECT 1
+      connection-timeout: 30000
+      #空间连接存活最大时间,默认600000(10分钟)
+      idle-timeout: 1800000
+      #控制池中连接的最大生命周期,值0便是无限证明周期,默认1800000即30分钟
+      max-lifetime: 1800000
+      #最大连接
+      maximum-pool-size: 15
+      #最小连接
+      minimum-idle: 5
+#配置日志
+logging:
+#配置日志文件路径
+  path: log\
+  level:
+     com.yunhe.core.aop.WebLogAspect: info

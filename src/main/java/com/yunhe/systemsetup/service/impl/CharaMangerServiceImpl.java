@@ -20,8 +20,10 @@ import java.util.List;
  */
 @Service
 public class CharaMangerServiceImpl extends ServiceImpl<CharaMangerMapper, CharaManger> implements ICharaMangerService {
+
     @Autowired
     public CharaMangerMapper charaMangerMapper;
+
     @Override
     public List<CharaManger> selectAll(Page page) {
         return charaMangerMapper.selectAll(page);
@@ -31,6 +33,18 @@ public class CharaMangerServiceImpl extends ServiceImpl<CharaMangerMapper, Chara
     public int insertRole(CharaManger charaManger) {
         return charaMangerMapper.insertRole(charaManger);
     }
+
+    @Override
+    public Boolean checkRole(CharaManger charaManger) {
+        List<CharaManger> list=charaMangerMapper.checkChar(charaManger);
+        Boolean b =false;
+        if (list.size()==0){
+            b=true;
+        }
+        return b;
+    }
+
+
 
     public CharaMangerMapper getCharaMangerMapper() {
         return charaMangerMapper;

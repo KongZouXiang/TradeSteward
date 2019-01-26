@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>库存详情</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/js/laypage/skin/laypage.css">
+    <script src="/js/jquery/jquery.min.js"></script>
+    <script src="/js/laypage/laypage.js" charset="utf-8"></script>
+    <script src="/js/layer/layer.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/vue/vue.min.js"></script>
+    <script src="/js/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+    <script src="/js/jquery.validation/1.14.0/messages_zh.min.js"></script>
+</head>
+<body>
+<div id="app" style="overflow: scroll;height: 500px"  >
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-border table-bordered table-bg" >
+    <thead>
+    <!--<tr>
+        <th scope="col" colspan="9">仓库列表</th>
+    </tr>-->
+    <tr class="text-c">
+        <th width="100">商品编号</th>
+        <th width="150">仓库</th>
+        <th width="130">可用库存量</th>
+        <th width="150">当前存货</th>
+        <th width="100">待出库量</th>
+        <th width="100">待入库量</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="text-c">
+        <td th:text="${warehouse.waNumber}"></td>
+        <td>默认仓库</td>
+        <td  th:text="${warehouse.waSpLnventory}"></td>
+        <td th:text="${warehouse.waSpCurrentInventory}"></td>
+        <td th:text="${warehouse.waSpForout}"></td>
+        <td th:text="${warehouse.waSpForenter}"></td>
+    </tr>
+    </tbody>
+</table>
+</div>
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+   /* var app = new Vue({
+        el:'#app',
+        data:{
+            result:[]
+        }
+    });
+    console.log('[[${list}]]');
+
+    var getPurchasePageList = function (curr) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/cargomanagement/warehouse/selEvents',
+            data: {},
+            success: function (msg) {
+                console.log(msg);
+                app.result = msg;
+            }
+        });
+    };*/
+
+</script>
+</body>
+</html>

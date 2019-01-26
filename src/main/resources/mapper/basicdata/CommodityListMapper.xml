@@ -4,31 +4,31 @@
     <insert id="inta"></insert>
     <select id="select" resultType="com.yunhe.basicdata.entity.CommodityList"></select>
     <!--从数据库中获取商品信息-->
-    <select id="selectAllCommmList" parameterType="com.yunhe.basicdata.entity.CommodityList" resultType="com.yunhe.basicdata.entity.CommodityList">
+    <select id="selectAllCommmList" parameterType="CommodityList" resultType="com.yunhe.basicdata.entity.CommodityList">
         select *
         from commodity_list
     </select>
     <!--增加商品信息-->
-    <insert id="insertComm" parameterType="com.yunhe.basicdata.entity.CommodityList">
-        insert into commodity_list (cl_number, cl_name, cc_id, cl_spec, us_id, cl_scan, cl_tag_prise, cl_who_price,
-                                    cl_pur_price)
-        values (#{clNumber}, #{clName}, #{ccId}, #{clSpec}, #{usId}, #{clScan}, #{clTagPrise}, #{clWhoPrice},
-                #{clPurPrice});
+    <insert id="insertComm" parameterType="CommodityList">
+        insert into commodity_list (cl_number, cl_name, cc_id, cl_spec, cl_unit, cl_scan, cl_tag_prise, cl_who_price,wm_id,pr_id,
+                                    cl_pur_price,cl_minstock,cl_maxstock,cl_minlingprice)
+        values (#{clNumber}, #{clName}, #{ccId}, #{clSpec}, #{clUnit}, #{clScan}, #{clTagPrise}, #{clWhoPrice},#{wmId},#{prId},
+                #{clPurPrice},#{clMinStock},#{clMAxStock},#{clMinLingPrice});
     </insert>
-    <!--查询用户的详细信息-->
-    <select id="selectCommById" parameterType="com.yunhe.basicdata.entity.CommodityList" resultType="com.yunhe.basicdata.entity.CommodityList">
+    <!--查询商品的详细信息-->
+    <select id="selectCommById" parameterType="CommodityList" resultType="com.yunhe.basicdata.entity.CommodityList">
         select *
         from commodity_list
         where id = #{id}
     </select>
     <!--更改商品的信息-->
-    <update id="updateComm" parameterType="com.yunhe.basicdata.entity.CommodityList">
+    <update id="updateComm" parameterType="CommodityList">
         update commodity_list
         set cl_number=#{clNumber},
             cl_name=#{clName},
             cc_id=#{ccId},
             cl_spec=#{clSpec},
-            us_id=#{usId},
+            cl_unit=#{clUnit},
             cl_scan=#{clScan},
             cl_tag_prise=#{clTagPrise},
             cl_who_price=#{clWhoPrice},
@@ -36,7 +36,7 @@
         where id = #{id}
     </update>
     <!--删除商品的信息-->
-    <delete id="deleteComm" parameterType="com.yunhe.basicdata.entity.CommodityList">
+    <delete id="deleteComm" parameterType="CommodityList">
         delete
         from commodity_list
         where id = #{id}
@@ -44,5 +44,18 @@
 <!--导出excel文件-->
     <select id="selectExcel" resultType="com.yunhe.basicdata.entity.CommodityList">
         select * from commodity_list
+    </select>
+    <!--查询仓库地址-->
+    <select id="selectwmandcomm" resultType="com.yunhe.basicdata.entity.WarehouseManagement">
+        SELECT  wm.wm_name FROM warehouse_management wm,commodity_list cl WHERE wm.id=cl.wm_id AND cl.id=#{id}
+    </select>
+    <!--查询分类信息-->
+    <select id="selectComclassAndCommdity" resultType="com.yunhe.basicdata.entity.Commclass">
+        SELECT com.cc_default FROM commclass com,commodity_list cl WHERE com.id=cl.cc_id AND cl.id=#{id}
+    </select>
+    <!--查询商品的属性-->
+
+    <select id="selectComclassList1" resultType="com.yunhe.basicdata.entity.CommodityList">
+        SELECT  id,cl_name,cl_unit,cl_scan,cl_spec,cl_pur_price,cl_who_price,cl_tag_prise,cc_id,wm_id,pr_id,cl_number,cl_minstock,cl_maxstock,cl_minlingprice  FROM commodity_list
     </select>
 </mapper>

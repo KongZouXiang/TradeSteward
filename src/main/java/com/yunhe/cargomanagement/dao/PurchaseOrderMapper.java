@@ -3,6 +3,7 @@ package com.yunhe.cargomanagement.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yunhe.cargomanagement.entity.PurComm;
 import com.yunhe.cargomanagement.entity.PurchaseOrder;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -45,7 +46,13 @@ public interface PurchaseOrderMapper extends BaseMapper<PurchaseOrder> {
      * @param id 进货订单历史表id
      * @return 进货订单历史详情 单条数据
      */
-    List<PurchaseOrder> getPurchaseById(Integer id);
+    PurchaseOrder getPurchaseById(Integer id);
+
+    /**
+     * 查询所有
+     * @return
+     */
+    List<PurchaseOrder> selectPurchaseOrder();
 
 
     /**
@@ -76,6 +83,26 @@ public interface PurchaseOrderMapper extends BaseMapper<PurchaseOrder> {
      * @return int
      */
     int updateHistState(PurchaseOrder purchaseOrder);
+
+    /**
+     * 进货订单历史详情
+     * @param purchaseOrder 实体类数据
+     * @return 历史详情
+     */
+    List<PurchaseOrder> selectPuOrder(PurchaseOrder purchaseOrder);
+
+    /**
+     * 一对一
+     * @return 商品信息
+     */
+    List<PurComm> selectComZhong(int id);
+
+    /**
+     * 根据订单编号查询
+     * @param poNumber 订单编号
+     * @return 单条进货订单历史
+     */
+    PurchaseOrder selectPurOrderByPoNumber(String poNumber);
 
 
 

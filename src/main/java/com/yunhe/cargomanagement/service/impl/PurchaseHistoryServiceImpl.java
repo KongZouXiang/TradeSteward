@@ -1,6 +1,7 @@
 package com.yunhe.cargomanagement.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yunhe.cargomanagement.entity.PurComm;
 import com.yunhe.cargomanagement.entity.PurchaseHistory;
 import com.yunhe.cargomanagement.dao.PurchaseHistoryMapper;
 import com.yunhe.cargomanagement.service.IPurchaseHistoryService;
@@ -55,6 +56,31 @@ public class PurchaseHistoryServiceImpl extends ServiceImpl<PurchaseHistoryMappe
     @Override
     public int updatePurchaseHistoryById(PurchaseHistory purchaseHistory) {
         return purchaseHistoryMapper.updatePurchaseHistoryById(purchaseHistory);
+    }
+
+    @Override
+    public List<PurchaseHistory> selectpurchaseHistory() {
+        return purchaseHistoryMapper.selectpurchaseHistory();
+    }
+
+    @Override
+    public PurchaseHistory selectXiangList(int id) {
+        return purchaseHistoryMapper.selectXiangList(id);
+    }
+
+    @Override
+    public List<PurComm> selectComHistZhong(int id) {
+        return purchaseHistoryMapper.selectComHistZhong(id);
+    }
+
+    @Override
+    public PurchaseHistory selectPurchaseHistoryByNumber(String phNumber) {
+        return purchaseHistoryMapper.selectPurchaseHistoryByNumber(phNumber);
+    }
+
+    @Override
+    public int updateHistoryState(String phWarehousingStatus ,int id) {
+        return purchaseHistoryMapper.updateHistoryState(phWarehousingStatus,id);
     }
 
     public PurchaseHistoryMapper getPurchaseHistoryMapper() {

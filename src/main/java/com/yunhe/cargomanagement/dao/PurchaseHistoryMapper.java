@@ -1,6 +1,7 @@
 package com.yunhe.cargomanagement.dao;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yunhe.cargomanagement.entity.PurComm;
 import com.yunhe.cargomanagement.entity.PurchaseHistory;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -41,4 +42,37 @@ public interface PurchaseHistoryMapper extends BaseMapper<PurchaseHistory> {
      * @return int
      */
     int updatePurchaseHistoryById(PurchaseHistory purchaseHistory);
+
+    /**
+     * 进货历史详情
+     * @param id 根据id查询
+     * @return 进货历史详情
+     */
+    PurchaseHistory selectXiangList(int id);
+
+    /**
+     * 一对一查询进货历史关联商品
+     * @return 商品信息
+     */
+    List<PurComm> selectComHistZhong(int id);
+
+    /**
+     * 根据进货历史编号查询进货历史id
+     * @param phNumber 进货历史编号
+     * @return 进货历史信息
+     */
+    PurchaseHistory selectPurchaseHistoryByNumber(String phNumber);
+
+    /**
+     * 查询所有进货历史
+     * @return 所有进货历史数据
+     */
+    List<PurchaseHistory> selectpurchaseHistory();
+
+    /**
+     * 修改进货历史的入库状态
+     * @param phWarehousingStatus 进货历史编号
+     * @return int
+     */
+    int updateHistoryState(String phWarehousingStatus ,int id);
 }

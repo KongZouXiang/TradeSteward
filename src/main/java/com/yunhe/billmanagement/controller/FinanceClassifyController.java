@@ -1,12 +1,15 @@
 package com.yunhe.billmanagement.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yunhe.billmanagement.entity.FinanceClassify;
+import com.yunhe.billmanagement.entity.FinanceOrder;
 import com.yunhe.billmanagement.service.IFinanceClassifyService;
+import com.yunhe.billmanagement.service.IFinanceOrderService;
+import com.yunhe.core.common.annotion.WebLog;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -34,17 +37,8 @@ public class FinanceClassifyController {
     @Resource
     IFinanceClassifyService financeClassifyService;
 
-    /**
-     * <P>
-     *    进入首页
-     * </P>
-     * @return 进入index.html
-     */
-    @RequestMapping("/toIndex")
-    public ModelAndView toIndex(){
-        System.out.println("toIndex进入controller");
-        return new ModelAndView("index");
-    }
+    @Resource
+    IFinanceOrderService financeOrderService;
 
     /**
      * <P>
@@ -52,11 +46,9 @@ public class FinanceClassifyController {
      * </P>
      * @return 进入bill-FinanceClassify.html
      */
+    @WebLog("进入收支分类管理页面")
     @RequestMapping("/toFc")
-    public ModelAndView toFc(HttpSession session){
-        List<FinanceClassify> li = financeClassifyService.selectFc();
-        session.setAttribute("total",li.size());
-        System.out.println("toFc进入controller");
+    public ModelAndView toFc(){
         return new ModelAndView("billmanagement/bill-FinanceClassify");
     }
     /**
@@ -67,9 +59,9 @@ public class FinanceClassifyController {
      * @param size 每页条数
      * @return  收支分类管理表：分页的结果集
      */
+    @WebLog("查看收支分类")
     @RequestMapping(value = "/selectFcPage",method = RequestMethod.GET)
     public Map selectFcPage(int current, int size, FinanceClassify financeClassify) {
-        System.out.println("进入分页的controller");
         return financeClassifyService.selectFcPage(current, size,financeClassify);
     }
     /**
@@ -78,9 +70,23 @@ public class FinanceClassifyController {
      * </P>
      * @return 收支分类管理表：查询的结果集
      */
+    @WebLog("查询所有收支分类")
     @RequestMapping(value = "/selectFc",method = RequestMethod.POST)
     public List<FinanceClassify> selectFc() {
         return financeClassifyService.selectFc();
+    }
+
+    /**
+     * <P>
+     *     通过条件查询数据
+     * </P>
+     * @param financeClassify 查询条件放在对象里
+     * @return 收支分类管理表：查询的结果集
+     */
+    @WebLog("通过类别查看收支分类")
+    @RequestMapping(value = "/selectFcBySort",method = RequestMethod.POST)
+    public List<FinanceClassify> selectFcBySort(FinanceClassify financeClassify) {
+        return financeClassifyService.selectFcBySort(financeClassify);
     }
 
     /**
@@ -89,11 +95,12 @@ public class FinanceClassifyController {
      * </P>
      * @return 进入bill-FC-add.html
      */
+    @WebLog("进入增加收支分类页面")
     @RequestMapping("/toAdd")
     public ModelAndView toAdd(){
-        System.out.println("toadd进入controller");
         return new ModelAndView("billmanagement/bill-FC-add");
     }
+
     /**
      * <P>
      *     增加数据
@@ -101,11 +108,24 @@ public class FinanceClassifyController {
      * @param financeClassify 增加的参数放到一个对象
      * @return  收支分类管理表：增加是否成功true or false
      */
+    @WebLog("增加收支分类")
     @RequestMapping(value = "/insertFc",method = RequestMethod.GET)
     public int insertFc(FinanceClassify financeClassify) {
         return financeClassifyService.insertFc(financeClassify);
     }
 
+    /**
+     * <P>
+     *     增加数据之前检查账目名是否已存在
+     * </P>
+     * @param financeClassify 查询条件
+     * @return
+     */
+    @WebLog("增加数据之前检查收支分类是否存在")
+    @RequestMapping(value = "/checkFcExit",method = RequestMethod.GET)
+    public boolean checkFcExit(FinanceClassify financeClassify){
+        return financeClassifyService.checkFcExit(financeClassify);
+    }
     /**
      * <P>
      *    进入修改页面
@@ -114,12 +134,10 @@ public class FinanceClassifyController {
      * @param session 要传到前端的值存在session
      * @return 进入bill-FC-update.html
      */
+    @WebLog("进入收支分类修改页面")
     @RequestMapping("/toUpdate")
     public ModelAndView toUpdate(int id, HttpSession session){
-        System.out.println("toUpdate进入controller");
-        System.out.println("要修改的ID："+id);
         FinanceClassify financeClassify = financeClassifyService.selectFcById(id);
-        System.out.println("查询到的要修改的对象："+financeClassify);
         session.setAttribute("financeClassify",financeClassify);
         return new ModelAndView("billmanagement/bill-FC-update");
     }
@@ -130,24 +148,31 @@ public class FinanceClassifyController {
      * @param financeClassify 修改的参数放到一个对象
      * @return  收支分类管理表：修改是否成功true or false
      */
+    @WebLog("修改收支分类")
     @RequestMapping(value = "/updateFc",method = RequestMethod.GET)
     public int updateFc(FinanceClassify financeClassify) {
-        System.out.println("修改的内容："+financeClassify);
         return financeClassifyService.updateFc(financeClassify);
     }
     /**
      * <P>
      *     删除数据
      * </P>
-     * @param financeClassify 删除的参数放到一个对象
+     * @param id 通过id删除
      * @return  收支分类管理表：删除是否成功true or false
      */
+    @WebLog("删除收支分类")
     @RequestMapping(value = "/deleteFc",method = RequestMethod.GET)
-    public int deleteFc(FinanceClassify financeClassify) {
-        return financeClassifyService.deleteFc(financeClassify);
+    public int deleteFc(int id) {
+        int i =1;//1代表不能删,0代表可以删
+        List<FinanceOrder> list = financeOrderService.list(new QueryWrapper<FinanceOrder>().eq("fc_id", id));
+        if(list.size()>0){
+            i=1;
+        }else {
+            i=0;
+            financeClassifyService.deleteFc(id);
+        }
+        return i;
     }
-
-    //导出Excel
 
     /**
      * <P>
@@ -157,16 +182,15 @@ public class FinanceClassifyController {
      * @return  Excel导出到本地
      * @throws IOException
      */
+    @WebLog("Excel导出收支分类")
     @RequestMapping("/export")
     public String createExcel(HttpServletResponse response) throws IOException {
         //获取查询结果的数据,只要对其进行封装就行了
         List<FinanceClassify> newlist = financeClassifyService.selectFc();
-        System.out.println("数据行数："+newlist.size());
         //数据封装，这里的map之所以敢这样add是因为这里的add顺序和hql中的select字段顺序是一样的，总共就查询那么多字段
         List<Map<String,Object>> solist = new ArrayList();
         for(FinanceClassify obj:newlist){
             //每次循环都要重新new一个map，表示不同对象
-            System.out.println("FinanceClassify的第一个字段"+obj.getId());
             Map<String,Object> map = new HashMap();
             map.put("id", obj.getId());
             map.put("fcType",obj.getFcType());
@@ -195,7 +219,7 @@ public class FinanceClassifyController {
         // 调用字体样式对象
         style.setFont(font);
         style.setWrapText(true);
-        /*style.setAlignment(HorizontalAlignment.CENTER);//设置居中样式*/
+        style.setAlignment(HorizontalAlignment.CENTER);//设置居中样式
 
         // 3.单元格应用样式
         cell.setCellStyle(style);
@@ -207,6 +231,7 @@ public class FinanceClassifyController {
 
         //在sheet里创建第二行
         HSSFRow row2=sheet.createRow(1);
+
         //创建单元格并设置单元格内容及样式
         HSSFCell cell0=row2.createCell(0);
         cell0.setCellStyle(style);
@@ -264,10 +289,10 @@ public class FinanceClassifyController {
         response.reset();
         //文件名这里可以改
         response.setHeader("Content-disposition", "attachment; filename=finance_classify.xls");
-        response.setContentType("application/msexcel");
+        response.setContentType("application/excel");
         wb.write(output);
         output.close();
-        return null;
+        return "SUCCESS";
     }
 
 }
