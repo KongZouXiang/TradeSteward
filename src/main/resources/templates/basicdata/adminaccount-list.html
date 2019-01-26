@@ -31,6 +31,8 @@
 <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
 <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
 <!--[if IE 6]>
 <script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
@@ -40,15 +42,14 @@
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 新手引导 <span class="c-gray en">&gt;</span> 结算账户<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-	<form class="layui-form" action="" data-validator-option="{theme:'simple_right'}">
+	<!--<form class="layui-form" action="" data-validator-option="{theme:'simple_right'}">-->
 	<div class="text-c">
-		<input type="text" class="input-text" style="width:250px;margin-left: 1200px" placeholder="账户名称、开户银行" id="SearchKeyWord" name="SearchKeyWord">
-		<button type="submit" class="btn btn-success" id="findempl" name="findempl"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+		<input type="text" class="input-text" style="width:250px;margin-left: 1200px" placeholder="输入账户名称、开户银行" id="SearchKeyWord" name="SearchKeyWord">
+		<button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-20">
 		<span class="l">
 			 <a href="javascript:;" id="addAccountBtn" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加账户</a>
-	<!--	<button id="addAccountBtn"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>添加账户</button>-->
 		</span>
 		<span class="r">共有数据：<strong id="strong"></strong> 条</span>
 	</div>
@@ -67,11 +68,11 @@
 				<th width="150">状态</th>
 			</tr>
 		</thead>
-		<tbody>
-			<tr class="text-c" v-for="(item,index) in result">
+		<tbody v-for="(item,index) in result">
+			<tr class="text-c" >
 				<td>{{index+1}}</td>
 				<td class="td-manage">
-					<a title="详情" href="#" @click="detailEventAccount(item.id)" class="ml-5" style="text-decoration:none"> <i class="icon Hui-iconfont">&#xe627;</i></a>
+					<a title="详情" href="#" @click="detail(index)" id="detail" class="ml-5" style="text-decoration:none" :value=index> <i class="icon Hui-iconfont">&#xe627;</i></a>
 					<a title="编辑" href="#" @click="editEventAccount(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
 					<a title="删除" href="#" @click="deleteAccount(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 				<td>{{item.saName}}</td>
@@ -79,13 +80,41 @@
 				<td>{{item.saBalance}}</td>
 		        <td>{{item.saState}}</td>
 			</tr>
-		</tbody>
-		<tbody>
+            <tr class="row0_detail" style="display: none"  ><td colspan="20" align="left">
+                <table style="padding:0 0 0px 0px;margin: 0px 0px 10px 0px;" border="0" cellspacing="0" cellpadding="0" class="noborderTable" >
+                    <tbody>
+                    <tr>
+                        <td><span style="font-size: 16px">{{item.saBank}}</span></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:15px 30px 0px 0;">
+                            <span  class="font999">开户银行:</span><span style="font-size: 14px">{{item.saBank}}</span>&nbsp;&nbsp;
+                        </td>
+                        <td style="padding:15px 30px 0px 0;">
+                            <span class="font999">账户余额:</span><span style="font-size: 14px">￥{{item.saBalance}}</span>
+                        </td>
+                        <td style="padding:15px 30px 0px 0;">
+                            <span class="font999">银行账号:</span><span style="font-size: 14px">{{item.saBankNumber}}</span>
+                        </td>
+                        <td style="padding:15px 30px 0px 0;">
+                            <span class="font999">账户名称:</span><span style="font-size: 14px">{{item.saName}}</span>
+                        </td>
+                        <td style="padding:15px 30px 0px 0;">
+                            <span class="font999">状态:</span><span style="font-size: 14px">{{item.saState}}</span>
+						</td>
+						<td style="padding:15px 30px 0px 0;">
+							<span class="font999">期初余额:</span><span style="font-size: 14px">{{item.saBeginBalance}}</span>
+						</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+            </tr>
 		</tbody>
 	</table>
 </div>
 <div id="pagenav" style="text-align:center;position: fixed;left: 0px;bottom :50px;width: 100%;height: 50px"></div>
-	</form>
+<!--	</form>-->
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
@@ -97,12 +126,12 @@
 <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
 <script>
-	var app = new Vue({
+/*	var app = new Vue({
 		el:'#app',
 		data:{
 			result:[]
 		}
-	});
+	});*/
 	/*查询分页*/
 	var getAccountPageList = function(curr) {
 		$.ajax({
@@ -111,7 +140,7 @@
 			url:'/basicdata/settlement-account/getrAccounlist',
 			data:{
 				current: curr || 1,
-				size:2,
+				size:10,
 			},
 			success:function(msg){
 				$("#strong").html(msg.total);
@@ -201,7 +230,7 @@
 			//否
 		});
 	}
-	var detailEventAccount=function (id) {
+	/*var detailEventAccount=function (id) {
 			layer.open({
 				type:2,
 				title:"账户详情",
@@ -210,7 +239,36 @@
 				area:['800px','500px'],
 				content : '/basicdata/settlement-account/detailaccount?id='+id,
 			});
+		}*/
+	var detail =function (as) {
+		var a=$(".row0_detail")
+		if (a[as].style.display=="none"){
+			a[as].style.display="";
+		} else {
+			a[as].style.display="none";
 		}
+	}
+	var app = new Vue({
+		el:'#app',
+		data:{
+			result:[],
+		},
+		methods:{
+			show:function (id){
+				console.log(id)
+				$.ajax({
+					type:'post',
+					dataType:'json',
+					url:'/basicdata/settlement-account/getrAccounlist',
+					data:{
+						id:id
+					},
+					success:function(msg){
+					}
+				});
+			}
+		}
+	});
 </script>
 </body>
 </html>

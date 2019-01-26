@@ -151,7 +151,7 @@ public class WarehouseManagementController {
         System.out.println("asd===" + warehouseManagement);
         return warehouseManagementService.addWarehouse(warehouseManagement);
     }
-  /*查询仓库*/
+  /*查询仓库 勿删*/
     @RequestMapping("/selectware")
     public Map selectwarelist(){
        List<WarehouseManagement> warelist= warehouseManagementService.selectware();

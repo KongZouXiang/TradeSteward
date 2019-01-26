@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
- <!-- <link rel="stylesheet" href="https://cdn.zhsmjxc.com/CDN/Static-webapp/jsmin/style.css?version=5.7.0.201901051730" type="text/css">-->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/js/laypage/skin/laypage.css">
     <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css" />
@@ -24,9 +23,9 @@
     <br>
            <b>基本信息</b>
             <hr style="height:1px;background-color: #2E2D3C"/>
-                条形码&nbsp; <input type="text" name="tiaoxingma" id="tiaoxingma" placeholder="选填，扫描或录入条形码"><br><br>
-            <span class="c-red">*</span> 编号&nbsp;&nbsp;&nbsp;<input type="text" name="bianhao" id="bianhao"><br><br>
-            <span class="c-red">*</span>名称&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="mingcheng" id="mingcheng" ><br><br>
+                条形码&nbsp; <input type="text" name="tiaoxingma" id="tiaoxingma" placeholder="选填，扫描或录入条形码"><span id="spanspec"></span><br><br>
+            <span class="c-red">*</span> 编号&nbsp;&nbsp;&nbsp;<input type="text" name="bianhao" id="bianhao"><span id="spanbian"></span><br><br>
+            <span class="c-red">*</span>名称&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="mingcheng" id="mingcheng" ><span id="spanclname"></span><br><br>
         分类 &nbsp;&nbsp;&nbsp;
         <select id="comclass" name="comclass" class="select"  style="width: 100px">
          </select>
@@ -65,7 +64,7 @@
             品&nbsp;&nbsp;&nbsp;牌&nbsp;&nbsp;&nbsp;<select id="pinpai" name="pinpai" style="width: 200px">
                 <option></option>
             </select>
-              <a href="/basicdata/commodity-list/getcommdityfenye" style="margin-left: 800px">属性设置</a><br><br>
+              <a href="basicdata/property/propertylist" style="margin-left: 800px">属性设置</a><br><br>
               产&nbsp;&nbsp;&nbsp;地&nbsp;&nbsp;&nbsp;<select id="chandi" name="chandi" style="width: 200px">
               <option></option>
           </select><br><br>
@@ -190,7 +189,6 @@
                 clMAxStock:$("#comzuigaokucun").val(),
             },
             success:function () {
-                alert(clunit);
                 $("#CancelBtn").click();
             }
         });
@@ -273,6 +271,61 @@
         });
     }
     getWarehouseList();
+    //验证商品名称在数据库中是否已存在
+    var checkname=false;
+    $(function () {
+        $("#mingcheng").on("blur", function () {
+            var mingcheng = $("#mingcheng").val();
+            var reg= /^[\u4e00-\u9fa5]+$/;
+            var b=reg.test(mingcheng);
+            if(b) {
+                $.ajax({
+                    type: "post",
+                    url: "/basicdata/commodity-list/checkname",
+                    data: {
+                        "clname": mingcheng
+                    },
+                    success: function (result, state, xhr) {
+                        if (result == "success") {
+                            $("#spanclname").html("<strong style='color: #1e97f7'>商品名称已存在</strong>");
+                            checkname = true;
+                        } else {
+                            $("#spanclname").html("<strong style='color: #1e97f7'>正确</strong>")
+                        }
+                    },
+                    dataType: "text"
+                })
+            }else{
+                $("#spanclname").html("<strong style='color: #1e97f7'>格式错误</strong>");
+                }
+        });
+    });
+    /*验证条形码*/
+    var tx=false;
+    $("#tiaoxingma").on("blur",function () {
+        var tiaoxingma=$("#tiaoxingma").val();
+        var reg=/^[1-9]\d{12}$/;
+        var b=reg.test(tiaoxingma);
+        if(b){
+            $("#spanspec").html("<strong style='color: #1e97f7'>输入正确</strong>")
+            tx=true;
+        }else{
+            $("#spanspec").html("<strong style='color: red'>格式错误</strong>")
+        }
+    });
+    /*验证编号*/
+    var bh=false;
+    $("#bianhao").on("blur",function () {
+        var bianhao=$("#bianhao").val();
+        var reg=/[0-9a-zA-z]/;
+        var b=reg.test(bianhao);
+        if(b){
+            $("#spanbian").html("<strong style='color: #1e97f7'>输入正确</strong>")
+            bh=true;
+        }else{
+            $("#spanbian").html("<strong style='color: red'>格式错误</strong>")
+        }
+    });
 
 </script>
 </body>

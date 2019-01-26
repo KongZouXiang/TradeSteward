@@ -3,10 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>编辑商品</title>
- <!-- <link rel="stylesheet" href="https://cdn.zhsmjxc.com/CDN/Static-webapp/jsmin/style.css?version=5.7.0.201901051730" type="text/css">-->
-<!-- <link rel="stylesheet" href="https://cdn.zhsmjxc.com/CDN/Static-webapp/jsmin/javascript/validator/jquery.validator.css" />
- <script type="text/javascript" src="https://cdn.zhsmjxc.com/CDN/UCenter-webapp/js/product/product.js?version=5.7.0.201901051730"></script>
-    <script src="https://cdn.zhsmjxc.com/CDN/UCenter-webapp/js/product/number.js?version=5.7.0.201901051730"></script>-->
     <script type="text/javascript" src="http://www.sz886.com/js/jquery-1.9.1.min.js"></script>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css" />
@@ -24,7 +20,7 @@
                          <button type="button" id="UpdateBtn" class="btn btn-success">修改</button>
                      </td>
                      <td>
-                         <button type="button" id="cancelBtnn" class="btn btn-default">取消</button>
+                         <button type="button" id="cancelBtnn" class="btn btn-success">取消</button>
                      </td>
                  </tr>
              </table>
@@ -32,14 +28,15 @@
         <hr style="height:1px;background-color: #2E2D3C"/>
            <span style="font-size: 16px">基本信息</span>
             <hr style="height:1px;background-color: #2E2D3C"/>
-        <b><span style="font-size: 14px">条形码 </span></b>&nbsp;&nbsp;&nbsp;<input style="text-align: center"  type="text" name="tiaoxingma" id="tiaoxingma" th:value="${commodityListid.clScan}" placeholder="选填，扫描或录入条形码"><br><br>
-            <span class="c-red">*</span><b><span style="font-size: 14px">编号 </span></b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="text-align: center" type="text" th:value="${commodityListid.clNumber}" name="bianhao" id="bianhao"><br><br>
-            <span class="c-red">*</span><b><span style="font-size: 14px">名称</span></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="text-align: center" type="text" name="mingcheng" id="mingcheng"  th:value="${commodityListid.clName}"><br><br>
+        <b><span style="font-size: 14px">条形码 </span></b>&nbsp;&nbsp;&nbsp;<input style="text-align: center"  type="text" name="tiaoxingma" id="tiaoxingma" th:value="${commodityListid.clScan}" placeholder="选填，扫描或录入条形码"><span id="spanspec"></span><br><br>
+            <span class="c-red">*</span><b><span style="font-size: 14px">编号 </span></b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="text-align: center" type="text" th:value="${commodityListid.clNumber}" name="bianhao" id="bianhao"><span id="spanbian"></span><br><br>
+            <span class="c-red">*</span><b><span style="font-size: 14px">名称</span></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="text-align: center" type="text" name="mingcheng" id="mingcheng"  th:value="${commodityListid.clName}">
+        <span id="spaneditname"></span><br><br>
         <input type="hidden" id="ids" th:value="${commodityListid.id}">
 <!--        <b><span style="font-size: 14px">分类 </span></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="text-align: center" type="text" name="fenlei" id="fenlei" th:value="${commclass.ccDefault}"><br><br>-->
-        分类 &nbsp;&nbsp;&nbsp;
+        <b><span style="font-size: 14px">分类</span></b> &nbsp;&nbsp;&nbsp;
         <select id="comclass" name="comclass" class="select"  style="width: 100px">
-        </select>
+        </select><br><br>
         <span class="c-red">*</span><b><span style="font-size: 14px">单位</span></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="text-align: center" type="text" name="danwei" id="sdanwei"  th:value="${commodityListid.clUnit}"><br><br>
         <b><span style="font-size: 14px">规格</span></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="text-align: center" type="text" id="guige" name="guige" th:value="${commodityListid.clSpec}"><br><br>
         <tr class="free">
@@ -51,7 +48,8 @@
         <div id="multPropertyDiv" style="display:none">
           <span style="font-size: 14px"><b>品&nbsp;&nbsp;&nbsp;牌</b></span>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="pinpai" name="pinpai" style="width: 200px">
             <option></option>
-        </select><br><br>
+        </select>
+            <a href="basicdata/property/propertylist" style="margin-left: 800px">属性设置</a><br><br>
             <span style="font-size: 14px"><b>产&nbsp;&nbsp;&nbsp;地</b></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="chandi" name="chandi" style="width: 200px">
             <option></option>
         </select><br>
@@ -120,7 +118,7 @@
             <td width="300" height="50" style="text-align: center"><span style="font-size: 14px"><b> 最高库存量</b></span></td>
         </tr>
         <tr>
-            <!--<td width="300" height="50" style="text-align: center"><span style="font-size: 14px"><b> <input type="text" id="whwmName" name="whwmName" th:value="${whManagement.wmName}"></b></span></td>-->
+           <td width="300" height="50" style="text-align: center"><span style="font-size: 14px"><b> <input type="text" id="whwmName" name="whwmName" th:value="${whManagement.wmName}"></b></span></td>
             <td width="300" height="50" style="text-align: center"><span style="font-size: 14px"><b> <select id="warehouse" name="warehouse" class="select"  style="width: 100px"></select> </b></span></td>
 
             <td height="50" style="text-align: center"><span style="font-size: 14px"><b> <input type="text" id="comzuidikucun"  name="czuidikc" style="text-align: center" th:value="${commodityListid.clMinStock}"> </b></span></td>
@@ -153,7 +151,7 @@
                 tiaoxingma: $("#tiaoxingma").val(),
                 bianhao:$("#bianhao").val(),
                 mingcheng:$("#mingcheng").val(),
-                fenlei:clid,
+                clid:clid,
                 wmid:wmid,
                 danwei:$("#sdanwei").val(),
                 guige:$("#guige").val(),
@@ -247,6 +245,62 @@
         });
     }
     getWarehouseList();
+    //验证商品名称在数据库中是否已存在
+    var checkname=false;
+    $(function () {
+        $("#mingcheng").on("blur", function () {
+            var mingcheng = $("#mingcheng").val();
+            var reg= /^[\u4e00-\u9fa5]+$/;
+            var b=reg.test(mingcheng);
+            if(b) {
+                $.ajax({
+                    type: "post",
+                    url: "/basicdata/commodity-list/checkname",
+                    data: {
+                        "clname": mingcheng
+                    },
+                    success: function (result, state, xhr) {
+                        if (result == "success") {
+                            $("#spaneditname").html("<strong style='color: #1e97f7'>商品名称已存在</strong>");
+                            checkname = true;
+                        } else {
+                            $("#spaneditname").html("<strong style='color: #1e97f7'>正确</strong>")
+                        }
+                    },
+                    dataType: "text"
+                })
+            }else{
+                $("#spaneditname").html("<strong style='color: #1e97f7'>格式错误</strong>");
+            }
+        });
+    });
+    /*验证条形码*/
+    var tx=false;
+    $("#tiaoxingma").on("blur",function () {
+        var tiaoxingma=$("#tiaoxingma").val();
+        var reg=/^[1-9]\d{12}$/;
+        var b=reg.test(tiaoxingma);
+        if(b){
+            $("#spanspec").html("<strong style='color: #1e97f7'>输入正确</strong>")
+            tx=true;
+        }else{
+            $("#spanspec").html("<strong style='color: red'>格式错误</strong>")
+        }
+    });
+    /*验证编号*/
+    var bh=false;
+    $("#bianhao").on("blur",function () {
+        var bianhao=$("#bianhao").val();
+        var reg=/[0-9a-zA-z]/;
+        var b=reg.test(bianhao);
+        if(b){
+            $("#spanbian").html("<strong style='color: #1e97f7'>输入正确</strong>")
+            bh=true;
+        }else{
+            $("#spanbian").html("<strong style='color: red'>格式错误</strong>")
+        }
+    });
+
 </script>
 </body>
 </html>
