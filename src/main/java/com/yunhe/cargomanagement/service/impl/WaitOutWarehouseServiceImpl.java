@@ -1,11 +1,14 @@
 package com.yunhe.cargomanagement.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yunhe.cargomanagement.entity.OrderConnectComm;
+import com.yunhe.cargomanagement.entity.SalesReturnHistory;
 import com.yunhe.cargomanagement.entity.WaitOutWarehouse;
 import com.yunhe.cargomanagement.dao.WaitOutWarehouseMapper;
 import com.yunhe.cargomanagement.service.IWaitOutWarehouseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -51,5 +54,16 @@ public class WaitOutWarehouseServiceImpl extends ServiceImpl<WaitOutWarehouseMap
         map.put("pages",page.getPages());
         map.put("list",list);
         return map;
+    }
+    @Override
+    public WaitOutWarehouse selectById(int id) {
+
+        return waitOutWarehouseMapper.selectById(id);
+    }
+
+    @Override
+    public int updateOutById(WaitOutWarehouse waitOutWarehouse) {
+        waitOutWarehouseMapper.updateById(waitOutWarehouse);
+        return 0;
     }
 }

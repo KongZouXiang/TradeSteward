@@ -23,4 +23,8 @@ public interface IWaitOutWarehouseService extends IService<WaitOutWarehouse> {
     int updateWaitOutWarehouse(WaitOutWarehouse waitOutWarehouse);
 
     Map queryLikeWaitOutWarehouse(int pageSize, int pageNum,WaitOutWarehouse waitOutWarehouse);
+
+    WaitOutWarehouse selectById(int id);
+
+    int updateOutById(WaitOutWarehouse waitOutWarehouse);
 }
