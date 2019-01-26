@@ -6,13 +6,13 @@ import com.yunhe.cargomanagement.entity.PurchaseOrder;
 import com.yunhe.cargomanagement.service.IPurchaseOrderService;
 import com.yunhe.customermanagement.entity.Supplier;
 import com.yunhe.customermanagement.service.ISupplierService;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -94,16 +94,20 @@ public class PurchaseOrderController {
     }
     /**
      * 进货订单历史分页
-     * @param pageNum 前台传当前页
-     * @param pageSize 前台传每页条数
+     * @param current 前台传当前页
+     * @param size 前台传每页条数
      * @param purchaseOrder  进货订单历史数据
      * @return 进货订单历史分页数据  传到前台 ajax接收
      */
     @RequestMapping("/getPage")
-    public Map getPurchaseByPoNumber(int pageNum, int pageSize, PurchaseOrder purchaseOrder) {
+    public Map getPurchaseByPoNumber(int current, int size, PurchaseOrder purchaseOrder) {
+        System.out.println("currentasdasda==="+current);
+        PurchaseOrder purchaseOrder1=new PurchaseOrder();
+        purchaseOrder.setPoNumber("0");
+        purchaseOrder.setPoSupName("供");
         System.out.println("供111***"+purchaseOrder.getPoSupName());
-        Map purchaseByPoNumber = purchaseOrderService.getPurchaseByPoNumber(pageNum, pageSize, purchaseOrder);
-        System.out.println(purchaseByPoNumber);
+        Map purchaseByPoNumber=new HashMap();
+        purchaseByPoNumber= purchaseOrderService.getPurchaseByPoNumber(current,size, purchaseOrder);
         return purchaseByPoNumber;
     }
 
@@ -171,5 +175,31 @@ public class PurchaseOrderController {
 
     public void setPurchaseOrderService(IPurchaseOrderService purchaseOrderService) {
         this.purchaseOrderService = purchaseOrderService;
+    }
+
+    /**
+     * <p>
+     *     销售报表分页
+     * </p>
+     * @param pageNum 当前页
+     * @param pageSize 每页条数
+     * @return 分页
+     */
+    @PostMapping("/selectsaleMap")
+    @ResponseBody
+    public Map selectsaleMap(int pageNum, int pageSize){
+        System.out.println("pageNum:"+pageNum+"pageSize:"+pageSize);
+        return purchaseOrderService.selectsaleMap(pageNum, pageSize);
+    }
+
+    /**
+     * <p>
+     *     销售报表视图控制器
+     * </p>
+     * @return 跳转的html界面
+     */
+    @GetMapping("/zhuzhuangtu")
+    public ModelAndView zhuzhuangtu(){
+        return new ModelAndView("/reportanalysis/selazhu");
     }
 }

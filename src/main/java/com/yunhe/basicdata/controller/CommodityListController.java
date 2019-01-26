@@ -2,8 +2,10 @@ package com.yunhe.basicdata.controller;
 
 import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -140,4 +142,24 @@ public class CommodityListController {
     public ModelAndView selectfenye() {
         return new ModelAndView("basicdata/admincommodity-list");
     }
+
+    /**
+     * <p>
+     *     进货报表   （勿删）
+     * </p>
+     * @param current 当前页
+     * @param size 每页条数
+     * @return 分页
+     */
+    @PostMapping("/selectListMap")
+    @ResponseBody
+    public Map selectListMap(int current, int size){
+        System.out.println("current:"+current+"size:"+size);
+        return commodityListService.selectListMap( current, size);
+    }
+    @GetMapping("/zhuzahung")
+    public ModelAndView zhu(){
+        return new ModelAndView("/reportanalysis/zhuzhuangtu");
+    }
+
 }

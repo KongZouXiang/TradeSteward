@@ -1,7 +1,9 @@
 package com.yunhe.reportanalysis.controller;
 
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,9 +18,10 @@ public class purchasereportViewContro {
      * </p>
      * @return  商品详情查询界面
      */
-    @RequestMapping("/login")
+    @GetMapping("/login")
+    @ResponseBody
     public ModelAndView Login(){
-         return new ModelAndView("reportanalysis/rep_admin_list.html");
+         return new ModelAndView("reportanalysis/rep_admin_list");
     }
 
     /**
@@ -29,7 +32,7 @@ public class purchasereportViewContro {
      */
     @RequestMapping("/selctAllSupp")
     public ModelAndView selctAllSupp(){
-        return new ModelAndView("reportanalysis/rep_supp_list.html");
+        return new ModelAndView("reportanalysis/rep_supp_list");
     }
 
     /**
@@ -39,6 +42,6 @@ public class purchasereportViewContro {
      * @return  单据查询界面
      */
     public ModelAndView selctAllDocument(){
-        return new ModelAndView("reportanalysis/re_docu_list.html");
+        return new ModelAndView("reportanalysis/re_docu_list");
     }
 }

@@ -4,7 +4,7 @@
     <insert id="inta"></insert>
     <select id="select" resultType="com.yunhe.basicdata.entity.CommodityList"></select>
     <!--从数据库中获取商品信息-->
-    <select id="selectAllCommmList" parameterType="CommodityList" resultType="com.yunhe.basicdata.entity.CommodityList">
+    <select id="selectAllCommmList" parameterType="com.yunhe.basicdata.entity.CommodityList" resultType="com.yunhe.basicdata.entity.CommodityList">
         select *
         from commodity_list
     </select>

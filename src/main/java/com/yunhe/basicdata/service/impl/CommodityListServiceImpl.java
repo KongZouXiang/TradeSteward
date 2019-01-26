@@ -9,9 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -106,6 +104,26 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
         List<CommodityList> list = commodityListMapper.selectList(new QueryWrapper<>());
         Map<String, Object> map = new HashMap<>();
         map.put("list",list);
+        return map;
+    }
+
+    /**
+     * <p>
+     *     进货报表
+     * </p>
+     * @param current 当前页
+     * @param size 每页条数
+     * @return map
+     */
+    @Override
+    public Map selectListMap(int current, int size) {
+        Page page=new Page(current,size);
+        List<Map<String,Object>> comlist = commodityListMapper.selectListMap(page);
+        System.out.println("查询所有信息："+comlist);
+        Map map = new HashMap();
+        map.put("total", page.getTotal());
+        map.put("pages", page.getPages());
+        map.put("comlist", comlist);
         return map;
     }
 

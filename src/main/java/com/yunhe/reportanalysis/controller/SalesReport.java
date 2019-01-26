@@ -7,13 +7,16 @@ import com.yunhe.basicdata.service.ICommodityListService;
 import com.yunhe.billmanagement.entity.FundClientDebt;
 import com.yunhe.billmanagement.service.IFundClientDebtService;
 import com.yunhe.cargomanagement.entity.SalesHistory;
+import com.yunhe.cargomanagement.entity.SalesOrderHistory;
 import com.yunhe.cargomanagement.service.ISalesHistoryService;
+import com.yunhe.cargomanagement.service.ISalesOrderHistoryService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,7 +36,7 @@ public class SalesReport {
     @Resource
     ICommodityListService commodityListService;
     @Resource
-    ISalesHistoryService salesOrderHistoryService;
+    ISalesOrderHistoryService salesOrderHistoryService;
     @Resource
     IFundClientDebtService fundClientDebtService;
 
@@ -71,13 +74,13 @@ public class SalesReport {
      * <p>
      *     销售历史
      * </p>
-     * @param cond
+     * @param
      * @return
      */
     @PostMapping("/getSalesOrd")
     @ResponseBody
-    public Page queryLikeList(int cond){
-        return salesOrderHistoryService.queryLikeSalesHistory(cond);
+    public List<SalesOrderHistory> selectAll() {
+        return salesOrderHistoryService.selectAll();
     }
 
     /**

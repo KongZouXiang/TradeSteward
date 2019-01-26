@@ -2,11 +2,14 @@ package com.yunhe.cargomanagement.dao;
 
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.cargomanagement.entity.PurchaseOrder;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
@@ -70,6 +73,16 @@ public interface PurchaseOrderMapper extends BaseMapper<PurchaseOrder> {
      */
     int insert(PurchaseOrder purchaseOrder);
 
+    /**
+     * <p>
+     *     销售报表分页
+     * </p>
+     * @param page 分页
+     * @return 无返回
+     */
+    @Select("SELECT c.cl_number,c.cl_name,c.cl_spec,c.cl_unit,s.sh_sell_count,s.sh_money,s.sh_discount,s.sh_profit FROM order_connect_comm o,sales_history s,commodity_list c WHERE c.id=o.cl_id AND s.id = o.sell_order_num")
+    List<Map<String,Object>> selectsaleMap(Page page);
+
 
 
 
@@ -98,6 +111,7 @@ public interface PurchaseOrderMapper extends BaseMapper<PurchaseOrder> {
      * @return
      */
     int updateById(@Param(Constants.ENTITY) PurchaseOrder entity);
+
 
 
 

@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin" />
     <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
     <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <script href="/js/jquery/jquery.min.js"></script>
     <title>进货报表</title>
 </head>
 <body>
@@ -25,7 +26,7 @@
         class="c-gray en">&gt;</span> 进货报表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
                                               href="javascript:location.replace(location.href);" title="刷新"><i
         class="Hui-iconfont">&#xe68f;</i></a></nav>
-<div class="page-container">
+<div class="page-container" id="app"  >
     <div class="text-c"> <!--日期范围：
         <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin"
                class="input-text Wdate" style="width:120px;">
@@ -34,6 +35,8 @@
                class="input-text Wdate" style="width:120px;">-->
         <input type="text" class="input-text" style="width:250px" placeholder="输入单号或供应商编号" id="soNumber" name="">
         <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜索</button>
+    <!--    <input type='button' value='柱状图 ' onclick="location.href = 'zhuzhuangtu.html'"/>-->
+        <a href="/basicdata/commodity-list/zhuzahung">柱状图</a>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <span class="l">
@@ -47,14 +50,13 @@
     </span>
 
         <span class="r">共有数据：<strong id="strong"></strong> 条</span></div>
-    <div id="app" style="overflow: scroll;height: 500px"  >
+    <div style="overflow: scroll;height: 500px"  >
         <table class="table table-border table-bordered table-bg">
             <thead>
             <tr>
                 <th scope="col" colspan="9">订单列表</th>
             </tr>
             <tr class="text-c">
-                <th width="25"><input type="checkbox" id="checkAll" value=""></th>
                 <th width="40">ID</th>
                 <th width="130">商品名称</th>
                 <th width="150">单位</th>
@@ -62,27 +64,20 @@
                 <th width="90">进货价格</th>
                 <th width="130">进货量</th>
                 <th width="150">进货额</th>
-                <th width="100">进货开单量</th>
+                <th></th>
                 <!--<th width="100">进货开单金额</th>-->
             </tr>
             </thead>
-
-
             <tbody>
             <tr class="text-c" v-for="(item,index) in result">
-
-                <td><input type="checkbox" id="box_" :value="item.id"></td>
                 <td>{{index+1}}</td>
-
-                <td>{{item.us_id}}</td>
-                <td>{{item.cl_name}}</td>
-                <td>{{item.cl_spec}}</td>
-                <td>{{item.cl_pur_price}}</td>
-                <td>{{item.po_quantity_of_purchase}}</td>
-                <td>{{item.cl_pur_price}}</td>
+                <td>{{item.clNumber}}</td>
+                <td>{{item.clName}}</td>
+                <td>{{item.clSpec}}</td>
+                <td>{{item.clUnit}}</td>
                 <td>{{item.poQuantityOfPurchase}}</td>
-                <td>{{item.po_bill}}</td>
-                <!--<td>{{item.}}</td>-->
+                <td>{{item.poYingMoney}}</td>
+                <td></td>
             </tr>
             </tbody>
         </table>
@@ -96,64 +91,125 @@
 <script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
-<script type="text/javascript">
+<script>
     var app = new Vue({
         el:'#app',
         data:{
             result:[]
         }
     });
-    $(function () {
-        $("#checkAll").click(function () {
-            $("input[id^='box_']").attr("checked",this.checked);
-        })
-        $("input[id^='box_']").click(function(){//点击每一个子checkbox，都会触发这个事件
-            /**获取到下面所有checkbox*/
-            var boxs = $("input[id^='box_']");
 
-            $("#checkAll").attr("checked",boxs.filter(":checked").length == 4);
-        });
-    });
-
-    var getPurchasePageList = function (curr) {
+    var getFcPageList = function(curr) {
         $.ajax({
             type:'post',
             dataType:'json',
-            url:'/reportanalysis/rep_admin_list/selectallcom',
+            url:'/basicdata/commodity-list/selectListMap',
             data:{
-                pageNum: curr || 1,
-                pageSize:4,
-                soClient:$("#soClient").val(),
-                soOrderNum:$("#soNumber").val(),
+                current: curr || 1,
+                size:5
             },
-            success: function (msg) {
-                app.result = msg.page;
-                $("#strong").html(msg.total);
+            success:function(msg){
+                app.result = msg.comlist;
                 laypage({
-                    cont: 'pagenav',//容器  值支持id名、原生dom对象，jquery对象,
-                    pages: msg.totalPage,//总页数
-                    first: '首页',
-                    last: '尾页',
-                    curr: curr || 1,//初始化页数
-                    jump: function (obj, first) { //触发分页后的回调
-                        if (!first) {     //点击跳页触发函数自身，并传递当前页：obj.curr
-                            getPurchasePageList(obj.curr);
+                    cont:'pagenav',
+                    pages:msg.pages,
+                    first:'首页',
+                    last:'尾页',
+                    skin: '#00A0E9',
+                    curr: curr || 1,
+                    jump: function (obj, first) {
+                        if (!first) {
+                            getFcPageList(obj.curr);
                         }
                     }
                 });
             }
         });
     };
-    getPurchasePageList();
-    $("#findempl").on('click', function () {
+
+    getFcPageList();
+
+    /*搜索*/
+    $("#findempl").click(function () {
+        getFcPageList();
+    });
+</script>
+
+
+<!--<script type="text/javascript">
+
+    var app = new Vue({
+        el : '#app',
+        data : {
+            result : [],
+            results:[]
+        }
+    });
+
+    //查询商品数据
+    var getCommdityPageList = function (curr) {
+        getCommdityPageLis(curr);
+        getCommdityPageLi(curr);
+    };
+    var getCommdityPageLis = function(curr) {
+        $.ajax({
+            type : "post",
+            dataType : "json",
+            url : "/reportanalysis/Purch/getallbypurch",
+            data : {
+                current:curr || 1,
+                size:2,
+                poNumber:"0",
+                poSupName:"供"
+            },
+
+            success : function(msg) {
+                console.log(msg);
+                app.result=msg.comlist;
+                console.log(msg.pages)
+                laypage({
+                    cont : 'pagenav', //容器。值支持id名、原生dom对象，jquery对象,
+                    pages : msg.pages, //总页数
+                    first : '首页',
+                    last : '尾页',
+                    curr : curr || 1, //当前页
+                    jump : function(obj, first) { //触发分页后的回调
+                        if (!first) { //点击跳页触发函数自身，并传递当前页：obj.curr
+                            getCommdityPageList(obj.curr);
+                        }
+                    }
+                });
+            }
+        });
+    };
+    var getCommdityPageLi = function(curr) {
+        $.ajax({
+            type : "post",
+            dataType : "json",
+            url : "/cargomanagement/purchase-order/getPage",
+            data : {
+                current:curr || 1,
+                size:2,
+                poNumber:"0",
+                poSupName:"供"
+            },
+            success : function(msg) {
+                console.log(msg);
+                app.result=msg.list;
+                console.log(app.result)
+            }
+        });
+    };
+    getCommdityPageList();
+   /* $("#findempl").on('click', function () {
         getPurchasePageList();
     });
 
 
     var Excel_out =function () {
         window.location.href="/reportanalysis/rep_admin_list/export";
-    }
+    }*/
 
-</script>
+</script>-->
 </body>
 </html>

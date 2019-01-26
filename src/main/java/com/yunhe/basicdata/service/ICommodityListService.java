@@ -1,5 +1,6 @@
 package com.yunhe.basicdata.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.basicdata.entity.CommodityList;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.stereotype.Repository;
@@ -72,4 +73,14 @@ public interface ICommodityListService extends IService<CommodityList> {
      * @return 查询商品
      */
     Map selectList();
+
+    /**
+     * <p>
+     *     进货报表
+     * </p>
+     * @param current 当前页
+     * @param size 每页条数
+     * @return 无返回
+     */
+    Map selectListMap(int current, int size);
 }
