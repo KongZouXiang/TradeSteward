@@ -135,11 +135,11 @@
 
             },
             atCharge:function (value) {
-                var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+                var re = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
                 var charge = $('#atCharge').val();
                 if(charge.length>1){
-                    if (!reg.test(charge)){
-                        return '金额格式不对！'
+                    if (!re.test(charge)){
+                        return '金额格式不对！';
                     }
 				}
             },
