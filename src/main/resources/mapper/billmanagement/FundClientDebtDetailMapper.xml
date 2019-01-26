@@ -10,10 +10,4 @@
         select * from fund_client_debt_detail
         where (fcdd_fcd_name like concat('%',#{fundClientDebtDetail.fcddFcdName},'%'))
     </select>
-    <!--<insert id="tianFcd" parameterType="map">
-        insert into fund_client_debt_detail(fcdd_num_list) values(#{fundClientDebtDetail.fcddNumList})
-    </insert>-->
-    <!--<update id="gaiFo" parameterType="map">
-        update fund_client_debt_detail set fcdd_num_list = concat('SKD',DATE_FORMAT(now(), '%Y%m%d'),'00',#{maxId}),fcdd_date = DATE_FORMAT(now(), '%Y-%m-%d') where id=#{maxId}
-    </update>-->
 </mapper>

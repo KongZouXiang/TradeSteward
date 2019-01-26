@@ -30,23 +30,25 @@ spring:
   #出现错误时直接抛出异常
   mvc:
     throw-exception-if-no-handler-found: true
-  #关闭工程中的资源文件建立映射
-#  resources:
-#    add-mappings: false
+      #关闭工程中的资源文件建立映射
+      #  resources:
+      #    add-mappings: false
 
-#配置日志
-#logging:
+      #配置日志
+      #logging:
       ##  #配置日志文件路径
       ##  path: log\
-    ##  level:
-    ##      com.yunhe.core.aop.WebLogAspect: info
+      ##  level:
+      ##      com.yunhe.core.aop.weblog.WebLogAspect: info
 
-      #配置redis
-#  redis:
-#    host: 127.0.0.1
-#    port: 6379
+    #配置redis
+  redis:
+    host: 47.106.37.123
+    port: 6379
 #    pool:
-#     max-wait: -1
-#     max-active: 8
-#      max-idle: 8
-#      timeout: 0
+#      max-idle: 100
+#      min-idle: 1
+#    jedis:
+#      pool:
+#        max-idle: 1000
+#        max-wait:

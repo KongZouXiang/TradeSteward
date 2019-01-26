@@ -54,10 +54,10 @@ public interface IFundClientDebtService extends IService<FundClientDebt> {
 
     /**
      * <P>
-     *     增加数据
+     *     修改数据
      * </P>
-     * @param fundClientDebt 新增收款的参数存在一个对象里
-     * @return  客户应收欠款表：增加是否成功
+     * @param fundClientDebt 修改的参数存在一个对象里
+     * @return  客户应收欠款表：修改是否成功
      */
     int updateFcd(FundClientDebt fundClientDebt);
     /**

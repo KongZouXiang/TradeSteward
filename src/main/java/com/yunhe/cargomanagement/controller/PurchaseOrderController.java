@@ -6,8 +6,10 @@ import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
 import com.yunhe.cargomanagement.entity.PurComm;
 import com.yunhe.cargomanagement.entity.PurchaseHistory;
 import com.yunhe.cargomanagement.entity.PurchaseOrder;
+import com.yunhe.cargomanagement.service.IPurCommService;
 import com.yunhe.cargomanagement.service.IPurchaseHistoryService;
 import com.yunhe.cargomanagement.service.IPurchaseOrderService;
+import com.yunhe.cargomanagement.service.impl.PurCommServiceImpl;
 import com.yunhe.core.util.DateUtil;
 import com.yunhe.customermanagement.service.ISupplierService;
 import org.apache.poi.hssf.usermodel.*;
@@ -52,7 +54,13 @@ public class PurchaseOrderController {
      * 商品列表
      */
     @Resource
-    CommodityListServiceImpl commodityListService;
+    private CommodityListServiceImpl commodityListService;
+
+    /**
+     * 进货详情中间表
+     */
+    @Resource
+    private IPurCommService purCommService;
 
     @RequestMapping("/Purlist")
     public ModelAndView test22() {
@@ -69,11 +77,11 @@ public class PurchaseOrderController {
         int jiage = 0;
         int shuliang = 0;
         for (PurComm purComm : purComms) {
-            shuliang+=purComm.getPcGeshu();
+            shuliang += purComm.getPcGeshu();
             jiage += purComm.getPcGeshu() * Integer.parseInt(purComm.getCommodityList().getClPurPrice());
         }
-        session.setAttribute("shuliang",shuliang);
-        session.setAttribute("jiage",jiage);
+        session.setAttribute("shuliang", shuliang);
+        session.setAttribute("jiage", jiage);
         session.setAttribute("poId", id);
         session.setAttribute("model", list);
         ModelAndView mv = new ModelAndView();
@@ -104,11 +112,11 @@ public class PurchaseOrderController {
         String curr = DateUtil.curr();
         String curr2 = curr.replace(" ", "");
         String curr3 = "-";
-        String curr4 = curr2.replace(curr3,"");
+        String curr4 = curr2.replace(curr3, "");
         String curr5 = ":";
-        String curr6 = curr4.replace(curr5,"");
-        String curr7 = "ADD"+curr6;
-        session.setAttribute("curr",curr7);
+        String curr6 = curr4.replace(curr5, "");
+        String curr7 = "ADD" + curr6;
+        session.setAttribute("curr", curr7);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("cargomanagement/Pur_order-add");
         return mv;
@@ -157,17 +165,15 @@ public class PurchaseOrderController {
      * @param purchaseOrder 进货订单历史实体类数据
      */
     @RequestMapping("/addPurchaseGoTo")
-    public ModelAndView insertPurchaseOrder(PurchaseOrder purchaseOrder,String[] poClName,int[] QuantityOfPurchase) {
+    public ModelAndView insertPurchaseOrder(PurchaseOrder purchaseOrder, String[] poClName, int[] QuantityOfPurchase) {
         int a = 0;
         int maney = 0;
-        for (String s : poClName) {
-            CommodityList list = commodityListService.selectListByClName(s);
-            for (int m : QuantityOfPurchase) {
-                maney+=Integer.parseInt(list.getClPurPrice())*m;
-            }
+        for (int i = 0; i <= poClName.length - 1; i++) {
+            CommodityList list = commodityListService.selectListByClName(poClName[i]);
+            maney += Integer.parseInt(list.getClPurPrice()) * QuantityOfPurchase[i];
         }
         for (int s : QuantityOfPurchase) {
-            a+=s;
+            a += s;
         }
         purchaseOrder.setPoYingMoney(maney);
         purchaseOrder.setPoState("未审核");
@@ -177,21 +183,21 @@ public class PurchaseOrderController {
         purchaseOrder.setPoQuantityOfPurchase(a);
         purchaseOrder.setPoDateOrder(purchaseOrder.getPoDate());
         purchaseOrderService.insertPurchaseOrder(purchaseOrder);
+
+        for (int i = 0; i <= poClName.length - 1; i++) {
+            CommodityList list1 = commodityListService.selectListByClName(poClName[i]);
+            PurchaseOrder purchaseOrder1 = purchaseOrderService.selectPurOrderByPoNumber(purchaseOrder.getPoNumber());
+            PurComm purComm = new PurComm();
+            purComm.setPuId(purchaseOrder.getId());
+            purComm.setComId(list1.getId());
+            purComm.setPcGeshu(QuantityOfPurchase[i]);
+            purCommService.insertPurComm(purComm);
+        }
         ModelAndView mv = new ModelAndView();
         mv.setViewName("/cargomanagement/purorder-list");
         return mv;
     }
 
-    /* *//**
-     * 根据id查询进货订单历史 单条数据
-     * @param id 进货订单历史表id  前台传的
-     * @return
-     *//*
-    @RequestMapping("/getPuById")
-    public List<PurchaseOrder> getPurchaseById(int id){
-        List<PurchaseOrder> list = purchaseOrderService.getPurchaseById(id);
-        return list;
-    }*/
 
     /**
      * 根据id删除进货订单历史
@@ -251,13 +257,11 @@ public class PurchaseOrderController {
      */
     @RequestMapping("/updateHistState")
     public int updateHistState(PurchaseOrder purchaseOrder) {
-        System.out.println("/*/*/*/*/*/*" + purchaseOrder.getId());
         purchaseOrder.setPoState("已审核");
         purchaseOrderService.updateHistStateByid(purchaseOrder);
-        System.out.println("aaaaaaaaaaaaaaaaaaa");
         PurchaseHistory purchaseHistory = new PurchaseHistory();
         purchaseHistory.setPhDate(purchaseOrder.getPoDate());
-        purchaseHistory.setPhNumber("Y" + purchaseOrder.getPoNumber());
+        purchaseHistory.setPhNumber(purchaseOrder.getPoNumber());
         purchaseHistory.setPhSupname(purchaseOrder.getPoSupName());
         purchaseHistory.setPhClname(purchaseOrder.getPoClName());
         purchaseHistory.setPhQuantity(purchaseOrder.getPoQuantityOfPurchase());
@@ -269,10 +273,15 @@ public class PurchaseOrderController {
         purchaseHistory.setPhManeyHu("现金");
         purchaseHistory.setPhExperiencedPerson(purchaseOrder.getPoExperiencedPerson());
         purchaseHistory.setPhSinglePerson("老板");
-        purchaseHistory.setPhOtherExpenses("");
+        purchaseHistory.setPhOtherExpenses(0);
         purchaseHistory.setPhWarehousingStatus("未入库");
         purchaseHistory.setPhRemarks(purchaseOrder.getPoRemarks());
         purchaseHistoryService.insertPurchaseHistory(purchaseHistory);
+        PurchaseHistory purchaseHistory1 = purchaseHistoryService.selectPurchaseHistoryByNumber(purchaseOrder.getPoNumber());
+        PurComm purComm = new PurComm();
+        int puhId=purchaseHistory1.getId();
+        int puId=purchaseOrder.getId();
+        purCommService.updatePurCommByPuId(puhId,puId);
         return 1;
     }
 

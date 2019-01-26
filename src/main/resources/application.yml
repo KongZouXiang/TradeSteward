@@ -30,9 +30,9 @@ server:
 ---
 
 mybatis-plus:
-    #mybatis对应的映射文件路径
-    mapper-locations: classpath*:mapper/*/*Mapper.xml
-    type-aliases-package: com.yunhe.*.entity
+  #mybatis对应的映射文件路径
+  mapper-locations: classpath*:mapper/*/*Mapper.xml
+  type-aliases-package: com.yunhe.*.entity
 
 spring:
   #thymeleaf:
@@ -45,4 +45,16 @@ spring:
     mode: HTML5
     servlet:
       content-type: text/html
+  #邮件服务功能
+  mail:
+    default-encoding: UTF-8
+    #QQ邮箱服务器
+    host: smtp.qq.com
+    #发送人邮箱
+    username:
+    #发送人邮箱的授权码
+    password:
+    #网易邮箱端口
+    port: 25
+    protocol: smtp
 

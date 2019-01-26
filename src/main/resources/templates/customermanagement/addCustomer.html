@@ -32,6 +32,7 @@
             <div class="form-group">
                 <label for="cus_tele">联系方式：</label>
                 <input type="text" class="form-control" id="cus_tele" name="cus_tele"   placeholder="联系方式">
+                <span id="spanphone"></span>
             </div>
             <div class="form-group">
                 <label for="cus_name">联系人：</label>
@@ -72,13 +73,7 @@
     </form>
 </div>
 <script>
-   /* var app = new Vue({
-        el:'#app',
-        data:{
-            result:[]
-        }
-    });
-*/
+
 
     var addAccount = function () {
         /*if (!check().form()) {
@@ -118,40 +113,18 @@
 
     });
 
-
-    /*function check() {
-        return $("#insertAccountForm").validate({
-            rules: {
-                cusNumber: {
-                    required: true
-                },
-                cusCompname: {
-                    required: true
-                },
-                cusMoney: {
-                    required: true
-                },
-                cusTele: {
-                    required: true
-                },
-                cusName: {
-                    required: true
-                },
-                cusFlag: {
-                    required: true
-                },
-                cusConnname: {
-                    required: true
-                },
-                cusAddress: {
-                    required: true
-                },
-                cusEmail: {
-                    required: true
-                },
-            }
-        });
-    }*/
+     var phone=false;
+    $("#cus_tele").on("blur",function () {
+        var custele=$("#cus_tele").val();
+        var reg=/^1[34578]\d{9}$/;
+        var b=reg.test(custele);
+        if(b){
+            $("#spanphone").html("<strong style='color: #1e97f7'>正确</strong>")
+            phone=true;
+        }else{
+            $("#spanphone").html("<strong  style='color: red'>手机号格式错误</strong>")
+        }
+    });
 </script>
 </body>
 </html>

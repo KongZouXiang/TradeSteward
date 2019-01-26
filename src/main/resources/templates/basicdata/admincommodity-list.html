@@ -13,7 +13,6 @@
     <script type="text/javascript" src="/lib/respond.min.js"></script>
     <script type="text/javascript" src="/js/vue/vue.min.js"></script>
     <script type="text/javascript" src="/jquery/jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="/jquery/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.js"></script>
     <script type="text/css" src="/css/bootstrap.min.css"></script>
     <script type="text/javascript" src="/lib/lightbox2/2.8.1/js/lightbox-plus-jquery.js"></script>
@@ -32,7 +31,10 @@
         class="c-gray en">&gt;</span> 商品列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
                                                href="javascript:location.replace(location.href);" title="刷新"><i
         class="Hui-iconfont">&#xe68f;</i></a></nav>
-<div class="page-container">
+<div style="width: 18%;height: 100%;float: left;border: red solid 1px">
+<div><span style="font-size: 18px">商品分类</span></div>
+</div>
+<div class="page-container" style="float: left;border: #1e97f7 1px solid;width: 78%;height: 96%">
     <div class="text-c">
         <input type="text" class="input-text" style="width:250px;margin-left: 1000px" placeholder="输入编号、名称、规格、属性" id="poKeyword" name="poKeyword">
         <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜索</button>
@@ -41,7 +43,7 @@
         <span class="l">
                  <button  id="deleteall" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</button>
            <button id="addcommditybtn" class="btn btn-primary radius"> <i class="Hui-iconfont">&#xe600;</i> 添加商品</button>
-        <a href="#" onclick="exportexcel()" class="btn btn-danger radius" >
+        <a href="javascript:;" onclick="exportexcel()" class="btn btn-danger radius" >
         <i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
     </span>
         <span class="r">共有数据：<strong id="strong"></strong> 条</span></div>
@@ -50,7 +52,6 @@
     <div id="app" style="overflow: scroll;height: 500px"  >
         <table class="table table-border table-bordered table-bg">
             <thead>
-
             <tr>
                 <th scope="col" colspan="9">商品列表</th>
             </tr>
@@ -59,12 +60,11 @@
                 <th width="40">序号</th>
                 <th width="130">移动</th>
                 <th width="130">操作</th>
-                <th width="150">编号</th>
-                <th width="90">名称</th>
-                <th width="90">基本单位</th>Q
-                <th width="130">零售价(元)</th>
-                <th width="100">属性</th>
-                <th width="90">规格</th>
+                <th width="100">编号</th>
+                <th width="80">名称</th>
+                <th width="80">基本单位</th>Q
+                <th width="80">零售价(元)</th>
+                <th width="80">规格</th>
             </tr>
             </thead>
             <tbody  class="tbody tb1">
@@ -84,10 +84,9 @@
                 </td>
                 <td>{{item.clNumber}}</td>
                 <td>{{item.clName}}</td>
-                <td>{{item.usId}}</td>
+                <td>{{item.clUnit}}</td>
                 <td>{{item.clTagPrise}}</td>
                 <td>{{item.clSpec}}</td>
-                <td>{{item.prId}}</td>
             </tr>
             </tbody>
         </table>
@@ -170,11 +169,11 @@
     var editEventcommdity=function (id) {
         layer.open({
             type : 2,
-            title : '编辑账户',
+            title : '编辑商品',
             fix : false,
             maxmin : true,
             shadeClose : true,
-            area : [ '1100px', '600px' ],
+            area : [ '1500px', '900px' ],
             content : '/basicdata/commodity-list/selectcommditybyid?id='+id,
             end : function() {
                 getCommdityPageList();

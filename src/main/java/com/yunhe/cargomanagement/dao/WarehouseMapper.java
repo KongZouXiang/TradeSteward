@@ -49,9 +49,24 @@ import java.util.Map;
          */
         List<Warehouse> selectAll();
 
+        /**
+         * 根据商品名查询
+         * @author 史江浩
+         * @since 2019-01-25
+         * @param waSpName 商品名
+         * @return 库存数据
+         */
+        Warehouse selectWarehouseByWaSpName(String waSpName);
 
 
-
-
-
+        /**
+         * 根据商品名查询
+         * @author 史江浩
+         * @since 2019-01-25
+         * @param waSpCurrentInventory 库存数量
+         * @param waTotalSum 总金额
+         * @param waSpName 商品名
+         * @return int
+         */
+        int updateWarehouseByWaSpName(int waSpCurrentInventory,double waTotalSum,String waSpName);
 }

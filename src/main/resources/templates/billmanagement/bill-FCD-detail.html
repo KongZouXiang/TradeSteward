@@ -28,12 +28,12 @@
     <meta name="description" content="">
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 客户应收欠款 <span class="c-gray en">&gt;</span> 客户欠款详细 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> <a href="/billManagement/fund-client-debt/toFcd">客户应收欠款</a> <span class="c-gray en">&gt;</span> <a href="/billManagement/fund-client-debt/fcdDetail">客户欠款详细</a> <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" data-validator-option="{theme:'simple_right'}">
     <form class="layui-form" action="">
         <div class="layui-form-item">
             <div class="layui-inline" style="float: left;width: 20%">
-                <label class="layui-form-label"><span class="c-red">*</span>应付欠款:</label>
+                <label class="layui-form-label"><span class="c-red">*</span>应收欠款:</label>
                 <div class="layui-input-inline">
                     <input type="text" id="fcddReceivable" readonly="readonly" autocomplete="off" class="layui-input" th:value="${session.countList.receivable}">
                 </div>

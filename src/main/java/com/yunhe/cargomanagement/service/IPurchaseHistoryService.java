@@ -68,4 +68,18 @@ public interface IPurchaseHistoryService extends IService<PurchaseHistory> {
      * @return 商品信息
      */
     List<PurComm> selectComHistZhong(int id);
+
+    /**
+     * 根据进货历史编号查询进货历史id
+     * @param phNumber 进货历史编号
+     * @return 进货历史信息
+     */
+    PurchaseHistory selectPurchaseHistoryByNumber(String phNumber);
+
+    /**
+     * 修改进货历史的入库状态
+     * @param phWarehousingStatus 进货历史编号
+     * @return int
+     */
+    int updateHistoryState(String phWarehousingStatus ,int id);
 }

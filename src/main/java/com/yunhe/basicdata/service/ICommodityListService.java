@@ -27,7 +27,7 @@ public interface ICommodityListService extends IService<CommodityList> {
      * @param commodityList 实体类
      * @return f返回商品的信息
      */
-    Map selectAllcommList(int current, int size,CommodityList commodityList);
+    Map selectAllcommList(int current, int size, CommodityList commodityList);
     /**
      * 新增商品列表
      * @param commodityList 新增商品的实体类

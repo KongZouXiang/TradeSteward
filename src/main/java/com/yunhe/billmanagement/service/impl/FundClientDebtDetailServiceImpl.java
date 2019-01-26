@@ -40,16 +40,11 @@ public class FundClientDebtDetailServiceImpl extends ServiceImpl<FundClientDebtD
     @Override
     public Map selectFcddPage(int current, int size,FundClientDebtDetail fundClientDebtDetail) {
         Page page = new Page(current,size);
-        System.out.println("每页条数："+size);
-        System.out.println("当前页数："+current);
         Map map = new HashMap();
         List<FundClientDebtDetail> list = fundClientDebtDetailMapper.selectFcddPage(page,fundClientDebtDetail);
-        System.out.println("遍历出来的长度："+list.size());
         map.put("total",page.getTotal());
         map.put("pages",page.getPages());
         map.put("list",list);
-        System.out.println("总页数："+page.getPages());
-        System.out.println("总条数："+page.getTotal());
         return map;
     }
 

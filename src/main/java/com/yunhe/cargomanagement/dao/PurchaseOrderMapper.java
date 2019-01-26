@@ -49,6 +49,12 @@ public interface PurchaseOrderMapper extends BaseMapper<PurchaseOrder> {
      */
     PurchaseOrder getPurchaseById(Integer id);
 
+    /**
+     * 查询所有
+     * @return
+     */
+    List<PurchaseOrder> selectPurchaseOrder();
+
 
     /**
      * 修改进货订单历史
@@ -91,6 +97,13 @@ public interface PurchaseOrderMapper extends BaseMapper<PurchaseOrder> {
      * @return 商品信息
      */
     List<PurComm> selectComZhong(int id);
+
+    /**
+     * 根据订单编号查询
+     * @param poNumber 订单编号
+     * @return 单条进货订单历史
+     */
+    PurchaseOrder selectPurOrderByPoNumber(String poNumber);
 
 
     /**

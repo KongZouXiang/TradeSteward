@@ -116,7 +116,7 @@ public class PurchaseHistory implements Serializable {
      * 其他费用
      */
     @TableField(value = "ph_other_expenses")
-    private String phOtherExpenses;
+    private double phOtherExpenses;
 
     /**
      * 入库状态

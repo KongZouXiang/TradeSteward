@@ -2,11 +2,10 @@ package com.yunhe.basicdata.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yunhe.basicdata.entity.WarehouseManagement;
-import com.yunhe.basicdata.dao.WarehouseManagementMapper;
-import com.yunhe.basicdata.service.IWarehouseManagementService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
+import com.yunhe.basicdata.dao.WarehouseManagementMapper;
+import com.yunhe.basicdata.entity.WarehouseManagement;
+import com.yunhe.basicdata.service.IWarehouseManagementService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,7 +28,6 @@ public class WarehouseManagementServiceImpl extends ServiceImpl<WarehouseManagem
 
     @Override
     public Map selectWareList(String data,int pageSize, int pageNum) {
-
         Page<WarehouseManagement> page = new Page<WarehouseManagement>();
         page.setSize(pageSize);
         page.setCurrent(pageNum);
@@ -80,5 +78,15 @@ public class WarehouseManagementServiceImpl extends ServiceImpl<WarehouseManagem
     @Override
     public Integer addWarehouse(WarehouseManagement warehouseManagement) {
       return warehouseManagementMapper.insert(warehouseManagement);
+    }
+
+    @Override
+    public List<WarehouseManagement> selectware() {
+        return warehouseManagementMapper.selectware();
+    }
+
+    @Override
+    public List<WarehouseManagement> selectquanWarList() {
+        return warehouseManagementMapper.selectList(null);
     }
 }

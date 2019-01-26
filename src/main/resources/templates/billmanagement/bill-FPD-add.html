@@ -1,6 +1,6 @@
 ﻿<!--_meta 作为公共模版分离出去-->
 <!DOCTYPE HTML>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -25,7 +25,7 @@
 	<meta name="keywords" content="">
 	<meta name="description" content="">
 </head>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 供应商应付欠款 <span class="c-gray en">&gt;</span> 新增付款 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> <a href="/billManagement/fund_provider_debt/toFpd">供应商应付欠款</a> <span class="c-gray en">&gt;</span> <a href="/billManagement/fund_provider_debt/toAdd">新增付款</a> <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container" data-validator-option="{theme:'simple_right'}">
 	<form class="layui-form" action="">
 		<div class="layui-form-item">
@@ -192,7 +192,7 @@
             $.ajax({
                 type: "GET",
                 dataType: "json",
-                url: "/billManagement/fund-client-debt/insertFcdd",
+                url: "/billManagement/fund_provider_debt/insertFcdd",
                 data: {
                     fcddFcdName:$("#fcddFcdName").val(),
                     fcddDate:$("#fcddDate").val(),

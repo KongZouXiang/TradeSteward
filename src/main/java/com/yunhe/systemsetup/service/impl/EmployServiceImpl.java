@@ -1,18 +1,19 @@
 package com.yunhe.systemsetup.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
 import com.github.qcloudsms.httpclient.HTTPException;
-import com.yunhe.redis.service.RedisService;
-import com.yunhe.systemsetup.entity.Employ;
+import com.yunhe.core.redis.RedisService;
 import com.yunhe.systemsetup.dao.EmployMapper;
+import com.yunhe.systemsetup.entity.Employ;
 import com.yunhe.systemsetup.service.IEmployService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.List;
 
@@ -26,9 +27,11 @@ import java.util.List;
  */
 @Service
 public class EmployServiceImpl extends ServiceImpl<EmployMapper, Employ> implements IEmployService {
-    @Autowired
+
+    @Resource
     private EmployMapper employMapper;
-    @Autowired
+
+    @Resource
     private RedisService redisService;
     @Override
     public List<Employ> selectPageEmploy(Page page, Employ employ) {

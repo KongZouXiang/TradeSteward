@@ -52,7 +52,7 @@
         <span class="l">
             <a href="javascript:;" id="datadel" class="btn btn-danger radius"><i
                     class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
-        <a href="/cargomanagement/purchase-history/addPurchase" id="addpurOrder"
+        <a href="/cargomanagement/purchase-history/addPurchaseHistory"
            class="btn btn-primary radius">
         <i class="Hui-iconfont">&#xe600;</i> 添加进货历史</a>
         <a href="/cargomanagement/purchase-history/puchaseHistoryExcel"
@@ -104,7 +104,8 @@
                         <i class="Hui-iconfont">&#xe6e2;</i>
                     </a>
                     <a title="入库" href="javascript:;"
-                       @click="stateEvent(item.id)" class="ml-5"
+                       @click="wStateEvent(item.id,item.phDate,item.phNumber,item.phSupname,item.phClname,item.phWarehouse,item.phQuantity,item.phExperiencedPerson,item.phWarehousingStatus)"
+                       class="ml-5"
                        style="text-decoration:none">
                         <i class="Hui-iconfont">&#xe644;</i>
                     </a>
@@ -122,7 +123,7 @@
                 <td>{{item.phAmountPayable}}</td>
                 <td>{{item.phAmountPaid}}</td>
                 <td>{{item.phWarehouse}}</td>
-                <td><a href="#" id="img"></a></td>
+                <td>{{item.phBill}}</td>
                 <td>{{item.phJindate}}</td>
                 <td>{{item.phManeyHu}}</td>
                 <td>{{item.phExperiencedPerson}}</td>
@@ -257,41 +258,36 @@
     });
 
     /*入库*/
-    var stateEvent = function (id) {
-        if (poState == "未审核") {
-            layer.confirm('您确定通过该订单的审核？', {
+    var wStateEvent = function (id,phDate,phNumber,phSupname,phClname,phWarehouse,phQuantity,phExperiencedPerson,phWarehousingStatus) {
+        if (phWarehousingStatus == "未入库") {
+            layer.confirm('您确定添加等待入库？', {
                 btn: ['是', '否']
             }, function () {
                 $.ajax({
                     type: 'GET',
                     dataType: 'json',
-                    url: '/cargomanagement/purchase-order/updateHistState',
+                    url: '/cargomanagement/purchase-history/updateHistoryState',
                     data: {
                         id: id,
-                        poDate: poDate,
-                        poNumber: poNumber,
-                        poState: poState,
-                        poAuditor: poAuditor,
-                        poSupName: poSupName,
-                        poClName: poClName,
-                        poQuantityOfPurchase: poQuantityOfPurchase,
-                        poYingMoney: poYingMoney,
-                        poBill: poBill,
-                        poExperiencedPerson: poExperiencedPerson,
-                        poSinglePerson: poSinglePerson,
-                        poRemarks: poRemarks,
-                        poDateOrder: poDateOrder
+                        phDate: phDate,
+                        phNumber:phNumber,
+                        phSupname:phSupname,
+                        phClname:phClname,
+                        phWarehouse:phWarehouse,
+                        phQuantity:phQuantity,
+                        phExperiencedPerson:phExperiencedPerson,
+                        phWarehousingStatus:phWarehousingStatus
                     },
                     success: function (msg) {
-                        getPurchasePageList();
-                        layer.msg('审核成功' + id, {icon: 5});
+                        getPurchaseHostPageList();
+                        layer.msg('添加成功!' + id, {icon: 1});
                     }
                 })
             }, function () {
 
             });
         } else {
-            alert("此订单已审核！");
+            alert("已添加待入库单！");
         }
 
 

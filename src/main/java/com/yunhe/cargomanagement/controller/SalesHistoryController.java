@@ -44,15 +44,19 @@ public class SalesHistoryController {
         return new ModelAndView("cargomanagement/salesHistory-add");
     }
 
-    @RequestMapping("/nimabo")
-    @ResponseBody
-    public String sumbiiiit(HttpServletResponse response, String[] soClient, String[] clNumber){
-        for (int i=0;i<soClient.length;i++){
-            SalesHistory salesHistory = new SalesHistory();
-            salesHistory.setShClient(soClient[i]);
-            System.out.println(salesHistory.getShClient());
-        }
-        return "haha";
+    /**
+     * 增加一个订单详情
+     * @param customer 客户
+     * @param poNumber 订单号
+     * @param articlecolumn 经手人
+     * @param commentdatemin 时间
+     * @param clName 商品
+     * @param orderCount 数量
+     * @return
+     */
+    @RequestMapping("/addList")
+    public String addList(String customer,String poNumber,String articlecolumn,String commentdatemin,String [] clName ,int [] orderCount){
+        return "ok";
     }
     /**
      * 增加一条销售历史 _已测试成功
@@ -71,7 +75,6 @@ public class SalesHistoryController {
      */
     @RequestMapping("/edit")
     public ModelAndView edit(int id, HttpSession httpSessionsion) {
-        System.out.println(id);
         SalesHistory salesHistory = salesHistoryService.selectById(id);
         httpSessionsion.setAttribute("sales", salesHistory);
         return new ModelAndView("/cargomanagement/salesHistory-detail");
@@ -103,7 +106,11 @@ public class SalesHistoryController {
         return i;
     }
 
-
+    /**
+     * 根据id删除订单
+     * @param id
+     * @return
+     */
     @RequestMapping("/deleteSalesHistory")
     public int deleteSalesHistory(int id) {
         return salesHistoryService.deleteSalesHistory(id);
@@ -125,5 +132,9 @@ public class SalesHistoryController {
     public Map quertLikeListSalesHistory(int pageNum, int pageSize, SalesHistory salesHistory) {
         Map map = salesHistoryService.queryLikeSalesHistory(pageNum, pageSize, salesHistory);
         return map;
+    }
+    @RequestMapping("/detailList")
+    public List<OrderConnectComm> detailList(int id){
+        return salesHistoryService.detailList(id);
     }
 }

@@ -23,8 +23,17 @@ import java.util.Map;
 @Service
 public class RunningAccountsServiceImpl extends ServiceImpl<RunningAccountsMapper, RunningAccounts> implements IRunningAccountsService {
 
-    @Resource
-    private RunningAccountsMapper runningAccountsMapper;
+    @Resource RunningAccountsMapper runningAccountsMapper;
+
+    @Override
+    public int insertRunningAccountsOne(RunningAccounts runningAccounts) {
+        return runningAccountsMapper.insert(runningAccounts);
+    }
+
+    @Override
+    public RunningAccounts selectRunningMaxIdMoney() {
+        return runningAccountsMapper.selectRunningMaxIdMoney();
+    }
 
     @Override
     public Map selectRaPage(int current, int size,RunningAccounts runningAccounts) {

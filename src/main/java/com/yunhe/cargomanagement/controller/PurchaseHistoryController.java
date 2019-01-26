@@ -1,14 +1,23 @@
 package com.yunhe.cargomanagement.controller;
 
 
+import com.yunhe.basicdata.entity.CommodityList;
+import com.yunhe.basicdata.entity.WarehouseManagement;
+import com.yunhe.basicdata.service.IWarehouseManagementService;
+import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
+import com.yunhe.billmanagement.entity.RunningAccounts;
+import com.yunhe.billmanagement.service.IRunningAccountsService;
 import com.yunhe.cargomanagement.entity.PurComm;
 import com.yunhe.cargomanagement.entity.PurchaseHistory;
-import com.yunhe.cargomanagement.entity.PurchaseOrder;
+import com.yunhe.cargomanagement.entity.WarehouseReceipt;
+import com.yunhe.cargomanagement.service.IPurCommService;
 import com.yunhe.cargomanagement.service.IPurchaseHistoryService;
+import com.yunhe.cargomanagement.service.IWarehouseReceiptService;
+import com.yunhe.core.util.DateUtil;
+import com.yunhe.customermanagement.service.ISupplierService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,6 +46,42 @@ public class PurchaseHistoryController {
     @Resource
     private IPurchaseHistoryService purchaseHistoryService;
 
+    /**
+     * 供应商列表
+     */
+    @Resource
+    private ISupplierService supplierService;
+
+    /**
+     * 商品列表
+     */
+    @Resource
+    private CommodityListServiceImpl commodityListService;
+
+    /**
+     * 进货详情中间表
+     */
+    @Resource
+    private IPurCommService purCommService;
+
+    /**
+     * 仓库列表
+     */
+    @Resource
+    private IWarehouseManagementService warehouseManagementService;
+
+    /**
+     * 资金流水
+     */
+    @Resource
+    private IRunningAccountsService runningAccountsService;
+
+    /**
+     * 入库单
+     */
+    @Resource
+    private IWarehouseReceiptService warehouseReceiptService;
+
 
 
     @RequestMapping("/purchasehistoryList")
@@ -45,6 +90,95 @@ public class PurchaseHistoryController {
         mv.setViewName("cargomanagement/purhistory-list");
         return mv;
     }
+
+    /**
+     * 增加进货订单历史页面
+     *
+     * @return 页面
+     */
+    @RequestMapping("/addPurchaseHistory")
+    public ModelAndView getaddPurchaseHouseOne(HttpSession session) {
+        String curr = DateUtil.curr();
+        String curr2 = curr.replace(" ", "");
+        String curr3 = "-";
+        String curr4 = curr2.replace(curr3,"");
+        String curr5 = ":";
+        String curr6 = curr4.replace(curr5,"");
+        String curr7 = "ADD"+curr6;
+        session.setAttribute("curr",curr7);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("cargomanagement/Pur_history-add");
+        return mv;
+    }
+
+    /**
+     * 增加进货历史
+     *
+     * @param purchaseHistory 进货历史实体类数据
+     */
+    @RequestMapping("/addPurchaseGoTo")
+    public ModelAndView insertPurchaseOrder(PurchaseHistory purchaseHistory,String[] phClname,int[] QuantityOfPurchase) {
+        int a = 0;
+        int maney = 0;
+        for (int i = 0;i<=phClname.length-1;i++){
+            CommodityList list = commodityListService.selectListByClName(phClname[i]);
+            maney+=Integer.parseInt(list.getClPurPrice())*QuantityOfPurchase[i];
+        }
+
+        for (int s : QuantityOfPurchase) {
+            a+=s;
+        }
+        purchaseHistory.setPhAmountPayable(maney+purchaseHistory.getPhOtherExpenses());
+        purchaseHistory.setPhAmountPaid(maney+purchaseHistory.getPhOtherExpenses());
+        purchaseHistory.setPhBill("无");
+        purchaseHistory.setPhJindate(purchaseHistory.getPhDate());
+        purchaseHistory.setPhQuantity(a);
+        purchaseHistory.setPhManeyHu("现金");
+        purchaseHistory.setPhSinglePerson("老板");
+        purchaseHistory.setPhOtherExpenses(0);
+        purchaseHistory.setPhBill("无");
+        purchaseHistory.setPhWarehousingStatus("未入库");
+        purchaseHistoryService.insertPurchaseHistory(purchaseHistory);
+
+        RunningAccounts runningAccounts1 = runningAccountsService.selectRunningMaxIdMoney();
+        RunningAccounts runningAccounts = new RunningAccounts();
+        runningAccounts.setRaNumList(purchaseHistory.getPhNumber());
+        runningAccounts.setRaTime(DateUtil.curr());
+        runningAccounts.setRaCompanyName(purchaseHistory.getPhSupname());
+        runningAccounts.setRaProjectName("进货支出");
+        runningAccounts.setRaAccount("现金");
+        runningAccounts.setRaPerson("老板");
+        runningAccounts.setRaIncome(0.0);
+        runningAccounts.setRaOutcome(maney+purchaseHistory.getPhOtherExpenses());
+        runningAccounts.setRaCurrentBalance(runningAccounts1.getRaCurrentBalance()-(maney+purchaseHistory.getPhOtherExpenses()));
+        runningAccountsService.insertRunningAccountsOne(runningAccounts);
+        for (int i = 0;i<=phClname.length-1;i++){
+            CommodityList list1 = commodityListService.selectListByClName(phClname[i]);
+            PurchaseHistory purchaseHistory1 = purchaseHistoryService.selectPurchaseHistoryByNumber(purchaseHistory.getPhNumber());
+            PurComm purComm = new PurComm();
+            purComm.setPuhId(purchaseHistory1.getId());
+            purComm.setComId(list1.getId());
+            purComm.setPcGeshu(QuantityOfPurchase[i]);
+            purCommService.insertPurComm(purComm);
+        }
+
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/cargomanagement/purhistory-list");
+        return mv;
+    }
+
+
+
+
+    /**
+     * 仓库信息
+     * @return 仓库信息
+     */
+    @RequestMapping("/selectquanWarList")
+    public List<WarehouseManagement> selectquanWarList(){
+        return warehouseManagementService.selectquanWarList();
+    }
+
 
     /**
      * 跳转进货历史页面 并且session传值过去
@@ -71,16 +205,7 @@ public class PurchaseHistoryController {
         return mv;
     }
 
-    /**
-     * 这是一个为了上传才写的注释....
-     * @return
-     */
-    @RequestMapping("/addPurchaseHistory")
-    public ModelAndView getPurchaseHistory(){
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("addPurchaseHistory");
-        return mv;
-    }
+
 
     /**
      * 进货历史分页
@@ -138,6 +263,35 @@ public class PurchaseHistoryController {
     public List<PurComm> selectComHistZhong(PurchaseHistory purchaseHistory){
         return purchaseHistoryService.selectComHistZhong(purchaseHistory.getId());
     }
+
+    @RequestMapping("/updateHistoryState")
+    public int updateHistoryState(PurchaseHistory purchaseHistory){
+        String phWarehousingStatus = "等待入库";
+        int id = purchaseHistory.getId();
+        purchaseHistoryService.updateHistoryState(phWarehousingStatus,id);
+        WarehouseReceipt warehouseReceipt = new WarehouseReceipt();
+        warehouseReceipt.setWreDate(purchaseHistory.getPhDate());
+        warehouseReceipt.setWreNumber(purchaseHistory.getPhNumber());
+        warehouseReceipt.setWreType("进货");
+        warehouseReceipt.setWreCurrentUnit(purchaseHistory.getPhSupname());
+        warehouseReceipt.setWreWarehostName(purchaseHistory.getPhWarehouse());
+        warehouseReceipt.setWreStorage(purchaseHistory.getPhClname());
+        warehouseReceipt.setWreScheduledReceipt(purchaseHistory.getPhQuantity());
+        warehouseReceipt.setWreDateOrder(DateUtil.curr());
+        warehouseReceipt.setWreSinglePerson("老板");
+        warehouseReceipt.setWreExperiencedPerson("老板");
+        warehouseReceipt.setWreState("未入库");
+        warehouseReceiptService.insertWarHouseByHistory(warehouseReceipt);
+        WarehouseReceipt warehouseReceipt1 = warehouseReceiptService.selectWarhouseByNumber(purchaseHistory.getPhNumber());
+        PurComm purComm = new PurComm();
+        int warhoureId= warehouseReceipt1.getId();
+        int puhId= purchaseHistory.getId();
+        purCommService.updatePurCommByPuhId(warhoureId,puhId);
+        return 1;
+    }
+
+
+
 
     /**
      * <P>
@@ -365,7 +519,7 @@ public class PurchaseHistoryController {
 
             HSSFCell cell014=rowx.createCell(14);
             cell014.setCellStyle(style);
-            cell014.setCellValue((String) map.get("phOtherExpenses"));
+            cell014.setCellValue((double) map.get("phOtherExpenses"));
 
             HSSFCell cell015=rowx.createCell(15);
             cell015.setCellStyle(style);

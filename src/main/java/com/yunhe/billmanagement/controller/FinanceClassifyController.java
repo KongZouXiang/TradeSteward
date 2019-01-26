@@ -5,6 +5,7 @@ import com.yunhe.billmanagement.entity.FinanceClassify;
 import com.yunhe.billmanagement.entity.FinanceOrder;
 import com.yunhe.billmanagement.service.IFinanceClassifyService;
 import com.yunhe.billmanagement.service.IFinanceOrderService;
+import com.yunhe.core.common.annotion.WebLog;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -41,21 +42,11 @@ public class FinanceClassifyController {
 
     /**
      * <P>
-     *    进入首页
-     * </P>
-     * @return 进入index.html
-     */
-    @RequestMapping("/toIndex")
-    public ModelAndView toIndex(){
-        return new ModelAndView("index");
-    }
-
-    /**
-     * <P>
      *    进入收支分类管理页面
      * </P>
      * @return 进入bill-FinanceClassify.html
      */
+    @WebLog("进入收支分类管理页面")
     @RequestMapping("/toFc")
     public ModelAndView toFc(){
         return new ModelAndView("billmanagement/bill-FinanceClassify");
@@ -68,6 +59,7 @@ public class FinanceClassifyController {
      * @param size 每页条数
      * @return  收支分类管理表：分页的结果集
      */
+    @WebLog("查看收支分类")
     @RequestMapping(value = "/selectFcPage",method = RequestMethod.GET)
     public Map selectFcPage(int current, int size, FinanceClassify financeClassify) {
         return financeClassifyService.selectFcPage(current, size,financeClassify);
@@ -78,6 +70,7 @@ public class FinanceClassifyController {
      * </P>
      * @return 收支分类管理表：查询的结果集
      */
+    @WebLog("查询所有收支分类")
     @RequestMapping(value = "/selectFc",method = RequestMethod.POST)
     public List<FinanceClassify> selectFc() {
         return financeClassifyService.selectFc();
@@ -90,6 +83,7 @@ public class FinanceClassifyController {
      * @param financeClassify 查询条件放在对象里
      * @return 收支分类管理表：查询的结果集
      */
+    @WebLog("通过类别查看收支分类")
     @RequestMapping(value = "/selectFcBySort",method = RequestMethod.POST)
     public List<FinanceClassify> selectFcBySort(FinanceClassify financeClassify) {
         return financeClassifyService.selectFcBySort(financeClassify);
@@ -101,6 +95,7 @@ public class FinanceClassifyController {
      * </P>
      * @return 进入bill-FC-add.html
      */
+    @WebLog("进入增加收支分类页面")
     @RequestMapping("/toAdd")
     public ModelAndView toAdd(){
         return new ModelAndView("billmanagement/bill-FC-add");
@@ -113,6 +108,7 @@ public class FinanceClassifyController {
      * @param financeClassify 增加的参数放到一个对象
      * @return  收支分类管理表：增加是否成功true or false
      */
+    @WebLog("增加收支分类")
     @RequestMapping(value = "/insertFc",method = RequestMethod.GET)
     public int insertFc(FinanceClassify financeClassify) {
         return financeClassifyService.insertFc(financeClassify);
@@ -125,6 +121,7 @@ public class FinanceClassifyController {
      * @param financeClassify 查询条件
      * @return
      */
+    @WebLog("增加数据之前检查收支分类是否存在")
     @RequestMapping(value = "/checkFcExit",method = RequestMethod.GET)
     public boolean checkFcExit(FinanceClassify financeClassify){
         return financeClassifyService.checkFcExit(financeClassify);
@@ -137,6 +134,7 @@ public class FinanceClassifyController {
      * @param session 要传到前端的值存在session
      * @return 进入bill-FC-update.html
      */
+    @WebLog("进入收支分类修改页面")
     @RequestMapping("/toUpdate")
     public ModelAndView toUpdate(int id, HttpSession session){
         FinanceClassify financeClassify = financeClassifyService.selectFcById(id);
@@ -150,6 +148,7 @@ public class FinanceClassifyController {
      * @param financeClassify 修改的参数放到一个对象
      * @return  收支分类管理表：修改是否成功true or false
      */
+    @WebLog("修改收支分类")
     @RequestMapping(value = "/updateFc",method = RequestMethod.GET)
     public int updateFc(FinanceClassify financeClassify) {
         return financeClassifyService.updateFc(financeClassify);
@@ -161,6 +160,7 @@ public class FinanceClassifyController {
      * @param id 通过id删除
      * @return  收支分类管理表：删除是否成功true or false
      */
+    @WebLog("删除收支分类")
     @RequestMapping(value = "/deleteFc",method = RequestMethod.GET)
     public int deleteFc(int id) {
         int i =1;//1代表不能删,0代表可以删
@@ -182,6 +182,7 @@ public class FinanceClassifyController {
      * @return  Excel导出到本地
      * @throws IOException
      */
+    @WebLog("Excel导出收支分类")
     @RequestMapping("/export")
     public String createExcel(HttpServletResponse response) throws IOException {
         //获取查询结果的数据,只要对其进行封装就行了

@@ -49,7 +49,7 @@ public class SettlementAccount implements Serializable {
      * 状态（是否启用）
      */
     @TableField("sa_state")
-    private Integer saState;
+    private String saState;
     /**
      * 银行账号
      */

@@ -1,32 +1,21 @@
 package com.yunhe.systemsetup.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.github.qcloudsms.SmsSingleSender;
-import com.github.qcloudsms.SmsSingleSenderResult;
-import com.github.qcloudsms.httpclient.HTTPException;
-import com.yunhe.redis.service.RedisService;
-import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.json.JSONException;
-import org.junit.Test;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
-
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yunhe.core.redis.RedisService;
 import com.yunhe.systemsetup.entity.Employ;
 import com.yunhe.systemsetup.service.impl.EmployServiceImpl;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +35,7 @@ public class EmployController {
 
     @Autowired
     private EmployServiceImpl employService;
+
     @Autowired
     private RedisService redisService;
 
@@ -91,11 +81,33 @@ public class EmployController {
         System.out.println(employ.getEmRole().equals("财务员"));
         if (employ.getEmRole().equals("管理员")){
             employ.setCh_id(1);
+            employ.setEmShiro("零售价，最低价");
+            employ.setEmDelInvoice("允许");
+            employ.setEmSelInvoice("允许");
+            employ.setEmSelUser("不允许");
+            employ.setEmRepo("默认仓库");
         }else if(employ.getEmRole().equals("财务员")){
+
             employ.setCh_id(2);
+            employ.setEmShiro("零售价，进货价，最低价，批发价，成本价");
+            employ.setEmDelInvoice("允许");
+            employ.setEmSelInvoice("允许");
+            employ.setEmSelUser("不允许");
+            employ.setEmRepo("默认仓库");
         }else if(employ.getEmRole().equals("仓管员")){
+
             employ.setCh_id(3);
+            employ.setEmShiro("批发价，进货价");
+            employ.setEmDelInvoice("允许");
+            employ.setEmSelInvoice("允许");
+            employ.setEmSelUser("不允许");
+            employ.setEmRepo("默认仓库");
         }else if (employ.getEmRole().equals("销售员")){
+            employ.setEmShiro("零售价，成本价");
+            employ.setEmDelInvoice("不允许");
+            employ.setEmSelInvoice("允许");
+            employ.setEmSelUser("不允许");
+            employ.setEmRepo("默认仓库");
             employ.setCh_id(4);
         }
         int a =employService.insertEmploy(employ);
@@ -155,12 +167,32 @@ public class EmployController {
         System.out.println("修改员工信息进入controller");
         if (employ.getEmRole().equals("管理员")){
             employ.setCh_id(1);
+            employ.setEmShiro("零售价，最低价");
+            employ.setEmDelInvoice("允许");
+            employ.setEmSelInvoice("允许");
+            employ.setEmSelUser("不允许");
+            employ.setEmRepo("默认仓库");
         }else if(employ.getEmRole().equals("财务员")){
             employ.setCh_id(2);
+            employ.setEmShiro("零售价，进货价，最低价，批发价，成本价");
+            employ.setEmDelInvoice("允许");
+            employ.setEmSelInvoice("允许");
+            employ.setEmSelUser("不允许");
+            employ.setEmRepo("默认仓库");
         }else if(employ.getEmRole().equals("仓管员")){
             employ.setCh_id(3);
+            employ.setEmShiro("批发价，进货价");
+            employ.setEmRepo("默认仓库");
+            employ.setEmDelInvoice("允许");
+            employ.setEmSelInvoice("允许");
+            employ.setEmSelUser("不允许");
         }else if (employ.getEmRole().equals("销售员")){
             employ.setCh_id(4);
+            employ.setEmShiro("零售价，成本价");
+            employ.setEmDelInvoice("不允许");
+            employ.setEmSelInvoice("允许");
+            employ.setEmSelUser("不允许");
+            employ.setEmRepo("默认仓库");
         }
         int a =employService.updateMessage(employ);
         return a;
@@ -177,7 +209,7 @@ public class EmployController {
      */
     @RequestMapping(value = "/checkSend")
     public boolean checkSend(String phone,String num){
-       String checknum=redisService.get(phone);
+       String checknum=(String)redisService.get(phone);
         System.out.println(checknum);
        if (checknum.equals(num)){
            return true;

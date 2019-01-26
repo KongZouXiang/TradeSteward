@@ -8,9 +8,9 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ByteSource;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author 孔邹祥
  * @date 2019年1月18日
- */
+ *//**/
 
 public class UserRealm extends AuthorizingRealm {
 
@@ -31,6 +31,7 @@ public class UserRealm extends AuthorizingRealm {
 
     @Resource
     EmployMapper employMapper;
+
 
     /**
      * <p>
@@ -83,13 +84,24 @@ public class UserRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
 //            查询数据库的用户名和密码
         Employ employ = loginService.selectOneEmploy(token.getUsername());
+
+
+//盐值
+        ByteSource credentialsSalt = ByteSource.Util.bytes(employ.getEmUsername());
+        //封装用户信息，构建AuthenticationInfo对象并返回
+        AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(employ, employ.getEmPassword(),
+                credentialsSalt, getName());
+
+
         SecurityUtils.getSubject().getSession().setAttribute("employ", employ);
+
         if (employ == null) {
 //            用户名不存在
 //            底层会抛出UnKnowAccountException
             return null;
         }
+        return authcInfo;
 //        2.判断密码
-        return new SimpleAuthenticationInfo(employ, employ.getEmPassword(), "");
+//        return new SimpleAuthenticationInfo(employ, employ.getEmPassword(), "");
     }
 }

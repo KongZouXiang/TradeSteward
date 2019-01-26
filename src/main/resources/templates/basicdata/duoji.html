@@ -1,0 +1,191 @@
+﻿<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>dtree</title>
+    <link rel="StyleSheet" href="/dtree.css" type="text/css"/>
+    <script type="text/javascript" src="/dtree.js"></script>
+    <script src="/jquery.min.js"></script>
+</head>
+<body>
+<div class="dtree" id="dtree_div">
+    <p><a href="javascript:  d.closeAll();">打开</a> | <a href="javascript: d.openAll();">关闭</a></p>
+    <input id="dosearch_text" type="text"/>
+    <input id="dosearch" type="button" value="查询" onClick="nodeSearching() "/>
+    <script type="text/javascript">
+        d = new dTree('d', true);   //参数一: 树名称。参数二：单选多选 true多选  false单选  默认单选
+        d.add(0, -1, '商品分类');
+        var getdata=function () {
+            $.ajax({
+                async:false,
+                type:'post',
+                dataType:'json',
+                url:'/basicdata/commclass/queryList',
+                success:function (msg) {
+                    console.log(msg.commclass);
+                    var data=msg.commclass;
+                    for (var j=0,len=data.length;j<len;j++)
+                    {
+                        d.add(data[j].id,data[j].ccFuji,'authority','00'+j,data[j].ccDefault,true, false);
+                    }
+                }
+            })
+        };
+        getdata();
+        console.log(d);
+        document.write(d);
+        d.openAll();
+    </script>
+</div>
+
+<div class="selectorResult">
+    增加分类：<br>
+    <input type="text" id="selectfulei" placeholder="您想把该分类添加到哪个分类下？">
+    <span id="ss"></span>
+    <br>
+    <input type="text" id="addclass" placeholder="请输入要增加的分类名">
+    <br>
+    <input type="button" id="tijiao" value="提交">
+    <script type="text/javascript">
+        var ss=document.getElementById("ss");
+        var ccFuji;
+        $("#selectfulei").blur(function () {
+            $.ajax({
+                type:'post',
+                dataType:'json',
+                url:'/basicdata/commclass/seleceidbyname',
+                data:{
+                    name:$("#selectfulei").val()
+                },
+                success:function (msg) {
+                    console.log(msg)
+                    if (msg==0){
+                        ss.innerHTML="该分类不存在！"
+                    }
+                    ccFuji=msg;
+                }
+            })
+        });
+        $("#tijiao").click(function () {
+            $.ajax({
+                type:'post',
+                dataType:'json',
+                url:'/basicdata/commclass/add',
+                data:{
+                    ccDefault:$("#addclass").val(),
+                    ccFuji:ccFuji,
+                },
+                success:function (msg) {
+                    layer.msg('添加成功',{icon:5});
+                }
+            })
+        })
+
+    </script>
+</div>
+<div>
+    <input type='button' name='bTest' value='test' onclick='test();'>
+</div>
+
+<script type="text/javascript">
+    function test() {
+        var count = 0;
+        var obj = document.all.authority;
+
+        for (i = 0; i < obj.length; i++) {
+            if (obj[i].checked) {
+                alert(obj[i].value);
+                count++;
+            }
+        }
+    }
+
+    //搜索节点并展开节点
+    function nodeSearching() {
+        var dosearch = $.trim($("#dosearch_text").val());//获取要查询的文字
+        var dtree_div = $("#dtree_div").find(".dtree_node").show().filter(":contains('" + dosearch + "')");//获取所有包含文本的节点
+        $.each(dtree_div, function (index, element) {
+            var s = $(element).attr("node_id");
+            d.openTo(s);//根据id打开节点
+        });
+    }
+</script>
+<script type="text/javascript">
+    //#region 页面执行入口
+    $(document).ready(function () {
+        //#region 浏览器检测相关方法
+        window["MzBrowser"] = {};
+        (function () {
+            if (MzBrowser.platform) return;
+            var ua = window.navigator.userAgent;
+            MzBrowser.platform = window.navigator.platform;
+            MzBrowser.firefox = ua.indexOf("Firefox") > 0;
+            MzBrowser.opera = typeof (window.opera) == "object";
+            MzBrowser.ie = !MzBrowser.opera && ua.indexOf("MSIE") > 0;
+            MzBrowser.mozilla = window.navigator.product == "Gecko";
+            MzBrowser.netscape = window.navigator.vendor == "Netscape";
+            MzBrowser.safari = ua.indexOf("Safari") > -1;
+            if (MzBrowser.firefox) var re = /Firefox(\s|\/)(\d+(\.\d+)?)/;
+            else if (MzBrowser.ie) var re = /MSIE( )(\d+(\.\d+)?)/;
+            else if (MzBrowser.opera) var re = /Opera(\s|\/)(\d+(\.\d+)?)/;
+            else if (MzBrowser.netscape) var re = /Netscape(\s|\/)(\d+(\.\d+)?)/;
+            else if (MzBrowser.safari) var re = /Version(\/)(\d+(\.\d+)?)/;
+            else if (MzBrowser.mozilla) var re = /rv(\:)(\d+(\.\d+)?)/;
+            if ("undefined" != typeof (re) && re.test(ua))
+                MzBrowser.version = parseFloat(RegExp.$2);
+        })();
+    });
+
+    //显示删除
+    function showRemove(obj) {
+        $(obj).addClass("remove");
+    }
+
+    //隐藏删除
+    function hideRemove(obj) {
+        $(obj).removeClass("remove");
+    }
+
+    //鼠标移动到删除图标，显示手（pointer）
+    function setRemove(obj, event) {
+        var width = $(obj).width();
+        var left = $(obj).position().left;
+        var e = event || window.event;
+        var x = IsIE(GetVersion()) ? e.x : e.pageX;
+        if (x > left + width - 9) {
+            $(obj).css("cursor", "pointer")
+        } else {
+            $(obj).css("cursor", "default")
+        }
+    }
+
+    function GetVersion() {
+        return MzBrowser.version;
+    }
+
+    function GetName() {
+        var name = "undefined";
+        if (MzBrowser.ie) {
+            name = "ie";
+        } else if (MzBrowser.firefox) {
+            name = "firefox";
+        } else if (MzBrowser.safari) {
+            name = "safari";
+        }
+        return name;
+    }
+    function IsIE(versionValue) {
+        if (versionValue == 11) {
+            return IsIE11();
+        }
+        var name = GetName();
+        var version = GetVersion();
+        return name == 'ie' && parseInt(version) == versionValue;
+    }
+</script>
+</body>
+</html>
+
+
+

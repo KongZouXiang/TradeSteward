@@ -96,6 +96,20 @@ public class CharaMangerController {
         session.setAttribute("chara",charamanger);
         return new ModelAndView("/systemsetup/chararole-edit");
     }
+
+    /**
+     * 提交修改页面
+     * @param
+     * @param charaManger
+     * @return
+     */
+    @RequestMapping("/subchara")
+    public Boolean  subCharaEdit(CharaManger charaManger){
+        System.out.println("这是个charaManger");
+       // System.out.println(charaMangerService.subCharaMage(charaManger));
+        //return charaMangerService.updateById(charaManger);
+        return charaMangerService.updateById(charaManger);
+    }
     //删除角色
     @RequestMapping("/deleteRole")
     public Boolean deleteRole(CharaManger charaManger){

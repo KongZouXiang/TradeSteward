@@ -65,7 +65,8 @@ public class CommodiTytemplateController {
      */
     @ApiOperation("删除模块信息")
     @ApiImplicitParam(name = "id", value = "模块的ID", dataType = "Integer")
-    @RequestMapping("/delete")
+
+    @RequestMapping("/delete?name=")
     public int delete(int id) {
         return commodiTytemplateService.deleteById(id);
     }

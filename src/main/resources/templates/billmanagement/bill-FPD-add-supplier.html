@@ -28,7 +28,7 @@
 		class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
 	<div class="text-c" style="margin-bottom: 20px">
-		<input type="text" class="input-text" style="width:250px" placeholder="输入供应商编号、供应商名" id="poSupName" name="">
+		<input type="text" class="input-text" style="width:250px" placeholder="输入供应商编号、供应商名" id="poSupName">
 		<button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜索</button>
 	</div>
 	<table class="table table-border table-bordered table-bg" id="app">
@@ -44,12 +44,12 @@
 		<tr class="text-c" v-for="(item,index) in result">
 			<td>{{index+1}}</td>
 			<td class="td-manage">
-				<a style="text-decoration:none" class="ml-5" @click="editEvent(item.cusCompname)" href="javascript:;" title="选择">
+				<a style="text-decoration:none" class="ml-5" @click="editEvent(item.supCompname)" href="javascript:;" title="选择">
 					<i class="Hui-iconfont">&#xe6a7;</i>
 				</a>
 			</td>
-			<td>{{item.supCompname}}</td>
 			<td>{{item.supNumber}}</td>
+			<td>{{item.supCompname}}</td>
 		</tr>
 		</tbody>
 	</table>
@@ -72,12 +72,12 @@
 
     var getPurchasePageList = function (curr) {
         $.ajax({
-            type: 'POST',
+            type: 'GET',
             dataType: 'json',
-            url: '/customermanagement/supplier/selectSupplier',
+            url: '/customermanagement/supplier/selectPage',
             data: {
                 current: curr || 1,
-                size: 1,
+                size: 10,
                 supCompname:$("#poSupName").val(),
                 supTele:$("#poSupName").val(),
                 supNumber:$("#poSupName").val()
@@ -101,107 +101,28 @@
         });
     };
     getPurchasePageList();
+
+    /*搜索*/
     $("#findempl").on('click', function () {
         getPurchasePageList();
     });
+    var editEvent = function (supCompname) {
+        alert(supCompname);
+        $.ajax({
+            type: 'get',
+            dataType: 'json',
+            url:'/billManagement/fund_provider_debt/selectIdFpdExit',
+            data:{
+                fpdName:supCompname
+            },
+            success: function (msg) {
+                parent.$("#fcddFcdName").val(msg.fpdName);
+                parent.$("#fcddReceivable").val(msg.fpdReceivable);
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
 
-
-    /*删除客户*/
-    var delEvent = function (id) {
-        layer.confirm('你确定要删除吗？', {
-            btn: ['是', '否']
-        }, function () {
-            $.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: '/customermanagement/supplier/deleteSuppler',
-                data: {
-                    id: id
-                },
-                success: function (msg) {
-                    getPurchasePageList();
-                    layer.msg('成功删除' + id, {icon: 5});
-                }
-            })
-        });
-    };
-
-    /*批量删除*/
-    $("#deleteAll").click(function(){
-        var arr = new Array();
-        $("input:checkbox[id='box']:checked").each(function (i) {
-            arr[i]=$(this).val();
-        });
-        if (arr[0]==null){
-            layer.msg("请选择要删除的客户！",{time:2000,icon:2})
-        }else{
-            layer.confirm('你确定要删除它们吗？',{
-                btn:['是','否']
-            },function () {
-                for (var i =0;i<arr.length;i++ ){
-                    $.ajax({
-                        type:'POST',
-                        dataType:'json',
-                        url: '/customermanagement/supplier/deleteSupplier',
-                        data: {
-                            id: arr[i],
-                        },
-                        success: function (msg) {
-                            console.log(msg);
-                            if (msg) {
-                                layer.msg('成功删除', {icon: 1});
-                                getPurchasePageList();
-                            }
-                        }
-                    });
-                }
-            },function () {
-                layer.msg('删除失败！',{time:2000,icon:2});
-            });
-            $("input:checkbox[id='box']:checked").attr("checked",false);
-        };
-    });
-
-    /*编辑修改*/
-    var editEvent = function (id) {
-        layer.open({
-            type: 2,
-            title: '编辑用户',
-            fix: false,
-            maxmin: true,
-            shadeClose: true,
-            area: ['1100px', '600px'],
-            content: '/customermanagement/supplier/editSupplier?id='+id,
-            end: function () {
-                getPurchasePageList();
-                layer.msg('修改成功', {icon: 1});
             }
-
         });
-    };
-
-    /*增加供应商*/
-    var addEvent = function (supplier) {
-
-        layer.open({
-            type: 2,
-            title: '新增用户',
-            fix: false,
-            maxmin: true,
-            shadeClose: true,
-            area: ['1100px', '600px'],
-            content: '/customermanagement/supplier/addSupplier',
-            end: function () {
-                getPurchasePageList();
-                layer.msg('增加成功', {icon: 1});
-            }
-
-        });
-    };
-
-    function excel() {
-        window.location.href="/customermanagement/supplier/getExcel"
-
     }
 </script>
 </body>
