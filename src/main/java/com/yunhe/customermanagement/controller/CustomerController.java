@@ -1,7 +1,10 @@
 package com.yunhe.customermanagement.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.yunhe.billmanagement.entity.FundClientDebt;
+import com.yunhe.billmanagement.service.IFundClientDebtService;
 import com.yunhe.customermanagement.entity.Customer;
 import com.yunhe.customermanagement.service.ICustomerService;
 import org.apache.poi.hssf.usermodel.*;
@@ -17,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 
 import java.util.*;
@@ -36,6 +40,9 @@ public class CustomerController {
     @Resource
     ICustomerService customerService;
 
+    @Resource
+    IFundClientDebtService fundClientDebtService;
+
     @RequestMapping("/editCustomer")
     public String selectAllCustomer(Integer id, Model model) {
         Customer customer = customerService.getById(id);
@@ -43,10 +50,20 @@ public class CustomerController {
         return "customermanagement/editCustomer";
     }
 
+    /**
+     * <p>
+     *     进入客户添加页面
+     * </p>
+     * @author 杨明月
+     * @param session 将最大ID存到session里
+     * @return 进入addCustomer.html
+     */
     @RequestMapping("/addCustomer")
-    public String insertCustomer(Customer customer, Model model) {
-        model.addAttribute("customer", customer);
-        return "customermanagement/addCustomer";
+    public ModelAndView insertCustomer(HttpSession session) {
+        int id = customerService.maxId();
+        int maxId = id+1;
+        session.setAttribute("maxId",maxId);
+        return new ModelAndView("customermanagement/addCustomer");
     }
 
 
@@ -83,7 +100,6 @@ public class CustomerController {
     @PostMapping("/insertCustomer")
     @ResponseBody
     public Integer insertCustomer(Customer customer) {
-
         return customerService.insertCustomer(customer);
 
     }
@@ -99,9 +115,18 @@ public class CustomerController {
     @RequestMapping("/deleteCustomer")
     @ResponseBody
     public Integer deleteCustomer(int id) {
-
-        return customerService.deleteCustomer(id);
-
+        List<Customer> customerName = customerService.list(new QueryWrapper<Customer>().eq("id", id));
+        Customer customer = customerName.get(0);
+        String fcdName = customer.getCusCompname();
+        int i =1;//1代表不能删,0代表可以删
+        List<FundClientDebt> list = fundClientDebtService.list(new QueryWrapper<FundClientDebt>().eq("fcd_name", fcdName));
+        if(list.size()>0){
+            i=1;
+        }else {
+            i=0;
+            customerService.deleteCustomer(id);
+        }
+        return i;
     }
 
     /**

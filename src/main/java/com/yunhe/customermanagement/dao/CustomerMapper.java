@@ -17,11 +17,6 @@ import java.util.List;
  */
 
 public interface CustomerMapper extends BaseMapper<Customer> {
-
-
-
-
-
 /**
  * <p>
  *     导出excel
@@ -29,5 +24,14 @@ public interface CustomerMapper extends BaseMapper<Customer> {
  * @return 客户列表
  */
 List<Customer> sellectAllExcel();
+
+    /**
+     * <p>
+     *      查询最大ID
+     * </p>
+     *@author 杨明月
+     * @return zuidaID
+     */
+    int maxId();
 }
 

@@ -26,6 +26,13 @@ public interface SupplierMapper extends BaseMapper<Supplier> {
      */
     List<Supplier> selectAllExcel();
 
-
+    /**
+     * <p>
+     *      查询最大ID
+     * </p>
+     *@author 杨明月
+     * @return zuidaID
+     */
+    int maxId();
 
 }

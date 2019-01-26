@@ -1,6 +1,9 @@
 package com.yunhe.customermanagement.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.yunhe.billmanagement.entity.FundProviderDebt;
+import com.yunhe.billmanagement.service.IFundProviderDebtService;
 import com.yunhe.customermanagement.entity.Supplier;
 import com.yunhe.customermanagement.service.ISupplierService;
 import org.apache.poi.hssf.usermodel.*;
@@ -15,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -35,6 +39,9 @@ public class SupplierController {
     @Resource
     ISupplierService supplierService;
 
+    @Resource
+    IFundProviderDebtService fundProviderDebtService;
+
     @RequestMapping("/editSupplier")
     public ModelAndView selectAllCustomer(Integer id, Model model) {
         Supplier supplier = supplierService.getById(id);
@@ -42,9 +49,19 @@ public class SupplierController {
         return new ModelAndView ("customermanagement/editSupplier");
     }
 
+    /**
+     * <p>
+     *     进入供应商添加页面
+     * </p>
+     * @author 杨明月
+     * @param session 将最大ID存到session里
+     * @return 进入addCustomer.html
+     */
     @RequestMapping("/addSupplier")
-    public ModelAndView addSupplier() {
-        System.out.println("进入添加页面");
+    public ModelAndView addSupplier(HttpSession session) {
+        int id = supplierService.maxId();
+        int maxId = id+1;
+        session.setAttribute("maxId",maxId);
         return new ModelAndView ("customermanagement/addSupplier");
     }
 
@@ -68,7 +85,6 @@ public class SupplierController {
         System.out.println(current);
         return supplierService.selectPage(current, size, supplier);
     }
-
 
     /**
      *<p>
@@ -107,11 +123,19 @@ public class SupplierController {
     @PostMapping("/deleteSupplier")
     @ResponseBody
     public Integer deleteSupplier(int id) {
-        return  supplierService.deleteSupplier(id);
+        List<Supplier> supplierName = supplierService.list(new QueryWrapper<Supplier>().eq("id", id));
+        Supplier supplier = supplierName.get(0);
+        String fpdName = supplier.getSupCompname();
+        int i =1;//1代表不能删,0代表可以删
+        List<FundProviderDebt> list = fundProviderDebtService.list(new QueryWrapper<FundProviderDebt>().eq("fpd_name", fpdName));
+        if(list.size()>0){
+            i=1;
+        }else {
+            i=0;
+            supplierService.deleteSupplier(id);
+        }
+        return i;
     }
-
-
-
 
     /**
      * <p>

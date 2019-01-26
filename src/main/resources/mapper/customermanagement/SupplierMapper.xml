@@ -9,5 +9,8 @@
     <select id="selectAllExcel" resultType="com.yunhe.customermanagement.entity.Supplier">
         SELECT * FROM trades_teward.supplier
     </select>
+    <select id="maxId" resultType="java.lang.Integer">
+        select MAX(id) from  trades_teward.supplier
+    </select>
 
 </mapper>

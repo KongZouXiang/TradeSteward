@@ -92,5 +92,16 @@ public interface ICustomerService extends IService<Customer> {
      * @return 客户列表
      */
     List<Customer> selectCustomer();
+
+    /**
+     * <p>
+     *      查询最大ID
+     * </p>
+     *@author 杨明月
+     * @return zuidaID
+     */
+    int maxId();
+
+
 }
 

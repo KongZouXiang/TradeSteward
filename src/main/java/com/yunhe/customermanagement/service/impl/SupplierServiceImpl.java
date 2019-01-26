@@ -74,5 +74,10 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier> i
         map.put("list",list);
         return map;
     }
+
+    @Override
+    public int maxId() {
+        return supplierMapper.maxId();
+    }
 }
 
