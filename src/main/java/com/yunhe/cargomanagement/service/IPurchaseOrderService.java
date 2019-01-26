@@ -91,4 +91,14 @@ public interface IPurchaseOrderService extends IService<PurchaseOrder> {
      */
     List<PurComm> selectComZhong(int id);
 
+    /**
+     * <p>
+     *     销售报表
+     * </p>
+     * @param pageNum 当前页
+     * @param pageSize 每页条数
+     * @return  无返回
+     */
+    Map selectsaleMap(int pageNum, int pageSize);
+
 }

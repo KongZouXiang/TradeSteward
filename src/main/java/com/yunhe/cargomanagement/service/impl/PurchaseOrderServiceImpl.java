@@ -109,4 +109,24 @@ public class PurchaseOrderServiceImpl extends ServiceImpl<PurchaseOrderMapper, P
     public void setPurchaseOrderMapper(PurchaseOrderMapper purchaseOrderMapper) {
         this.purchaseOrderMapper = purchaseOrderMapper;
     }
+
+    /**
+     * <p>
+     *     销售报表
+     * </p>
+     * @param pageNum 当前页
+     * @param pageSize 每页条数
+     * @return 所有信息集合
+     */
+    @Override
+    public Map selectsaleMap(int pageNum, int pageSize) {
+        Page page=new Page(pageNum,pageSize);
+        List<Map<String,Object>> purch = purchaseOrderMapper.selectsaleMap(page);
+        System.out.println("查询所有信息："+purch);
+        Map map = new HashMap();
+        map.put("total", page.getTotal());
+        map.put("pages", page.getPages());
+        map.put("purch", purch);
+        return map;
+    }
 }

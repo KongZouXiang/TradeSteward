@@ -1,16 +1,17 @@
 package com.yunhe.reportanalysis.controller;
 
-import com.yunhe.basicdata.entity.CommodityList;
-import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
+import com.yunhe.basicdata.service.ICommodityListService;
 import com.yunhe.cargomanagement.entity.PurchaseOrder;
-import com.yunhe.cargomanagement.service.impl.PurchaseOrderServiceImpl;
-import com.yunhe.customermanagement.service.impl.SupplierServiceImpl;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.yunhe.cargomanagement.entity.SalesOrderHistory;
+import com.yunhe.cargomanagement.service.IPurchaseOrderService;
+import com.yunhe.cargomanagement.service.ISalesOrderHistoryService;
+import com.yunhe.customermanagement.service.ISupplierService;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,29 +25,75 @@ import java.util.Map;
  */
 
 @RestController
-@RequestMapping("/reportanalysis/Purch")
+@RequestMapping(value = "/reportanalysis/Purch")
 public class PurchasereportController {
-    @Resource
-    CommodityListServiceImpl commodityListService;
-    @Resource
-    SupplierServiceImpl supplierService;
-    @Resource
-    PurchaseOrderServiceImpl purchaseOrderService;
 
 
+    @Resource
+    ICommodityListService commodityListService;
+    @Resource
+    ISupplierService supplierService;
+    @Resource
+    IPurchaseOrderService purchaseOrderService;
+    @Resource
+    ISalesOrderHistoryService salesOrderHistoryService;
 
+    @GetMapping("/rep_admin_list")
+    public ModelAndView rep_admin_list(){
+        return new ModelAndView("/reportanalysis/rep_admin_list");
+    }
+
+    @GetMapping("/rep_list")
+    public ModelAndView rep_list(){
+        return new ModelAndView("/reportanalysis/rep_list");
+    }
     /**
      *
      * @param size 每页显示的条数
      * @param current 当前页
-     * @param commodityList 实体类
+     * @param purchaseOrder 实体类
      * @return
      */
     @PostMapping("/getallbypurch")
     @ResponseBody
-    public Map selectbyallcomm(int size, int current, CommodityList commodityList){
-        return commodityListService.selectAllcommList(current,size,commodityList);
+    public Map selectbyallcomm(int size, int current, PurchaseOrder purchaseOrder){
+        System.out.println("currentss=="+current);
+        return commodityListService.selectAllcommList(current,size,null);
     }
+    @GetMapping("/selectall")
+    @ResponseBody
+    public Map selectAll(){
+        List<SalesOrderHistory> list = salesOrderHistoryService.selectAll();
+        Map map=new HashMap();
+        map.put("commclass",list);
+        return map;
+    }
+    /*@PostMapping("/selectListMap")
+    @ResponseBody
+    public Map selectListMap(int current, int size){
+        System.out.println("current:"+current+"size:"+size);
+        return commodityListService.selectListMap( current, size);
+    }*/
+
+
+
+   /*@GetMapping("/getPage")
+    @ResponseBody
+    public Map getPurchaseByPoNumber(int size, int current, PurchaseOrder purchaseOrder) {
+        Map purchaseByPoNumber = purchaseOrderService.getPurchaseByPoNumber(size, current, purchaseOrder);
+        return purchaseByPoNumber;
+    }*/
+
+ /*   @PostMapping("/selectallsupp")
+    @ResponseBody
+    public Map selectbyallSupplier(){
+        Map list=();
+        Map map=new HashMap();
+        map.put("commclass",list);
+        return map;
+    }*/
+
+
 
     /*@PostMapping("/getallbySupp")
     @ResponseBody

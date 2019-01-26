@@ -7,6 +7,7 @@ import com.yunhe.cargomanagement.entity.PurchaseOrder;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
@@ -90,6 +91,17 @@ public interface PurchaseOrderMapper extends BaseMapper<PurchaseOrder> {
      * @return 商品信息
      */
     List<PurComm> selectComZhong(int id);
+
+
+    /**
+     * <p>
+     *     销售报表分页
+     * </p>
+     * @param page 分页
+     * @return 无返回
+     */
+    @Select("SELECT c.cl_number,c.cl_name,c.cl_spec,c.cl_unit,s.sh_sell_count,s.sh_money,s.sh_discount,s.sh_profit FROM order_connect_comm o,sales_history s,commodity_list c WHERE c.id=o.cl_id AND s.id = o.sell_order_num")
+    List<Map<String,Object>> selectsaleMap(Page page);
 
 
 

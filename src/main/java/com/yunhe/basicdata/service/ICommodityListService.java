@@ -101,4 +101,22 @@ public interface ICommodityListService extends IService<CommodityList> {
      * @return 根据商id查询的结果
      */
     CommodityList selectListByClName(String clName);
+
+    /**
+     * <p>
+     *     进货报表
+     * </p>
+     * @param current 当前页
+     * @param size 每页条数
+     * @return 无返回
+     */
+    Map selectListMap(int current, int size);
+
+    /**
+     * <p>
+     *     进货报表
+     * </p>
+     * @return 无返回
+     */
+    List<Map<String,Object>> selectAllMap();
 }

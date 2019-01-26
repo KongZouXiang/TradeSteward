@@ -12,10 +12,7 @@ import com.yunhe.core.util.DateUtil;
 import com.yunhe.customermanagement.service.ISupplierService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -506,5 +503,30 @@ public class PurchaseOrderController {
 
     public void setPurchaseOrderService(IPurchaseOrderService purchaseOrderService) {
         this.purchaseOrderService = purchaseOrderService;
+    }
+
+    /**
+     * <p>
+     *     销售报表分页控制器  （勿删）
+     * </p>
+     * @param pageNum 当前页
+     * @param pageSize  每页条数
+     * @return  分页
+     */
+    @PostMapping("/selectsaleMap")
+    @ResponseBody
+    public Map selectsaleMap(int pageNum, int pageSize){
+        System.out.println("pageNum:"+pageNum+"pageSize:"+pageSize);
+        return purchaseOrderService.selectsaleMap(pageNum, pageSize);
+    }
+    /**
+     * <p>
+     *     销售报表视图控制器
+     * </p>
+     * @return 跳转的html界面
+     */
+    @GetMapping("/zhuzhuangtu")
+    public ModelAndView zhuzhuangtu(){
+        return new ModelAndView("/reportanalysis/selazhu");
     }
 }

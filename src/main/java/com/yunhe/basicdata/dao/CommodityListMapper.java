@@ -7,11 +7,13 @@ import com.yunhe.basicdata.entity.CommodityList;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yunhe.basicdata.entity.WarehouseManagement;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -89,4 +91,21 @@ public interface CommodityListMapper extends BaseMapper<CommodityList> {
      * @return 根据商品名查询商品
      */
     CommodityList selectListByClName(String clName);
+
+
+    /**
+     *
+     * @param page 分页
+     * @return  无返回
+     */
+    @Select("SELECT cl.cl_number as clNumber,cl.cl_pur_price as clPurPrice,cl.cl_who_price as clWhoPrice,cl.`cl_name` as clName,cl.`cl_spec` as clSpec,cl.`cl_unit` as clUnit,po.`po_quantity_of_purchase` as poQuantityOfPurchase,po.`po_ying_money`as poYingMoney FROM commodity_list cl,purchase_order po WHERE cl.cl_name = po.po_cl_name")
+    List<Map<String,Object>> selectListMap(Page page);
+
+    /**
+     *
+     * @return  无返回
+     */
+    @Select("SELECT cl.cl_number as clNumber,cl.cl_pur_price as clPurPrice,cl.cl_who_price as clWhoPrice,cl.`cl_name` as clName,cl.`cl_spec` as clSpec,cl.`cl_unit` as clUnit,po.`po_quantity_of_purchase` as poQuantityOfPurchase,po.`po_ying_money`as poYingMoney FROM commodity_list cl,purchase_order po WHERE cl.cl_name = po.po_cl_name")
+    List<Map<String,Object>> selectAllMap();
 }
+

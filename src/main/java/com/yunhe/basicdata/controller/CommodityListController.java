@@ -3,6 +3,7 @@ import com.yunhe.basicdata.entity.Commclass;
 import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.entity.WarehouseManagement;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
+import com.yunhe.cargomanagement.service.impl.PurchaseOrderServiceImpl;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -295,6 +296,8 @@ public class CommodityListController {
         output.close();
         return null;
     }
+
+
     @RequestMapping("/addcommlist")
     public ModelAndView addcomm() {
         return new ModelAndView("basicdata/addCommodityList");
@@ -302,5 +305,192 @@ public class CommodityListController {
     @RequestMapping("/getcommdityfenye")
     public ModelAndView selectfenye() {
         return new ModelAndView("basicdata/admincommodity-list");
+    }
+
+    /**
+     * <p>
+     *     进货报表   （勿删）
+     * </p>
+     * @param current 当前页
+     * @param size 每页条数
+     * @return 分页
+     */
+    @PostMapping("/selectListMap")
+    @ResponseBody
+    public Map selectListMap(int current, int size){
+        System.out.println("current:"+current+"size:"+size);
+        return commodityListService.selectListMap( current, size);
+    }
+
+    /**
+     *
+     * @return 跳转界面
+     */
+    @GetMapping("/zhuzahung")
+    public ModelAndView zhu(){
+        return new ModelAndView("/reportanalysis/zhuzhuangtu");
+    }
+
+
+    /**
+     * <P>
+     *      Excel导出
+     * </P>
+     * @param response 响应
+     * @return  Excel导出到本地
+     */
+    @RequestMapping("/expo")
+    public String createExcel(HttpServletResponse response) throws IOException {
+        //获取查询结果的数据,只要对其进行封装就行了
+        List<Map<String,Object>> com = commodityListService.selectAllMap();
+        //数据封装，这里的map之所以敢这样add是因为这里的add顺序和hql中的select字段顺序是一样的，总共就查询那么多字段
+        List<Map<String,Object>> solist = new ArrayList();
+
+        for(Map<String,Object> obj:com){
+            //每次循环都要重新new一个map，表示不同对象
+            Map<String,Object> map = new HashMap();
+            map.put("clNumber", obj.get("clNumber"));
+            map.put("clName",obj.get("clName"));
+            map.put("clUnit",obj.get("clUnit"));
+            map.put("clSpec",obj.get("clSpec"));
+            map.put("clPurPrice",obj.get("clPurPrice"));
+            map.put("clWhoPrice",obj.get("clWhoPrice"));
+            map.put("poQuantityOfPurchase",obj.get("poQuantityOfPurchase"));
+            map.put("poYingMoney",obj.get("poYingMoney"));
+            solist.add(map);
+        }
+
+        //创建HSSFWorkbook对象(excel的文档对象)
+        HSSFWorkbook wb = new HSSFWorkbook();
+        //建立新的sheet对象（excel的表单）
+        HSSFSheet sheet=wb.createSheet("报表");
+        //在sheet里创建第一行，参数为行索引(excel的行)，可以是0～65535之间的任何一个
+        HSSFRow row1=sheet.createRow(0);
+        //创建单元格（excel的单元格，参数为列索引，可以是0～255之间的任何一个
+        HSSFCell cell=row1.createCell(0);
+
+        // 1.生成字体对象
+        HSSFFont font = wb.createFont();
+        font.setFontHeightInPoints((short) 12);
+        font.setFontName("新宋体");
+
+        // 2.生成样式对象，这里的设置居中样式和版本有关，我用的poi用HSSFCellStyle.ALIGN_CENTER会报错，所以用下面的
+        HSSFCellStyle style = wb.createCellStyle();
+        //设置居中样式
+        /*style.setAlignment(HSSFCellStyle.ALIGN_CENTER);*/
+        // 调用字体样式对象
+        style.setFont(font);
+        style.setWrapText(true);
+        style.setAlignment(HorizontalAlignment.CENTER);//设置居中样式
+
+        // 3.单元格应用样式
+        cell.setCellStyle(style);
+
+        //设置单元格内容
+        cell.setCellValue("报表");
+        //合并单元格CellRangeAddress构造参数依次表示起始行，截至行，起始列， 截至列
+        sheet.addMergedRegion(new CellRangeAddress(0,0,0,9));
+
+        //在sheet里创建第二行
+        HSSFRow row2=sheet.createRow(1);
+
+        //创建单元格并设置单元格内容及样式
+        HSSFCell cell0=row2.createCell(0);
+        cell0.setCellStyle(style);
+        cell0.setCellValue("商品编号");
+
+        HSSFCell cell1=row2.createCell(1);
+        cell1.setCellStyle(style);
+        cell1.setCellValue("商品名称");
+
+        HSSFCell cell2=row2.createCell(2);
+        cell2.setCellStyle(style);
+        cell2.setCellValue("单位");
+
+        HSSFCell cell3=row2.createCell(3);
+        cell3.setCellStyle(style);
+        cell3.setCellValue("规格");
+
+        HSSFCell cell4=row2.createCell(4);
+        cell4.setCellStyle(style);
+        cell4.setCellValue("进货价格");
+
+        HSSFCell cell5=row2.createCell(5);
+        cell5.setCellStyle(style);
+        cell5.setCellValue("批发价");
+
+        HSSFCell cell6=row2.createCell(6);
+        cell6.setCellStyle(style);
+        cell6.setCellValue("进货量");
+
+        HSSFCell cell7=row2.createCell(7);
+        cell7.setCellStyle(style);
+        cell7.setCellValue("进货额");
+
+        //单元格宽度自适应
+        sheet.autoSizeColumn((short)3);
+        sheet.autoSizeColumn((short)4);
+        sheet.autoSizeColumn((short)5);
+        sheet.autoSizeColumn((short)6);
+        sheet.autoSizeColumn((short)7);
+      /*  sheet.autoSizeColumn((short)8);
+        sheet.autoSizeColumn((short)9);
+        sheet.autoSizeColumn((short)10);
+        sheet.autoSizeColumn((short)11);*/
+        //宽度自适应可自行选择自适应哪一行，这里写在前面的是适应第二行，写在后面的是适应第三行
+        for (int i = 0; i < solist.size(); i++) {
+            //单元格宽度自适应
+            sheet.autoSizeColumn((short)0);
+            sheet.autoSizeColumn((short)1);
+            sheet.autoSizeColumn((short)2);
+          /*  sheet.autoSizeColumn((short)3);
+            sheet.autoSizeColumn((short)4);*/
+            //从sheet第三行开始填充数据
+            HSSFRow rowx=sheet.createRow(i+2);
+            Map<String,Object> map = solist.get(i);
+            //这里的hospitalid,idnumber等都是前面定义的全局变量
+            HSSFCell cell00=rowx.createCell(0);
+            cell00.setCellStyle(style);
+            cell00.setCellValue((String) map.get("clNumber"));
+
+            HSSFCell cell01=rowx.createCell(1);
+            cell01.setCellStyle(style);
+            cell01.setCellValue((String) map.get("clName"));
+
+            HSSFCell cell02=rowx.createCell(2);
+            cell02.setCellStyle(style);
+            cell02.setCellValue((String) map.get("clUnit"));
+
+            HSSFCell cell03=rowx.createCell(3);
+            cell03.setCellStyle(style);
+            cell03.setCellValue((String) map.get("clSpec"));
+
+            HSSFCell cell04=rowx.createCell(4);
+            cell04.setCellStyle(style);
+            cell04.setCellValue((String) map.get("clPurPrice"));
+
+            HSSFCell cell05=rowx.createCell(5);
+            cell05.setCellStyle(style);
+            cell05.setCellValue((String) map.get("clWhoPrice"));
+
+
+            HSSFCell cell06=rowx.createCell(6);
+            cell06.setCellStyle(style);
+            cell06.setCellValue((int) map.get("poQuantityOfPurchase"));
+
+            HSSFCell cell07=rowx.createCell(7);
+            cell07.setCellStyle(style);
+            cell07.setCellValue((Double) map.get("poYingMoney"));
+
+        }
+        //输出Excel文件
+        OutputStream output=response.getOutputStream();
+        response.reset();
+        //文件名这里可以改
+        response.setHeader("Content-disposition", "attachment; filename=Purchasereport.xls");
+        response.setContentType("application/excel");
+        wb.write(output);
+        output.close();
+        return "SUCCESS";
     }
 }
