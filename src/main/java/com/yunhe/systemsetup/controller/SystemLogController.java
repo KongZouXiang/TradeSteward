@@ -40,7 +40,7 @@ public class SystemLogController {
      * @param modelAndView
      * @return
      */
-    @WebLog("查看系统日志")
+    @WebLog("进入系统日志")
     @GetMapping("/toSystemLog")
     public ModelAndView toSystemLog(ModelAndView modelAndView) {
         modelAndView.setViewName("SystemLog");
@@ -54,6 +54,7 @@ public class SystemLogController {
      *
      * @return 所有的系统日志
      */
+    @WebLog("查看系统日志")
     @GetMapping("/selectAllSystemLog")
     public IPage<SystemLog> selectAllSystemLog(Integer current, Integer size, SystemLog systemLog) {
         System.out.println(size);
