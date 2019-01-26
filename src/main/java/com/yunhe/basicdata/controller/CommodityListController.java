@@ -4,10 +4,10 @@ import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.entity.WarehouseManagement;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -88,6 +88,18 @@ public class CommodityListController {
         mv.addObject("commclass",commclass);
        mv.setViewName("basicdata/editCommodity");
         return mv;
+    }
+
+    /**
+     * 根据id查询所有的商品.刘延琦2019-1-23 16:10:22
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/selectcommdityId")
+    public CommodityList selectcommdityId(@RequestParam("id") int id) {
+
+        CommodityList commodityListid = commodityListService.selectCommById(id);
+        return commodityListid;
     }
     /**
      * 更改商品的信息

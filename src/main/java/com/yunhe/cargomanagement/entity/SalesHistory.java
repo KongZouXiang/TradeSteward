@@ -1,6 +1,7 @@
 package com.yunhe.cargomanagement.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -162,5 +163,5 @@ public class SalesHistory implements Serializable {
     @TableField(value = "sh_remark")
     private String shRemark;
 
-
+    private List<OrderConnectComm> orderConnectComms;
 }

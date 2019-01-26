@@ -1,0 +1,130 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport"
+		  content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+	<meta http-equiv="Cache-Control" content="no-siteapp"/>
+	<link rel="Bookmark" href="/favicon.ico">
+	<link rel="Shortcut Icon" href="/favicon.ico"/>
+	<script type="text/javascript" src="/lib/html5shiv.js"></script>
+	<script type="text/javascript" src="/lib/respond.min.js"></script>
+	<script type="text/javascript" src="/js/vue/vue.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css"/>
+	<link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+	<link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin"/>
+	<link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css"/>
+	<script type="text/javascript" src="/lib/respond.min.js"></script>
+	<!--<script>DD_belatedPNG.fix('*');</script>-->
+	<title>客户列表</title>
+</head>
+<body>
+<div class="page-container">
+	<div class="text-c">
+		<input type="text" class="input-text" style="width:250px" placeholder="输入客户编号、客户名称" id="poSupName" name="">
+		<button type="button" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜索
+		</button>
+	</div>
+	<table class="table table-border table-bordered table-bg" id="app">
+		<thead>
+		<tr class="text-c">
+			<th width="20">ID</th>
+			<th width="20">操作</th>
+			<th width="80">客户编号</th>
+			<th width="80">客户名称</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr class="text-c" v-for="(item,index) in result">
+			<td>{{index+1}}</td>
+			<td class="td-manage">
+				<a style="text-decoration:none" class="ml-5" @click="editEvent(item.cusCompname)" href="javascript:;" title="选择">
+					<i class="Hui-iconfont">&#xe6a7;</i>
+				</a>
+			</td>
+			<td>{{item.cusNumber}}</td>
+			<td>{{item.cusCompname}}</td>
+		</tr>
+		</tbody>
+	</table>
+	<div id="pagenav" style="text-align: center;position:absolute;margin-top:150px;left:0;right:0"></div>
+</div>
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            result: []
+        }
+    });
+    var getPurchasePageList = function (curr) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/customermanagement/customer/selectPage',
+            data: {
+                current: curr || 1,
+                size: 5,
+                cusCompname:$("#poSupName").val(),
+                cusTele:$("#poSupName").val(),
+                cusNumber:$("#poSupName").val(),
+            },
+            success: function (msg) {
+                app.result = msg.records;
+                laypage({
+                    cont: 'pagenav',
+                    pages: msg.pages,
+                    first: '首页',
+                    last: '尾页',
+                    curr: curr || 1,
+                    jump: function (obj, first) {
+                        //触发分页后的回调
+                        if (!first) {     //点击跳页触发函数自身，并传递当前页：obj.curr
+                            getPurchasePageList(obj.curr);
+                        }
+                    }
+                });
+            }
+        });
+    };
+    getPurchasePageList();
+
+    /*搜索*/
+    $("#findempl").click(function () {
+        getPurchasePageList();
+    });
+    var a  =1;
+    function geturl() {
+		return a;
+    }
+    var editEvent = function (cusCompname) {
+        alert(cusCompname);
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url:'/billManagement/fund-client-debt/selectIdFcdExit',
+			data:{
+                fcdName:cusCompname
+			},
+            success: function (msg) {
+             parent.$("#customer").val(msg.fcdName);
+             parent.$("#fcdReceivable").val(msg.fcdReceivable);
+             var index = parent.layer.getFrameIndex(window.name);
+             parent.layer.close(index);
+
+            }
+        });
+    }
+
+</script>
+</body>
+</html>
