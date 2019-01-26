@@ -150,7 +150,7 @@ public class SalesOrderHistoryController {
         orderConnectComm.setSellOrderNum(id);
         orderConnectCommService.updateSales(orderConnectComm);
 
-/*        RunningAccounts runningAccounts1 = runningAccountsService.selectRunningMaxIdMoney();
+        RunningAccounts runningAccounts1 = runningAccountsService.selectRunningMaxIdMoney();
         RunningAccounts runningAccounts = new RunningAccounts();
         runningAccounts.setRaNumList(salesHistory.getShConnect());
         runningAccounts.setRaTime(DateUtil.todayDate());
@@ -161,7 +161,7 @@ public class SalesOrderHistoryController {
         runningAccounts.setRaIncome(salesHistory.getShMoney());
         runningAccounts.setRaOutcome(0.0);
         runningAccounts.setRaCurrentBalance(runningAccounts1.getRaCurrentBalance()+salesHistory.getShMoney());
-        runningAccountsService.insertRunningAccountsOne(runningAccounts);*/
+        runningAccountsService.insertRunningAccountsOne(runningAccounts);
         return "true";
     }
     public int insertSale(SalesOrderHistory sa){

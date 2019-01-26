@@ -43,17 +43,23 @@ public class SalesReturnHistoryController {
     public ModelAndView edit(int id, HttpSession httpSessionsion){
         SalesReturnHistory salesReturnHistory = salesReturnHistoryService.selectById(id);
         httpSessionsion.setAttribute("sales",salesReturnHistory);
-        return new ModelAndView("/cargomanagement/salesOrderHistory-detail");
+        return new ModelAndView("/cargomanagement/salesReturnHistory-detail");
     }
 
+    /**
+     * detail页面的商品详情
+     * @param id
+     * @return
+     */
     @RequestMapping("/detailList")
     public List<OrderConnectComm> detailList(int id){
         SalesReturnHistory salesReturnHistory = salesReturnHistoryService.selectById(id);
         String srhNumber = salesReturnHistory.getSrhNumber();
         SalesHistory salesHistory = new SalesHistory();
         salesHistory.setShNumber(srhNumber);
-        salesHistoryService.selectByNumber(salesHistory);
-        return salesHistoryService.detailList(id);
+        SalesHistory salesHistory1 = salesHistoryService.selectByNumber(salesHistory);
+        Integer id1 = salesHistory1.getId();
+        return salesHistoryService.detailList(id1);
     }
 
     @RequestMapping("/deleteSalesReturnHistory")

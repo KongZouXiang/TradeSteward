@@ -76,13 +76,13 @@
                     <td><input type="checkbox" id="box" :value="item.id" name=""></td>
                     <td>{{index+1}}</td>
                     <td class="td-manage">
-                        <a title="详情" href="#" class="ml-5" style="text-decoration:none">
+                        <a title="详情" href="#" class="ml-5" @click="detailSale(item.id)" style="text-decoration:none">
                             <i class="icon Hui-iconfont" id="sta">&#xe627;</i>
                         </a>
                         <a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none">
                             <i class="Hui-iconfont">&#xe6e2;</i>
                         </a>
-                        <a title="出库" href="#" class="ml-5" style="text-decoration:none">
+                        <a title="出库" href="#"  @Click="updateOut(item.id)" class="ml-5" style="text-decoration:none">
                             <i class="icon Hui-iconfont" id="111">&#xe627;</i>
                         </a>
                     </td>
@@ -149,7 +149,7 @@
                     <td><input type="checkbox" id="box" :value="item.id" name=""></td>
                     <td>{{index+1}}</td>
                     <td class="td-manage">
-                        <a title="详情" href="#" class="ml-5" style="text-decoration:none">
+                        <a title="详情" href="#" class="ml-5"  @click="detailSale(item.id)" style="text-decoration:none">
                             <i class="icon Hui-iconfont" id="sta1">&#xe627;</i>
                         </a>
                     </td>
@@ -290,11 +290,14 @@
     $("#findempl").on('click', function () {
         getPurchasePageList();
     });
+    $("#findempl1").on('click', function () {
+        getPurchasePageList2();
+    });
     var getPurchasePageList2 = function (curr) {
         $.ajax({
             type:'post',
             dataType:'json',
-            url:'/cargomanagement/wait-out-warehouse/quertLikeListWaitOutWarehouse',
+            url:'/cargomanagement/wait-out-warehouse/quertLikeListWaitOutWarehouse2',
             data:{
                 pageNum: curr || 1,
                 pageSize:4,
@@ -345,11 +348,33 @@
         var index = layer.open({
             type: 2,
             title: '详细',
-            content: '/cargomanagement/sales-history/edit?id='+id,
+            content: '/cargomanagement/wait-out-warehouse/edit?id='+id,
         });
         layer.full(index);
     };
 
+    var updateOut = function (id) {
+        layer.confirm('你确定要入库吗？', {
+            btn: ['是', '否']
+        },
+            function () {
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '/cargomanagement/wait-out-warehouse/updateOut',
+                data: {
+                    id: id
+                },
+                success: function (msg) {
+                   if(msg){
+                       layer.msg('成功入库', {icon: 1});
+
+                   }
+                    getWarehouseReceiptList();
+                }
+            })
+        });
+    };
 </script>
 </body>
 </html>

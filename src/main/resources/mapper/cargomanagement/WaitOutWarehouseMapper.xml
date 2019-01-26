@@ -5,11 +5,18 @@
         id,wo_date,wo_number,wo_type,wo_company,wo_house,wo_goods,wo_count
         wo_create_date,wo_hander,wo_maker,wo_status
     </sql>
+    <update id="updateOutById">
+        update from wait_out_warehouse set wo_status =#{woStatus} where id=#{id}
+    </update>
     <select id="queryLikeWaitOutWarehouse" resultType="com.yunhe.cargomanagement.entity.WaitOutWarehouse">
         select <include refid="Cols"/>
         from wait_out_warehouse
         where wo_company like concat('%',#{waitOutWarehouse.woCompany},'%')
         and   wo_number like concat('%',#{waitOutWarehouse.woNumber},'%')
+        and   wo_status like concat('%',#{waitOutWarehouse.woStatus},'%')
+    </select>
+    <select id="selectById" resultType="com.yunhe.cargomanagement.entity.WaitOutWarehouse">
+        select <include refid="Cols"/> from wait_out_warehouse where id=#{id}
     </select>
 
 </mapper>

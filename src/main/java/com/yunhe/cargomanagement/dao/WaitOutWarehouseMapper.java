@@ -17,4 +17,8 @@ import java.util.List;
 public interface WaitOutWarehouseMapper extends BaseMapper<WaitOutWarehouse> {
 
     List<WaitOutWarehouse> queryLikeWaitOutWarehouse(Page page,WaitOutWarehouse waitOutWarehouse);
+
+    WaitOutWarehouse selectById(int id);
+
+    int updateOutById(int id ,WaitOutWarehouse waitOutWarehouse);
 }
