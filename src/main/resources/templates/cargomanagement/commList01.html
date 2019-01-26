@@ -27,7 +27,7 @@
 		<input type="text" class="input-text" style="width:250px" placeholder="输入客户编号、客户名称" id="poSupName" name="">
 		<button type="button" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜索
 		</button>
-		<input type="text" hidden="hidden" id="id" th:value="${id}">
+		<input type="text" id="quzhi" hidden="hidden" th:value="${session.message}">
 	</div>
 	<table class="table table-border table-bordered table-bg" id="app">
 		<thead>
@@ -114,7 +114,8 @@
                 id:id
 			},
             success: function (msg) {
-                var inx= $("#id").val();
+                var inx= $("#quzhi").val();
+                alert(inx);
              	parent.$("#soClient11"+inx).val(msg.clName);
                 parent.$("#clNumber"+inx).html(msg.clNumber);
                 parent.$("#clTagPrise"+inx).html(msg.clTagPrise);

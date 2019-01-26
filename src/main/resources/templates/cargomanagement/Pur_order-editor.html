@@ -25,7 +25,7 @@
 </head>
 <body>
 <div id="app">
-    <form class="form form-horizontal" id="form-article-add" action="/cargomanagement/purchase-order/addPurchaseGoTo">
+    <form class="form form-horizontal" id="form-article-add" action="/cargomanagement/purchase-order/updatePurchaseById">
     <article class="page-container">
         <h1 style="text-align: center">商品销售订单</h1>
         <div> <table class="table table-border table-bordered table-bg">
@@ -42,8 +42,8 @@
             </thead>
             <tbody>
             <tr class="text-c" >
-                <td><input type="text" class="input-text" th:value="${session.purchase.poSupName}" id="soClient" ></td>
-                <td ><input type="text" class="input-text" th:value="${session.purchase.poNumber}"  id="soOrderNum"></td>
+                <td><input type="text" class="input-text" th:value="${session.purchase.poSupName}" id="poSupName" name="poSupName"></td>
+                <td ><input type="text" class="input-text" th:value="${session.purchase.poNumber}"  id="poNumber" name="poNumber"></td>
                 <td ><select  class="select" name="poExperiencedPerson" required="required">
                     <option value="老板">老板</option>
                     <option value="财务">财务</option>
@@ -57,7 +57,7 @@
                            onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'commentdatemin\')}' })"
                            id="commentdatemax" name="commentdatemax" class="input-text Wdate">
                 </td>
-                <input type="text" hidden="hidden" th:value="${session.purchase.id}" id="id">
+                <input type="text" hidden="hidden" th:value="${session.purchase.id}" id="id" name="id">
             </tr>
             </tbody>
         </table>
@@ -83,11 +83,11 @@
                 <td><a title='清除' href='javascript:;' class='ml-5' style='text-decoration:none'><i
                         class='Hui-iconfont'>&#xe6a6;</i></a>
                 </td>
-                <td><input type="text" class="input-text radius"  :value="item.commodityList.clName" :id="getId(index)" @click="soClient11(index)" name="clName">
+                <td><input type="text" class="input-text radius"  :value="item.commodityList.clName" :id="getId(index)" @click="soClient11(index)" name="poClName">
                     <input type="text" hidden="hidden"  :value="item.commodityList.id" name="commId" :id="getCommId(index)">
                     <input type="text" hidden="hidden"  :value="item.commodityList.id" name="commId_">
                 </td>
-                <td :id="getClNumber(index)" >{{item.commodityList.clNumber}}</td>
+                <td :id="getClNumber(index)">{{item.commodityList.clNumber}}</td>
                 <td></td>
                 <td><input type="text" class="input-text" placeholder="" id="QuantityOfPurchase"
                            name="QuantityOfPurchase" required="required" value="1"></td>
@@ -185,50 +185,6 @@
     };
     getCommodityList();
 
-    /*
-    var submitAdd = function () {
-        var clName= new Array();
-        $('input[name="clName"]').each(function(){
-            clName.push(this.value);
-        });
-        var commId = new Array();
-        $('input[name="commId"]').each(function(){
-            commId.push(this.value);
-        });
-        var commId_ = new Array();
-        $('input[name="commId_"]').each(function(){
-            commId_.push(this.value);
-        });
-        var orderCount= new Array();
-        $('input[name="orderCount"]').each(function(){
-            orderCount.push(this.value);
-        });
-        $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            traditional:true,
-            url:'/cargomanagement/sales-order-history/update',
-
-            data:{
-                soClient: $("#soClient").val(),
-                soStatus: $("#soStatus").val(),
-                soOrderNum:$("#soOrderNum").val(),
-                soHander:$("#soHander").val(),
-                soDate: $("#soDate").val(),
-                id: $("#idCloud").val(),
-                clName:clName,
-                commId:commId,
-                commId1:commId_,
-                orderCount:orderCount
-            },
-            success:function (msg) {
-                if(msg){
-                    layer.msg('成功',{icon:1});
-                }
-            }
-        })
-    };
-    */
     var soClient11=function (index) {
         layer.open({
             type:2,

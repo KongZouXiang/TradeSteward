@@ -100,7 +100,8 @@ public class PurchaseOrderController {
      */
     @RequestMapping("/commList01")
     public ModelAndView commListOne(int id,HttpSession session){
-        session.setAttribute("id",id);
+        System.out.println(id);
+        session.setAttribute("message",id);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("/cargomanagement/commList01");
         return mv;
@@ -187,6 +188,8 @@ public class PurchaseOrderController {
         System.out.println(purchaseByPoNumber);
         return purchaseByPoNumber;
     }
+
+
 
     /**
      * 增加进货订单历史

@@ -70,7 +70,7 @@ public class SystemLogController {
      * @return 删除日志的数量
      */
     @WebLog("删除了一条日志")
-    @GetMapping("/selectAllSystemLog")
+    @GetMapping("/deleteByIdSystemLog")
     public String deleteByIdSystemLog(Integer id) {
         return RUDResult.ConvertString(systemLogService.deleteByIdSystemLog(id), ResultRule.DELETE);
     }

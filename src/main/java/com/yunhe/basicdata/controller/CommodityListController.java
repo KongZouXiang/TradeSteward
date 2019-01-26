@@ -97,7 +97,6 @@ public class CommodityListController {
      */
     @GetMapping(value = "/selectcommdityId")
     public CommodityList selectcommdityId(@RequestParam("id") int id) {
-
         CommodityList commodityListid = commodityListService.selectCommById(id);
         return commodityListid;
     }
