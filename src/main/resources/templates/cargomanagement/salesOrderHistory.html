@@ -39,6 +39,10 @@
         <a href="javascript:;" onclick="Excel_out()"
                class="btn btn-primary radius">
         <i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
+
+            <a href="javascript:;" onclick="shenhe()"
+               class="btn btn-primary radius">
+        <i class="Hui-iconfont">&#xe644;</i> 审核</a>
     </span>
 
         <span class="r">共有数据：<strong id="strong"></strong> 条</span></div>
@@ -160,6 +164,7 @@
                         console.log(msg);
                         if (msg){
                             layer.msg('成功删除',{icon:5});
+                            getPurchasePageList();
                         }
                     }
                 })

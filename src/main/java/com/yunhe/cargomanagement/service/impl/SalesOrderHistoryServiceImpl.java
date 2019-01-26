@@ -44,7 +44,7 @@ public class SalesOrderHistoryServiceImpl extends ServiceImpl<SalesOrderHistoryM
     @Override
     public int updateSale(SalesOrderHistory salesOrderHistory) {
 
-        return salesOrderHistoryMapper.updateSale(salesOrderHistory);
+        return salesOrderHistoryMapper.updateById(salesOrderHistory);
     }
 
     @Override
