@@ -198,7 +198,6 @@ public class WarehouseManagementController {
      * @param id
      * @return 0或1
      */
-
     @WebLog("根据id启用仓库")
     @RequestMapping("/updatestateqi")
     public Integer updatestateqi(Integer id){

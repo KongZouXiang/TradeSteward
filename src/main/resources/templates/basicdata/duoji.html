@@ -24,18 +24,25 @@
     <script src="/jquery.min.js"></script>
 </head>
 <body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 基础资料 <span
+        class="c-gray en">&gt;</span> 商品分类 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+                                              href="javascript:location.replace(location.href);" title="刷新"><i
+        class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="dtree" id="dtree_div">
-    <p><a href="javascript:  d.closeAll();">打开</a> | <a href="javascript: d.openAll();">关闭</a></p>
-    <input id="dosearch_text" type="text"/>
-    <input id="dosearch" type="button" value="查询" onClick="nodeSearching() "/>
+
+    <p>
+        <a href="javascript:  d.closeAll();" class="btn btn-success">打开</a> | <a href="javascript: d.openAll();" class="btn btn-success">关闭</a>
+    </p>
+    <input id="dosearch_text"  type="text" class="input-text" style="width:250px" />
+    <input id="dosearch" type="button" class="btn btn-success" value="查询" onClick="nodeSearching() "/>
     <div class="selectorResult">
         增加分类：<br>
-        <input type="text" id="selectfulei" placeholder="您想把该分类添加到哪个分类下？">
+        <input type="text" class="input-text" style="width:250px" id="selectfulei" placeholder="您想把该分类添加到哪个分类下？">
         <span id="ss"></span>
         <br>
-        <input type="text" id="addclass" placeholder="请输入要增加的分类名">
+        <input type="text" class="input-text" style="width:250px" id="addclass" placeholder="请输入要增加的分类名">
         <br>
-        <input type="button" id="tijiao" value="提交">
+        <input type="button" class="btn btn-success"  id="tijiao" value="提交">
         <script type="text/javascript">
             var ss=document.getElementById("ss");
             var ccFuji;
