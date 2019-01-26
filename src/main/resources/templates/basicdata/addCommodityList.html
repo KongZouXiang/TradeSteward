@@ -10,8 +10,8 @@
     <script type="text/javascript" src="http://www.sz886.com/js/jquery-1.9.1.min.js"></script>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/jquery/jquery.min.js"></script>
-    <script src="/jquery/validation.1.14.0/jquery.validate.js/jquery.validate.min.js"></script>
-    <script src="/jquery/validation.1.14.0/messages_zh.js/messages_zh.min.js"></script>
+  <!-- <script src="/jquery/validation.1.14.0/jquery.validate.js/jquery.validate.min.js"></script>
+    <script src="/jquery/validation.1.14.0/messages_zh.js/messages_zh.min.js"></script>-->
     <script type="text/javascript">
         //返回单个单位
      function returnSingleUnit() {
@@ -35,7 +35,7 @@
     </script>
 </head>
 <body>
-<div class="container">
+<div class="container" id="app">
     <form id="addCommdityForm">
     <br/>
        <div style="width: auto;height: auto">
@@ -85,8 +85,9 @@
                         <option value="" onclick="selectClick(this)">支</option>
                     </select>
                 <td>
-                    <input class="free" id="enableMultiUnit" name="" type="checkbox" value="" onclick="enableMultiUnit(this)">&nbsp;&nbsp;
-                    <label class="free" for="enableMultiUnit">多单位支持</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <!--  <input class="free" id="enableMultiUnit" name="" type="checkbox" value="" onclick="enableMultiUnit(this)">&nbsp;&nbsp;-->
+                    <input id="enableMultiUnit" name="" type="checkbox" value="多单位支持" onclick="enableMultiUnit(this)" >
+                    <!--<label class="free" for="enableMultiUnit">多单位支持</label>&nbsp;&nbsp;&nbsp;&nbsp;-->
                 </td>
             </tr><br><br>
              规格&nbsp;&nbsp;&nbsp;<input type="text" id="guige" name="guige" placeholder="选填，如'红色长款'"><br><br>
@@ -165,8 +166,8 @@
                         <td width="100" align="right" class="font14"></td>
                         <td width="200">
                             <a href="javascript:;" onclick="addProperties()" class="button" style="display: none">增加属性</a>&nbsp;&nbsp;
-                            <input id="doNotEnableMultiProperties" name="" type="checkbox" value="" onclick="enableMultProperties(this)" checked>
-                            <label for="doNotEnableMultiProperties">多属性支持</label>
+                         <input id="doNotEnableMultiProperties" name="" type="checkbox" value="" onclick="enableMultProperties(this)" checked>
+                           <label for="doNotEnableMultiProperties">多属性支持</label>
                         </td>
                         <td></td>
                     </tr>
@@ -239,24 +240,30 @@
     </form>
 </div>
 <script>
-    var addCommity=function () {
-        if(!check().form()){
-            return ;
+/*    var app=new Vue({
+        el:'#app',
+        data:{
+            result:[]
         }
+    });*/
+    var addCommity=function () {
+     /* if(!check().form()){
+            return ;
+        }*/
         $.ajax({
             type:"POST",
             dataType:"json",
-            url:"/../basicdata/commodity-list/addpage",
+            url:"/basicdata/commodity-list/addpage",
             data:{
                 tiaoxingma:$("#tiaoxingma").val(),
                 bianhao:$("#bianhao").val(),
                 mingcheng:$("#mingcheng").val(),
-                fenlei:$("fenlei").val(),
-                danwei:$("danwei").val(),
-                guige:$("guige").val(),
-                cankaojinhuo:$("cankaojinhuo").val(),
-                pifajia:$("pifajia").val(),
-                lingshoujia:$("lingshoujia").val(),
+                fenlei:$("#fenlei").val(),
+                danwei:$("#danwei").val(),
+                guige:$("#guige").val(),
+                cankaojinhuo:$("#cankaojinhuo").val(),
+                pifajia:$("#pifajia").val(),
+                lingshoujia:$("#lingshoujia").val(),
             },
             success:function (msg) {
                 $("#CancelBtn").click();
@@ -268,13 +275,13 @@
     });
   $('#CancelBtn').on('click',function () {
         var index=parent.layer.getFrameIndex(window.name);
-        parent.getUserPageList();
+        parent.getCommdityPageList();
         parent.layer.close(index);
     });
-    function check() {
+    /*function check() {
         return $("#addCommdityForm").validate({
             rules:{
-                tiaoxingma: {
+               tiaoxingma: {
                     required: true
                 },
                 bianhao: {
@@ -305,7 +312,7 @@
         });
 
     }
-
+*/
 </script>
 
 <script  type="text/javascript">

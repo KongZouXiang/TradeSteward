@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>编辑账户</title>
@@ -13,76 +14,54 @@
     <script src="/js/jquery.validation/1.14.0/messages_zh.min.js"></script>
 </head>
 <body>
-<div class="container"  id="app">
     <form id="updateAccountForm">
         <br/>
-        <tr v-for="(item,index) in result">
         <div >
             <label for="zhanghu">账户名称：</label>
-            <input type="text" class="form-control"  id="zhanghu" name="zhanghu" value={{item.saName}} placeholder="输入账户名称">
-            {{item.saName}}
+            <input type="text" class="form-control"  id="zhanghu" name="zhanghu" th:value="${sellaccount.saName}">
+            <input type="hidden" id="ids" th:value="${sellaccount.id}">
         </div>
         <div class="form-group">
             <label for="sabank">开户银行：</label>
-            <input type="text" class="form-control" id="sabank" name="sabank" value="${data.saBank}" placeholder="开户银行">
+            <input type="text" class="form-control" id="sabank" name="sabank" th:value="${sellaccount.saBank}" >
         </div>
         <div class="form-group">
             <label for="sabanknumber">银行账号：</label>
-            <input type="text" class="form-control" id="sabanknumber" name="sabanknumber" value=data.saBankNumber placeholder="银行账号">
+            <input type="text" class="form-control" id="sabanknumber" name="sabanknumber" th:value="${sellaccount.saBankNumber}" >
         </div>
         <div class="form-group">
             <label for="beginbalance">期初余额：</label>
-            <input type="text" class="form-control" id="beginbalance" name="beginbalance"  value="${data.saBeginBalance}" placeholder="期初余额">
+            <input type="text" class="form-control" id="beginbalance" name="beginbalance" th:value="${sellaccount.saBeginBalance}" >
         </div>
         <div class="form-group">
             <label for="zhangbalance">账户余额：</label>
-            <input type="text" class="form-control" id="zhangbalance" name="zhangbalance"  value="{{data.saBalance}}" placeholder="账户余额">
+            <input type="text" class="form-control" id="zhangbalance" name="zhangbalance"  th:value="${sellaccount.saBalance}"  >
         </div>
         <div class="form-group">
             <label for="zhangstate">状态：</label>
-            <input type="text" class="form-control" id="zhangstate" name="zhangstate"  value="${data.saState}" placeholder="状态">
-        </div>
-        <div class="form-group">
-            <label for="remark">备注：</label>
-            <textarea class="form-control" id="remark" name="remark" ></textarea>
+            <input type="text" class="form-control" id="zhangstate" name="zhangstate"  th:value="${sellaccount.saState}" >
         </div>
         <div class="form-group">
             <button type="button" id="updateBtn" class="btn btn-success">修改</button>
             <button type="button" id="cancelBtn" class="btn btn-default">取消</button>
         </div>
-        </tr>
-    </form>
-</div>
-<script>
-    var app = new Vue({
-        el:'#app',
-        data:{
-            result:[]
-        }
-    });
-    var updataAccountList = function(curr) {
-        $.ajax({
-            type:'POST',
-            dataType:'json',
-            url:'/basicdata/settlement-account/getrAccounlist',
-            data:{
-            },
-            success:function(msg){
-                app.result = msg.settlementAccountid;
 
-            }
-        });
-    }
+    </form>
+
+<script>
+
+
+
     var updateAccount = function () {
-        if (!check().form()) {
+        /*if (!check().form()) {
             return;
-        }
+        }*/
         $.ajax({
-            type: 'POST',
+            type: 'GET',
             dataType: 'json',
             url: "/basicdata/settlement-account/updateAccount",
             data: {
-                id:{${data.id}},
+               id:$("#ids").val(),
                 zhanghu: $("#zhanghu").val(),
                 sabank: $("#sabank").val(),
                 sabanknumber: $("#sabanknumber").val(),
@@ -91,8 +70,11 @@
                 zhangstate: $("#zhangstate").val()
             },
             success: function () {
-                $("#cancelBtn").click();
-            }
+
+
+
+            },
+
         });
     }
 
@@ -106,8 +88,6 @@
         parent.layer.close(index);
 
     });
-
-
     function check() {
         return $("#updateAccountForm").validate({
             rules: {

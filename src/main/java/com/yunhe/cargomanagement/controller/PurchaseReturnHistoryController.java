@@ -4,7 +4,6 @@ package com.yunhe.cargomanagement.controller;
 import com.yunhe.cargomanagement.entity.PurchaseReturnHistory;
 import com.yunhe.cargomanagement.service.IPurchaseReturnHistoryService;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,6 +25,12 @@ public class PurchaseReturnHistoryController {
     @Resource
     private IPurchaseReturnHistoryService purchaseReturnHistoryService;
 
+    @RequestMapping("/purchaseReturnHistoryList")
+    public ModelAndView getGoToPurchaseHistory(){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("cargomanagement/purreturnhistory-list");
+        return mv;
+    }
 
 
     /**
@@ -38,8 +43,9 @@ public class PurchaseReturnHistoryController {
     @RequestMapping("/selectPurchaseReturnHistoryPage")
     public Map selectPurchaseReturnHistoryPage(int pageNum, int pageSize, PurchaseReturnHistory purchaseReturnHistory){
         System.out.println("****"+purchaseReturnHistory.getPrhNumber());
+        System.out.println("********"+pageNum);
+        System.out.println("**********"+pageSize);
         Map purchaseReturnHistoryPage = purchaseReturnHistoryService.selectPurchaseReturnHistoryPage(pageNum, pageSize, purchaseReturnHistory);
-        System.out.println("//"+purchaseReturnHistoryPage);
         return purchaseReturnHistoryPage;
     }
 
@@ -64,6 +70,8 @@ public class PurchaseReturnHistoryController {
         System.out.println("*****"+purchaseReturnHistory.getId());
         return purchaseReturnHistoryService.updatePurchaseReturnHistory(purchaseReturnHistory);
     }
+
+
 
     /**
      * 根据id删除进货退货历史

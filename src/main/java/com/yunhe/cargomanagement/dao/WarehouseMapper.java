@@ -1,8 +1,8 @@
 package com.yunhe.cargomanagement.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.cargomanagement.entity.Warehouse;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,11 +25,10 @@ import java.util.Map;
          *  查询所有库存信息并分页
          * </p>
          *
-         * @param page      实体类
-         * @param warehouse 实体类
+         * @param page
          * @return list集合
          */
-        List<Warehouse> selectAll(Page page, Warehouse warehouse);
+        List<Warehouse> selectAll(Page page);
 
         /**
          * <p>
@@ -49,5 +48,10 @@ import java.util.Map;
          * @return list集合
          */
         List<Warehouse> selectAll();
+
+
+
+
+
 
 }

@@ -1,16 +1,15 @@
 package com.yunhe.cargomanagement.entity;
 
-import java.io.Serializable;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.yunhe.customermanagement.entity.Supplier;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -53,7 +52,7 @@ public class PurchaseOrder implements Serializable {
      * 处理状态
      */
     @TableField(value = "po_state")
-    private Integer poState;
+    private String poState;
 
     /**
      * 审核人

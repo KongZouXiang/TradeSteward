@@ -1,8 +1,9 @@
 package com.yunhe.basicdata.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.basicdata.entity.WarehouseManagement;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
 import java.util.List;
 
 /**
@@ -22,6 +23,20 @@ public interface WarehouseManagementMapper extends BaseMapper<WarehouseManagemen
      * @return 仓库列表数据
      */
     List<WarehouseManagement> selectWareList(String data,Page page);
+
+    /**
+     * 根据ID禁用仓库
+     * @param id
+     * @return
+     */
+    Integer updatestatejin(int id);
+    /**
+     * 根据ID启用仓库
+     * @param id
+     * @return
+     */
+    Integer updatestateqi(int id);
+
 
 
 }

@@ -1,8 +1,8 @@
 package com.yunhe.cargomanagement.service;
 
 
-import com.yunhe.cargomanagement.entity.PurchaseOrder;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yunhe.cargomanagement.entity.PurchaseOrder;
 
 import java.io.Serializable;
 import java.util.List;
@@ -66,6 +66,13 @@ public interface IPurchaseOrderService extends IService<PurchaseOrder> {
      */
     List<PurchaseOrder> getPurchaseById(Integer id);
 
+    /**
+     * 审核进货订单历史
+     * @param purchaseOrder 订单状态
+     * @return int
+     */
+    int updateHistState(PurchaseOrder purchaseOrder);
 
+    int updateHistStateByid(PurchaseOrder purchaseOrder);
 
 }

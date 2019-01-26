@@ -1,8 +1,8 @@
 package com.yunhe.billmanagement.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.billmanagement.entity.FinanceOrder;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,6 +27,22 @@ public interface FinanceOrderMapper extends BaseMapper<FinanceOrder> {
      * @param financeOrder 模糊查询的参数存在financeOrder中
      * @return 日常收支表：分页的结果集
      */
-    List<FinanceOrder> selectFoPage(Page page,FinanceOrder financeOrder);
+    List<FinanceOrder> selectFoPage(Page page, FinanceOrder financeOrder);
 
+    /**
+     * <P>
+     *     自动显示编码的SQL语句
+     * </P>
+     * @return 当前所有数据中最大ID
+     */
+    int maxId();
+
+    /**
+     * <P>
+     *      修改订单编号
+     * </P>
+     * @param map 需要修改的参数信息
+     * @return 修改是否成功
+     */
+    int gaiFo(Map<String, Object> map);
 }

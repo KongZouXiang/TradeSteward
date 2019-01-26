@@ -1,9 +1,8 @@
 package com.yunhe.basicdata.service;
 
-import com.yunhe.basicdata.entity.CommodityList;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yunhe.basicdata.entity.CommodityList;
 import org.springframework.stereotype.Repository;
-
 
 import java.util.List;
 import java.util.Map;
@@ -65,5 +64,9 @@ public interface ICommodityListService extends IService<CommodityList> {
      */
     List<CommodityList> selectCommstlist(String data);
 
-
+    /**
+     *
+     * @return
+     */
+    List<CommodityList> ExportExcel();
 }

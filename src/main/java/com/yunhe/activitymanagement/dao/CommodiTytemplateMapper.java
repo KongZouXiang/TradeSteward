@@ -1,9 +1,8 @@
 package com.yunhe.activitymanagement.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.activitymanagement.entity.CommodiTytemplate;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.yunhe.basicdata.entity.CommodityList;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,20 +28,7 @@ public interface CommodiTytemplateMapper extends BaseMapper<CommodiTytemplate> {
      */
     List<CommodiTytemplate> selectAllPage(Page page, CommodiTytemplate commodiTytemplate);
 
-    /**
-     * <P>
-     *     查询商品模板详情
-     * </P>
-     * @return 商品模板表：查询的结果集
-     */
-    List<CommodityList> selectCt(Integer ctId);
 
-
-    /**
-     * 插入新的商品模板
-     * @param commodiTytemplate
-     * @return
-     */
 
 
 }

@@ -1,12 +1,12 @@
 package com.yunhe.basicdata.entity;
 
-import java.io.Serializable;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -56,7 +56,7 @@ public class WarehouseManagement implements Serializable {
     /**
      * 邮箱
      */
-    private Integer wmPostcode;
+    private String wmPostcode;
 
     /**
      * 状态

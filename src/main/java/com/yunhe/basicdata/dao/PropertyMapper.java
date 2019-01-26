@@ -1,11 +1,12 @@
 package com.yunhe.basicdata.dao;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yunhe.basicdata.entity.Property;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.yunhe.basicdata.entity.PropertyVal;
+import com.yunhe.basicdata.entity.Property;
+import com.yunhe.basicdata.entity.Propertyval;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -25,5 +26,19 @@ public interface PropertyMapper extends BaseMapper<Property> {
    * 查询属性列表
    * @return  属性值
    */
-  public List<PropertyVal> selectproperty1();
+  public List<Propertyval> selectproperty1();
+
+  /**
+   * 连表查询
+   * @return
+   */
+  @Select("SELECT py.id AS id,py.pr_attributevalue AS pinpai,GROUP_CONCAT(se.property_value) AS shuxing FROM property py, (SELECT pp.id, pp.pr_attributevalue,pv.property_value FROM property pp LEFT JOIN propertyval pv ON pp.id = pv.`pnid`) se WHERE py.id = se.id GROUP BY py.id")
+  List<Map<String,Object>> selectAll();
+
+  /**
+   * 改变属性名
+   * @return
+   */
+  int updatename(Property property);
+
 }

@@ -1,9 +1,8 @@
 package com.yunhe.cargomanagement.dao;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.cargomanagement.entity.SalesOrderHistory;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import java.io.Serializable;
 import java.util.List;
@@ -56,4 +55,7 @@ public interface SalesOrderHistoryMapper extends BaseMapper<SalesOrderHistory> {
 
         List<SalesOrderHistory> selectAll();
 
+        List<SalesOrderHistory> selectAbc(int id);
+
+        SalesOrderHistory selectSaleById(int id);
 }

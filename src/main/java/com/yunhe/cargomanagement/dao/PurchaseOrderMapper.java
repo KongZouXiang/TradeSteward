@@ -1,9 +1,9 @@
 package com.yunhe.cargomanagement.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.cargomanagement.entity.PurchaseOrder;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -36,7 +36,7 @@ public interface PurchaseOrderMapper extends BaseMapper<PurchaseOrder> {
     /**
      * 根据id 删进货订单历史
      * @param id 进货订单历史表id
-     * @return
+     * @return int
      */
     int deleteById(Serializable id);
 
@@ -58,7 +58,7 @@ public interface PurchaseOrderMapper extends BaseMapper<PurchaseOrder> {
     /**
      * 进货订单历史单条数据 要到修改的页面的input中
      * @param id 进货订单历史表id
-     * @return
+     * @return purchaseOrder
      */
     PurchaseOrder selectById(Serializable id);
 
@@ -70,6 +70,12 @@ public interface PurchaseOrderMapper extends BaseMapper<PurchaseOrder> {
      */
     int insert(PurchaseOrder purchaseOrder);
 
+    /**
+     * 审核进货订单历史
+     * @param purchaseOrder 订单状态
+     * @return int
+     */
+    int updateHistState(PurchaseOrder purchaseOrder);
 
 
 

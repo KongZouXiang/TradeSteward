@@ -1,11 +1,11 @@
 package com.yunhe.cargomanagement.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yunhe.cargomanagement.entity.SalesOrderHistory;
-import com.yunhe.cargomanagement.dao.SalesOrderHistoryMapper;
-import com.yunhe.cargomanagement.service.ISalesOrderHistoryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yunhe.cargomanagement.dao.SalesOrderHistoryMapper;
+import com.yunhe.cargomanagement.entity.OrderConnectComm;
+import com.yunhe.cargomanagement.entity.SalesOrderHistory;
+import com.yunhe.cargomanagement.service.ISalesOrderHistoryService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -56,13 +56,34 @@ public class SalesOrderHistoryServiceImpl extends ServiceImpl<SalesOrderHistoryM
 
     @Override
     public SalesOrderHistory selectById(int id) {
-        SalesOrderHistory sale = salesOrderHistoryMapper.selectById(id);
+        SalesOrderHistory sale = salesOrderHistoryMapper.selectSaleById(id);
         return sale;
     }
 
     @Override
     public List<SalesOrderHistory> selectAll() {
         return salesOrderHistoryMapper.selectAll();
+    }
+
+    @Override
+    public List<OrderConnectComm> detailList(int id) {
+       /* ArrayList<CommodityList> commodityLists = new ArrayList<>();
+        List<SalesOrderHistory> list = salesOrderHistoryMapper.selectAbc(id);
+        for (SalesOrderHistory salesOrderHistory : list) {
+            List<OrderConnectComm> orderConnectComms = salesOrderHistory.getOrderConnectComms();
+            for (OrderConnectComm comm : orderConnectComms) {
+                CommodityList commodityList = comm.getCommodityList();
+                commodityLists.add(commodityList);
+            }
+        }
+        return commodityLists;*/
+        List<OrderConnectComm> arr=null;
+        List<SalesOrderHistory> list = salesOrderHistoryMapper.selectAbc(id);
+        for (SalesOrderHistory salesOrderHistory : list) {
+            List<OrderConnectComm> orderConnectComms = salesOrderHistory.getOrderConnectComms();
+            arr =orderConnectComms;
+        }
+        return arr;
     }
 
 }

@@ -1,9 +1,9 @@
 package com.yunhe.basicdata.service.impl;
 
-import com.yunhe.basicdata.entity.Commclass;
-import com.yunhe.basicdata.dao.CommclassMapper;
-import com.yunhe.basicdata.service.ICommclassService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yunhe.basicdata.dao.CommclassMapper;
+import com.yunhe.basicdata.entity.Commclass;
+import com.yunhe.basicdata.service.ICommclassService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -30,13 +30,14 @@ public class CommclassServiceImpl extends ServiceImpl<CommclassMapper, Commclass
 
     @Override
     public List<Commclass> sel(String name) {
+        List<Commclass> list= (List<Commclass>) commclassMapper.sel(name);
 
-        return commclassMapper.sel(name);
+        return list;
     }
 
     @Override
-    public void add(String ccdefault) {
-        commclassMapper.add(ccdefault);
+    public void add(Commclass commclass) {
+        commclassMapper.insert(commclass);
 
     }
 
@@ -51,5 +52,19 @@ public class CommclassServiceImpl extends ServiceImpl<CommclassMapper, Commclass
 
     }
 
+    @Override
+    public int selectidbyname(String name) throws Exception{
+    /*    Commclass commclass=new Commclass();
+        commclass= commclassMapper.sel(name);*/
+    int re=0;
+        List<Commclass> list= commclassMapper.sel(name);
 
+        if (list.size()>0){
+            for (Commclass commclass : list) {
+                commclass.getId();
+                re= commclass.getId();
+            }
+        }
+        return re;
+    }
 }

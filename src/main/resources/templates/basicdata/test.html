@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <label for="myDate">Do u love me ?</label>
+    <div class="wrap">
+        <my-switch size="sm" v-model="toggle"></my-switch>
+    </div>
+</div>
+
+<script>
+    import 'babel-polyfill'; //因为使用了es6的一些方法，需要babel垫片，如果你项目中已有相关兼容性方案，可忽略
+    import Vue from 'vue';
+    import mySwitch from 'vue-switch/switch-2.vue';
+
+    new Vue({
+        el: '#app',
+        data: {
+            toggle: true
+        },
+        components: {
+            'my-switch': mySwitch
+        }
+    });
+</script>
+</body>
+</html>

@@ -4,21 +4,19 @@ package com.yunhe.customermanagement.controller;
 import com.yunhe.customermanagement.entity.Customer;
 import com.yunhe.customermanagement.service.ICustomerService;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.*;
-
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-
-import java.util.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -50,7 +48,10 @@ public class CustomerController {
     public Map selectAllCustomer(int current, int size, Customer customer) {
         return customerService.selectAllCustomer(current, size, customer);
     }
-    @RequestMapping("/login")
+
+
+
+    @RequestMapping("/cust")
     @ResponseBody
     public ModelAndView selectAllCustomer1() {
         return new ModelAndView("customermanagement/admin.html");

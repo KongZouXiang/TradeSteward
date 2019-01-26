@@ -1,10 +1,10 @@
 package com.yunhe.cargomanagement.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yunhe.cargomanagement.entity.PurchaseOrder;
-import com.yunhe.cargomanagement.dao.PurchaseOrderMapper;
-import com.yunhe.cargomanagement.service.IPurchaseOrderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yunhe.cargomanagement.dao.PurchaseOrderMapper;
+import com.yunhe.cargomanagement.entity.PurchaseOrder;
+import com.yunhe.cargomanagement.service.IPurchaseOrderService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -66,6 +66,16 @@ public class PurchaseOrderServiceImpl extends ServiceImpl<PurchaseOrderMapper, P
     @Override
     public List<PurchaseOrder> getPurchaseById(Integer id) {
         return purchaseOrderMapper.getPurchaseById(id);
+    }
+
+    @Override
+    public int updateHistState(PurchaseOrder purchaseOrder) {
+        return purchaseOrderMapper.updateHistState(purchaseOrder);
+    }
+
+    @Override
+    public int updateHistStateByid(PurchaseOrder purchaseOrder) {
+        return purchaseOrderMapper.updateById(purchaseOrder);
     }
 
     public PurchaseOrderMapper getPurchaseOrderMapper() {

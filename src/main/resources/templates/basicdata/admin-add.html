@@ -50,13 +50,16 @@
                 <tbody><tr>
                     <td width="80" align="right"><span class="fontRed">*</span>名称</td>
                     <td>
-                        <input name="userloginname" id="emplusername" placeholder="仓库名称" maxlength="30" type="text" class="inputText wf250"  ></td>
+                        <input name="userloginname" id="emplusername" placeholder="仓库名称" maxlength="30" type="text" class="inputText wf250"  onblur="warename()">
+                        <span class="font999" id="namespan" style="color: red"></span>
+                    </td>
                     <td></td>
                 </tr>
                 <tr>
                     <td width="80" align="right"><span class="fontRed">*</span>编号</td>
                     <td>
-                        <input name="newusername" id="emplrealnumber" maxlength="50" type="text" class="inputText wf250 fl" data-rule="编号:required;name;" placeholder="编号" data-rule-name="[/^[\u4E00-\u9FA5A-Za-z0-9_]+$/, '只能输入中文,字母数字下划线']" spellcheck="false">
+                        <input name="newusername" id="emplrealnumber" placeholder="编号"  maxlength="30" type="text" class="inputText wf250 fl"  onblur="emplrealnumbe()">
+                        <span class="font999" id="numspan" style="color: red"></span>
                     </td>
                     <td><span class="font999"></span></td>
                 </tr>
@@ -79,7 +82,8 @@
             <tr>
                 <td width="80" align="right"><span class="fontRed">*</span>邮箱</td>
                 <td>
-                    <input name="newusername" id="emplrealn" maxlength="50" type="text" class="inputText wf250 fl" data-rule="邮箱" placeholder="请输入邮箱..." data-rule-name="^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$, '请输入正确邮箱格式...']" spellcheck="false">
+                    <input name="newusername" id="emplrealn" maxlength="50" type="text" class="inputText wf250 fl" placeholder="请输入邮箱..."  onblur="emplreal()">
+                    <span class="font999" id="lnspan" style="color: red"></span>
                 </td>
                 <td><span class="font999"></span></td>
             </tr>
@@ -125,6 +129,43 @@
         var index = parent.layer.getFrameIndex(window.name);
         parent.layer.close(index);
     });
+    /*表单验证*/
+    function warename() {
+        var name=document.getElementById("emplusername").value;
+        var namespan=document.getElementById("namespan");
+        var aa=/^[A-Za-z0-9]{3,10}$/;
+        /*if (aa.test(name)==false){
+            namespan.innerHTML="格式不正确"
+            return false;
+        }else {
+            namespan.innerHTML="格式正确"
+            return true;
+        }*/
+    };
+    function emplrealnumbe() {
+        var emplrealnumber=document.getElementById("emplrealnumber").value;
+        var numespan=document.getElementById("numspan");
+        var bb=/^[0-9]{3,10}$/;
+        if (bb.test(emplrealnumber)==false){
+            numespan.innerHTML="编号只能为数字且长度在3到10之间"
+            return false;
+        }else {
+            numespan.innerHTML="格式正确"
+            return true;
+        }
+    };
+    function emplreal() {
+        var emplrealn=document.getElementById("emplrealn").value;
+        var lnspan=document.getElementById("lnspan");
+        var cc=/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+        if (cc.test(emplrealn)==false){
+            lnspan.innerHTML="请输入正确的邮箱格式"
+            return false;
+        }else {
+            lnspan.innerHTML="格式正确"
+            return true;
+        }
+   }
     </script>
 </body>
 </html>

@@ -9,8 +9,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * <p>
@@ -31,15 +29,22 @@ public class Property implements Serializable {
      * 属性名的主键
      */
     @TableId(value = "id",type = IdType.AUTO)
-    private Integer pnid;
+    private Integer id;
     /**
      * 属性名
      */
-    @TableField("propertyname")
-    private String propertyname;
+    @TableField("pr_attributevalue")
+    private String prattributevalue;
+
     /**
-     *
+     * ID
      */
 
-    private Set<PropertyVal> propertyVals=new HashSet<>();
+   /* @TableField("property_value")
+    private String propertyvalue;
+    *//**
+     * 属性名的外键（）
+     *//*
+    @TableField("pnid")
+    private Integer pnid;*/
 }

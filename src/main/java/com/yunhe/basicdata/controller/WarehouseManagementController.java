@@ -2,11 +2,14 @@ package com.yunhe.basicdata.controller;
 
 import com.yunhe.basicdata.entity.WarehouseManagement;
 import com.yunhe.basicdata.service.impl.WarehouseManagementServiceImpl;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -55,7 +58,7 @@ public class WarehouseManagementController {
         ModelAndView mv = new ModelAndView();
         WarehouseManagement warehouseManagemenst = warehouseManagementService.selectByid(id);
         mv.addObject("whm", warehouseManagemenst);
-        mv.setViewName("basicdata/editWareHouse");
+        mv.setViewName("basicdata/editWareHous.html");
         return mv;
     }
 
@@ -83,10 +86,28 @@ public class WarehouseManagementController {
      * @return 删除成功之后返回 success
      */
     @RequestMapping("/deletebyid")
-    public String deleteByid(int id) {
-        warehouseManagementService.deleteByid(id);
-        return "success";
+    public Integer deleteByid(int id) {
+
+        return warehouseManagementService.deleteByid(id);
     }
+    /**
+     * <>
+     * 删除仓库
+     * </>
+     *
+     * @param ids 要删除仓库的
+     * @return 删除成功之后返回 success
+     */
+    @RequestMapping("/deleteall")
+    public boolean deleteAll(@RequestBody List<Integer> ids) {
+        System.out.println("ids"+ids);
+        for (Integer id:ids){
+            warehouseManagementService.deleteByid(id);
+        }
+
+        return true;
+    }
+
 
     /**
      * <>
@@ -150,6 +171,25 @@ public class WarehouseManagementController {
     public Integer addWarehouse(WarehouseManagement warehouseManagement) {
         System.out.println("asd===" + warehouseManagement);
         return warehouseManagementService.addWarehouse(warehouseManagement);
+    }
+
+    /**
+     * 根据id禁用仓库
+     * @param id
+     * @return 0或1
+     */
+    @RequestMapping("/updatestatejin")
+    public Integer updatestatejin(Integer id){
+        return warehouseManagementService.updatestatejin(id);
+    }
+    /**
+     * 根据id启用仓库
+     * @param id
+     * @return 0或1
+     */
+    @RequestMapping("/updatestateqi")
+    public Integer updatestateqi(Integer id){
+        return warehouseManagementService.updatestateqi(id);
     }
 
 }

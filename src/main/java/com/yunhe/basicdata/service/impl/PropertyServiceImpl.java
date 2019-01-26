@@ -1,11 +1,11 @@
 package com.yunhe.basicdata.service.impl;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yunhe.basicdata.entity.Property;
-import com.yunhe.basicdata.dao.PropertyMapper;
-import com.yunhe.basicdata.entity.PropertyVal;
-import com.yunhe.basicdata.service.IPropertyService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yunhe.basicdata.dao.PropertyMapper;
+import com.yunhe.basicdata.dao.PropertyvalMapper;
+import com.yunhe.basicdata.entity.Property;
+import com.yunhe.basicdata.entity.Propertyval;
+import com.yunhe.basicdata.service.IPropertyService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,16 +25,17 @@ import java.util.Map;
 public class PropertyServiceImpl extends ServiceImpl<PropertyMapper, Property> implements IPropertyService {
     @Resource
     private   PropertyMapper propertyMapper;
+    @Resource
+    private PropertyvalMapper propertyvalMapper;
 
 
     @Override
     public Map selectproperty() {
-
         Map map=new HashMap();
-       List<Property> list= propertyMapper.selectproperty();
-       List<PropertyVal> list1=propertyMapper.selectproperty1();
-       map.put("list",list);
-       map.put("list1",list1);
+        List<Property> propertyList= propertyMapper.selectproperty();
+        List<Propertyval> propertyvalList= propertyvalMapper.selectall();
+        map.put("propertyList",propertyList);
+        map.put("propertyvalList",propertyvalList);
         System.out.println(map);
         return map;
     }
@@ -52,5 +53,26 @@ public class PropertyServiceImpl extends ServiceImpl<PropertyMapper, Property> i
     @Override
     public void updateproperty(Property property) {
         propertyMapper.updateById(property);
+    }
+
+    @Override
+    public List<Map<String, Object>> selectAll() {
+        return propertyMapper.selectAll();
+    }
+
+    @Override
+    public int updatename(Property property) {
+        return propertyMapper.updatename(property);
+
+    }
+
+    @Override
+    public Property selectbyid(int id) {
+        return propertyMapper.selectById(id);
+    }
+
+    @Override
+    public int insertvalue(Propertyval propertyval) {
+        return propertyvalMapper.insert(propertyval);
     }
 }

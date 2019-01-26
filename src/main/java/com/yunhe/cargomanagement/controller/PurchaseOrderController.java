@@ -1,10 +1,14 @@
 package com.yunhe.cargomanagement.controller;
 
 
+import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
+import com.yunhe.cargomanagement.entity.PurchaseHistory;
 import com.yunhe.cargomanagement.entity.PurchaseOrder;
+import com.yunhe.cargomanagement.service.IPurchaseHistoryService;
 import com.yunhe.cargomanagement.service.IPurchaseOrderService;
+import com.yunhe.core.util.DateUtil;
+import com.yunhe.customermanagement.service.ISupplierService;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,8 +28,34 @@ import java.util.Map;
 @RestController
 @RequestMapping("/cargomanagement/purchase-order")
 public class PurchaseOrderController {
+
     @Resource
     private IPurchaseOrderService purchaseOrderService;
+
+    /**
+     * 进货历史 业务层
+     */
+    @Resource
+    private IPurchaseHistoryService purchaseHistoryService;
+    /**
+     * 供应商列表
+     */
+    @Resource
+    private ISupplierService supplierService;
+
+    /**
+     * 商品列表
+     */
+    @Resource
+    CommodityListServiceImpl commodityListService;
+
+    @RequestMapping("/Purlist")
+    public ModelAndView test22(){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/cargomanagement/purorder-list");
+        return mv;
+    }
+
 
     /**
      * 跳转到进货订单历史页面
@@ -43,15 +73,32 @@ public class PurchaseOrderController {
      * @return 页面
      */
     @RequestMapping("/addPurchase")
-    public ModelAndView getaddPurchase(){
-        
-
+    public ModelAndView getaddPurchase(HttpSession session){
+        /*List<Supplier> suppliers = supplierService.selectList();
+        session.setAttribute("suppliers",suppliers);*/
         ModelAndView mv = new ModelAndView();
         mv.setViewName("cargomanagement/Pur_order-add");
         return mv;
     }
 
+    /**
+     * 查询供应商
+     * @return 供应商数据
+     */
+    @RequestMapping("/getSupplieradd")
+    public Map getSupplieradd(){
+        return supplierService.selectList();
+    }
 
+
+    /**
+     * 查询商品
+     * @return 商品列表
+     */
+   /* @RequestMapping("/getCommodadd")
+    public Map getCommodadd(){
+        return commodityListService.selectList();
+    }*/
     /**
      * 进货订单历史分页
      * @param pageNum 前台传当前页
@@ -122,6 +169,38 @@ public class PurchaseOrderController {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("cargomanagement/article-add");
         return mv;
+    }
+
+    /**
+     * 审核进货订单 并增加进货历史
+     * @param purchaseOrder 进货订单
+     * @return int
+     */
+    @RequestMapping("/updateHistState")
+    public int updateHistState(PurchaseOrder purchaseOrder){
+        System.out.println("/*/*/*/*/*/*"+purchaseOrder.getId());
+        purchaseOrder.setPoState("已审核");
+        purchaseOrderService.updateHistStateByid(purchaseOrder);
+        System.out.println("aaaaaaaaaaaaaaaaaaa");
+        PurchaseHistory purchaseHistory = new PurchaseHistory();
+        purchaseHistory.setPhDate(purchaseOrder.getPoDate());
+        purchaseHistory.setPhNumber("Y"+purchaseOrder.getPoNumber());
+        purchaseHistory.setPhSupname(purchaseOrder.getPoSupName());
+        purchaseHistory.setPhClname(purchaseOrder.getPoClName());
+        purchaseHistory.setPhQuantity(purchaseOrder.getPoQuantityOfPurchase());
+        purchaseHistory.setPhAmountPayable(purchaseOrder.getPoYingMoney());
+        purchaseHistory.setPhAmountPaid(purchaseOrder.getPoYingMoney());
+        purchaseHistory.setPhWarehouse("默认仓库");
+        purchaseHistory.setPhBill(purchaseOrder.getPoBill());
+        purchaseHistory.setPhJindate(DateUtil.curr());
+        purchaseHistory.setPhManeyHu("现金");
+        purchaseHistory.setPhExperiencedPerson(purchaseOrder.getPoExperiencedPerson());
+        purchaseHistory.setPhSinglePerson("老板");
+        purchaseHistory.setPhOtherExpenses("");
+        purchaseHistory.setPhWarehousingStatus("未入库");
+        purchaseHistory.setPhRemarks(purchaseOrder.getPoRemarks());
+        purchaseHistoryService.insertPurchaseHistory(purchaseHistory);
+        return 1;
     }
 
 

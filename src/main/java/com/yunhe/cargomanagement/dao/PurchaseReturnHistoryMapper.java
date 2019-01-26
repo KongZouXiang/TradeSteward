@@ -1,8 +1,8 @@
 package com.yunhe.cargomanagement.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.cargomanagement.entity.PurchaseReturnHistory;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -26,5 +26,5 @@ public interface PurchaseReturnHistoryMapper extends BaseMapper<PurchaseReturnHi
      * @param purchaseReturnHistory 实体类
      * @return 进货退货历史数据集合
      */
-    List<PurchaseReturnHistory> selectPurchaseReturnHistoryPage(Page page,PurchaseReturnHistory purchaseReturnHistory);
+    List<PurchaseReturnHistory> selectPurchaseReturnHistoryPage(Page page, PurchaseReturnHistory purchaseReturnHistory);
 }

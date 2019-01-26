@@ -1,12 +1,11 @@
 package com.yunhe.cargomanagement.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yunhe.cargomanagement.entity.SalesOrderHistory;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.apache.logging.log4j.util.PropertySource;
+import com.yunhe.cargomanagement.entity.OrderConnectComm;
+import com.yunhe.cargomanagement.entity.SalesOrderHistory;
 
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -62,4 +61,5 @@ public interface ISalesOrderHistoryService extends IService<SalesOrderHistory> {
      */
     List<SalesOrderHistory> selectAll();
 
+    List<OrderConnectComm> detailList(int id);
 }

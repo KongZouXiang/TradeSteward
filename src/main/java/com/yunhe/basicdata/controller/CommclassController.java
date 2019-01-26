@@ -4,8 +4,8 @@ package com.yunhe.basicdata.controller;
 import com.yunhe.basicdata.entity.Commclass;
 import com.yunhe.basicdata.service.impl.CommclassServiceImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -26,6 +26,14 @@ public class CommclassController {
 
     @Resource
     private CommclassServiceImpl commclassService;
+    @RequestMapping("/commclasslist")
+    public ModelAndView commclasslist() {
+        return new ModelAndView("basicdata/CommClass.html");
+    }
+    @RequestMapping("/duoji")
+    public ModelAndView duoji() {
+        return new ModelAndView("basicdata/duoji.html");
+    }
 
     /**
      * <p>
@@ -65,8 +73,9 @@ public class CommclassController {
      * @return success
      */
     @RequestMapping("/add")
-    public String add(String ccdefault){
-        commclassService.add(ccdefault);
+    public String add(Commclass commclass){
+        System.out.println(commclass);
+        commclassService.add(commclass);
         return "success";
     }
 
@@ -100,4 +109,15 @@ public class CommclassController {
         commclassService.deleteCommclass(name);
         return "success";
     }
+
+    /**
+     * 根据iname返回id
+     * @param name
+     * @return id
+     */
+    @RequestMapping("/seleceidbyname")
+    public int seleceidbyname(String name) throws Exception {
+
+        return commclassService.selectidbyname(name);
+}
 }

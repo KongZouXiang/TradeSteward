@@ -4,25 +4,25 @@
     <insert id="inta"></insert>
     <select id="select" resultType="com.yunhe.basicdata.entity.CommodityList"></select>
     <!--从数据库中获取商品信息-->
-    <select id="selectAllCommmList" parameterType="CommodityList" resultType="com.yunhe.basicdata.entity.CommodityList">
+    <select id="selectAllCommmList" parameterType="com.yunhe.basicdata.entity.CommodityList" resultType="com.yunhe.basicdata.entity.CommodityList">
         select *
         from commodity_list
     </select>
     <!--增加商品信息-->
-    <insert id="insertComm" parameterType="CommodityList">
+    <insert id="insertComm" parameterType="com.yunhe.basicdata.entity.CommodityList">
         insert into commodity_list (cl_number, cl_name, cc_id, cl_spec, us_id, cl_scan, cl_tag_prise, cl_who_price,
                                     cl_pur_price)
         values (#{clNumber}, #{clName}, #{ccId}, #{clSpec}, #{usId}, #{clScan}, #{clTagPrise}, #{clWhoPrice},
                 #{clPurPrice});
     </insert>
     <!--查询用户的详细信息-->
-    <select id="selectCommById" parameterType="CommodityList" resultType="com.yunhe.basicdata.entity.CommodityList">
+    <select id="selectCommById" parameterType="com.yunhe.basicdata.entity.CommodityList" resultType="com.yunhe.basicdata.entity.CommodityList">
         select *
         from commodity_list
         where id = #{id}
     </select>
     <!--更改商品的信息-->
-    <update id="updateComm" parameterType="CommodityList">
+    <update id="updateComm" parameterType="com.yunhe.basicdata.entity.CommodityList">
         update commodity_list
         set cl_number=#{clNumber},
             cl_name=#{clName},
@@ -36,10 +36,13 @@
         where id = #{id}
     </update>
     <!--删除商品的信息-->
-    <delete id="deleteComm" parameterType="CommodityList">
+    <delete id="deleteComm" parameterType="com.yunhe.basicdata.entity.CommodityList">
         delete
         from commodity_list
         where id = #{id}
     </delete>
-
+<!--导出excel文件-->
+    <select id="selectExcel" resultType="com.yunhe.basicdata.entity.CommodityList">
+        select * from commodity_list
+    </select>
 </mapper>

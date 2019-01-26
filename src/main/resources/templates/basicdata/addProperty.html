@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>增加属性值</title>
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/js/laypage/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css" />
+
+    <!--<link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css" />-->
+    <!--<link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css" />-->
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
+
+    <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript" src="/js/vue/vue.min.js"></script>
+    <script src="/js/jquery/jquery.min.js"></script>
+    <script src="/js/laypage/laypage.js" charset="utf-8"></script>
+    <script src="/js/layer/layer.js" charset="utf-8"></script>
+    <!--<script src="/js/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+    <script src="/js/jquery.validation/1.14.0/messages_zh.min.js"></script>-->
+</head>
+<body>
+<div class="container">
+     <div >
+            <label for="number">请输入要增加的属性值：</label>
+            <input type="text" class="form-control"  id="number" name="number" >
+            <input type="text" class="hidden" id="ids" name="pnid" th:value="${ss}" >
+        </div>
+        <div class="form-group">
+            <button type="button" id="updateBtn" class="btn btn-success">修改</button>
+            <button type="button" id="cancelBtn" class="btn btn-default">取消</button>
+        </div>
+            </tbody>
+        </table>
+    </form>
+
+</div>
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+<script>
+
+    var updateWareHouse = function () {
+        $.ajax({
+            type: 'post',
+            dataType: 'json',
+            url: "/basicdata/property/insertvalue",
+            data: {
+                pnid:$("#ids").val(),
+                propertyvalue: $("#number").val(),
+            },
+            success: function (msg) {
+                setTimeout( $("#cancelBtn").click(),2500);
+                $("#cancelBtn").click();
+            }
+        });
+    }
+
+
+    $("#updateBtn").click(function () {
+        updateWareHouse();
+        //$.Huimodalalert('我是消息框，2秒后我自动滚蛋！',2000)
+    });
+    $("#cancelBtn").click(function () {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    });
+
+</script>
+</body>
+</html>

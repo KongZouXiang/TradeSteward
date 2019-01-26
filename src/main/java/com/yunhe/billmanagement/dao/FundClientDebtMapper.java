@@ -1,8 +1,8 @@
 package com.yunhe.billmanagement.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.billmanagement.entity.FundClientDebt;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,5 +24,5 @@ public interface FundClientDebtMapper extends BaseMapper<FundClientDebt> {
      * @param page 分页的参数存在一个对象里
      * @return 客户应收欠款表：分页的结果集
      */
-    List<FundClientDebt> selectFcdPage(Page page);
+    List<FundClientDebt> selectFcdPage(Page page,FundClientDebt fundClientDebt);
 }

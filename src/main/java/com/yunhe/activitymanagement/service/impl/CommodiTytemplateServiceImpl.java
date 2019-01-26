@@ -2,15 +2,14 @@ package com.yunhe.activitymanagement.service.impl;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yunhe.activitymanagement.entity.CommodiTytemplate;
-import com.yunhe.activitymanagement.dao.CommodiTytemplateMapper;
-import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yunhe.activitymanagement.dao.CommodiTytemplateMapper;
+import com.yunhe.activitymanagement.entity.CommodiTytemplate;
+import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
 import com.yunhe.activitymanagement.service.ITemplateDetailsService;
 import com.yunhe.basicdata.dao.CommodityListMapper;
 import com.yunhe.basicdata.entity.CommodityList;
 import org.springframework.stereotype.Service;
-
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -55,9 +54,16 @@ public class CommodiTytemplateServiceImpl extends ServiceImpl<CommodiTytemplateM
         return map;
     }
 
+
+    /**
+     * <P>
+     *     查询数据
+     * </P>
+     * @return 商品模板表：查询所有模板的结果集
+     */
     @Override
     public List<CommodiTytemplate> selectAllCt() {
-        return null;
+        return commodiTytemplateMapper.selectList(null);
     }
 
     @Override

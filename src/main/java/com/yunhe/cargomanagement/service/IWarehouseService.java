@@ -1,7 +1,7 @@
 package com.yunhe.cargomanagement.service;
 
-import com.yunhe.cargomanagement.entity.Warehouse;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yunhe.cargomanagement.entity.Warehouse;
 
 import java.util.List;
 import java.util.Map;
@@ -81,9 +81,11 @@ public interface IWarehouseService extends IService<Warehouse> {
      * 分页
      * </p>
      *
-     * @param warehouse 实体对象 分页信息
-     * @return map集合
+     * @param pageNum  当前页
+     * @param pageSize 每页数据条数
+     * @return Page
      */
-    Map selectWareHousePage(int current, int size, Warehouse warehouse);
+    Map selectWareHousePage(int pageNum,int pageSize);
+
 
 }

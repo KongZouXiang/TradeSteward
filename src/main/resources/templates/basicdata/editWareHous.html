@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑仓库</title>
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/js/laypage/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css" />
+
+    <!--<link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css" />-->
+    <!--<link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css" />-->
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
+
+    <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript" src="/js/vue/vue.min.js"></script>
+    <script src="/js/jquery/jquery.min.js"></script>
+    <script src="/js/laypage/laypage.js" charset="utf-8"></script>
+    <script src="/js/layer/layer.js" charset="utf-8"></script>
+    <!--<script src="/js/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+    <script src="/js/jquery.validation/1.14.0/messages_zh.min.js"></script>-->
+</head>
+<body>
+<div class="container">
+     <div >
+            <label for="number">编号：</label>
+            <input type="text" class="form-control"  id="number" name="number" th:value="${whm.wmNumber}" >
+            <input type="text" class="hidden" id="ids" name="id" th:value="${whm.id}" >
+        </div>
+        <div class="form-group">
+            <label for="name">仓库名称：</label>
+            <input type="text" class="form-control" id="name" name="name" th:value="${whm.wmName}">
+        </div>
+        <div class="form-group">
+            <label for="person">联系人：</label>
+            <input type="text" class="form-control" id="person" name="person" th:value="${whm.wmPerson}">
+        </div>
+        <div class="form-group">
+            <label for="tel">联系电话：</label>
+            <input type="text" class="form-control" id="tel" name="tel"  th:value="${whm.wmTel}">
+        </div>
+        <div class="form-group">
+            <label for="address">仓库地址：</label>
+            <input type="text" class="form-control" id="address" name="address"  th:value="${whm.wmAddress}">
+        </div>
+        <div class="form-group">
+            <label for="postcade">邮箱：</label>
+            <input type="text" class="form-control" id="postcade" name="postcade"  th:value="${whm.wmPostcode}">
+        </div>
+        <div class="form-group">
+            <label for="remark">备注：</label>
+            <textarea class="form-control" id="remark" name="remark" th:value="${whm.wmRemark}"></textarea>
+        </div>
+        <div class="form-group">
+            <button type="button" id="updateBtn" class="btn btn-success">修改</button>
+            <button type="button" id="cancelBtn" class="btn btn-default">取消</button>
+        </div>
+            </tbody>
+        </table>
+    </form>
+
+</div>
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+<script>
+
+    var updateWareHouse = function () {
+        $.ajax({
+            type: 'get',
+            dataType: 'json',
+            url: "/basicdata/warehouse-management/update",
+            data: {
+                id:$("#ids").val(),
+                wmNumber: $("#number").val(),
+                wmName: $("#name").val(),
+                wmPerson: $("#person").val(),
+                wmTel: $("#tel").val(),
+                wmAddress: $("#address").val(),
+                wmPostcode: $("#postcade").val(),
+                wmRemark: $("#remark").val(),
+                wmState:null
+            },
+            success: function (msg) {
+                setTimeout( $("#cancelBtn").click(),2500);
+                $("#cancelBtn").click();
+            }
+        });
+    }
+
+
+    $("#updateBtn").click(function () {
+        updateWareHouse();
+        $.Huimodalalert('我是消息框，2秒后我自动滚蛋！',2000)
+    });
+    $("#cancelBtn").click(function () {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    });
+
+</script>
+</body>
+</html>

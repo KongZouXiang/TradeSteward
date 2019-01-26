@@ -2,10 +2,10 @@ package com.yunhe.basicdata.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yunhe.basicdata.entity.SettlementAccount;
-import com.yunhe.basicdata.dao.SettlementAccountMapper;
-import com.yunhe.basicdata.service.ISettlementAccountService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yunhe.basicdata.dao.SettlementAccountMapper;
+import com.yunhe.basicdata.entity.SettlementAccount;
+import com.yunhe.basicdata.service.ISettlementAccountService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -83,7 +83,6 @@ public class SettlementAccountServiceImpl extends ServiceImpl<SettlementAccountM
 
     /**
      * 修改账户的信息
-     *
      * @param settlementAccount 修改账户的实体类
      * @return 返回修改后的信息
      */

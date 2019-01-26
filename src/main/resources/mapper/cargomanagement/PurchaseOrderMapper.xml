@@ -41,13 +41,14 @@
             parameterType="com.yunhe.cargomanagement.entity.PurchaseOrder">
         select
         <include refid="getPurchaseOrderByNumber"/>
-        from purchase_order where po_number like concat('%', #{purchaseOrder.poNumber}, '%') order by id desc
+        from purchase_order where po_number like concat('%', #{purchaseOrder.poNumber}, '%') AND po_sup_name like concat('%', #{purchaseOrder.poSupName}, '%') order by id desc
     </select>
+
     <!--销售订单历史总条数-->
     <select id="getPoNumberCount" parameterType="com.yunhe.cargomanagement.entity.PurchaseOrder" resultType="int">
         select count(1)
         from purchase_order
-        where po_number like concat('%', #{purchaseOrder.poNumber}, '%') AND po_sup_name like concat('%', #{purchaseOrder.poSupName}, '%')
+        where po_number like concat('%', #{purchaseOrder.poNumber}, '%') AND po_sup_name like concat('%', #{purchaseOrder.poSupName}, '%') order by id desc
     </select>
     <!--销售订单历史详情-->
     <select id="getPurchaseById" resultType="com.yunhe.cargomanagement.entity.PurchaseOrder" parameterType="Integer">
@@ -55,6 +56,10 @@
         <include refid="getPurchaseOrderByNumber"/>
         from purchase_order where id = {id}
     </select>
+
+    <update id="updateHistState" parameterType="com.yunhe.cargomanagement.entity.PurchaseOrder" >
+        update purchase_order set po_state= #{purchaseOrder.po_state} where id=#{purchaseOrder.id}
+    </update>
 
     <!--更改销售订单历史-->
     <update id="updategetPurchaseById" parameterType="com.yunhe.cargomanagement.entity.PurchaseOrder">

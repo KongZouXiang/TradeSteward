@@ -1,7 +1,8 @@
 package com.yunhe.basicdata.service;
 
-import com.yunhe.basicdata.entity.Property;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yunhe.basicdata.entity.Property;
+import com.yunhe.basicdata.entity.Propertyval;
 
 import java.util.List;
 import java.util.Map;
@@ -38,4 +39,21 @@ public interface IPropertyService extends IService<Property> {
      * @param property 传过来的属性值
      */
  public void updateproperty(Property property);
+
+    /**
+     * 查找属性值属性名
+     * @return 属性值属性名
+     */
+    List<Map<String,Object>> selectAll();
+
+    /**
+     * 根据id修改属性名
+     * @param property
+     * @return
+     */
+    int updatename(Property property);
+
+    Property selectbyid(int id);
+
+    int insertvalue(Propertyval propertyval);
 }

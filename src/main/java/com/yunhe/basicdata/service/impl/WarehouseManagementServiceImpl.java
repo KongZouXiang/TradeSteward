@@ -1,14 +1,11 @@
 package com.yunhe.basicdata.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.AbstractWrapper;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yunhe.basicdata.entity.WarehouseManagement;
-import com.yunhe.basicdata.dao.WarehouseManagementMapper;
-import com.yunhe.basicdata.service.IWarehouseManagementService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
+import com.yunhe.basicdata.dao.WarehouseManagementMapper;
+import com.yunhe.basicdata.entity.WarehouseManagement;
+import com.yunhe.basicdata.service.IWarehouseManagementService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -46,9 +43,9 @@ public class WarehouseManagementServiceImpl extends ServiceImpl<WarehouseManagem
     }
 
     @Override
-    public void deleteByid(int id) {
+    public Integer deleteByid(int id) {
 
-        warehouseManagementMapper.deleteById(id);
+       return warehouseManagementMapper.deleteById(id);
     }
 
 
@@ -82,5 +79,15 @@ public class WarehouseManagementServiceImpl extends ServiceImpl<WarehouseManagem
     @Override
     public Integer addWarehouse(WarehouseManagement warehouseManagement) {
       return warehouseManagementMapper.insert(warehouseManagement);
+    }
+
+    @Override
+    public Integer updatestatejin(Integer id) {
+        return warehouseManagementMapper.updatestatejin(id);
+    }
+
+    @Override
+    public Integer updatestateqi(Integer id) {
+        return warehouseManagementMapper.updatestateqi(id);
     }
 }

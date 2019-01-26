@@ -8,17 +8,20 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class cargomanagement {
-/*
-    @Resource
-    private SalesHistoryMapper salesHistoryMapper;
 
+/*    @Resource
+    private SalesOrderHistoryMapper salesOrderHistoryMapper;
     @Test
-    public void ceshi(){
-        Page<SalesHistory> page= new Page<SalesHistory>(1,1);
-        QueryWrapper<SalesHistory> page1 = new QueryWrapper<SalesHistory>().like("sh_client","ya");
-        IPage<SalesHistory> page2 = salesHistoryMapper.selectPage(page,page1);
-    }
-*/
+    public void text(){
+        List<SalesOrderHistory> list = salesOrderHistoryMapper.selectAbc(1);
+        for (SalesOrderHistory salesOrderHistory : list) {
+            List<OrderConnectComm> orderConnectComms = salesOrderHistory.getOrderConnectComms();
+            for (OrderConnectComm comm : orderConnectComms) {
+                CommodityList commodityList = comm.getCommodityList();
+                System.out.println(commodityList);
+            }
+        }
+    }*/
 
 
 }

@@ -2,14 +2,14 @@ package com.yunhe.basicdata.controller;
 
 
 import com.yunhe.basicdata.entity.Property;
+import com.yunhe.basicdata.entity.Propertyval;
 import com.yunhe.basicdata.service.IPropertyService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import java.lang.reflect.MalformedParameterizedTypeException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,15 +27,49 @@ import java.util.Map;
 public class PropertyController {
     @Resource
  private IPropertyService propertyService;
+   @RequestMapping("/propertylist")
+   public ModelAndView propertylist(){
+       return new ModelAndView("basicdata/property.html");
+   }
+    @RequestMapping("/insertproperty")
+    public ModelAndView insertproperty(int id){
+        System.out.println("id=="+id);
+        ModelAndView mv=new ModelAndView();
+        mv.addObject("ss",id);
+        mv.setViewName("basicdata/addproperty.html");
+        return mv;
+    }
+   @RequestMapping("/editproperty")
+    public int editproperty(Property property){
+       System.out.println("pp:==="+property.getPrattributevalue());
+
+        return propertyService.updatename(property);
+    }
+    @RequestMapping("/selectbyid")
+    public ModelAndView selectbyid(int id){
+        System.out.println("id"+id);
+        Property property=propertyService.selectbyid(id);
+        ModelAndView mv=new ModelAndView();
+        mv.addObject("ss",property);
+        mv.setViewName("basicdata/editProperty.html");
+        return mv;
+    }
+
+
 
     /**
      * 属性设置列表
      * @return
      */
     @PostMapping("/selectProperty")
-    public Map selectProperty(){
-        return propertyService.selectproperty();
-}
+    public List selectProperty(){
+        Map map=new HashMap();
+        //List<Property> propertyList=propertyService.selectproperty();
+       // map.put("propertyList",propertyList);
+        List<Map<String,Object>> list = propertyService.selectAll();
+        System.out.println("list:"+list);
+        return list;
+    }
 
     /**
      * 增加商品属性
@@ -68,5 +102,9 @@ public class PropertyController {
 public String updateproperty(Property property){
  propertyService.updateproperty(property);
  return "success";
+}
+@PostMapping("/insertvalue")
+    public int insertvalue(Propertyval propertyval){
+        return propertyService.insertvalue(propertyval);
 }
 }

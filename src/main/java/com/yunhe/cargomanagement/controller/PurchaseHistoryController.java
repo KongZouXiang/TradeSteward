@@ -4,7 +4,6 @@ package com.yunhe.cargomanagement.controller;
 import com.yunhe.cargomanagement.entity.PurchaseHistory;
 import com.yunhe.cargomanagement.service.IPurchaseHistoryService;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,18 +25,12 @@ public class PurchaseHistoryController {
     @Resource
     private IPurchaseHistoryService purchaseHistoryService;
 
-    @RequestMapping("/Test22")
-    public ModelAndView test22(){
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("/cargomanagement/admin-list");
-        return mv;
-    }
 
 
-    @RequestMapping("/Test1")
+    @RequestMapping("/purchasehistoryList")
     public ModelAndView getGoToPurchaseHistory(){
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("purchaseHistory");
+        mv.setViewName("cargomanagement/purhistory-list");
         return mv;
     }
 
@@ -61,6 +54,7 @@ public class PurchaseHistoryController {
      */
     @RequestMapping("/getPurchaseHistoryPage")
     public Map getPurchaseHistoryByPhNumber(int pageNum, int pageSize, PurchaseHistory purchaseHistory){
+        System.out.println(purchaseHistory.getPhNumber()+"*******"+purchaseHistory.getPhSupname());
         Map purchaseHistpage = purchaseHistoryService.getPurchaseHistoryByPhNumber(pageNum,pageSize,purchaseHistory);
         return purchaseHistpage;
     }
