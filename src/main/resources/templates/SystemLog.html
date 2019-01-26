@@ -74,7 +74,7 @@
             <td>{{item.ip}}</td>
             <td>{{item.createDate}}</td>
             <td id="{{item.id}}">
-                <a title="删除" href="javascript:;" onclick="system_log_del(this,123)" class="ml-5"
+                <a title="删除" href="javascript:;"  @click="system_log_del(item.id)" class="ml-5"
                    style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
         </tr>
         </tbody>
@@ -135,23 +135,24 @@
     selectAllSystemLog();
 
     /*日志-删除*/
-    function system_log_del(obj,id){
-        layer.confirm('确认要删除吗？',function(index){
+    var system_log_del = function (id) {
+        layer.confirm('你确定要删除吗？',{
+            btn:['是','否']
+        },function () {
             $.ajax({
-                type: 'POST',
-                url: '',
-                dataType: 'json',
-                success: function(data){
-                    $(obj).parents("tr").remove();
-                    layer.msg('已删除!',{icon:1,time:1000});
+                type:'GET',
+                dataType:"text",
+                url: '/systemsetup/system-log/deleteByIdSystemLog',
+                data:{id:id},
+                success: function (msg) {
+                    layer.msg(msg, {icon: 1});
                     selectAllSystemLog();
-                },
-                error:function(data) {
-                    console.log(data.msg);
-                },
+                }
             });
-        });
-    }
+        }/*,function () {
+            selectAllSystemLog();
+        }*/);
+    };
 </script>
 </body>
 </html>
