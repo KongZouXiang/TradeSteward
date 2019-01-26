@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <title>dtree</title>
+    <link rel="StyleSheet" href="/dtree.css" type="text/css"/>
+    <script type="text/javascript" src="/dtree.js"></script>
+    <script src="/jquery.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<div style="width: 50px;height: 50px" class="dtree" id="dtree_div">
+    <script type="text/javascript">
+        d = new dTree('d', true);   //参数一: 树名称。参数二：单选多选 true多选  false单选  默认单选
+        d.add(0, -1, '商品分类');
+        var getdata=function () {
+            $.ajax({
+                async:false,
+                type:'post',
+                dataType:'json',
+                url:'/basicdata/commclass/queryList',
+                success:function (msg) {
+                    var data=msg.commclass;
+                    for (var j=0,len=data.length;j<len;j++)
+                    {
+                        d.add(data[j].id,data[j].ccFuji,'authority','00'+j,data[j].ccDefault,true, false);
+                    }
+                }
+            })
+        };
+        getdata();
+        document.write(d);
+        d.openAll();
+    </script>
+</div>
+</body>
+</html>

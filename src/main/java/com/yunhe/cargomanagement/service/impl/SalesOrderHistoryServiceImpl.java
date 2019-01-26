@@ -44,7 +44,7 @@ public class SalesOrderHistoryServiceImpl extends ServiceImpl<SalesOrderHistoryM
     @Override
     public int updateSale(SalesOrderHistory salesOrderHistory) {
 
-        return salesOrderHistoryMapper.updateSale(salesOrderHistory);
+        return salesOrderHistoryMapper.updateById(salesOrderHistory);
     }
 
     @Override
@@ -64,22 +64,18 @@ public class SalesOrderHistoryServiceImpl extends ServiceImpl<SalesOrderHistoryM
     }
 
     @Override
+    public SalesOrderHistory selectByNumber(SalesOrderHistory salesOrderHistory) {
+        SalesOrderHistory salesOrderHistory1 = salesOrderHistoryMapper.selectByNumber(salesOrderHistory);
+        return salesOrderHistory1;
+    }
+
+    @Override
     public List<SalesOrderHistory> selectAll() {
         return salesOrderHistoryMapper.selectAll();
     }
 
     @Override
     public List<OrderConnectComm> detailList(int id) {
-       /* ArrayList<CommodityList> commodityLists = new ArrayList<>();
-        List<SalesOrderHistory> list = salesOrderHistoryMapper.selectAbc(id);
-        for (SalesOrderHistory salesOrderHistory : list) {
-            List<OrderConnectComm> orderConnectComms = salesOrderHistory.getOrderConnectComms();
-            for (OrderConnectComm comm : orderConnectComms) {
-                CommodityList commodityList = comm.getCommodityList();
-                commodityLists.add(commodityList);
-            }
-        }
-        return commodityLists;*/
         List<OrderConnectComm> arr=null;
         List<SalesOrderHistory> list = salesOrderHistoryMapper.selectAbc(id);
         for (SalesOrderHistory salesOrderHistory : list) {

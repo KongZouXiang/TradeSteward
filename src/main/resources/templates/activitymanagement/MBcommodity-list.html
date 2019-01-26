@@ -21,8 +21,10 @@
     <script src="/lib/layui/layui.all.js"></script>
     <link rel="stylesheet" href="/lib/layui/css/layui.css">
 <!--    <script>DD_belatedPNG.fix('*');</script>-->
+
 </head>
 <body>
+
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 新手引导 <span
         class="c-gray en">&gt;</span> 商品列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
                                                href="javascript:location.replace(location.href);" title="刷新"><i
@@ -45,12 +47,12 @@
                 <th scope="col" colspan="9">商品列表</th>
             </tr>
             <tr class="text-c">
+                <th width="25"><input type="checkbox" id="check" name="" value=""></th>
                 <th width="40">序号</th>
-                <th width="70">操作</th>
                 <th width="130">数量</th>
                 <th width="150">编号</th>
                 <th width="90">名称</th>
-                <th width="60">基本单位</th>
+
                 <th width="100">零售价(元)</th>
                 <th width="100">属性</th>
                 <th width="100">规格</th>
@@ -58,25 +60,27 @@
             </thead>
             <tbody>
             <tr class="text-c" v-for="(item,index) in result">
-
-                <td>{{index+1}}</td>
-                <td><button class="layui-btn layui-btn-sm"  id="checkCommdi">选择商品</button></td>
+                <td><input type="checkbox" :value=index  name="aid"></td>
+                <td >{{index+1}}</td>
+                <td style="display: none" class="clid">{{item.id}}</td>
                 <td>
-                    <button class="layui-btn  layui-btn-xs" >+</button>
-                    <input type="text" class="input-text" style="width:40px; height: 24px" id="commdiNumber" name="">
-                    <button class="layui-btn  layui-btn-xs" style="width: 20px">-</button>
+                    <button class="layui-btn" style="width:15px; height: 24px" @click="jia(index)">+</button>
+                    <input type="text" class="input-text" style="width:40px; height: 24px" id="commdiNumber" name="" value="0">
+                    <button class="layui-btn" style="width:15px; height: 24px" @click="jian(index)">-</button>
                 </td>
-                <td id="clNumber">{{item.clNumber}}
-                    </td>
-                <td id="clName">{{item.clName}}</td>
-                <td id="usId">{{item.usId}}</td>
-                <td id="clTagPrise">{{item.clTagPrise}}</td>
-                <td id="clSpec">{{item.clSpec}}</td>
-                <td id="prId">{{item.prId}}</td>
+                <td class="clNumber" >{{item.clNumber}}</td>
+                <td class="clName">{{item.clName}}</td>
+                <td class="clTagPrise">{{item.clTagPrise}}</td>
+                <td class="clSpec">{{item.clSpec}}</td>
+                <td class="prId">{{item.prId}}</td>
             </tr>
             </tbody>
         </table>
+        <div><button class="layui-btn" style="margin-top: 60px;margin-left:450px " onclick="tijiao()">提交</button>
+          </div>
+
     </div>
+
     <div id="pagenav" style="text-align:center;position: fixed;left: 0px;bottom :50px;width: 100%;height: 50px"></div>
 </div>
 <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
@@ -102,7 +106,7 @@
                 url : "/basicdata/commodity-list/getpage",
                 data : {
                     current:curr || 1,
-                    size:2
+                    size:6
                 },
                 success : function(msg) {
                     $("#strong").html(msg.total);
@@ -155,6 +159,87 @@
         }
 
     )
+
+    /**
+     * 对选择的商品进行增加操作
+     * @param obj
+     */
+    function jia(obj) {
+        var txt =document.getElementsByClassName("input-text");
+        var val =txt[obj+1].value;
+        val++;
+        txt[obj+1].value=val;
+    }
+
+    /**
+     * 对选择的数据进行减少操作
+     * @param obj
+     */
+    function  jian(obj) {
+        var txt=document.getElementsByClassName("input-text");
+        var val =txt[obj+1].value;
+        val--;
+        if (val<=1){
+            val=0;
+        }
+        txt[obj+1].value=val;
+    }
+    
+    function  tijiao() {
+
+        var clid =new Array();
+        $(".clid").each(function(i) {
+            clid[i] =$(this).text() ;
+        })
+
+        var clName =new Array();
+        $(".clName").each(function(i) {
+           clName[i] =$(this).text() ;
+        })
+
+        var clNumber =new Array();
+        $(".clNumber").each(function(i) {
+            clNumber[i] =$(this).text() ;
+        })
+        var clSpec =new Array();
+        $(".clSpec").each(function(i) {
+            clSpec[i] =$(this).text() ;
+        })
+        var clTagPrise =new Array();
+        $(".clTagPrise").each(function(i) {
+            clTagPrise[i] =$(this).text() ;
+        })
+        var commdiNumber=new Array();
+        $(".input-text").each(function(i) {
+            commdiNumber[i] =$(this).val();
+        })
+
+
+        var check = new Array();
+        check = $('input[name=aid]:checked');
+        var sid =new Array()
+        for (var i =0;i<check.length;i++){
+                var s=check[i].value;
+                alert(s);
+                var d =i+1;
+                var sd =parent.$("#shuju");
+                parent.$("#index").append(new Option(d));
+                parent.$("#sid").val(clid[s]);
+                parent.$("#sid").append( $("<option value='"+i+"' id='sid'>"+clid[s]+",</option>"))
+                parent.$("#shopname").append( $("<option value='"+i+"'>"+clName[s]+",</option>"))
+                parent.$("#shopnuber").append($("<option value='"+i+"'>"+clNumber[s]+",</option>"))
+                parent.$("#shopguige").append($("<option value='"+i+"'>"+clSpec[s]+",</option>"))
+                parent.$("#shopsize").append($("<option value='"+i+"'>"+commdiNumber[d]+",</option>"))
+                parent.$("#shopjiage").append($("<option value='"+i+"'>"+clTagPrise[s]+",</option>"))
+
+                sd.append("<tr><td class='id' hidden='hidden' >"+clid[s]+"</td>  <td>"+d+"</td><td style='text-align: center'>  <button class=\"layui-btn layui-btn-danger layui-btn-sm\" ><i class=\"layui-icon\"></i></button></td><td id='names'>"+clName[s]+"</td><td>"+clNumber[s]+"</td><td>"+clSpec[s]+"</td><td><input value="+commdiNumber[d]+"></td><td>"+clTagPrise[s]+"</td></tr>");
+        }
+
+        var index = parent.layer.getFrameIndex(window.name);
+
+        parent.layer.close(index);
+
+    }
 
 
 </script>

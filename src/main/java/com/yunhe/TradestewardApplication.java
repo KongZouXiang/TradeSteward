@@ -9,7 +9,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 
 /**
- * Demo class
+ * <P>
+ *     SpringBoot启动类
+ * </P>
  *
  * @author 孔邹祥
  * @date 2016/10/31
@@ -18,6 +20,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @MapperScan("com.yunhe.*.dao")
 @EnableAutoConfiguration(exclude = { FreeMarkerAutoConfiguration.class })
 @EnableScheduling
+
 public class TradestewardApplication {
 
     public static void main(String[] args) {

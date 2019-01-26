@@ -10,9 +10,9 @@
     </select>
     <!--增加商品信息-->
     <insert id="insertComm" parameterType="CommodityList">
-        insert into commodity_list (cl_number, cl_name, cc_id, cl_spec, cl_unit, cl_scan, cl_tag_prise, cl_who_price,wm_id,
+        insert into commodity_list (cl_number, cl_name, cc_id, cl_spec, cl_unit, cl_scan, cl_tag_prise, cl_who_price,wm_id,pr_id,
                                     cl_pur_price,cl_minstock,cl_maxstock,cl_minlingprice)
-        values (#{clNumber}, #{clName}, #{ccId}, #{clSpec}, #{clUnit}, #{clScan}, #{clTagPrise}, #{clWhoPrice},#{wmId}
+        values (#{clNumber}, #{clName}, #{ccId}, #{clSpec}, #{clUnit}, #{clScan}, #{clTagPrise}, #{clWhoPrice},#{wmId},#{prId},
                 #{clPurPrice},#{clMinStock},#{clMAxStock},#{clMinLingPrice});
     </insert>
     <!--查询商品的详细信息-->
@@ -58,9 +58,4 @@
     <select id="selectComclassList1" resultType="com.yunhe.basicdata.entity.CommodityList">
         SELECT  id,cl_name,cl_unit,cl_scan,cl_spec,cl_pur_price,cl_who_price,cl_tag_prise,cc_id,wm_id,pr_id,cl_number,cl_minstock,cl_maxstock,cl_minlingprice  FROM commodity_list
     </select>
-
-    <select id="selectListByClName" parameterType="com.yunhe.basicdata.entity.CommodityList" resultType="com.yunhe.basicdata.entity.CommodityList">
-        SELECT  id,cl_name,cl_unit,cl_scan,cl_spec,cl_pur_price,cl_who_price,cl_tag_prise,cc_id,wm_id,pr_id,cl_number,cl_minstock,cl_maxstock,cl_minlingprice  FROM commodity_list where cl_name=#{clName}
-    </select>
-
 </mapper>

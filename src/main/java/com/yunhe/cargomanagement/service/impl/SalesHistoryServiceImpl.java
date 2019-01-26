@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.cargomanagement.dao.SalesHistoryMapper;
+import com.yunhe.cargomanagement.entity.OrderConnectComm;
 import com.yunhe.cargomanagement.entity.SalesHistory;
 import com.yunhe.cargomanagement.service.ISalesHistoryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -46,7 +47,7 @@ public class SalesHistoryServiceImpl extends ServiceImpl<SalesHistoryMapper, Sal
 
     @Override
     public SalesHistory selectById(int id) {
-        SalesHistory salesHistory = salesHistoryMapper.selectById(id);
+        SalesHistory salesHistory = salesHistoryMapper.selectSaleById(id);
         return salesHistory;
     }
 
@@ -64,6 +65,22 @@ public class SalesHistoryServiceImpl extends ServiceImpl<SalesHistoryMapper, Sal
         return map;
     }
 
+    @Override
+    public List<OrderConnectComm> detailList(int id) {
+        List<OrderConnectComm> arr=null;
+        List<SalesHistory> salesHistories = salesHistoryMapper.selectAbc(id);
+        for (SalesHistory salesHistory : salesHistories) {
+            List<OrderConnectComm> orderConnectComms = salesHistory.getOrderConnectComms();
+            arr=orderConnectComms;
+        }
+        return arr;
+    }
+
+    @Override
+    public SalesHistory selectByNumber(SalesHistory salesHistory) {
+
+        return salesHistoryMapper.selectByNumber(salesHistory);
+    }
 
 
 }

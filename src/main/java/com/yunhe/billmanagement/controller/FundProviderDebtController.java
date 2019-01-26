@@ -5,6 +5,7 @@ import com.yunhe.billmanagement.entity.FundClientDebtDetail;
 import com.yunhe.billmanagement.entity.FundProviderDebt;
 import com.yunhe.billmanagement.service.IFundClientDebtDetailService;
 import com.yunhe.billmanagement.service.IFundProviderDebtService;
+import com.yunhe.core.common.annotion.WebLog;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -47,6 +48,7 @@ public class FundProviderDebtController {
      * </P>
      * @return 进入bill-FundProviderDebt.html
      */
+    @WebLog("进入供应商应付欠款页面")
     @RequestMapping("/toFpd")
     public ModelAndView toFpd(HttpSession session){
         Map<String,Object> countList = fundProviderDebtService.selectFpdMap();
@@ -62,6 +64,7 @@ public class FundProviderDebtController {
      * @param size 每页条数
      * @return 供应商应付欠款表：分页的结果集
      */
+    @WebLog("查看供应商应付欠款信息")
     @GetMapping("/selectFpdPage")
     public Map selectFpdPage(int current, int size,FundProviderDebt fundProviderDebt) {
         return fundProviderDebtService.selectFpdPage(current,size,fundProviderDebt);
@@ -73,6 +76,7 @@ public class FundProviderDebtController {
      * </P>
      * @return 进入FPD_add.html
      */
+    @WebLog("进入供应商欠款增加页面")
     @RequestMapping("/toAdd")
     public ModelAndView toAdd(HttpSession session){
         int id = fundClientDebtDetailService.maxId();
@@ -87,16 +91,18 @@ public class FundProviderDebtController {
      * </P>
      * @return 进入bill-FCD-add-supplier.html
      */
+    @WebLog("进入供应商查找页面")
     @RequestMapping("/selectSupplier")
     public ModelAndView selectSupplier(){
         return new ModelAndView("billmanagement/bill-FPD-add-supplier");
     }
     /**
      * <P>
-     *    通过id查找该客户是否欠款
+     *    通过id查找该供应商是否欠款
      * </P>
      * @return 集合
      */
+    @WebLog("通过id查找该供应商是否欠款")
     @RequestMapping("/selectIdFpdExit")
     public FundProviderDebt selectIdFpdExit(String fpdName){
         return fundProviderDebtService.selectIdFpdExit(fpdName);
@@ -108,6 +114,7 @@ public class FundProviderDebtController {
      * @param fundClientDebtDetail 新增收款的参数存在一个对象里
      * @return  客户应收欠款表：增加是否成功
      */
+    @WebLog("向欠款详细中添加数据")
     @RequestMapping("/insertFcdd")
     public boolean insertFcdd(FundClientDebtDetail fundClientDebtDetail){
         boolean i = fundClientDebtDetailService.save(fundClientDebtDetail);
@@ -130,6 +137,7 @@ public class FundProviderDebtController {
      * @param fundProviderDebt 新增付款的参数存在一个对象里
      * @return  供应商应付欠款表：增加是否成功
      */
+    @WebLog("增加供应商欠款信息")
     @PostMapping("/insertFpd")
     public int insertFcd(FundProviderDebt fundProviderDebt) {
         return fundProviderDebtService.insertFpd(fundProviderDebt);
@@ -141,6 +149,7 @@ public class FundProviderDebtController {
      * </P>
      * @return 进入bill-FPD-detail.html
      */
+    @WebLog("进入供应商欠款详情页面")
     @RequestMapping("/fpdDetail")
     public ModelAndView fpdDetail(String fcddFcdName,HttpSession session){
         session.setAttribute("fcddFcdName",fcddFcdName);
@@ -157,6 +166,7 @@ public class FundProviderDebtController {
      * @return  Excel导出到本地
      * @throws IOException
      */
+    @WebLog("Excel导出供应商欠款信息")
     @RequestMapping("/export")
     public String createExcel(HttpServletResponse response) throws IOException {
         //获取查询结果的数据,只要对其进行封装就行了

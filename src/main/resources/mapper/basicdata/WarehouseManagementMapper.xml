@@ -12,4 +12,7 @@
         LIKE concat('%',#{data},'%') OR wm_remark
         LIKE concat('%',#{data},'%')
     </select>
+    <select id="selectware" resultType="com.yunhe.basicdata.entity.WarehouseManagement">
+        select * from warehouse_management
+    </select>
 </mapper>

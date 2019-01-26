@@ -1,0 +1,170 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="Bookmark" href="/favicon.ico" >
+    <link rel="Shortcut Icon" href="/favicon.ico" />
+    <script type="text/javascript" src="/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <script type="text/javascript" src="/js/vue/vue.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css" />
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <title>进货报表</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 云管货 <span
+        class="c-gray en">&gt;</span> 进货报表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+                                                href="javascript:location.replace(location.href);" title="刷新"><i
+        class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div class="text-c"> <!--日期范围：
+        <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin"
+               class="input-text Wdate" style="width:120px;">
+        -
+        <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax"
+               class="input-text Wdate" style="width:120px;">-->
+        <input type="text" class="input-text" style="width:250px" placeholder="输入单号或供应商编号" id="soNumber" name="">
+        <button type="submit" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜索</button>
+    </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+            <!--<a href="javascript:;" id="deletell"  class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+        <a href="javascript:;" onclick="addSales('添加','/cargomanagement/sales-order-history/ceshi1','800','500')"
+           class="btn btn-primary radius">
+        <i class="Hui-iconfont">&#xe600;</i> 添加销售订单历史</a>-->
+        <a href="javascript:;" onclick="Excel_out()"
+           class="btn btn-primary radius">
+        <i class="Hui-iconfont">&#xe644;</i> Excel导出</a>
+    </span>
+
+        <span class="r">共有数据：<strong id="strong"></strong> 条</span></div>
+    <div id="app" style="overflow: scroll;height: 500px"  >
+        <table class="table table-border table-bordered table-bg">
+            <thead>
+            <tr>
+                <th scope="col" colspan="9">订单列表</th>
+            </tr>
+            <tr class="text-c">
+                <th width="25"><input type="checkbox" id="checkAll" value=""></th>
+                <th width="40">ID</th>
+                <th width="130">商品名称</th>
+                <th width="150">单位</th>
+                <th width="150">规格</th>
+                <th width="90">进货价格</th>
+                <th width="130">进货量</th>
+                <th width="150">进货额</th>
+                <th width="100">进货开单量</th>
+                <th width="100">进货开单金额</th>
+            </tr>
+            </thead>
+
+
+            <tbody>
+            <tr class="text-c" v-for="(item,index) in result">
+
+                <td><input type="checkbox" id="box_" :value="item.id"></td>
+                <td>{{index+1}}</td>
+
+                <td>{{item.cl_name}}</td>
+                <td>{{item.us_id}}</td>
+                <td>{{item.cl_spec}}</td>
+                <td>{{item.cl_pur_price}}</td>
+                <td>{{item.po_quantity_of_purchase}}</td>
+                <td>{{item.cl_pur_price}}</td>
+                <td>{{item.poQuantityOfPurchase}}</td>
+                <td>{{item.po_bill}}</td>
+                <td>{{item.}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="pagenav" style="text-align: center"></div>
+</div>
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el:'#app',
+        data:{
+            result:[]
+        }
+    });
+    $(function () {
+        $("#checkAll").click(function () {
+            $("input[id^='box_']").attr("checked",this.checked);
+        })
+        $("input[id^='box_']").click(function(){//点击每一个子checkbox，都会触发这个事件
+            /**获取到下面所有checkbox*/
+            var boxs = $("input[id^='box_']");
+
+            $("#checkAll").attr("checked",boxs.filter(":checked").length == 4);
+        });
+    });
+
+    var getPurchasePageList = function (curr) {
+        $.ajax({
+            type:'post',
+            dataType:'json',
+            url:'/reportanalysis/jhbb/quertLikeList',
+            data:{
+                pageNum: curr || 1,
+                pageSize:4,
+                soClient:$("#soClient").val(),
+                soOrderNum:$("#soNumber").val(),
+            },
+            success: function (msg) {
+                app.result = msg.page;
+                $("#strong").html(msg.total);
+                laypage({
+                    cont: 'pagenav',//容器  值支持id名、原生dom对象，jquery对象,
+                    pages: msg.totalPage,//总页数
+                     first: '首页',
+                    last: '尾页',
+                    curr: curr || 1,//初始化页数
+                    jump: function (obj, first) { //触发分页后的回调
+                        if (!first) {     //点击跳页触发函数自身，并传递当前页：obj.curr
+                            getPurchasePageList(obj.curr);
+                        }
+                    }
+                });
+            }
+        });
+    };
+    getPurchasePageList();
+    $("#findempl").on('click', function () {
+        getPurchasePageList();
+    });
+
+
+
+    function detailSale(id) {
+        var index = layer.open({
+            type: 2,
+            title: '详细',
+            content: '/reportanalysis/jhbb/edit?id='+id,
+        });
+        layer.full(index);
+    };
+
+    var Excel_out =function () {
+        window.location.href="/reportanalysis/jhbb/export";
+    }
+
+</script>
+</body>
+</html>

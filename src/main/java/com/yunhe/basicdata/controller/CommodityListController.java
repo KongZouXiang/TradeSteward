@@ -4,10 +4,10 @@ import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.entity.WarehouseManagement;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,7 +48,28 @@ public class CommodityListController {
      */
     @RequestMapping(value = "/addpage", method = RequestMethod.POST)
     @ResponseBody
-    public int insertComm(CommodityList commodityList) {
+    public int insertComm(@RequestParam("clScan") String clScan,@RequestParam("clNumber") String clNumber,
+                          @RequestParam("clName") String clName,@RequestParam("ccId") int  ccId,
+                          @RequestParam("clUnit") String clUnit,@RequestParam("clSpec") String clSpec,
+                          @RequestParam("clPurPrice") String clPurPrice,@RequestParam("clWhoPrice") String clWhoPrice,
+                          @RequestParam("clTagPrise") String clTagPrise,@RequestParam("wmId") int  wmId,
+                          @RequestParam("clMinLingPrice") String  clMinLingPrice,@RequestParam("clMinStock") int clMinStock,
+                          @RequestParam("clMAxStock") int clMAxStock) {
+        CommodityList commodityList=new CommodityList();
+        commodityList.setClScan(clScan);
+        commodityList.setClNumber(clNumber);
+        commodityList.setClName(clName);
+        commodityList.setClSpec(clSpec);
+        commodityList.setClUnit(clUnit);
+        commodityList.setClPurPrice(clPurPrice);
+        commodityList.setClWhoPrice(clWhoPrice);
+        commodityList.setClTagPrise(clTagPrise);
+        commodityList.setWmId(wmId);
+        commodityList.setCcId(ccId);
+        commodityList.setClMinLingPrice(clMinLingPrice);
+        commodityList.setClMinStock(clMinStock);
+        commodityList.setClMAxStock(clMAxStock);
+        commodityList.setPrId(4);
         return  commodityListService.insertComm(commodityList);
     }
     /**
@@ -68,6 +89,18 @@ public class CommodityListController {
        mv.setViewName("basicdata/editCommodity");
         return mv;
     }
+
+    /**
+     * 根据id查询所有的商品.刘延琦2019-1-23 16:10:22
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/selectcommdityId")
+    public CommodityList selectcommdityId(@RequestParam("id") int id) {
+
+        CommodityList commodityListid = commodityListService.selectCommById(id);
+        return commodityListid;
+    }
     /**
      * 更改商品的信息
      * @param id     传过来的id
@@ -81,8 +114,8 @@ public class CommodityListController {
                           @RequestParam("guige") String guige,@RequestParam("cankaojinhuo") String cankaojinhuo,
                           @RequestParam("pifajia") String pifajia,@RequestParam("lingshoujia") String lingshoujia,
                            @RequestParam("comzuilingshoujia") String comzuilingshoujia,@RequestParam("comzuidikucun") int comzuidikucun,
-                           @RequestParam("comzuigaokucun") int comzuigaokucun,/*@RequestParam("fenlei") int fenlei,*/
-                           @RequestParam("danwei") String danwei) {
+                           @RequestParam("comzuigaokucun") int comzuigaokucun,@RequestParam("fenlei") int fenlei,
+                           @RequestParam("danwei") String danwei,@RequestParam("wmid") int wmid) {
         CommodityList commodityList = new CommodityList();
         commodityList.setId(id);
         commodityList.setClScan(tiaoxingma);
@@ -92,11 +125,12 @@ public class CommodityListController {
         commodityList.setClPurPrice(cankaojinhuo);
         commodityList.setClWhoPrice(pifajia);
         commodityList.setClTagPrise(lingshoujia);
-        commodityList.setCcId(1);
+        commodityList.setCcId(fenlei);
         commodityList.setClNumber(bianhao);
         commodityList.setClMinLingPrice(comzuilingshoujia);
         commodityList.setClMinStock(comzuidikucun);
         commodityList.setClMAxStock(comzuigaokucun);
+        commodityList.setWmId(wmid);
         return commodityListService.updateComm(commodityList);
     }
     @GetMapping("/detailcommodity")
@@ -282,5 +316,9 @@ public class CommodityListController {
     @RequestMapping("/getcommdityfenye")
     public ModelAndView selectfenye() {
         return new ModelAndView("basicdata/admincommodity-list");
+    }
+    @RequestMapping("/tocomclass")
+    public ModelAndView tocomclass(){
+        return new ModelAndView("basicdata/comclass");
     }
 }

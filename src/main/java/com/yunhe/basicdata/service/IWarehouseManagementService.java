@@ -1,9 +1,7 @@
 package com.yunhe.basicdata.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.basicdata.entity.WarehouseManagement;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yunhe.cargomanagement.entity.Warehouse;
 
 import java.util.List;
 import java.util.Map;
@@ -21,8 +19,9 @@ public interface IWarehouseManagementService extends IService<WarehouseManagemen
      * <>
      * 分页查询仓库
      * </>
+     *
      * @param pageSize 每页显示数量
-     * @param pageNum 当前页
+     * @param pageNum  当前页
      * @return 仓库列表
      */
     Map selectWareList(String data, int pageSize, int pageNum);
@@ -63,9 +62,17 @@ public interface IWarehouseManagementService extends IService<WarehouseManagemen
 
     /**
      * 增加仓库
+     *
      * @param warehouseManagement 要增加仓库的实体类
      */
     Integer addWarehouse(WarehouseManagement warehouseManagement);
+
+    /**
+     * 查询仓库
+     *
+     * @return
+     */
+    List<WarehouseManagement> selectware();
 
     /**
      * 查询所有

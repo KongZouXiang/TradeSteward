@@ -11,6 +11,44 @@
         where sh_client like concat('%',#{salesHistory.shClient},'%')
         and sh_number like concat('%',#{salesHistory.shNumber},'%')
     </select>
+    <select id="selectSaleById" resultType="com.yunhe.cargomanagement.entity.SalesHistory">
+        select <include refid="Cols"/>from sales_history where id=#{id}
+    </select>
+
+    <resultMap id="ConnectList" type="SalesHistory">
+        <id column="id" property="id"/>
+        <result column="sh_client" property="shClient"/>
+        <collection property="orderConnectComms"  ofType="OrderConnectComm">
+            <id column="bid" property="id"/>
+            <result column="order_count" property="orderCount"/>
+            <result column="cl_id" property="clId"/>
+            <association property="commodityList" javaType="CommodityList">
+                <id column="pid" property="id"/>
+                <result column="cl_name" property="clName"/>
+                <result column="cl_unit" property="clUnit"/>
+                <result column="cl_tag_prise" property="clTagPrise"/>
+                <result column="cl_number" property="clNumber"/>
+            </association>
+        </collection>
+    </resultMap>
+
+    <select id="selectAbc" resultMap="ConnectList">
+        select
+            a.id,
+            a.sh_client,
+            b.id bid,
+            b.order_count,
+            b.cl_id,
+            c.id pid,
+            c.cl_name,
+            c.cl_unit,
+            c.cl_tag_prise,
+            c.cl_number
+        from sales_history a,order_connect_comm b ,commodity_list c where a.id =b.sell_order_num and b.cl_id =c.id and a.id=#{id}
+    </select>
+    <select id="selectByNumber" resultType="com.yunhe.cargomanagement.entity.SalesHistory">
+        select <include refid="Cols"/> from sales_history where sh_number=#{shNumber}
+    </select>
 
 
 </mapper>

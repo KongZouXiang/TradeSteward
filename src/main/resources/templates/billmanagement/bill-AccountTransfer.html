@@ -53,10 +53,10 @@
             <th width="150">备注</th>
         </tr>
         </thead>
-        <tbody>
-        <tr class="text-c" v-for="(item,index) in result">
+        <tbody v-for="(item,index) in result">
+        <tr class="text-c">
             <td>{{index+1}}</td>
-            <td class="td-manage"><a title="详情" href="javascript:;" @click="editEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
+            <td class="td-manage"><a title="详情" href="javascript:;" @click="editEvent(index)" id="detail" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe623;</i></a>
                 <a title="删除" href="javascript:;" @click="delEvent(item.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
             <td>{{item.atOutAccount}}</td>
             <td>{{item.atOutTime}}</td>
@@ -68,8 +68,21 @@
             <td>{{item.atPerson}}</td>
             <td>{{item.atRemark}}</td>
         </tr>
-        <tr id="detail" >
-
+        <tr class='info' style="display: none">
+            <td height='75px'colspan='11'>
+                <div style="border-bottom:1px solid #b2b2b2;height: 25px">转账金额:<span>{{item.atMoney}}</span></div>
+                <div style="height: 25px ">
+                    <div style="width: 25%;float: left">转出账户:<span>{{item.atOutAccount}}</span></div>
+                    <div style="width: 25%;float: left">转入账户:<span>{{item.atIntoAccount}}</span></div>
+                    <div style="width: 25%;float: left">手续费:<span>{{item.atCharge}}</span></div>
+                    <div style="width: 25%;float: left">备注:<span>{{item.atRemark}}</span></div></div>
+                <div style="height: 25px">
+                    <div style="width: 25%;float: left">转出日期:<span>{{item.atOutTime}}</span></div>
+                    <div style="width: 25%;float: left">到账日期:<span>{{item.atIntoTime}}</span></div>
+                    <div style="width: 25%;float: left">手续费支付方:<span>{{item.atChargePerson}}</span></div>
+                    <div style="width: 25%;float: left">经手人:<span>{{item.atPerson}}</span></div>
+                </div>
+            </td>
         </tr>
         </tbody>
         <tbody data-validator-option="{theme:'simple_right'}">
@@ -80,8 +93,8 @@
             <th width="150"></th>
             <th width="150"></th>
             <th width="150"></th>
-            <th width="150"><span style="color: red;font-size: 20px" id="money"></span></th>
-            <th width="150"><span style="color: red;font-size: 20px" id="charge"></span></th>
+            <th width="150"><span style="color: red;font-size: 14px" id="money"></span></th>
+            <th width="150"><span style="color: red;font-size: 14px" id="charge"></span></th>
             <th width="150"></th>
             <th width="150"></th>
             <th></th>
@@ -165,36 +178,13 @@
     });
 
     /*收支详情*/
-    var editEvent = function (id){
-        $.ajax({
-            type:'get',
-            dataType:'json',
-            url:'/billManagement/account-transfer/toDetail',
-            data:{
-                id:id
-            },
-            success:function (msg) {
-                var xiangqing = "<td height='75px'colspan='11'>" +
-                    "<div style='border-bottom:1px solid #b2b2b2;height: 25px '>转账金额:<span>"+msg.atMoney+"</span></div>" +
-                    "<div style='height: 25px '>" +
-                    "   <div style='width: 25%;float: left'>转出账户:<span>"+msg.atOutAccount+"</span></div>" +
-                    "   <div style='width: 25%;float: left'>转入账户:<span>"+msg.atIntoAccount+"</span></div>" +
-                    "   <div style='width: 25%;float: left'>手续费:<span>"+msg.atCharge+"</span></div>" +
-                    "   <div style='width: 25%;float: left'>备注:<span>"+msg.atRemark+"</span></div></div>" +
-                    "<div style='height: 25px'>"  +
-                    "   <div style='width: 25%;float: left'>转出日期:<span>"+msg.atOutTime+"</span></div>" +
-                    "   <div style='width: 25%;float: left'>到账日期:<span>"+msg.atIntoTime+"</span></div>" +
-                    "   <div style='width: 25%;float: left'>手续费支付方:<span>"+msg.atChargePerson+"</span></div>" +
-                    "   <div style='width: 25%;float: left'>经手人:<span>"+msg.atPerson+"</span></div></div></td>";
-
-                if ($("#detail").val().length == 0){
-                    document.getElementById("detail").insertAdjacentHTML('afterend',xiangqing);
-                } else if ($("#detail").val().length != 0){
-                    document.getElementById("detail").closest(xiangqing);
-                }
-
+    var editEvent = function (as){
+            var a=$(".info");
+            if (a[as].style.display=="none"){
+                a[as].style.display="";
+            } else {
+                a[as].style.display="none";
             }
-        })
     };
 
     /*删除订单*/
@@ -208,11 +198,10 @@
                 url: '/billManagement/account-transfer/deleteAt',
                 data:{id:id},
                 success:function (msg) {
-                    /*alert(msg);*/
-                    if(msg==0){
+                    if(msg==1){
                         layer.msg('删除成功',{icon:1});
                     }
-                    if(msg!=0){
+                    if(msg!=1){
                         layer.msg('删除失败',{icon:5});
                     }
                     getAtPageList();

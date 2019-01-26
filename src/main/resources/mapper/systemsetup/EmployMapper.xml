@@ -46,6 +46,6 @@
     </update>
 
     <update id="updatemess" parameterType="com.yunhe.systemsetup.entity.Employ">
-        update employ set  em_username=#{emUsername},em_realname=#{emRealname},em_role=#{emRole},em_sex=#{emSex},em_phone=#{emPhone},em_email=#{emEmail},em_status=#{emStatus},em_address=#{emAddress},ch_id=#{ch_id} where id=#{id}
+        update employ set  em_username=#{emUsername},em_realname=#{emRealname},em_role=#{emRole},em_sex=#{emSex},em_phone=#{emPhone},em_email=#{emEmail},em_status=#{emStatus},em_address=#{emAddress},em_repo=#{emRepo},em_shiro=#{emShiro},em_sel_invoice=#{emSelInvoice},em_del_invoice=#{emDelInvoice},em_sel_user=#{emSelUser},ch_id=#{ch_id} where id=#{id}
 </update>
 </mapper>

@@ -35,6 +35,7 @@ public class ShiroConfig {
 //            设置安全管理器
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 //        添加Shiro内置过滤器
+
         /**
          * Shior内置过滤器，可以实现权限相关的拦截器
          *      常用拦截器
@@ -62,7 +63,7 @@ public class ShiroConfig {
         filterMap.put("/add", "perms[systemsetup]");
 
 //        Shiro拦截的页面
-        /*  filterMap.put("/*", "authc");*/
+        filterMap.put("/*", "authc");
 
 //        修改调整的登录页面
         shiroFilterFactoryBean.setLoginUrl("toLogin");
@@ -104,5 +105,22 @@ public class ShiroConfig {
     }
 
 
+    /**
+     * 密码校验规则HashedCredentialsMatcher
+     * 这个类是为了对密码进行编码的 ,
+     * 防止密码在数据库里明码保存 , 当然在登陆认证的时候 ,
+     * 这个类也负责对form里输入的密码进行编码
+     * 处理认证匹配处理器：如果自定义需要实现继承HashedCredentialsMatcher
+     */
+    @Bean("hashedCredentialsMatcher")
+    public HashedCredentialsMatcher hashedCredentialsMatcher() {
+        HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
+        //指定加密方式为MD5
+        credentialsMatcher.setHashAlgorithmName("MD5");
+        //加密次数
+        credentialsMatcher.setHashIterations(1024);
+        credentialsMatcher.setStoredCredentialsHexEncoded(true);
+        return credentialsMatcher;
+    }
 
 }

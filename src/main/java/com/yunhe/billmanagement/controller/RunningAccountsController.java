@@ -3,6 +3,7 @@ package com.yunhe.billmanagement.controller;
 
 import com.yunhe.billmanagement.entity.RunningAccounts;
 import com.yunhe.billmanagement.service.IRunningAccountsService;
+import com.yunhe.core.common.annotion.WebLog;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -41,6 +42,7 @@ public class RunningAccountsController {
      * </P>
      * @return 进入bill-FinanceClassify.html
      */
+    @WebLog("进入收支分类管理页面")
     @RequestMapping("/toRa")
     public ModelAndView toRa(HttpSession session){
         Map<String,Object> countList = runningAccountsService.selectCountMap();
@@ -56,6 +58,7 @@ public class RunningAccountsController {
      * @param runningAccounts 模糊查询的参数
      * @return 资金流水表：分页的结果集
      */
+    @WebLog("查看资金流水")
     @RequestMapping("/selectRaPage")
     public Map selectRaPage(int current, int size, RunningAccounts runningAccounts){
         return runningAccountsService.selectRaPage(current,size,runningAccounts);
@@ -69,6 +72,7 @@ public class RunningAccountsController {
      * @return  Excel导出到本地
      * @throws IOException
      */
+    @WebLog("Excel导出资金流水信息")
     @RequestMapping("/export")
     public String createExcel(HttpServletResponse response) throws IOException {
         //获取查询结果的数据,只要对其进行封装就行了

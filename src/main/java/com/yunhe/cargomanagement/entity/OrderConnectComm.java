@@ -39,11 +39,14 @@ public class OrderConnectComm implements Serializable {
     @TableField("sell_order_num")
     private int sellOrderNum;
 
+    @TableField("returnNum")
+    private int returnNum;
+
     @TableField("cl_id")
     private int clId;
 
-    @TableField("cl_number")
-    private String clNumber;
+    @TableField("order_count")
+    private int orderCount;
     private CommodityList commodityList;
     public static long getSerialVersionUID() {
         return serialVersionUID;

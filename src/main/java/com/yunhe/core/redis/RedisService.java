@@ -14,6 +14,7 @@ public class RedisService {
 
     @Resource
     private RedisTemplate redisTemplate;
+
     /**
      * 写入缓存
      * @param key

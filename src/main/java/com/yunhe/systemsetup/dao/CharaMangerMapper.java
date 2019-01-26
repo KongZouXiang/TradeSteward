@@ -28,4 +28,6 @@ public interface CharaMangerMapper extends BaseMapper<CharaManger> {
     //检查角色的名称
     public List<CharaManger> checkChar(CharaManger charaManger);
 
+
+
 }

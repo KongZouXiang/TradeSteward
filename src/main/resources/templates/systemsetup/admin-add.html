@@ -218,7 +218,7 @@
                 }
 
             },
-           /* yanzhengma:function (value) {
+            yanzhengma:function (value) {
                 if (value==""){
                     return "请输入验证码"
                 }
@@ -240,7 +240,7 @@
                 })
                 return checkyan;
             },
-*/
+
         });
             form.render();
         form.on('submit(add)',function (data) {
@@ -296,7 +296,7 @@
         $form.find('select[name=province]').append(proHtml);
         form.render();
         form.on('select(province)', function(data) {
-            $form.find('select[name=area]').html('<option value="">请选择县/区</option>').parent().hide();
+            $form.find('select[name=area]').html('<option value=""></option>').parent().hide();
             var value = data.value;
             var d = value.split('_');
             var code = d[0];

@@ -4,15 +4,18 @@ package com.yunhe.activitymanagement.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
-import io.swagger.annotations.*;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -28,7 +31,6 @@ import java.util.Map;
  * @author 刘栋
  * @since 2019-01-07
  */
-@Api(value = "套餐管理.商品模板 ", tags = "套餐管理.商品模板 ")
 @RestController
 @RequestMapping("/activitymanagement/commodi-tytemplate")
 public class CommodiTytemplateController {
@@ -45,15 +47,31 @@ public class CommodiTytemplateController {
     }
 
 
+
+
     @RequestMapping("/xinzeng")
     public ModelAndView xinzeng() {
         return new ModelAndView("activitymanagement/addshangpinmoban");
     }
 
-    @ApiOperation(value="增加模板", httpMethod = "POST",notes="根据CommodiTytemplate对象增加用户")
+    /**
+     * 查询模板详情
+     * @param id
+     * @param session
+     * @return
+     */
+    @RequestMapping("/toDetail")
+    public ModelAndView toDetail(int id, HttpSession session){
+        System.out.println("toDetail进入controller");
+        CommodiTytemplate co = commodiTytemplateService.selectById(id);
+        session.setAttribute("commditytemplate",co);
+        return new ModelAndView("activitymanagement/mobanxiangqing");
+    }
 
-    @ApiImplicitParam(name = "sa", value = "用户详细实体CommodiTytemplate", required = true, dataType = "CommodiTytemplate")
-    @PostMapping("insertCt")
+
+
+
+
     public int insertCt(CommodiTytemplate sa) {
         return commodiTytemplateService.insertCt(sa);
     }
@@ -63,10 +81,7 @@ public class CommodiTytemplateController {
      *
      * @return
      */
-    @ApiOperation("删除模块信息")
-    @ApiImplicitParam(name = "id", value = "模块的ID", dataType = "Integer")
-
-    @RequestMapping("/delete?name=")
+    @RequestMapping("/delete")
     public int delete(int id) {
         return commodiTytemplateService.deleteById(id);
     }
@@ -86,6 +101,18 @@ public class CommodiTytemplateController {
         return true;
     }
 
+
+    /**
+     * <P>
+     *     通过id查找数据，显示详情
+     * </P>
+     * @param id  查询数据的条件
+     * @return C对象
+     */
+    @GetMapping(value = "/selectById")
+    public CommodiTytemplate selectById(int id) {
+        return commodiTytemplateService.selectById(id);
+    }
 
     /**
      * <p>
