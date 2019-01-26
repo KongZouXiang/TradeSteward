@@ -2,4 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yunhe.cargomanagement.dao.OrderConnectCommMapper">
 
+    <update id="updateSalesHistory">
+        update order_connect_comm set sell_order_num=#{sellOrderNum} where order_num =#{orderNum}
+    </update>
+
+
+    <select id="selectOrderConnectComm" resultType="com.yunhe.cargomanagement.entity.OrderConnectComm">
+        select * from order_connect_comm
+        where order_num =#{first}  and cl_id=#{end}
+    </select>
+    <select id="selectOrderSale" resultType="com.yunhe.cargomanagement.entity.OrderConnectComm">
+        select * from order_connect_comm
+        where sell_order_num =#{first}  and cl_id=#{end}
+    </select>
 </mapper>

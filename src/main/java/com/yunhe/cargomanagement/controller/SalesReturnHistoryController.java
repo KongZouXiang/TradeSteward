@@ -1,8 +1,10 @@
 package com.yunhe.cargomanagement.controller;
 
 
+import com.yunhe.cargomanagement.entity.OrderConnectComm;
 import com.yunhe.cargomanagement.entity.SalesHistory;
 import com.yunhe.cargomanagement.entity.SalesReturnHistory;
+import com.yunhe.cargomanagement.service.ISalesHistoryService;
 import com.yunhe.cargomanagement.service.impl.SalesReturnHistoryServiceImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,9 +31,29 @@ public class SalesReturnHistoryController {
     @Resource
     private SalesReturnHistoryServiceImpl salesReturnHistoryService;
 
+    @Resource
+    private ISalesHistoryService salesHistoryService;
+
     @RequestMapping("/insertSalesReturnHistory")
     public int insertSalesReturnHistory(SalesReturnHistory salesReturnHistory){
         return  salesReturnHistoryService.insertSalesReturnHistory(salesReturnHistory);
+    }
+
+    @RequestMapping("/edit")
+    public ModelAndView edit(int id, HttpSession httpSessionsion){
+        SalesReturnHistory salesReturnHistory = salesReturnHistoryService.selectById(id);
+        httpSessionsion.setAttribute("sales",salesReturnHistory);
+        return new ModelAndView("/cargomanagement/salesOrderHistory-detail");
+    }
+
+    @RequestMapping("/detailList")
+    public List<OrderConnectComm> detailList(int id){
+        SalesReturnHistory salesReturnHistory = salesReturnHistoryService.selectById(id);
+        String srhNumber = salesReturnHistory.getSrhNumber();
+        SalesHistory salesHistory = new SalesHistory();
+        salesHistory.setShNumber(srhNumber);
+        salesHistoryService.selectByNumber(salesHistory);
+        return salesHistoryService.detailList(id);
     }
 
     @RequestMapping("/deleteSalesReturnHistory")

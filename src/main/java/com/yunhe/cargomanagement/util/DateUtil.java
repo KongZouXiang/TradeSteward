@@ -24,4 +24,11 @@ public class DateUtil {
         c++;
         return a+b+c;
     }
+
+    public static String numberXDD(){
+        String a="XDD";
+        String b=DateUtil.todayDate();
+        c++;
+        return a+b+c;
+    }
 }

@@ -2,6 +2,7 @@ package com.yunhe.cargomanagement.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yunhe.cargomanagement.entity.OrderConnectComm;
+import com.yunhe.cargomanagement.entity.SalesHistory;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +16,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface OrderConnectCommMapper extends BaseMapper<OrderConnectComm> {
+    OrderConnectComm selectOrderConnectComm(int first,int end);
+
+    OrderConnectComm selectOrderSale(int first,int end);
+
+    int updateSalesHistory(OrderConnectComm orderConnectComm);
 }

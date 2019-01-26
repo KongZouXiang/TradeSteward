@@ -5,11 +5,16 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
+import com.yunhe.billmanagement.entity.RunningAccounts;
+import com.yunhe.billmanagement.service.IRunningAccountsService;
 import com.yunhe.cargomanagement.dao.OrderConnectCommMapper;
 import com.yunhe.cargomanagement.entity.OrderConnectComm;
+import com.yunhe.cargomanagement.entity.SalesHistory;
 import com.yunhe.cargomanagement.entity.SalesOrderHistory;
 import com.yunhe.cargomanagement.service.IOrderConnectCommService;
+import com.yunhe.cargomanagement.service.ISalesHistoryService;
 import com.yunhe.cargomanagement.service.impl.OrderConnectCommServiceImpl;
+import com.yunhe.cargomanagement.service.impl.SalesHistoryServiceImpl;
 import com.yunhe.cargomanagement.service.impl.SalesOrderHistoryServiceImpl;
 import com.yunhe.cargomanagement.util.DateUtil;
 import com.yunhe.customermanagement.entity.Customer;
@@ -61,6 +66,12 @@ public class SalesOrderHistoryController {
 
     @Resource
     private IOrderConnectCommService orderConnectCommService;
+
+    @Resource
+    private ISalesHistoryService salesHistoryService;
+
+    @Resource
+    private IRunningAccountsService runningAccountsService;
     /**
      * 新增页面的跳转
      * @return web页面
@@ -83,7 +94,6 @@ public class SalesOrderHistoryController {
     @RequestMapping("/addList")
     public ModelAndView addList(SalesOrderHistory salesOrderHistory,int [] clName,int [] orderCount){
         ModelAndView mv = new ModelAndView();
-        System.out.println(salesOrderHistory);
         int count=0; double price=0; String arr="";
         for (int i=0;i<=clName.length-1;i++) {
             CommodityList commodityList = commodityListService.selectCommById(clName[i]);
@@ -97,11 +107,9 @@ public class SalesOrderHistoryController {
         salesOrderHistory.setSoOrderComm(arr);
         salesOrderHistory.setSoOrderCount(count);
         salesOrderHistory.setSoMoney(price);
-        System.out.println(salesOrderHistory);
         int x = salesOrderHistoryService.insertSale(salesOrderHistory);
         SalesOrderHistory salesOrderHistory1 = salesOrderHistoryService.selectByNumber(salesOrderHistory);
         Integer id = salesOrderHistory1.getId();
-        System.out.println(id);
         for (int i=0;i<= clName.length-1;i++){
             OrderConnectComm orderConnectComm = new OrderConnectComm();
             orderConnectComm.setOrderNum(id);
@@ -118,12 +126,44 @@ public class SalesOrderHistoryController {
      */
     @RequestMapping("/customerList")
     public List<Customer> customerList(){
-
         List<Customer> list = (List<Customer>)customerService.sellectAllExcel();
         return list;
     }
-    
 
+    /**
+     * 转销售
+     * @param salesHistory
+     * @param aid
+     * @return
+     */
+    @RequestMapping("changeToSale")
+    public String changeToSale(SalesHistory salesHistory, int aid){
+        salesHistory.setShNumber(DateUtil.numberXDD());
+        salesHistoryService.addSalesHistory(salesHistory);
+
+        SalesHistory salesHistory1 = salesHistoryService.selectByNumber(salesHistory);
+
+
+        Integer id = salesHistory1.getId();
+        OrderConnectComm orderConnectComm = new OrderConnectComm();
+        orderConnectComm.setOrderNum(aid);
+        orderConnectComm.setSellOrderNum(id);
+        orderConnectCommService.updateSales(orderConnectComm);
+
+/*        RunningAccounts runningAccounts1 = runningAccountsService.selectRunningMaxIdMoney();
+        RunningAccounts runningAccounts = new RunningAccounts();
+        runningAccounts.setRaNumList(salesHistory.getShConnect());
+        runningAccounts.setRaTime(DateUtil.todayDate());
+        runningAccounts.setRaCompanyName(salesHistory.getShClient());
+        runningAccounts.setRaProjectName("销售支出");
+        runningAccounts.setRaAccount("现金");
+        runningAccounts.setRaPerson("老板");
+        runningAccounts.setRaIncome(salesHistory.getShMoney());
+        runningAccounts.setRaOutcome(0.0);
+        runningAccounts.setRaCurrentBalance(runningAccounts1.getRaCurrentBalance()+salesHistory.getShMoney());
+        runningAccountsService.insertRunningAccountsOne(runningAccounts);*/
+        return "true";
+    }
     public int insertSale(SalesOrderHistory sa){
         return salesOrderHistoryService.insertSale(sa);
     }
@@ -186,10 +226,19 @@ public class SalesOrderHistoryController {
      * @return
      */
     @RequestMapping("/update")
-    public String updateSale(SalesOrderHistory salesOrderHistory){
-        System.out.println(salesOrderHistory);
-       /* int i = salesOrderHistoryService.updateSale(salesOrderHistory);
-        new ModelAndView("updateSale");*/
+    public String updateSale(SalesOrderHistory salesOrderHistory ,String [] clName,String [] commId,String []commId1,String [] orderCount){
+
+        for (int i=0;i<=clName.length-1;i++){
+            int first = salesOrderHistory.getId();
+            int end = Integer.parseInt(commId1[i]);
+            OrderConnectComm orderConnectComm = orderConnectCommService.slectOrderConnectComm(first, end);
+            orderConnectComm.setClId(Integer.parseInt(commId[i]));
+            orderConnectComm.setOrderNum(first);
+            orderConnectComm.setOrderCount(Integer.parseInt(orderCount[i]));
+            orderConnectCommService.updateOrderConnectComm(orderConnectComm);
+        }
+        salesOrderHistoryService.updateSale(salesOrderHistory);
+
         return "true";
     }
 
@@ -236,6 +285,7 @@ public class SalesOrderHistoryController {
     }
     @RequestMapping("/detailList")
     public List<OrderConnectComm> detailList(int id){
+
         return salesOrderHistoryService.detailList(id);
     }
     /**

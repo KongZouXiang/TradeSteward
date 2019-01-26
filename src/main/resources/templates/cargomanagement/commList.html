@@ -27,7 +27,7 @@
 		<input type="text" class="input-text" style="width:250px" placeholder="输入客户编号、客户名称" id="poSupName" name="">
 		<button type="button" class="btn btn-success" id="findempl" name=""><i class="Hui-iconfont">&#xe665;</i>搜索
 		</button>
-		<input type="text" id="quzhi" th:value="${message}">
+		<input type="text" hidden="hidden" id="quzhi" th:value="${message}">
 	</div>
 	<table class="table table-border table-bordered table-bg" id="app">
 		<thead>
@@ -114,12 +114,13 @@
                 id:mess
 			},
             success: function (msg) {
-               var inx= $("#quzhi").val();
-               console.log(inx);
-             parent.$("#soClient11"+inx).val(msg.clName);
+                var inx= $("#quzhi").val();
+             	parent.$("#soClient11"+inx).val(msg.clName);
+                parent.$("#clNumber"+inx).html(msg.clNumber)
+                parent.$("#clTagPrise"+inx).html(msg.clTagPrise);
+                parent.$("#commId"+inx).val(msg.id);
              var index = parent.layer.getFrameIndex(window.name);
              parent.layer.close(index);
-
             }
         });
     }

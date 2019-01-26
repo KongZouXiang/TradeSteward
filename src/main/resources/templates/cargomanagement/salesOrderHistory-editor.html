@@ -75,13 +75,17 @@
                 <tbody>
                 <tr class="text-c" v-for="(item,index) in result">
                     <td>{{index+1}}</td>
-                    <td><input type="text" class="input-text radius"  :value="item.commodityList.clName" :id="getId(index)" @click="soClient11(index)" ></td>
-                    <td>{{item.commodityList.clNumber}}</td>
+                    <td><input type="text" class="input-text radius"  :value="item.commodityList.clName" :id="getId(index)" @click="soClient11(index)" name="clName">
+                        <input type="text" hidden="hidden"  :value="item.commodityList.id" name="commId" :id="getCommId(index)">
+                        <input type="text" hidden="hidden"  :value="item.commodityList.id" name="commId_">
+                    </td>
+
+                    <td :id="getClNumber(index)" >{{item.commodityList.clNumber}}</td>
                     <td>属性</td>
-                    <td ><input type="text" class="input-text radius"  :value="item.orderCount" id="listCount"> </td>
+                    <td ><input type="text" class="input-text radius"  :value="item.orderCount" id="listCount" name="orderCount"> </td>
                     <td>{{item.commodityList.clUnit}}</td>
                     <td>1.00</td>
-                    <td>{{item.commodityList.clTagPrise}}</td>
+                    <td :id="getClTagPrise(index)">{{item.commodityList.clTagPrise}}</td>
                     <td>无</td>
                 </tr>
                 </tbody>
@@ -104,6 +108,7 @@
                 <tr>
                     <td width="300"><span style="text-align: right"><h3>总计金额：</h3><span style="color: red"><span
                             style="color: #8e8e99">¥</span> 0.00</span></span></td>
+                    <td th:text="${session.sales.soMoney}"></td>
                     <td> <a href="javascript:;" onclick="submitAdd()"
                             class="btn btn-primary radius">
                         <i class="Hui-iconfont">&#xe644;</i> 修改</a></td>
@@ -141,7 +146,17 @@
         methods:{
             getId(index){
                 return "soClient11"+index
+            },
+            getClNumber(index){
+              return "clNumber"+index
+            },
+            getClTagPrise(index){
+                return "clTagPrise"+index
+            },
+            getCommId(index){
+                return "commId"+index
             }
+
         }
     });
 
@@ -160,10 +175,28 @@
     };
     getCommodityList();
     var submitAdd = function () {
+        var clName= new Array();
+        $('input[name="clName"]').each(function(){
+            clName.push(this.value);
+        });
+        var commId = new Array();
+        $('input[name="commId"]').each(function(){
+            commId.push(this.value);
+        });
+        var commId_ = new Array();
+        $('input[name="commId_"]').each(function(){
+            commId_.push(this.value);
+        });
+        var orderCount= new Array();
+        $('input[name="orderCount"]').each(function(){
+            orderCount.push(this.value);
+        });
        $.ajax({
            type: 'POST',
            dataType: 'json',
+           traditional:true,
            url:'/cargomanagement/sales-order-history/update',
+
            data:{
                soClient: $("#soClient").val(),
                soStatus: $("#soStatus").val(),
@@ -171,10 +204,14 @@
                soHander:$("#soHander").val(),
                soDate: $("#soDate").val(),
                id: $("#idCloud").val(),
+               clName:clName,
+               commId:commId,
+               commId1:commId_,
+               orderCount:orderCount
            },
            success:function (msg) {
                 if(msg){
-                    layer.msg('成功',{icon:4});
+                    layer.msg('成功',{icon:1});
                 }
            }
        })

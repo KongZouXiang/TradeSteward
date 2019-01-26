@@ -1,8 +1,10 @@
 package com.yunhe.cargomanagement.service;
 
+import com.yunhe.cargomanagement.entity.OrderConnectComm;
 import com.yunhe.cargomanagement.entity.SalesReturnHistory;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,4 +46,8 @@ public interface ISalesReturnHistoryService extends IService<SalesReturnHistory>
      * @return map
      */
     Map queryLikeSalesReturnHistory(int pageSize,int pageNum,SalesReturnHistory salesReturnHistory);
+
+    SalesReturnHistory selectById(int id);
+
+    List<OrderConnectComm> detailList(int id);
 }
