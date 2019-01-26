@@ -1,0 +1,252 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="Bookmark" href="/favicon.ico">
+    <link rel="Shortcut Icon" href="/favicon.ico"/>
+    <script type="text/javascript" src="/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css"/>
+    <script type="text/javascript" src="/js/vue/vue.min.js"></script>
+    <script type="text/javascript" src="/lib/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <title>修改进货订单历史</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+</head>
+<body>
+<div id="app">
+    <form class="form form-horizontal" id="form-article-add" action="/cargomanagement/purchase-order/addPurchaseGoTo">
+    <article class="page-container">
+        <h1 style="text-align: center">商品销售订单</h1>
+        <div> <table class="table table-border table-bordered table-bg">
+            <thead>
+            <tr>
+                <th scope="col" colspan="4">商品列表</th>
+            </tr>
+            <tr class="text-c">
+                <th width="40">供应商</th>
+                <th width="170">单据编号</th>
+                <th width="170">经手人</th>
+                <th width="100">业务日期</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-c" >
+                <td><input type="text" class="input-text" th:value="${session.purchase.poSupName}" id="soClient" ></td>
+                <td ><input type="text" class="input-text" th:value="${session.purchase.poNumber}"  id="soOrderNum"></td>
+                <td ><select  class="select" name="poExperiencedPerson" required="required">
+                    <option value="老板">老板</option>
+                    <option value="财务">财务</option>
+                    <option value="仓库">仓库</option>
+                    <option value="销售">销售</option>
+                </select></td>
+                <td><input type="text"
+                           onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'commentdatemax\')||\'%y-%M-%d\'}' })"
+                           id="poDate" name="poDate" class="input-text Wdate" required="required" th:value="${session.purchase.poDate}" >
+                    <input type="hidden"
+                           onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'commentdatemin\')}' })"
+                           id="commentdatemax" name="commentdatemax" class="input-text Wdate">
+                </td>
+                <input type="text" hidden="hidden" th:value="${session.purchase.id}" id="id">
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        <table class="table table-border table-bordered table-bg">
+            <thead>
+            <tr>
+                <th scope="col" colspan="8">新增进货商品列表</th>
+            </tr>
+            <tr class="text-c">
+                <th width="40">操作</th>
+                <th width="170">商品名称/规格</th>
+                <th width="170">商品编号</th>
+                <th width="170">属性</th>
+                <th width="100">数量</th>
+                <th width="100">单位</th>
+                <th width="150">单价</th>
+                <th width="100">其他费用</th>
+            </tr>
+            </thead>
+            <tbody id="addTr">
+            <tr class="text-c" id="addx0" v-for="(item,index) in result">
+                <td><a title='清除' href='javascript:;' class='ml-5' style='text-decoration:none'><i
+                        class='Hui-iconfont'>&#xe6a6;</i></a>
+                </td>
+                <td><input type="text" class="input-text radius"  :value="item.commodityList.clName" :id="getId(index)" @click="soClient11(index)" name="clName">
+                    <input type="text" hidden="hidden"  :value="item.commodityList.id" name="commId" :id="getCommId(index)">
+                    <input type="text" hidden="hidden"  :value="item.commodityList.id" name="commId_">
+                </td>
+                <td :id="getClNumber(index)" >{{item.commodityList.clNumber}}</td>
+                <td></td>
+                <td><input type="text" class="input-text" placeholder="" id="QuantityOfPurchase"
+                           name="QuantityOfPurchase" required="required" value="1"></td>
+                <td>{{item.commodityList.clUnit}}</td>
+                <td :id="getClTagPrise(index)">{{item.commodityList.clTagPrise}}</td>
+                <td>
+                    <input type="text" class="input-text" >
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table table-border table-bordered table-bg">
+            <thead>
+            <tr>
+                <a href="#" id="addxx"
+                   class="btn btn-block radius">
+                    <i class="Hui-iconfont">&#xe600;</i>添加商品表格</a>
+            </tr>
+            </thead>
+        </table>
+        <table class="table table-border table-bordered table-bg">
+            <thead>
+            <tr class="text-c">
+                <th>
+                    备注
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td width="1500">
+                    <textarea type="text" class="textarea radius" name="poRemarks" value="备注：" required="required"></textarea>
+                </td>
+                <td><input class="btn btn-primary size-XL radius" type="submit" value="提交"></td>
+            </tr>
+            </tbody>
+        </table>
+    </article>
+    </form>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/lib/webuploader/0.1.5/webuploader.min.js"></script>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/ueditor.all.min.js"></script>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+
+<script type="text/javascript">
+
+
+    var app= new Vue({
+        el: '#app',
+        data: {
+            result: []
+        },
+        methods:{
+            getId(index){
+                return "soClient11"+index
+            },
+            getClNumber(index){
+                return "clNumber"+index
+            },
+            getClTagPrise(index){
+                return "clTagPrise"+index
+            },
+            getCommId(index){
+                return "commId"+index
+            }
+
+        }
+    });
+
+    /*遍历订单所有的商品*/
+    var getCommodityList = function (curr) {
+        var id =$("#id").val();
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/cargomanagement/purchase-order/selectComZhong',
+            data: {id:id},
+            success: function (msg) {
+                app.result = msg;
+            }
+        });
+    };
+    getCommodityList();
+
+    /*
+    var submitAdd = function () {
+        var clName= new Array();
+        $('input[name="clName"]').each(function(){
+            clName.push(this.value);
+        });
+        var commId = new Array();
+        $('input[name="commId"]').each(function(){
+            commId.push(this.value);
+        });
+        var commId_ = new Array();
+        $('input[name="commId_"]').each(function(){
+            commId_.push(this.value);
+        });
+        var orderCount= new Array();
+        $('input[name="orderCount"]').each(function(){
+            orderCount.push(this.value);
+        });
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            traditional:true,
+            url:'/cargomanagement/sales-order-history/update',
+
+            data:{
+                soClient: $("#soClient").val(),
+                soStatus: $("#soStatus").val(),
+                soOrderNum:$("#soOrderNum").val(),
+                soHander:$("#soHander").val(),
+                soDate: $("#soDate").val(),
+                id: $("#idCloud").val(),
+                clName:clName,
+                commId:commId,
+                commId1:commId_,
+                orderCount:orderCount
+            },
+            success:function (msg) {
+                if(msg){
+                    layer.msg('成功',{icon:1});
+                }
+            }
+        })
+    };
+    */
+    var soClient11=function (index) {
+        layer.open({
+            type:2,
+            title:'选择客户',
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['800px','650px'],
+            content:'/cargomanagement/purchase-order/commList01?id='+index,
+            end:function(index) {
+            }
+        });
+    };
+
+    function deleteRow(obj) {
+        $(obj).parents("tr").remove();
+    }
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

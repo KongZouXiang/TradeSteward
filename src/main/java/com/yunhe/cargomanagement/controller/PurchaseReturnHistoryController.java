@@ -323,9 +323,6 @@ public class PurchaseReturnHistoryController {
         cell2.setCellStyle(style);
         cell2.setCellValue("单据编号");
 
-        HSSFCell cell3=row2.createCell(3);
-        cell3.setCellStyle(style);
-        cell3.setCellValue("关联进货单号");
 
         HSSFCell cell4=row2.createCell(4);
         cell4.setCellStyle(style);
@@ -417,9 +414,6 @@ public class PurchaseReturnHistoryController {
             cell02.setCellStyle(style);
             cell02.setCellValue((String) map.get("prhNumber"));
 
-            HSSFCell cell03=rowx.createCell(3);
-            cell03.setCellStyle(style);
-            cell03.setCellValue((String) map.get("prhPurOrder"));
 
             HSSFCell cell04=rowx.createCell(4);
             cell04.setCellStyle(style);
@@ -467,7 +461,7 @@ public class PurchaseReturnHistoryController {
 
             HSSFCell cell015=rowx.createCell(15);
             cell015.setCellStyle(style);
-            cell015.setCellValue((double) map.get("prhOtherExpenses"));
+            cell015.setCellValue((String) map.get("prhOutgoingState"));
 
             HSSFCell cell016=rowx.createCell(16);
             cell016.setCellStyle(style);

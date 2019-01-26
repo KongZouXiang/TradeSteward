@@ -92,6 +92,32 @@ public class PurchaseOrderController {
         return mv;
     }
 
+    /**
+     * 跳转商品列表页面
+     * @param id
+     * @param session
+     * @return
+     */
+    @RequestMapping("/commList01")
+    public ModelAndView commListOne(int id,HttpSession session){
+        session.setAttribute("id",id);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/cargomanagement/commList01");
+        return mv;
+    }
+
+    /**
+     * 查询商品信息
+     * @param id 进货订单id
+     * @return 进货订单商品信息
+     */
+    @RequestMapping("/selectComZhong")
+    public List<PurComm> selectComZhong(int id){
+        List<PurComm> purComms = purchaseOrderService.selectComZhong(id);
+        return purComms;
+    }
+
+
 
     /**
      * 跳转到进货订单历史页面
@@ -231,10 +257,11 @@ public class PurchaseOrderController {
     @RequestMapping("/selectById")
     public ModelAndView selectPurchaseById(int id, HttpSession httpSession) {
         System.out.println("前台传过来的id:" + id);
-        PurchaseOrder purchaseOrder = purchaseOrderService.selectById(id);
+        PurchaseOrder purchaseOrder = purchaseOrderService.getPurchaseById(id);
+        System.out.println(purchaseOrder);
         httpSession.setAttribute("purchase", purchaseOrder);
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("cargomanagement/article-add");
+        mv.setViewName("cargomanagement/Pur_order-editor.html");
         return mv;
     }
 
