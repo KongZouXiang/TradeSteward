@@ -4,6 +4,7 @@ package com.yunhe.basicdata.controller;
 import com.yunhe.basicdata.entity.Property;
 import com.yunhe.basicdata.entity.Propertyval;
 import com.yunhe.basicdata.service.IPropertyService;
+import com.yunhe.core.common.annotion.WebLog;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,6 +62,7 @@ public class PropertyController {
      * 属性设置列表
      * @return
      */
+    @WebLog("属性设置列表")
     @PostMapping("/selectProperty")
     public List selectProperty(){
         Map map=new HashMap();
@@ -76,6 +78,7 @@ public class PropertyController {
      * @param property 传入的属性值
      * @return success
      */
+    @WebLog("增加商品属性")
     @PostMapping("/addproperty")
     public String addproperty (Property property){
         propertyService.addproperty(property);
@@ -87,6 +90,7 @@ public class PropertyController {
      * @param id 传过来的属性id
      * @return success
      */
+    @WebLog("删除商品属性")
     @PostMapping("/deleteproperty")
     public String deleteproperty(int id){
         propertyService.deletepropoerty(id);
@@ -98,12 +102,20 @@ public class PropertyController {
      * @param property 要修改的内容
      * @return success
      */
+    @WebLog("修改商品属性")
     @PostMapping("/updateproperty")
 public String updateproperty(Property property){
  propertyService.updateproperty(property);
  return "success";
 }
-@PostMapping("/insertvalue")
+
+    /**
+     * 修改商品属性
+     * @param propertyval
+     * @return
+     */
+    @WebLog("修改商品属性")
+    @PostMapping("/insertvalue")
     public int insertvalue(Propertyval propertyval){
         return propertyService.insertvalue(propertyval);
 }

@@ -36,9 +36,8 @@ public class CommclassServiceImpl extends ServiceImpl<CommclassMapper, Commclass
     }
 
     @Override
-    public void add(Commclass commclass) {
-        commclassMapper.insert(commclass);
-
+    public int add(Commclass commclass) {
+     return commclassMapper.insert(commclass);
     }
 
     @Override

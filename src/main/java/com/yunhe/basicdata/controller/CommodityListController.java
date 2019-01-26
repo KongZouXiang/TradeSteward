@@ -3,6 +3,7 @@ import com.yunhe.basicdata.entity.Commclass;
 import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.entity.WarehouseManagement;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
+import com.yunhe.core.common.annotion.WebLog;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,7 @@ public class CommodityListController {
      * @param commodityList 商品列表的对象
      * @return 商品的信息
      */
+    @WebLog("查询商品的信息")
     @RequestMapping(value = "/getpage", method = RequestMethod.POST)
     @ResponseBody
     public Map selectCommPage(int current, int size, CommodityList commodityList) {

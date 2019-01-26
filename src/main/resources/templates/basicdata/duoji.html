@@ -5,6 +5,21 @@
     <meta charset="utf-8">
     <title>dtree</title>
     <link rel="StyleSheet" href="/dtree.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/h-ui.admin/css/style.css"/>
+    <script type="text/javascript" src="/lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="/js/laypage/laypage.js"></script>
     <script type="text/javascript" src="/dtree.js"></script>
     <script src="/jquery.min.js"></script>
 </head>
@@ -13,6 +28,57 @@
     <p><a href="javascript:  d.closeAll();">打开</a> | <a href="javascript: d.openAll();">关闭</a></p>
     <input id="dosearch_text" type="text"/>
     <input id="dosearch" type="button" value="查询" onClick="nodeSearching() "/>
+    <div class="selectorResult">
+        增加分类：<br>
+        <input type="text" id="selectfulei" placeholder="您想把该分类添加到哪个分类下？">
+        <span id="ss"></span>
+        <br>
+        <input type="text" id="addclass" placeholder="请输入要增加的分类名">
+        <br>
+        <input type="button" id="tijiao" value="提交">
+        <script type="text/javascript">
+            var ss=document.getElementById("ss");
+            var ccFuji;
+            $("#selectfulei").blur(function () {
+                $.ajax({
+                    type:'post',
+                    dataType:'json',
+                    url:'/basicdata/commclass/seleceidbyname',
+                    data:{
+                        name:$("#selectfulei").val()
+                    },
+                    success:function (msg) {
+                        console.log(msg)
+                        if (msg==0){
+                            ss.innerHTML="该分类不存在！"
+                        }else { ss.innerHTML="可以添加"}
+                        ccFuji=msg;
+                    }
+                })
+            });
+            $("#tijiao").click(function () {
+                if($("#addclass").val(null)){
+                    layer.msg('不能为空');
+                }else { $.ajax({
+                    type:'post',
+                    dataType:'json',
+                    url:'/basicdata/commclass/add',
+                    data:{
+                        ccDefault:$("#addclass").val(),
+                        ccFuji:ccFuji,
+                    },
+                    success:function (msg) {
+                        layer.msg('添加成功');
+                        location.replace(location.href);
+                    }
+                })
+                }
+
+            })
+
+        </script>
+    </div>
+
     <script type="text/javascript">
         d = new dTree('d', true);   //参数一: 树名称。参数二：单选多选 true多选  false单选  默认单选
         d.add(0, -1, '商品分类');
@@ -39,54 +105,6 @@
     </script>
 </div>
 
-<div class="selectorResult">
-    增加分类：<br>
-    <input type="text" id="selectfulei" placeholder="您想把该分类添加到哪个分类下？">
-    <span id="ss"></span>
-    <br>
-    <input type="text" id="addclass" placeholder="请输入要增加的分类名">
-    <br>
-    <input type="button" id="tijiao" value="提交">
-    <script type="text/javascript">
-        var ss=document.getElementById("ss");
-        var ccFuji;
-        $("#selectfulei").blur(function () {
-            $.ajax({
-                type:'post',
-                dataType:'json',
-                url:'/basicdata/commclass/seleceidbyname',
-                data:{
-                    name:$("#selectfulei").val()
-                },
-                success:function (msg) {
-                    console.log(msg)
-                    if (msg==0){
-                        ss.innerHTML="该分类不存在！"
-                    }
-                    ccFuji=msg;
-                }
-            })
-        });
-        $("#tijiao").click(function () {
-            $.ajax({
-                type:'post',
-                dataType:'json',
-                url:'/basicdata/commclass/add',
-                data:{
-                    ccDefault:$("#addclass").val(),
-                    ccFuji:ccFuji,
-                },
-                success:function (msg) {
-                    layer.msg('添加成功',{icon:5});
-                }
-            })
-        })
-
-    </script>
-</div>
-<div>
-    <input type='button' name='bTest' value='test' onclick='test();'>
-</div>
 
 <script type="text/javascript">
     function test() {

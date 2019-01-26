@@ -3,6 +3,7 @@ package com.yunhe.basicdata.controller;
 
 import com.yunhe.basicdata.entity.Commclass;
 import com.yunhe.basicdata.service.impl.CommclassServiceImpl;
+import com.yunhe.core.common.annotion.WebLog;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -73,10 +74,9 @@ public class CommclassController {
      * @return success
      */
     @RequestMapping("/add")
-    public String add(Commclass commclass){
+    public int add(Commclass commclass){
         System.out.println(commclass);
-        commclassService.add(commclass);
-        return "success";
+        return  commclassService.add(commclass);
     }
 
     /**
@@ -87,6 +87,7 @@ public class CommclassController {
      * @param bb  修改后分类名
      * @return success
      */
+    @WebLog("修改商品分类名字")
     @RequestMapping("/update")
     public String updateCommclass(String aa,String bb){
         Map map=new HashMap();
@@ -104,6 +105,7 @@ public class CommclassController {
      * @param name 要删除的分类名
      * @return success
      */
+    @WebLog("删除商品分类")
     @RequestMapping("/drop")
     public String drop(String name){
         commclassService.deleteCommclass(name);

@@ -1,23 +1,17 @@
 package com.yunhe.systemsetup.controller;
 
 
-
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.systemsetup.entity.CharaManger;
 import com.yunhe.systemsetup.service.impl.CharaMangerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
-
-import org.springframework.ui.Model;
-
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
-
 import java.util.Map;
 
 /**
@@ -106,8 +100,7 @@ public class CharaMangerController {
     @RequestMapping("/subchara")
     public Boolean  subCharaEdit(CharaManger charaManger){
         System.out.println("这是个charaManger");
-       // System.out.println(charaMangerService.subCharaMage(charaManger));
-        //return charaMangerService.updateById(charaManger);
+
         return charaMangerService.updateById(charaManger);
     }
     //删除角色

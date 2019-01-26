@@ -21,7 +21,7 @@ public interface ICommclassService extends IService<Commclass> {
      * <p/>
      * @return 商品列表
      */
-public List<Commclass> query();
+ List<Commclass> query();
     /**
      * <p>
      *   增加商品分类前查重
@@ -37,7 +37,7 @@ public List<Commclass> query();
      * @param ccdefault 要增加商品分类名
      * @return 无返回
      */
-    public void add(Commclass commclass);
+     int add(Commclass commclass);
     /**
      * <p>
      *   修改商品分类名字

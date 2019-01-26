@@ -2,6 +2,7 @@ package com.yunhe.basicdata.controller;
 
 import com.yunhe.basicdata.entity.WarehouseManagement;
 import com.yunhe.basicdata.service.impl.WarehouseManagementServiceImpl;
+import com.yunhe.core.common.annotion.WebLog;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,6 +53,7 @@ public class WarehouseManagementController {
      *
      * @return 修改仓库页面
      */
+    @WebLog("跳转修改仓库页面")
     @RequestMapping("/UpdateWareHouse")
     public ModelAndView UpdateWareHouse(int id) {
         System.out.println("id===>" + id);
@@ -70,6 +72,7 @@ public class WarehouseManagementController {
      * @param data 模糊查询
      * @return 查询后返回的数据
      */
+    @WebLog("分页查询仓库")
     @RequestMapping("/select")
     public Map select(String data,int pageSize, int pageNum) {
         Map map = new HashMap();
@@ -85,6 +88,7 @@ public class WarehouseManagementController {
      * @param id 要删除仓库的
      * @return 删除成功之后返回 success
      */
+    @WebLog("删除仓库")
     @RequestMapping("/deletebyid")
     public Integer deleteByid(int id) {
 
@@ -98,6 +102,7 @@ public class WarehouseManagementController {
      * @param ids 要删除仓库的
      * @return 删除成功之后返回 success
      */
+    @WebLog("删除仓库")
     @RequestMapping("/deleteall")
     public boolean deleteAll(@RequestBody List<Integer> ids) {
         System.out.println("ids"+ids);
@@ -117,6 +122,7 @@ public class WarehouseManagementController {
      * @param warehouseManagement 要修改的数据
      * @return success
      */
+    @WebLog("修改仓库")
     @RequestMapping("/update")
     public Integer uptate(WarehouseManagement warehouseManagement) {
         System.out.println("id"+warehouseManagement.getWmName());
@@ -129,6 +135,7 @@ public class WarehouseManagementController {
      * @param id 查找仓库的
      * @return 根据仓库id返回的数据
      */
+    @WebLog("根据id查找仓库")
     @RequestMapping("/selectByid")
     public Map selectByid(int id) {
         System.out.println("id===" + id);
@@ -137,6 +144,7 @@ public class WarehouseManagementController {
         map.put("data", warehouseManagement);
         return map;
     }
+    @WebLog("根据id查找仓库")
     @RequestMapping("/selectByi")
     public ModelAndView selectByi(int id) {
         ModelAndView mv=new ModelAndView();
@@ -154,6 +162,7 @@ public class WarehouseManagementController {
      * @param data 要查询的信息
      * @return 根据data返回的数据
      */
+    @WebLog("模糊查询")
     @RequestMapping("/vagueselect")
     public Map vagueselect(String data) {
         Map map = new HashMap();
@@ -167,6 +176,7 @@ public class WarehouseManagementController {
      * @param warehouseManagement 增加仓库的数据
      * @return 视图
      */
+    @WebLog("增加仓库")
     @RequestMapping("/addWarehouse")
     public Integer addWarehouse(WarehouseManagement warehouseManagement) {
         System.out.println("asd===" + warehouseManagement);
@@ -178,6 +188,7 @@ public class WarehouseManagementController {
      * @param id
      * @return 0或1
      */
+    @WebLog("根据id禁用仓库")
     @RequestMapping("/updatestatejin")
     public Integer updatestatejin(Integer id){
         return warehouseManagementService.updatestatejin(id);
@@ -187,6 +198,7 @@ public class WarehouseManagementController {
      * @param id
      * @return 0或1
      */
+    @WebLog("根据id启用仓库")
     @RequestMapping("/updatestateqi")
     public Integer updatestateqi(Integer id){
         return warehouseManagementService.updatestateqi(id);
