@@ -20,7 +20,7 @@
         <th scope="col" colspan="9">仓库列表</th>
     </tr>-->
     <tr class="text-c">
-        <th width="40">序号</th>
+        <th width="100">商品编号</th>
         <th width="150">仓库</th>
         <th width="130">可用库存量</th>
         <th width="150">当前存货</th>
@@ -30,7 +30,7 @@
     </thead>
     <tbody>
     <tr class="text-c">
-        <td th:text="${warehouse.id}"></td>
+        <td th:text="${warehouse.waNumber}"></td>
         <td>默认仓库</td>
         <td  th:text="${warehouse.waSpLnventory}"></td>
         <td th:text="${warehouse.waSpCurrentInventory}"></td>
