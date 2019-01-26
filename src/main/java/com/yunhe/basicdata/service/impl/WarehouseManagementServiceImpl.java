@@ -31,7 +31,6 @@ public class WarehouseManagementServiceImpl extends ServiceImpl<WarehouseManagem
 
     @Override
     public Map selectWareList(String data,int pageSize, int pageNum) {
-
         Page<WarehouseManagement> page = new Page<WarehouseManagement>();
         page.setSize(pageSize);
         page.setCurrent(pageNum);
@@ -85,7 +84,7 @@ public class WarehouseManagementServiceImpl extends ServiceImpl<WarehouseManagem
     }
 
     @Override
-    public List<WarehouseManagement> selectquanWarList() {
-        return warehouseManagementMapper.selectList(null);
+    public List<WarehouseManagement> selectware() {
+        return warehouseManagementMapper.selectware();
     }
 }

@@ -1,7 +1,7 @@
 package com.yunhe.basicdata.service;
 
-import com.yunhe.basicdata.entity.Commclass;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yunhe.basicdata.entity.Commclass;
 
 import java.util.List;
 import java.util.Map;
@@ -29,7 +29,7 @@ public List<Commclass> query();
      * @param name 分类名称
      * @return 商品列表
      */
-    public List<Commclass> sel(String name);
+    List<Commclass> sel(String name);
     /**
      * <p>
      *     添加商品分类
@@ -37,7 +37,7 @@ public List<Commclass> query();
      * @param ccdefault 要增加商品分类名
      * @return 无返回
      */
-    public void add(String ccdefault);
+    public void add(Commclass commclass);
     /**
      * <p>
      *   修改商品分类名字
@@ -56,4 +56,10 @@ public List<Commclass> query();
      */
     public void deleteCommclass(String name);
 
+    /**
+     * 根据id查name
+     * @param name
+     * @return id
+     */
+    int selectidbyname(String name) throws Exception;
 }

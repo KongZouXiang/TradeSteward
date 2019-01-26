@@ -7,11 +7,11 @@
      select * from commclass
  </select>
     <!--添加商品分类之前查询名字是否重复-->
-    <select id="sel" resultType="com.yunhe.basicdata.entity.Commclass">
+    <select id="sel" resultType="com.yunhe.basicdata.entity.Commclass" parameterType="string">
         select * from commclass where cc_default=#{cc_default}
     </select>
     <!--添加商品分类-->
-    <insert id="add"  parameterType="string">
+    <insert id="add"  parameterType="com.yunhe.basicdata.entity.Commclass">
         INSERT INTO commclass(cc_default) VALUES(#{name})
     </insert>
     <!--修改商品分类字段-->

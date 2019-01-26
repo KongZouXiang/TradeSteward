@@ -73,9 +73,9 @@ public class WebLogAspect {
 //        Session请求
         HttpSession session = request.getSession();
 
-
-       Employ employ = (Employ) session.getAttribute("employ");
-        if(employ == null){
+//        从Session拿去员工信息
+        Employ employ = (Employ) session.getAttribute("employ");
+        if (employ == null) {
             throw new GlobalException(ExceptionEnum.ACCOUNT_UNKNOWN);
         }
 
@@ -103,7 +103,7 @@ public class WebLogAspect {
 //        获取操作时间
         log.setCreateDate(DateUtil.curr());
 
-        if (systemLogMapper.insert(log) < 1){
+        if (systemLogMapper.insert(log) < 1) {
             throw new GlobalException(ExceptionEnum.LOG_ERROR);
         }
 
