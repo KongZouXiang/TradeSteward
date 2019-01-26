@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yunhe.activitymanagement.entity.CommodiTytemplate;
 import com.yunhe.activitymanagement.service.ICommodiTytemplateService;
 import com.yunhe.billmanagement.entity.FinanceOrder;
+import com.yunhe.core.common.annotion.WebLog;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,7 @@ public class CommodiTytemplateController {
     ICommodiTytemplateService commodiTytemplateService;
 
 
+    @WebLog("查看商品列表")
     @GetMapping("MBcommodity")
     public ModelAndView MBcommodity(ModelAndView modelAndView) {
         modelAndView.setViewName("/activitymanagement/MBcommodity-list");
@@ -49,11 +51,6 @@ public class CommodiTytemplateController {
      * 点击提交所有选择商品之后，跳转一个刷新之后的商品模板页面
      * @return
      */
-
-
-
-
-
     @RequestMapping("/xinzeng")
     public ModelAndView xinzeng() {
         return new ModelAndView("activitymanagement/addshangpinmoban");
