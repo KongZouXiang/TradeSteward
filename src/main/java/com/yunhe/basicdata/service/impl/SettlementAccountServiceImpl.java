@@ -51,7 +51,7 @@ public class SettlementAccountServiceImpl extends ServiceImpl<SettlementAccountM
      */
     @Override
     public List<SettlementAccount> vagueAccountList(String data) {
-        List<SettlementAccount> settlementAccountList = settlementAccountMapper.selectList(new QueryWrapper<SettlementAccount>().like("sa_name", data).or().like("sa_bank", data));
+        List<SettlementAccount> settlementAccountList = (List<SettlementAccount>) settlementAccountMapper.selectList(new QueryWrapper<SettlementAccount>().like("sa_name", data).or().like("sa_bank", data));
         return settlementAccountList;
     }
     /**

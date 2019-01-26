@@ -95,7 +95,8 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
      */
     @Override
     public List<CommodityList> selectCommstlist(String data) {
-        List<CommodityList> commodityLists = (List<CommodityList>) commodityListMapper.selectList(new QueryWrapper<CommodityList>().like("cl_name", data).or().like("cl_scan", data));
+        List<CommodityList> commodityLists = (List<CommodityList>) commodityListMapper.selectList(new QueryWrapper<CommodityList>().like("cl_name", data).or().like("cl_number", data)
+        .or().like("cl_spec",data));
         return commodityLists;
     }
 
@@ -135,9 +136,21 @@ public class CommodityListServiceImpl extends ServiceImpl<CommodityListMapper, C
         map.put("list",list);
         return map;
     }
-
+   /*检查商品名是否存在*/
     @Override
-    public List<CommodityList> selectListByClName(CommodityList commodityList) {
-        return commodityListMapper.selectList(new QueryWrapper<CommodityList>().eq("cl_name",commodityList.getClName()));
+    public List<Map<String, String>> checkclName(CommodityList commodityList) {
+        return commodityListMapper.checkclname(commodityList);
+    }
+
+    /**
+     * 根据商品名查询
+     * @author 史江浩
+     * @param clName 查询的条件
+     * @return
+     */
+    @Override
+    public CommodityList selectListByClName(String clName) {
+        CommodityList list = commodityListMapper.selectListByClName(clName);
+        return list;
     }
 }

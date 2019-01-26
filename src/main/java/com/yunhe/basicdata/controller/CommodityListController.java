@@ -102,9 +102,10 @@ public class CommodityListController {
                           @RequestParam("guige") String guige,@RequestParam("cankaojinhuo") String cankaojinhuo,
                           @RequestParam("pifajia") String pifajia,@RequestParam("lingshoujia") String lingshoujia,
                            @RequestParam("comzuilingshoujia") String comzuilingshoujia,@RequestParam("comzuidikucun") int comzuidikucun,
-                           @RequestParam("comzuigaokucun") int comzuigaokucun,@RequestParam("fenlei") int fenlei,
+                           @RequestParam("comzuigaokucun") int comzuigaokucun,@RequestParam("clid") int clid,
                            @RequestParam("danwei") String danwei,@RequestParam("wmid") int wmid) {
         CommodityList commodityList = new CommodityList();
+        System.out.println(clid);
         commodityList.setId(id);
         commodityList.setClScan(tiaoxingma);
         commodityList.setClName(mingcheng);
@@ -113,7 +114,7 @@ public class CommodityListController {
         commodityList.setClPurPrice(cankaojinhuo);
         commodityList.setClWhoPrice(pifajia);
         commodityList.setClTagPrise(lingshoujia);
-        commodityList.setCcId(fenlei);
+        commodityList.setCcId(clid);
         commodityList.setClNumber(bianhao);
         commodityList.setClMinLingPrice(comzuilingshoujia);
         commodityList.setClMinStock(comzuidikucun);
@@ -296,6 +297,21 @@ public class CommodityListController {
         wb.write(output);
         output.close();
         return null;
+    }
+    /*检查商品名是否存在*/
+    @PostMapping("/checkname")
+    @ResponseBody
+    public String checkcommClname(@RequestParam("clname") String clnme){
+        CommodityList commodityList=new CommodityList();
+        commodityList.setClName(clnme);
+     List<Map<String,String>> list=   commodityListService.checkclName(commodityList);
+     if(list.size()>0){
+         //商品已存在
+         return "success";
+     }else{
+         //不存在
+         return "error";
+     }
     }
     @RequestMapping("/addcommlist")
     public ModelAndView addcomm() {
