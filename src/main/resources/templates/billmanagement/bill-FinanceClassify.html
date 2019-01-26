@@ -206,7 +206,7 @@
                         },
                         success: function (msg) {
                             if (msg==0) {
-                                layer.msg('成功删除', {icon: 1});
+                                layer.msg(msg, {icon: 1});
                                 getFcPageList();
                             };
                             if (msg==1){

@@ -57,7 +57,6 @@ public class SystemLogController {
     @WebLog("查看系统日志")
     @GetMapping("/selectAllSystemLog")
     public IPage<SystemLog> selectAllSystemLog(Integer current, Integer size, SystemLog systemLog) {
-        System.out.println(size);
         return systemLogService.selectAllSystemLog(current, size, systemLog);
     }
 
@@ -72,7 +71,6 @@ public class SystemLogController {
     @WebLog("删除了一条日志")
     @GetMapping("/deleteByIdSystemLog")
     public String deleteByIdSystemLog(Integer id) {
-//        return systemLogService.deleteByIdSystemLog(id);
         return RUDResult.ConvertString(systemLogService.deleteByIdSystemLog(id), ResultRule.DELETE);
     }
 }
