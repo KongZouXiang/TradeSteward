@@ -87,10 +87,10 @@ public class UserRealm extends AuthorizingRealm {
 
 
 //盐值
-        ByteSource credentialsSalt = ByteSource.Util.bytes(employ.getEmUsername());
+       /* ByteSource credentialsSalt = ByteSource.Util.bytes(employ.getEmUsername());
         //封装用户信息，构建AuthenticationInfo对象并返回
         AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(employ, employ.getEmPassword(),
-                credentialsSalt, getName());
+                credentialsSalt, getName());*/
 
 
         SecurityUtils.getSubject().getSession().setAttribute("employ", employ);
@@ -100,8 +100,8 @@ public class UserRealm extends AuthorizingRealm {
 //            底层会抛出UnKnowAccountException
             return null;
         }
-        return authcInfo;
+//        return authcInfo;
 //        2.判断密码
-//        return new SimpleAuthenticationInfo(employ, employ.getEmPassword(), "");
+        return new SimpleAuthenticationInfo(employ, employ.getEmPassword(), "");
     }
 }

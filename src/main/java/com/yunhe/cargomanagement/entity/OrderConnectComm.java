@@ -51,4 +51,6 @@ public class OrderConnectComm implements Serializable {
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
+
+
 }
