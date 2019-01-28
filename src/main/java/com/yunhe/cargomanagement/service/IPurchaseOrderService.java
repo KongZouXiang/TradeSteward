@@ -101,4 +101,10 @@ public interface IPurchaseOrderService extends IService<PurchaseOrder> {
      */
     Map selectsaleMap(int pageNum, int pageSize);
 
+    /**
+     * 根据订单编号查询
+     * @param poNumber 订单编号
+     * @return 单条进货订单历史
+     */
+    PurchaseOrder selectPurOrderByPoNumber(String poNumber);
 }
