@@ -1,43 +1,33 @@
 package com.yunhe.cargomanagement.controller;
 
 
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunhe.basicdata.entity.CommodityList;
 import com.yunhe.basicdata.service.impl.CommodityListServiceImpl;
 import com.yunhe.billmanagement.entity.RunningAccounts;
 import com.yunhe.billmanagement.service.IRunningAccountsService;
-import com.yunhe.cargomanagement.dao.OrderConnectCommMapper;
 import com.yunhe.cargomanagement.entity.OrderConnectComm;
 import com.yunhe.cargomanagement.entity.SalesHistory;
 import com.yunhe.cargomanagement.entity.SalesOrderHistory;
 import com.yunhe.cargomanagement.service.IOrderConnectCommService;
 import com.yunhe.cargomanagement.service.ISalesHistoryService;
-import com.yunhe.cargomanagement.service.impl.OrderConnectCommServiceImpl;
-import com.yunhe.cargomanagement.service.impl.SalesHistoryServiceImpl;
 import com.yunhe.cargomanagement.service.impl.SalesOrderHistoryServiceImpl;
 import com.yunhe.cargomanagement.util.DateUtil;
 import com.yunhe.customermanagement.entity.Customer;
 import com.yunhe.customermanagement.service.ICustomerService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import springfox.documentation.spring.web.json.Json;
 
 import javax.annotation.Resource;
-import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -13,7 +13,7 @@ import java.lang.annotation.*;
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@Documented //生成文档
+@Documented
 public @interface WebLog {
 
     String value() default "";

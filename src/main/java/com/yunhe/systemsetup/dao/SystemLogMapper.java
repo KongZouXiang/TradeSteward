@@ -17,5 +17,6 @@ import java.util.List;
  */
 @Repository
 public interface SystemLogMapper extends BaseMapper<SystemLog> {
+
     List<SystemLog> selectSystemall(Page page);
 }

@@ -7,11 +7,25 @@
 软件架构说明
 
 
-#### 安装教程
 
-1. 辟邪404
-2. xxxx
-3. xxxx
+### 技术选型
+
+#### 后端技术:
+技术 | 名称 | 官网
+----|------|----
+Spring Framework | 容器  | [http://projects.spring.io/spring-framework/](http://projects.spring.io/spring-framework/)
+SpringMVC | MVC框架  | [http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#mvc](http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#mvc)
+Apache Shiro | 安全框架  | [http://shiro.apache.org/](http://shiro.apache.org/)
+MyBatis | ORM框架  | [http://www.mybatis.org/mybatis-3/zh/index.html](http://www.mybatis.org/mybatis-3/zh/index.html)
+MyBatis Generator | 代码生成  | [http://www.mybatis.org/generator/index.html](http://www.mybatis.org/generator/index.html)
+Druid | 数据库连接池  | [https://github.com/alibaba/druid](https://github.com/alibaba/druid)
+Thymeleaf | 模板引擎  | [http://www.thymeleaf.org/](http://www.thymeleaf.org/)
+Redis | 分布式缓存数据库  | [https://redis.io/](https://redis.io/)
+Quartz | 作业调度框架  | [http://www.quartz-scheduler.org/](http://www.quartz-scheduler.org/)
+Log4J | 日志组件  | [http://logging.apache.org/log4j/1.2/](http://logging.apache.org/log4j/1.2/)
+Swagger2 | 接口测试框架  | [http://swagger.io/](http://swagger.io/)
+Jenkins | 持续集成工具  | [https://jenkins.io/index.html](https://jenkins.io/index.html)
+Maven | 项目构建管理  | [http://maven.apache.org/](http://maven.apache.org/)
 
 #### 使用说明
 

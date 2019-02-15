@@ -26,8 +26,8 @@ spring:
       #最小连接
       minimum-idle: 5
 #配置日志
-logging:
-#配置日志文件路径
-  path: log\
-  level:
-     com.yunhe.core.aop.WebLogAspect: info
+#logging:
+##配置日志文件路径
+#  path: log\
+#  level:
+#     com.yunhe.core.aop.WebLogAspect: info
